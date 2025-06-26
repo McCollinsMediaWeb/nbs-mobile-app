@@ -1,3 +1,6 @@
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { loginCustomer } from '@/utils/actions/userActions';
 import Checkbox from 'expo-checkbox';
 import { useNavigation } from 'expo-router';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
@@ -13,7 +16,7 @@ import { useTheme } from '../theme/ThemeProvider';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducers';
 
-const isTestMode = true;
+const isTestMode = false;
 
 const initialState = {
     inputValues: {
@@ -33,6 +36,8 @@ type Nav = {
 
 const Login = () => {
     const { navigate } = useNavigation<Nav>();
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(state => state.user);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
     const [error, setError] = useState(null);
     const [isChecked, setChecked] = useState(false);
@@ -53,6 +58,24 @@ const Login = () => {
             Alert.alert('An error occured', error)
         }
     }, [error]);
+
+    useEffect(() => {
+        if (user.accessToken) {
+            navigate("(tabs)");
+        }
+    }, [user.accessToken]);
+
+    const handleSignin = () => {
+        const isFormValid = Object.values(formState.inputValidities).every(v => v === undefined);
+        if (!isFormValid) {
+            Alert.alert('Invalid Input', 'Please fill all fields correctly.');
+            return;
+        }
+
+        const { email, password } = formState.inputValues;
+
+        dispatch(loginCustomer(email, password));
+    };
 
     // Implementing apple authentication
     const appleAuthHandler = () => {
@@ -114,7 +137,8 @@ const Login = () => {
                     </View>
                     <ButtonFilled
                         title="Login"
-                        onPress={() => navigate("(tabs)")}
+                        // onPress={() => navigate("(tabs)")}
+                        onPress={handleSignin}
                         style={styles.button}
                     />
                     <TouchableOpacity

@@ -1,24 +1,21 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import React, { useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, SIZES, icons } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
-import { FontAwesome } from "@expo/vector-icons";
 
 interface ProductCardProps {
     name: string;
-    image: any; // Use 'require' for local images or 'ImageSourcePropType' for more robust typing
-    numSolds: number;
+    image: string; // Use 'require' for local images or 'ImageSourcePropType' for more robust typing
     price: string;
-    rating: number;
+    oldPrice: string;
     onPress: () => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
     name,
     image,
-    numSolds,
     price,
-    rating,
+    oldPrice,
     onPress
 }) => {
     const [isFavourite, setIsFavourite] = useState<boolean>(false);
@@ -34,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 backgroundColor: dark ? COLORS.dark3 : COLORS.silver
             }]}>
                 <Image
-                    source={image}
+                    source={{ uri: image }}
                     resizeMode='cover'
                     style={styles.image}
                 />
@@ -51,7 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <Text style={[styles.name, {
                 color: dark ? COLORS.secondaryWhite : COLORS.greyscale900,
             }]}>{name}</Text>
-            <View style={styles.viewContainer}>
+            {/* <View style={styles.viewContainer}>
                 <FontAwesome name="star-half-o" size={14} color={dark ? COLORS.white : COLORS.primary} />
                 <Text style={[styles.location, {
                     color: dark ? COLORS.greyscale300 : COLORS.grayscale700,
@@ -64,12 +61,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
                         color: dark ? COLORS.greyscale300 : COLORS.grayscale700,
                     }]}>{numSolds} sold</Text>
                 </View>
-            </View>
+            </View> */}
             <View style={styles.bottomPriceContainer}>
                 <View style={styles.priceContainer}>
                     <Text style={[styles.price, {
-                        color: dark ? COLORS.white : COLORS.primary
-                    }]}>${price}</Text>
+                        // color: dark ? COLORS.white : COLORS.primary
+                    }]}>{"AED " + parseFloat(price).toFixed(2)}</Text>
+                </View>
+
+                <View style={styles.oldPriceContainer}>
+                    <Text style={[styles.oldPrice, {
+                        // color: dark ? COLORS.white : COLORS.primary
+                    }]}>{"AED " + parseFloat(oldPrice).toFixed(2)}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -112,19 +115,32 @@ const styles = StyleSheet.create({
     bottomPriceContainer: {
         width: "100%",
         flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
+        // justifyContent: "space-between",
+        alignItems: "baseline",
         marginBottom: 4
     },
     priceContainer: {
         flexDirection: "row",
         alignItems: "center"
     },
+    oldPriceContainer: {
+        flexDirection: "row",
+        alignItems: "flex-start"
+    },
     price: {
         fontSize: 18,
         fontFamily: "bold",
-        color: COLORS.primary,
+        // color: COLORS.primary,
+        color: "rgb(177, 18, 22)",
         marginRight: 8
+    },
+    oldPrice: {
+        fontSize: 14,
+        // fontFamily: "bold",
+        color: COLORS.primary,
+        // color: "rgb(177, 18, 22)",
+        marginRight: 8,
+        textDecorationLine: 'line-through'
     },
     heartIcon: {
         width: 16,

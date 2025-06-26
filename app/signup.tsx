@@ -1,6 +1,8 @@
 import Header from '@/components/Header';
 import Input from '@/components/Input';
 import OrSeparator from '@/components/OrSeparator';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import Checkbox from 'expo-checkbox';
 import { useNavigation } from 'expo-router';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
@@ -11,6 +13,7 @@ import SocialButton from '../components/SocialButton';
 import { COLORS, SIZES, icons } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 import { validateInput } from '../utils/actions/formActions';
+import { signupCustomer } from '../utils/actions/userActions';
 import { reducer } from '../utils/reducers/formReducers';
 
 const isTestMode = true;
@@ -37,6 +40,8 @@ type Nav = {
 
 const Signup = () => {
     const { navigate } = useNavigation<Nav>();
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(state => state.user);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -59,6 +64,25 @@ const Signup = () => {
             Alert.alert('An error occured', error)
         }
     }, [error])
+
+    useEffect(() => {
+        if (user.accessToken) {
+            navigate("(tabs)");
+        }
+    }, [user.accessToken]);
+
+    const handleSignup = () => {
+        const isFormValid = Object.values(formState.inputValidities).every(v => v === undefined);
+        if (!isFormValid) {
+            Alert.alert('Invalid Input', 'Please fill all fields correctly.');
+            return;
+        }
+
+        const { email, password, firstName, lastName } = formState.inputValues;
+
+        dispatch(signupCustomer(email, password, firstName, lastName));
+    };
+
 
     // implementing apple authentication
     const appleAuthHandler = () => {
@@ -138,7 +162,7 @@ const Signup = () => {
                     </View>
                     <ButtonFilled
                         title="Sign Up"
-                        onPress={() => navigate("fillyourprofile")}
+                        onPress={handleSignup}
                         style={styles.button}
                     />
                     <View>

@@ -142,7 +142,7 @@ const AddNewAddress = () => {
             </MapView>
             <RBSheet
                 ref={bottomSheetRef}
-                height={500}
+                height={800}
                 openDuration={250}
                 closeOnPressMask={false}
                 customStyles={{
@@ -173,13 +173,67 @@ const AddNewAddress = () => {
                                 <Text style={[commonStyles.inputHeader, {
                                     color: dark ? COLORS.white : COLORS.greyscale900
                                 }]}>
-                                    Address
+                                    First Name*
+                                </Text>
+                                <Input
+                                    id="firstName"
+                                    onInputChanged={inputChangedHandler}
+                                    errorText={formState.inputValidities['firstName']}
+                                    placeholder="Type your name"
+                                    placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
+                                />
+                            </View>
+                            <View
+                                style={{
+                                    marginTop: 0,
+                                    width: SIZES.width - 32,
+                                }}>
+                                <Text style={[commonStyles.inputHeader, {
+                                    color: dark ? COLORS.white : COLORS.greyscale900
+                                }]}>
+                                    Last Name*
+                                </Text>
+                                <Input
+                                    id="lastName"
+                                    onInputChanged={inputChangedHandler}
+                                    errorText={formState.inputValidities['lastName']}
+                                    placeholder="Type your name"
+                                    placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
+                                />
+                            </View>
+                            <View
+                                style={{
+                                    marginTop: 0,
+                                    width: SIZES.width - 32,
+                                }}>
+                                <Text style={[commonStyles.inputHeader, {
+                                    color: dark ? COLORS.white : COLORS.greyscale900
+                                }]}>
+                                    Mobile No.*
+                                </Text>
+                                <Input
+                                    id="mobileNo"
+                                    onInputChanged={inputChangedHandler}
+                                    errorText={formState.inputValidities['mobileNo']}
+                                    placeholder="Type your mobile no."
+                                    placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
+                                />
+                            </View>
+                            <View
+                                style={{
+                                    marginTop: 0,
+                                    width: SIZES.width - 32,
+                                }}>
+                                <Text style={[commonStyles.inputHeader, {
+                                    color: dark ? COLORS.white : COLORS.greyscale900
+                                }]}>
+                                    Address*
                                 </Text>
                                 <Input
                                     id="address"
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['address']}
-                                    placeholder="3235 Royal Ln. mesa, new jersy 34567"
+                                    placeholder="Enter Address"
                                     placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                                 />
                             </View>
@@ -187,17 +241,54 @@ const AddNewAddress = () => {
                                 <Text style={[commonStyles.inputHeader, {
                                     color: dark ? COLORS.white : COLORS.greyscale900
                                 }]}>
-                                    Appartment
+                                    City / District
                                 </Text>
                                 <Input
                                     id="appartment"
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['appartment']}
-                                    placeholder="2143"
+                                    placeholder="Enter city"
                                     placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                                 />
                             </View>
                             <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    marginTop: 12,
+                                }}>
+                                <View
+                                    style={{ width: (SIZES.width - 32) / 2 - 10 }}>
+                                    <Text style={[commonStyles.inputHeader, {
+                                        color: dark ? COLORS.white : COLORS.greyscale900
+                                    }]}>
+                                        Emirate*
+                                    </Text>
+                                    <Input
+                                        id="street"
+                                        onInputChanged={inputChangedHandler}
+                                        errorText={formState.inputValidities['street']}
+                                        placeholder="hason nagar"
+                                        placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
+                                    />
+                                </View>
+                                <View
+                                    style={{ width: (SIZES.width - 32) / 2 - 10 }}>
+                                    <Text style={[commonStyles.inputHeader, {
+                                        color: dark ? COLORS.white : COLORS.greyscale900
+                                    }]}>
+                                        Pin Code*
+                                    </Text>
+                                    <Input
+                                        id="postalCode"
+                                        onInputChanged={inputChangedHandler}
+                                        errorText={formState.inputValidities['postalCode']}
+                                        placeholder="3456"
+                                        placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
+                                    />
+                                </View>
+                            </View>
+                            {/* <View
                                 style={{
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
@@ -233,7 +324,7 @@ const AddNewAddress = () => {
                                         placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                                     />
                                 </View>
-                            </View>
+                            </View> */}
                         </View>
                     </View>
                     <View>
@@ -244,7 +335,7 @@ const AddNewAddress = () => {
                                 marginBottom: 2,
                                 color: dark ? COLORS.white : COLORS.greyscale900
                             }}>
-                            AVAILABLE TIME
+                            SAVE ADDRESS AS
                         </Text>
                         <View
                             style={{ flexDirection: 'row', marginVertical: 13 }}>

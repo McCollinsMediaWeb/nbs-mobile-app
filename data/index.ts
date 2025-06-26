@@ -425,39 +425,205 @@ export const callData = [
 export const banners = [
     {
         id: 1,
-        discount: '40%',
-        discountName: "Today's Special",
-        bottomTitle: 'Get a discount for every orde!',
-        bottomSubtitle: 'Only valid for today!'
+        label: "NBS SOLAR INVERTER",
+        headline1: "RELIABLE. EFFICIENT.",
+        headline2: "BUILT FOR PERFORMANCE.",
+        buttonText: "VIEW PRODUCTS",
+        buttonLink: "",
+        image: images.banner1
     },
     {
         id: 2,
-        discount: '50%',
-        discountName: "Weekend Sale",
-        bottomTitle: 'Special discount for weekend orderings!',
-        bottomSubtitle: 'This weekend only!'
+        label: "NBS SOLAR INVERTER",
+        headline1: "RELIABLE. EFFICIENT.",
+        headline2: "BUILT FOR PERFORMANCE.",
+        buttonText: "VIEW PRODUCTS",
+        buttonLink: "",
+        image: images.banner1
+    },
+    // {
+    //     id: 3,
+    //     discount: '30%',
+    //     discountName: "Limited Time Offer",
+    //     bottomTitle: 'Hurry up! Limited time offer!',
+    //     bottomSubtitle: 'Valid until supplies last!'
+    // }
+];
+
+export const brands = [
+    {
+        id: "1",
+        image: images.brand1
     },
     {
-        id: 3,
-        discount: '30%',
-        discountName: "Limited Time Offer",
-        bottomTitle: 'Hurry up! Limited time offer!',
-        bottomSubtitle: 'Valid until supplies last!'
+        id: "2",
+        image: images.brand2
+    },
+    {
+        id: "3",
+        image: images.brand3
+    },
+    {
+        id: "4",
+        image: images.brand1
+    },
+    {
+        id: "5",
+        image: images.brand2
+    },
+    {
+        id: "6",
+        image: images.brand3
     }
 ];
 
-export const categories = [
-    {
-        id: "0",
-        name: "All",
-        icon: icons.category,
-        iconColor: "rgba(51, 94, 247, 1)",
-        backgroundColor: "rgba(51, 94, 247, .12)",
-        onPress: null
-    },
+export const cardsData = [
     {
         id: "1",
-        name: "Sofa",
+        title: "Free Global Shipping",
+        subTitle: "Returns included. Taxes & duties fully covered.",
+        icon: icons.cardShipping
+    },
+    {
+        id: "2",
+        title: "Customer service",
+        subTitle: "We are available from monday to friday to answer your questions.",
+        icon: icons.cardContact
+    },
+    {
+        id: "3",
+        title: "Secure payment",
+        subTitle: "Your payment information is processed securely.",
+        icon: icons.cardSecurity
+    },
+    {
+        id: "4",
+        title: "Contact us",
+        subTitle: "Need to contact us ? Just send us an e-mail at info@yourstore.com",
+        icon: icons.cardEmail
+    }
+];
+
+export const ourProducts = [
+    {
+        id: "1",
+        title: "NBS solar",
+        image: images.ourProduct1
+    },
+    {
+        id: "2",
+        title: "Generator",
+        image: images.ourProduct2
+    },
+    {
+        id: "3",
+        title: "Battery",
+        image: images.ourProduct3
+    },
+    {
+        id: "4",
+        title: "Sunride Solar",
+        image: images.ourProduct4
+    },
+    {
+        id: "5",
+        title: "Generators",
+        image: images.ourProduct5
+    },
+    {
+        id: "6",
+        title: "Water Pump",
+        image: images.ourProduct6
+    }
+];
+
+// export const categories = [
+//     {
+//         id: "0",
+//         name: "All",
+//         icon: icons.category,
+//         iconColor: "rgba(51, 94, 247, 1)",
+//         backgroundColor: "rgba(51, 94, 247, .12)",
+//         onPress: null
+//     },
+//     {
+//         id: "1",
+//         name: "Sofa",
+//         icon: icons.sofa1,
+//         iconColor: "rgba(51, 94, 247, 1)",
+//         backgroundColor: "rgba(51, 94, 247, .12)",
+//         onPress: "categorysofa"
+//     },
+//     {
+//         id: "2",
+//         name: "Chair",
+//         icon: icons.chair1,
+//         iconColor: "rgba(255, 152, 31, 1)",
+//         backgroundColor: "rgba(255, 152, 31, .12)",
+//         onPress: "categorychair"
+//     },
+//     {
+//         id: "3",
+//         name: "Table",
+//         icon: icons.table,
+//         iconColor: "rgba(26, 150, 240, 1)",
+//         backgroundColor: "rgba(26, 150, 240,.12)",
+//         onPress: "categorytable"
+//     },
+//     {
+//         id: "4",
+//         name: "Kitchen",
+//         icon: icons.kitchen,
+//         iconColor: "rgba(255, 192, 45, 1)",
+//         backgroundColor: "rgba(255, 192, 45,.12)",
+//         onPress: "categorykitchen"
+//     },
+//     {
+//         id: "5",
+//         name: "Lamp",
+//         icon: icons.lamp1,
+//         iconColor: "rgba(245, 67, 54, 1)",
+//         backgroundColor: "rgba(245, 67, 54,.12)",
+//         onPress: "categorylamp"
+//     },
+//     {
+//         id: "6",
+//         name: "Cupboard",
+//         icon: icons.cupboard1,
+//         iconColor: "rgba(74, 175, 87, 1)",
+//         backgroundColor: "rgba(74, 175, 87,.12)",
+//         onPress: "categorycupboard"
+//     },
+//     {
+//         id: "7",
+//         name: "Vase",
+//         icon: icons.vase1,
+//         iconColor: "rgba(0, 188, 211, 1)",
+//         backgroundColor: "rgba(0, 188, 211,.12)",
+//         onPress: "categoryvase"
+//     },
+//     {
+//         id: "8",
+//         name: "Others",
+//         icon: icons.more2,
+//         iconColor: "rgba(114, 16, 255, 1)",
+//         backgroundColor: "rgba(114, 16, 255, .12)",
+//         onPress: null
+//     }
+// ];
+
+export const categories = [
+    // {
+    //     id: "0",
+    //     name: "All",
+    //     icon: icons.category,
+    //     iconColor: "rgba(51, 94, 247, 1)",
+    //     backgroundColor: "rgba(51, 94, 247, .12)",
+    //     onPress: null
+    // },
+    {
+        id: "1",
+        name: "Top Picks",
         icon: icons.sofa1,
         iconColor: "rgba(51, 94, 247, 1)",
         backgroundColor: "rgba(51, 94, 247, .12)",
@@ -465,7 +631,7 @@ export const categories = [
     },
     {
         id: "2",
-        name: "Chair",
+        name: "What's New",
         icon: icons.chair1,
         iconColor: "rgba(255, 152, 31, 1)",
         backgroundColor: "rgba(255, 152, 31, .12)",
@@ -473,52 +639,52 @@ export const categories = [
     },
     {
         id: "3",
-        name: "Table",
+        name: "Only at NBS",
         icon: icons.table,
         iconColor: "rgba(26, 150, 240, 1)",
         backgroundColor: "rgba(26, 150, 240,.12)",
         onPress: "categorytable"
     },
-    {
-        id: "4",
-        name: "Kitchen",
-        icon: icons.kitchen,
-        iconColor: "rgba(255, 192, 45, 1)",
-        backgroundColor: "rgba(255, 192, 45,.12)",
-        onPress: "categorykitchen"
-    },
-    {
-        id: "5",
-        name: "Lamp",
-        icon: icons.lamp1,
-        iconColor: "rgba(245, 67, 54, 1)",
-        backgroundColor: "rgba(245, 67, 54,.12)",
-        onPress: "categorylamp"
-    },
-    {
-        id: "6",
-        name: "Cupboard",
-        icon: icons.cupboard1,
-        iconColor: "rgba(74, 175, 87, 1)",
-        backgroundColor: "rgba(74, 175, 87,.12)",
-        onPress: "categorycupboard"
-    },
-    {
-        id: "7",
-        name: "Vase",
-        icon: icons.vase1,
-        iconColor: "rgba(0, 188, 211, 1)",
-        backgroundColor: "rgba(0, 188, 211,.12)",
-        onPress: "categoryvase"
-    },
-    {
-        id: "8",
-        name: "Others",
-        icon: icons.more2,
-        iconColor: "rgba(114, 16, 255, 1)",
-        backgroundColor: "rgba(114, 16, 255, .12)",
-        onPress: null
-    }
+    // {
+    //     id: "4",
+    //     name: "Kitchen",
+    //     icon: icons.kitchen,
+    //     iconColor: "rgba(255, 192, 45, 1)",
+    //     backgroundColor: "rgba(255, 192, 45,.12)",
+    //     onPress: "categorykitchen"
+    // },
+    // {
+    //     id: "5",
+    //     name: "Lamp",
+    //     icon: icons.lamp1,
+    //     iconColor: "rgba(245, 67, 54, 1)",
+    //     backgroundColor: "rgba(245, 67, 54,.12)",
+    //     onPress: "categorylamp"
+    // },
+    // {
+    //     id: "6",
+    //     name: "Cupboard",
+    //     icon: icons.cupboard1,
+    //     iconColor: "rgba(74, 175, 87, 1)",
+    //     backgroundColor: "rgba(74, 175, 87,.12)",
+    //     onPress: "categorycupboard"
+    // },
+    // {
+    //     id: "7",
+    //     name: "Vase",
+    //     icon: icons.vase1,
+    //     iconColor: "rgba(0, 188, 211, 1)",
+    //     backgroundColor: "rgba(0, 188, 211,.12)",
+    //     onPress: "categoryvase"
+    // },
+    // {
+    //     id: "8",
+    //     name: "Others",
+    //     icon: icons.more2,
+    //     iconColor: "rgba(114, 16, 255, 1)",
+    //     backgroundColor: "rgba(114, 16, 255, .12)",
+    //     onPress: null
+    // }
 ];
 
 
@@ -1542,6 +1708,16 @@ export const vases = [
         navigate: "vasedetails"
     }
 ];
+
+// export const products = {
+//     sofas,
+//     chairs,
+//     tables,
+//     kitchens,
+//     lamps,
+//     cupboards,
+//     vases
+// }
 
 export const products = {
     sofas,

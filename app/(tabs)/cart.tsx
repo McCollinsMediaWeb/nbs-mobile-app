@@ -1,48 +1,65 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
+import Button from '@/components/Button';
+import ButtonFilled from '@/components/ButtonFilled';
+import CartCard from '@/components/CartCard';
+import NotFoundCard from '@/components/NotFoundCard';
+import { COLORS, icons, images, SIZES } from '@/constants';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { useTheme } from '@/theme/ThemeProvider';
+import { removeProductFromCart } from '@/utils/actions/cartActions';
+import { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
-import RBSheet from 'react-native-raw-bottom-sheet';
-import { useTheme } from '@/theme/ThemeProvider';
-import { categories, myCart } from '@/data';
-import { COLORS, icons, images, SIZES } from '@/constants';
-import CartCard from '@/components/CartCard';
-import ButtonFilled from '@/components/ButtonFilled';
-import Button from '@/components/Button';
-import { NavigationProp } from '@react-navigation/native';
-import NotFoundCard from '@/components/NotFoundCard';
-import { useNavigation } from 'expo-router';
 
 interface Product {
+  merchandiseId: string;
   id: string;
-  name: string;
-  image: any; // Change to the correct type if necessary
+  title: string;
   price: number;
-  rating: number;
-  numReviews: number;
-  size?: string;
-  color?: string;
-  categoryId: string;
+  oldPrice?: number;
+  quantity: number;
+  image?: string;
+  productType: string;
 }
 
 const Cart: React.FC = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const refRBSheet = useRef<any>(null);
   const { dark, colors } = useTheme();
+  const dispatch = useAppDispatch();
   const [selectedBookmarkItem, setSelectedBookmarkItem] = useState<Product | null>(null);
-  const [myCartProducts, setMyCartProducts] = useState<any>(myCart || []);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [resultsCount, setResultsCount] = useState(0);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(["0"]);
+  const cartItems = useAppSelector(state => state.cart.cartItems);
 
   const handleRemoveBookmark = () => {
     if (selectedBookmarkItem) {
-      const updatedCartProduct = myCartProducts.filter(
-        (product: any) => product.id !== selectedBookmarkItem.id
-      );
-      setMyCartProducts(updatedCartProduct);
+      dispatch(removeProductFromCart(selectedBookmarkItem.merchandiseId));
+      // const updatedCartProduct = myCartProducts.filter(
+      //   (product: any) => product.id !== selectedBookmarkItem.id
+      // );
+      // setMyCartProducts(updatedCartProduct);
       refRBSheet.current?.close();
     }
   };
+
+  useEffect(() => {
+    if (cartItems && cartItems.length > 0) {
+      const total = cartItems.reduce((sum, item) => {
+        return sum + (item.price * item.quantity); // multiply price * quantity
+      }, 0);
+      setTotalPrice(total);
+    } else {
+      setTotalPrice(0); // empty cart
+    }
+  }, [cartItems]);
+
+  // console.log('cart', cartItems)
   /**
    * Render header
    */
@@ -71,13 +88,19 @@ const Cart: React.FC = () => {
    * Render my content
    */
   const renderContent = () => {
-    const filteredProducts = myCartProducts.filter(
-      (product: any) => selectedCategories.includes("0") || selectedCategories.includes(product.categoryId)
-    );
+    // const filteredProducts = myCartProducts.filter(
+    //   (product: any) => selectedCategories.includes("0") || selectedCategories.includes(product.categoryId)
+    // );
+
+    const filteredProducts = cartItems;
+
+    // useEffect(() => {
+    //   setResultsCount(filteredProducts.length);
+    // }, [myCartProducts, selectedCategories]);
 
     useEffect(() => {
       setResultsCount(filteredProducts.length);
-    }, [myCartProducts, selectedCategories]);
+    }, [cartItems, selectedCategories]);
 
     // Category item
     const renderCategoryItem = ({ item }: { item: { id: string; name: string } }) => (
@@ -118,7 +141,7 @@ const Cart: React.FC = () => {
 
     return (
       <View>
-        <View style={styles.categoryContainer}>
+        {/* <View style={styles.categoryContainer}>
           <FlatList
             data={categories}
             keyExtractor={(item) => item.id}
@@ -126,14 +149,15 @@ const Cart: React.FC = () => {
             horizontal
             renderItem={renderCategoryItem}
           />
-        </View>
+        </View> */}
 
         {/* Results container  */}
         <View>
           {/* result list */}
           <View style={{
-            backgroundColor: dark ? COLORS.dark1 : COLORS.secondaryWhite,
-            marginVertical: 16
+            // backgroundColor: dark ? COLORS.dark1 : COLORS.secondaryWhite,
+            marginVertical: 20,
+            // padding: 16,
           }}>
             {resultsCount > 0 ? (
               <FlatList
@@ -141,13 +165,14 @@ const Cart: React.FC = () => {
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                   <CartCard
-                    name={item.name}
+                    title={item.title}
                     image={item.image}
                     price={item.price}
-                    rating={item.rating}
-                    numReviews={item.numReviews}
-                    size={item.size}
-                    color={item.color}
+                    oldPrice={item.oldPrice}
+                    id={item.id}
+                    merchandiseId={item.merchandiseId}
+                    productType={item.productType}
+                    quantity={item.quantity}
                     onPress={() => {
                       setSelectedBookmarkItem(item);
                       refRBSheet.current?.open();
@@ -180,13 +205,13 @@ const Cart: React.FC = () => {
               Total Price
             </Text>
             <Text style={[styles.cartSubtitle, { color: dark ? COLORS.white : COLORS.black }]}>
-              $1,970.00
+              AED {totalPrice.toFixed(2)}
             </Text>
           </View>
           <TouchableOpacity
             onPress={() => navigation.navigate("checkout")}
             style={styles.cartBtn}>
-            <Text style={styles.cartBtnText}>Checkout</Text>
+            <Text style={styles.cartBtnText}>Continue</Text>
             <Image
               source={icons.rightArrow2}
               resizeMode="contain"
@@ -198,7 +223,7 @@ const Cart: React.FC = () => {
       <RBSheet
         ref={refRBSheet}
         closeOnPressMask={true}
-        height={310}
+        height={380}
         customStyles={{
           wrapper: {
             backgroundColor: "rgba(0,0,0,0.5)",
@@ -209,7 +234,7 @@ const Cart: React.FC = () => {
           container: {
             borderTopRightRadius: 32,
             borderTopLeftRadius: 32,
-            height: 310,
+            height: 350,
             backgroundColor: dark ? COLORS.dark2 : COLORS.white,
             alignItems: "center",
             width: "100%",
@@ -221,15 +246,18 @@ const Cart: React.FC = () => {
         </Text>
         <View style={styles.separateLine} />
 
-        <View style={[styles.selectedBookmarkContainer, { backgroundColor: dark ? COLORS.dark2 : COLORS.tertiaryWhite }]}>
+        <View style={[styles.selectedBookmarkContainer,
+          //  { backgroundColor: dark ? COLORS.dark2 : COLORS.tertiaryWhite }
+        ]}>
           <CartCard
-            name={selectedBookmarkItem?.name || ""}
+            title={selectedBookmarkItem?.title || ""}
             image={selectedBookmarkItem?.image}
             price={selectedBookmarkItem?.price || 0}
-            rating={selectedBookmarkItem?.rating || 0}
-            numReviews={selectedBookmarkItem?.numReviews || 0}
-            size={selectedBookmarkItem?.size}
-            color={selectedBookmarkItem?.color || ""}
+            id={selectedBookmarkItem?.id || ""}
+            merchandiseId={selectedBookmarkItem?.merchandiseId || ""}
+            productType={selectedBookmarkItem?.productType || ""}
+            quantity={selectedBookmarkItem?.quantity || 0}
+            oldPrice={selectedBookmarkItem?.oldPrice || 0}
             onPress={() => console.log(selectedBookmarkItem)}
           />
         </View>
@@ -335,7 +363,7 @@ const styles = StyleSheet.create({
   },
   selectedBookmarkContainer: {
     marginVertical: 16,
-    backgroundColor: COLORS.tertiaryWhite
+    // backgroundColor: COLORS.tertiaryWhite
   },
   separateLine: {
     width: "100%",

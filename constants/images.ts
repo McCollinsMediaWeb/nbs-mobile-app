@@ -5,6 +5,19 @@ const splashOnboarding2 = require("../assets/images/splash_onboarding2.jpeg");
 const splashOnboarding3 = require("../assets/images/splash_onboarding3.jpeg");
 const splashOnboarding4 = require("../assets/images/splash_onboarding4.jpeg");
 
+const banner1 = require("../assets/images/banners/banner1.jpg");
+
+const brand1 = require("../assets/images/brands/kubota.png");
+const brand2 = require("../assets/images/brands/yanmar.png");
+const brand3 = require("../assets/images/brands/bluetti.png");
+
+const ourProduct1 = require('../assets/images/collection-banners/nbs-solar.jpg');
+const ourProduct2 = require('../assets/images/collection-banners/generator.jpg');
+const ourProduct3 = require('../assets/images/collection-banners/battery.jpg');
+const ourProduct4 = require('../assets/images/collection-banners/sunride-solar.jpg');
+const ourProduct5 = require('../assets/images/collection-banners/generators.jpg');
+const ourProduct6 = require('../assets/images/collection-banners/water-pump.jpg');
+
 const user1 = require("../assets/images/users/user1.jpeg");
 const user2 = require("../assets/images/users/user2.jpeg");
 const user3 = require("../assets/images/users/user3.jpeg");
@@ -16,17 +29,19 @@ const user8 = require("../assets/images/users/user8.jpeg");
 const user9 = require("../assets/images/users/user9.jpeg");
 const user10 = require("../assets/images/users/user10.jpeg");
 const user11 = require("../assets/images/users/user11.jpeg");
+const noUser = require("../assets/icons/user-default.png")
+const noUserWhite = require("../assets/icons/user-default-white.png")
 
 const chair1 = require("../assets/images/chair/chair1.png");
 const chair2 = require("../assets/images/chair/chair2.png");
 const chair3 = require("../assets/images/chair/chair3.png");
 const chair4 = require("../assets/images/chair/chair4.png");
-const chair5 = require("../assets/images/chair/chair5.png"); 
+const chair5 = require("../assets/images/chair/chair5.png");
 const chair6 = require("../assets/images/chair/chair6.png");
 const chair7 = require("../assets/images/chair/chair7.png");
 const chair8 = require("../assets/images/chair/chair8.png");
-const chair9 = require("../assets/images/chair/chair9.png"); 
-const chair10 = require("../assets/images/chair/chair10.png"); 
+const chair9 = require("../assets/images/chair/chair9.png");
+const chair10 = require("../assets/images/chair/chair10.png");
 const chair11 = require("../assets/images/chair/chair11.png");
 const chair12 = require("../assets/images/chair/chair12.png");
 
@@ -36,12 +51,12 @@ const cupboard3 = require("../assets/images/cupboard/cupboard3.png");
 const cupboard4 = require("../assets/images/cupboard/cupboard4.png");
 const cupboard5 = require("../assets/images/cupboard/cupboard5.png");
 const cupboard6 = require("../assets/images/cupboard/cupboard6.png");
-const cupboard7 = require("../assets/images/cupboard/cupboard7.png"); 
-const cupboard8 = require("../assets/images/cupboard/cupboard8.png"); 
+const cupboard7 = require("../assets/images/cupboard/cupboard7.png");
+const cupboard8 = require("../assets/images/cupboard/cupboard8.png");
 const cupboard9 = require("../assets/images/cupboard/cupboard9.png");
 const cupboard10 = require("../assets/images/cupboard/cupboard10.png");
 const cupboard11 = require("../assets/images/cupboard/cupboard11.png");
-const cupboard12 = require("../assets/images/cupboard/cupboard12.png"); 
+const cupboard12 = require("../assets/images/cupboard/cupboard12.png");
 
 const lamp1 = require("../assets/images/lamp/lamp1.png");
 const lamp2 = require("../assets/images/lamp/lamp2.png");
@@ -120,6 +135,21 @@ export default {
     ornament,
     logo,
 
+    banner1,
+
+    brand1,
+    brand2,
+    brand3,
+
+    ourProduct1,
+    ourProduct2,
+    ourProduct3,
+    ourProduct4,
+    ourProduct5,
+    ourProduct6,
+
+
+
     user1,
     user2,
     user3,
@@ -131,6 +161,8 @@ export default {
     user9,
     user10,
     user11,
+    noUser,
+    noUserWhite,
 
     lamp1,
     lamp2,

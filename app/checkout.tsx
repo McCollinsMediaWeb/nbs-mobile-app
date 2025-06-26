@@ -1,32 +1,47 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList, TextInput } from 'react-native';
-import React from 'react';
+import OrderListItem from '@/components/OrderListItem';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
-import { useTheme } from '../theme/ThemeProvider';
-import { COLORS, SIZES, icons } from '../constants';
-import HeaderWithSearch from '../components/HeaderWithSearch';
-import { orderList } from '../data';
-import { Feather } from "@expo/vector-icons";
 import ButtonFilled from '../components/ButtonFilled';
-import { NavigationProp } from '@react-navigation/native';
-import OrderListItem from '@/components/OrderListItem';
-import { useNavigation } from 'expo-router';
+import HeaderWithSearch from '../components/HeaderWithSearch';
+import { COLORS, SIZES, icons } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
 
 const Checkout = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const { colors, dark } = useTheme();
+  const cartItems = useAppSelector(state => state.cart.cartItems);
+  const user = useAppSelector(state => state.user);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    if (cartItems && cartItems.length > 0) {
+      const total = cartItems.reduce((sum, item) => {
+        return sum + (item.price * item.quantity);
+      }, 0);
+      setTotalPrice(total);
+    } else {
+      setTotalPrice(0);
+    }
+  }, [cartItems]);
+
+  console.log("user", user)
 
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <HeaderWithSearch
-          title="Checkout"
+          title="Select Address"
           icon={icons.moreCircle}
           onPress={() => null}
         />
         <ScrollView
           contentContainerStyle={{
-            backgroundColor: dark ? COLORS.dark1 : COLORS.tertiaryWhite,
+            // backgroundColor: dark ? COLORS.dark1 : COLORS.tertiaryWhite,
             marginTop: 12
           }}
           showsVerticalScrollIndicator={false}>
@@ -36,9 +51,9 @@ const Checkout = () => {
           <View style={[styles.summaryContainer, {
             backgroundColor: dark ? COLORS.dark2 : COLORS.white,
           }]}>
-            <View style={[styles.separateLine, {
+            {/* <View style={[styles.separateLine, {
               backgroundColor: dark ? COLORS.grayscale700 : COLORS.grayscale200
-            }]} />
+            }]} /> */}
             <TouchableOpacity
               onPress={() => navigation.navigate("selectshippingaddress")}
               style={styles.addressContainer}>
@@ -58,8 +73,8 @@ const Checkout = () => {
                       color: dark ? COLORS.white : COLORS.greyscale900
                     }]}>Home</Text>
                     <View style={styles.defaultView}>
-                      <Text style={[styles.defaultTitle, { 
-                        color: dark? COLORS.white : COLORS.primary
+                      <Text style={[styles.defaultTitle, {
+                        color: dark ? COLORS.white : COLORS.primary
                       }]}>Default</Text>
                     </View>
                   </View>
@@ -83,32 +98,34 @@ const Checkout = () => {
             color: dark ? COLORS.white : COLORS.greyscale900
           }]}>Order List</Text>
           <FlatList
-            data={orderList}
+            // data={orderList}
+            data={cartItems}
             keyExtractor={item => item.id}
             style={{ marginTop: 12 }}
             renderItem={({ item }) => (
               <OrderListItem
-                name={item.name}
+                title={item.title}
                 image={item.image}
                 price={item.price}
-                rating={item.rating}
-                numReviews={item.numReviews}
-                size={item.size}
-                color={item.color}
+                oldPrice={item.oldPrice}
+                id={item.id}
+                merchandiseId={item.merchandiseId}
+                productType={item.productType}
                 quantity={item.quantity}
+                onPress={() => { }}
               />
             )}
           />
-          <View style={[styles.separateLine, {
+          {/* <View style={[styles.separateLine, {
             backgroundColor: dark ? COLORS.grayscale700 : COLORS.grayscale200
-          }]} />
-          <Text style={[styles.summaryTitle, {
+          }]} /> */}
+          {/* <Text style={[styles.summaryTitle, {
             color: dark ? COLORS.white : COLORS.greyscale900
           }]}>Choose Shipping</Text>
 
           <TouchableOpacity
             onPress={() => navigation.navigate("chooseshippingmethods")}
-            style={[styles.addressContainer, styles.shippingMethods, { 
+            style={[styles.addressContainer, styles.shippingMethods, {
               backgroundColor: dark ? COLORS.dark3 : COLORS.white,
               borderRadius: 12
             }]}>
@@ -136,17 +153,17 @@ const Checkout = () => {
                 tintColor: dark ? COLORS.white : COLORS.greyscale900
               }]}
             />
-          </TouchableOpacity>
-          <View style={[styles.separateLine, {
+          </TouchableOpacity> */}
+          {/* <View style={[styles.separateLine, {
             backgroundColor: dark ? COLORS.grayscale700 : COLORS.grayscale200,
             marginTop: 4,
             marginBottom: 16
-          }]} />
+          }]} /> */}
 
-          <Text style={[styles.summaryTitle, {
+          {/* <Text style={[styles.summaryTitle, {
             color: dark ? COLORS.white : COLORS.greyscale900
           }]}>Promo Code</Text>
-          <View style={[styles.promoCodeContainer, { 
+          <View style={[styles.promoCodeContainer, {
             backgroundColor: "transparent",
           }]}>
             <TextInput
@@ -159,17 +176,17 @@ const Checkout = () => {
             />
             <TouchableOpacity
               onPress={() => navigation.navigate("addpromo")}
-              style={[styles.addPromoBtn, { 
+              style={[styles.addPromoBtn, {
                 backgroundColor: dark ? COLORS.dark3 : COLORS.primary,
               }]}>
               <Feather name="plus" size={18} color={COLORS.white} />
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           <View style={[styles.summaryContainer, {
             backgroundColor: dark ? COLORS.dark2 : COLORS.white,
           }]}>
-            <View style={styles.view}>
+            {/* <View style={styles.view}>
               <Text style={[styles.viewLeft, {
                 color: dark ? COLORS.grayscale200 : COLORS.grayscale700
               }]}>Subtitle</Text>
@@ -186,20 +203,20 @@ const Checkout = () => {
                 color: dark ? COLORS.grayscale200 : COLORS.grayscale700
               }]}>Promo</Text>
               <Text style={[styles.viewRight, { color: dark ? COLORS.white : COLORS.primary }]}>- $12.80</Text>
-            </View>
+            </View> */}
             <View style={[styles.separateLine, {
               backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200
             }]} />
             <View style={styles.view}>
-              <Text style={[styles.viewLeft, {
+              <Text style={[styles.totalPrice, {
                 color: dark ? COLORS.grayscale200 : COLORS.grayscale700
               }]}>Total</Text>
-              <Text style={[styles.viewRight, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>$1909.20</Text>
+              <Text style={[styles.totalPrice, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>AED {totalPrice.toFixed(2)}</Text>
             </View>
           </View>
         </ScrollView>
       </View>
-      <View style={[styles.buttonContainer, { 
+      <View style={[styles.buttonContainer, {
         backgroundColor: dark ? COLORS.dark2 : COLORS.white,
       }]}>
         <ButtonFilled
@@ -415,7 +432,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
-  }
+  },
+  totalPrice: {
+    fontSize: 24,
+    fontFamily: "bold",
+    color: COLORS.black,
+  },
 });
 
 export default Checkout

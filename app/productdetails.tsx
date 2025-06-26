@@ -1,31 +1,109 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import React, { useRef, useState } from 'react';
-import { COLORS, SIZES, icons, images, socials } from '../constants';
-import RBSheet from "react-native-raw-bottom-sheet";
-import { ScrollView } from 'react-native-virtualized-view';
-import { StatusBar } from 'expo-status-bar';
-import AutoSlider from '../components/AutoSlider';
-import { useTheme } from '../theme/ThemeProvider';
-import SocialIcon from '../components/SocialIcon';
-import { FontAwesome, Feather } from "@expo/vector-icons";
-import { NavigationProp } from '@react-navigation/native';
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { addProductToCart } from "@/utils/actions/cartActions";
+import { clearProductFirst, fetchProduct } from "@/utils/actions/productActions";
+import { Feather, FontAwesome } from "@expo/vector-icons";
+import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useRef, useState } from 'react';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import RBSheet from "react-native-raw-bottom-sheet";
+import { ScrollView } from "react-native-virtualized-view";
+import AutoSlider from '../components/AutoSlider';
+import SocialIcon from '../components/SocialIcon';
+import { COLORS, SIZES, icons, socials } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
 
-const SofaDetails = () => {
+type ProductDetailsParams = {
+    id: string;
+};
+
+type ProductDetailsRouteProp = RouteProp<
+    { productdetails: ProductDetailsParams },
+    'productdetails'
+>;
+
+interface Specification {
+    key: string;
+    value: string;
+}
+
+export interface CartProduct {
+    merchandiseId: string;
+    id: string;
+    title: string;
+    price: number;
+    oldPrice?: number; // optional
+    quantity: number;
+    image?: string;
+    productType: string;
+}
+
+interface Product {
+    id: string;
+    title: string;
+    productType: string;
+    variants: {
+        id: string;
+        price: string;
+        oldPrice?: string;
+        image?: string;
+    }[];
+}
+
+
+const ProductDetails = () => {
     const navigation = useNavigation<NavigationProp<any>>();
+    const route = useRoute<ProductDetailsRouteProp>();
+    const dispatch = useAppDispatch();
+    const product = useAppSelector(state => state.product.data);
+    // const [totalPrice, setTotalPrice] = useState<string>(parseFloat(product?.variants[0]?.price ?? "0").toFixed(2));
+    const [totalPrice, setTotalPrice] = useState<number>(parseFloat(product?.variants[0]?.price ?? "0")); // store as number
+    const [quantity, setQuantity] = useState(1);
+
+    const { id } = route.params; // ✅ Now `id` is available
     const [isFavorite, setIsFavorite] = useState(false);
     const { dark } = useTheme();
     const refRBSheet = useRef<any>(null);
 
     // Slider images
-    const sliderImages = [
-        images.sofa1,
-        images.sofa2,
-        images.sofa3,
-        images.sofa4,
-        images.sofa5,
-        images.sofa6,
-    ];
+    // const sliderImages = [
+    //     images.sofa1,
+    //     images.sofa2,
+    //     images.sofa3,
+    //     images.sofa4,
+    //     images.sofa5,
+    //     images.sofa6,
+    // ];
+
+    useEffect(() => {
+        dispatch(clearProductFirst());
+        dispatch(fetchProduct(id));
+
+        // dispatch(fetchProductRecommendations(id));
+    }, [dispatch, id]);
+
+    const sliderImages = (product?.images ?? []).map(img => ({ uri: img.src }));
+
+    const handleAddToCart = (product: Product | null) => {
+        if (product?.variants[0]?.id) {
+            const cartProduct: CartProduct = {
+                merchandiseId: product.variants[0].id,
+                id: product.id,
+                quantity: quantity,
+                title: product.title,
+                price: parseFloat(product.variants[0].price),
+                oldPrice: parseFloat(product.variants[0].oldPrice ?? "0"), // ✅ fixed
+                image: product.variants[0].image,
+                productType: product.productType,
+            };
+            dispatch(addProductToCart(cartProduct));
+        }
+    };
+
+
+
     // render header
     const renderHeader = () => {
 
@@ -62,20 +140,48 @@ const SofaDetails = () => {
             </View>
         )
     }
+
+    const parseSpecifications = (specValues: string | null | undefined): Specification[] => {
+        // Handle null, undefined, or empty string cases
+        if (!specValues || specValues.trim() === '') {
+            return [];
+        }
+
+        try {
+            const parsed: string[] = JSON.parse(specValues);
+            return parsed.map((spec: string) => {
+                const [key, value] = spec.split(':');
+                return {
+                    key: key?.trim() || '',
+                    value: value?.trim() || ''
+                };
+            });
+        } catch (error) {
+            console.error('Error parsing specifications:', error);
+            return [];
+        }
+    };
+
+    const specifications = parseSpecifications(product?.specificationValues);
     /**
      * render content
      */
     const renderContent = () => {
         const [selectedColor, setSelectedColor] = useState(null);
-        const [quantity, setQuantity] = useState(1);
 
         const increaseQty = () => {
-            setQuantity(quantity + 1);
+            // setQuantity(quantity + 1);
+            const newQty = quantity + 1;
+            setQuantity(newQty);
+            setTotalPrice(newQty * parseFloat(product?.variants[0]?.price ?? "0"));
         }
 
         const decreaseQty = () => {
             if (quantity > 1) {
-                setQuantity(quantity - 1);
+                // setQuantity(quantity - 1);
+                const newQty = quantity - 1;
+                setQuantity(newQty);
+                setTotalPrice(newQty * parseFloat(product?.variants[0]?.price ?? "0"));
             }
         }
 
@@ -90,13 +196,24 @@ const SofaDetails = () => {
             return null;
         };
 
+        // Safe parse with a default empty string if product.features is null or undefined
+        let featuresArray: string[] = [];
+
+        try {
+            const rawFeatures = product?.features ?? "[]"; // default to empty array string
+            featuresArray = JSON.parse(rawFeatures) as string[];
+        } catch (error) {
+            console.error("Error parsing features JSON:", error);
+            featuresArray = [];
+        }
+
         return (
             <View style={styles.contentContainer}>
                 <View style={styles.contentView}>
                     <Text style={[styles.contentTitle, {
                         color: dark ? COLORS.white : COLORS.black
                     }]}>
-                        Mid Century Sofa
+                        {product?.title}
                     </Text>
                     <TouchableOpacity
                         onPress={() => setIsFavorite(!isFavorite)}>
@@ -110,67 +227,44 @@ const SofaDetails = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.ratingContainer}>
-                    <View style={[styles.ratingView, {
-                        backgroundColor: dark ? COLORS.dark3 : COLORS.silver
-                    }]}>
-                        <Text style={[styles.ratingViewTitle, {
-                            color: dark ? COLORS.white : "#35383F",
-                        }]}>3,429 sold</Text>
-                    </View>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate("productreviews")}
-                        style={styles.starContainer}>
-                        <View>
-                            <Image
-                                source={icons.starHalf2}
-                                resizeMode='contain'
-                                style={[styles.starIcon, {
-                                    tintColor: dark ? COLORS.white : COLORS.black
-                                }]}
-                            />
-                        </View>
-                        <View>
-                            <Text style={[styles.reviewText, {
-                                color: dark ? COLORS.white : COLORS.greyScale800
-                            }]}>
-                                {"   "}4.6 (6,388 reviews)
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
 
+                    <Text style={[styles.price, {
+                        // color: dark ? COLORS.white : COLORS.black,
+                        color: "rgb(177, 18, 22)",
+                    }]}>{product?.variants && product?.variants.length > 0
+                        ? "AED " + parseFloat(product?.variants[0]?.price).toFixed(2)
+                        : ""}</Text>
+
+                    <Text style={[styles.oldPrice, {
+                        color: dark ? COLORS.white : COLORS.gray, marginLeft: 12
+                    }]}>{product?.variants && product?.variants.length > 0
+                        ? "AED " + parseFloat(product?.variants[0]?.oldPrice).toFixed(2)
+                        : ""}</Text>
                 </View>
                 <View style={[styles.separateLine, {
                     backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
                 }]} />
-                <Text style={[styles.descTitle, {
-                    color: dark ? COLORS.white : COLORS.greyscale900
-                }]}>Description</Text>
-                <Text style={[styles.descText, {
-                    color: dark ? COLORS.greyscale300 : COLORS.greyScale800,
-                }]}>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna.</Text>
-                <View style={styles.featureContainer}>
-                    <View style={styles.featureView}>
-                        <Text style={[styles.descTitle, {
-                            color: dark ? COLORS.white : COLORS.greyscale900
-                        }]}>Color</Text>
-                        <View style={styles.colorContainer}>
-                            {['#101010', '#673AB3', '#FF981F', '#3F51B2', '#607D8A', '#7A5548', '#797979'].map((color) => (
-                                <TouchableOpacity
-                                    key={color}
-                                    style={[
-                                        styles.colorView,
-                                        { backgroundColor: color },
-                                        selectedColor === color && styles.selectedColor,
-                                    ]}
-                                    onPress={() => handleColorSelect(color)}
-                                >
-                                    {renderCheckmark(color)}
-                                </TouchableOpacity>
-                            ))}
+                <View style={{ marginVertical: 10 }}>
+                    {specifications.map((spec, index) => (
+                        <View
+                            key={index}
+                            style={[styles.row, {
+                                backgroundColor: dark ? COLORS.dark1 : 'rgb(245,245,245)'
+                            }]}
+                        >
+                            <Text style={[styles.keyText, {
+                                color: dark ? COLORS.white : '#333'
+                            }]}>{spec.key}</Text>
+                            <Text style={[styles.valueText, {
+                                color: dark ? COLORS.white : '#333'
+                            }]}>: {spec.value}</Text>
                         </View>
-                    </View>
+                    ))}
                 </View>
+
+                <View style={[styles.separateLine, {
+                    backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
+                }]} />
                 <View style={styles.qtyContainer}>
                     <Text style={[styles.descTitle, {
                         color: dark ? COLORS.white : COLORS.greyscale900
@@ -191,6 +285,58 @@ const SofaDetails = () => {
                         </TouchableOpacity>
                     </View>
                 </View>
+
+                <View style={[styles.separateLine, {
+                    backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
+                }]} />
+
+                {/* <View style={{ marginVertical: 10 }}>
+                    {specifications.map((spec, index) => (
+                        <View
+                            key={index}
+                            style={[
+                                styles.row,
+                                index % 2 === 0 ? styles.evenRow : styles.oddRow
+                            ]}
+                        >
+                            <Text style={styles.keyText}>{spec.key}</Text>
+                            <Text style={styles.valueText}>: {spec.value}</Text>
+                        </View>
+                    ))}
+                </View> */}
+                <View style={{ marginVertical: 10 }}>
+                    <Text style={[styles.contentTitle, {
+                        color: dark ? COLORS.white : COLORS.black
+                    }]}>
+                        Product Overview
+                    </Text>
+
+                    <Text style={[styles.descTitle, { marginVertical: 10 }, {
+                        color: dark ? COLORS.white : COLORS.greyscale900
+                    }]}>Highlights</Text>
+                    <FlatList
+                        data={featuresArray}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={({ item }) => (
+                            <View style={styles.featureItem}>
+                                <Text style={styles.bullet}>▸</Text>
+                                <Text style={[styles.featureText, {
+                                    color: dark ? COLORS.white : COLORS.greyscale900
+                                }]}>{item}</Text>
+                            </View>
+                        )}
+                    />
+
+                    {/* Featured image */}
+                    {product?.variants[0].image ? (
+                        <Image
+                            source={{ uri: product?.variants[0].image }}
+                            style={styles.featuredImage}
+                            resizeMode="contain"
+                        />
+                    ) : null}
+                </View>
+
                 <View style={[styles.separateLine, {
                     backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
                 }]} />
@@ -201,6 +347,7 @@ const SofaDetails = () => {
         <View style={[styles.area,
         { backgroundColor: dark ? COLORS.dark1 : COLORS.white }]}>
             <StatusBar hidden />
+            {/* <ScrollView showsVerticalScrollIndicator={true}> */}
             <AutoSlider images={sliderImages} />
             {renderHeader()}
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -214,15 +361,22 @@ const SofaDetails = () => {
                     <Text style={[styles.cartTitle, {
                         color: dark ? COLORS.greyscale300 : COLORS.greyscale600
                     }]}>Total Price</Text>
+                    {/* <Text style={[styles.cartSubtitle, {
+                        color: dark ? COLORS.white : COLORS.black,
+                    }]}>{product?.variants && product?.variants.length > 0
+                        ? "AED " + parseFloat(product?.variants[0]?.price).toFixed(2)
+                        : ""}</Text> */}
                     <Text style={[styles.cartSubtitle, {
                         color: dark ? COLORS.white : COLORS.black,
-                    }]}>$540.00</Text>
+                    }]}>AED {totalPrice.toFixed(2)}</Text>
                 </View>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("(tabs)")}
+                    // onPress={() => navigation.navigate("(tabs)")}
+                    onPress={() => handleAddToCart(product)}
                     style={[styles.cartBtn, {
                         backgroundColor: dark ? COLORS.white : COLORS.black
-                    }]}>
+                    }]}
+                    disabled={!product?.variants || !product.variants[0]?.available}>
                     <Image
                         source={icons.bags}
                         resizeMode='contain'
@@ -232,9 +386,10 @@ const SofaDetails = () => {
                     />
                     <Text style={[styles.cartBtnText, {
                         color: dark ? COLORS.black : COLORS.white,
-                    }]}>Add To Cart</Text>
+                    }]}>{product?.variants && product.variants[0]?.available ? "Add to Cart" : "Out of Stock"}</Text>
                 </TouchableOpacity>
             </View>
+            {/* </ScrollView> */}
             <RBSheet
                 ref={refRBSheet}
                 closeOnPressMask={true}
@@ -314,7 +469,7 @@ const SofaDetails = () => {
 const styles = StyleSheet.create({
     area: {
         flex: 1,
-        backgroundColor: COLORS.white
+        backgroundColor: COLORS.white,
     },
     headerContainer: {
         width: SIZES.width - 32,
@@ -334,7 +489,8 @@ const styles = StyleSheet.create({
     bookmarkIcon: {
         width: 24,
         height: 24,
-        tintColor: COLORS.black
+        tintColor: COLORS.black,
+        marginTop: 10
     },
     sendIcon: {
         width: 24,
@@ -371,19 +527,21 @@ const styles = StyleSheet.create({
         width: SIZES.width - 32
     },
     contentView: {
-        alignItems: "center",
+        alignItems: "flex-start",
         justifyContent: "space-between",
         flexDirection: "row",
-        width: SIZES.width - 32
+        width: SIZES.width - 50,
+        marginTop: 10
     },
     contentTitle: {
         fontSize: 30,
         fontFamily: "bold",
         color: COLORS.black,
+        // marginTop: 10
     },
     ratingContainer: {
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "baseline",
         width: SIZES.width - 32,
         marginVertical: 12
     },
@@ -510,14 +668,14 @@ const styles = StyleSheet.create({
     },
     cartBottomContainer: {
         position: "absolute",
-        bottom: 12,
+        bottom: 0,
         left: 0,
         right: 0,
         width: SIZES.width,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        height: 104,
+        height: 108,
         backgroundColor: COLORS.white,
         paddingHorizontal: 16,
         paddingVertical: 16,
@@ -536,6 +694,18 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontFamily: "bold",
         color: COLORS.black,
+    },
+    price: {
+        fontSize: 24,
+        fontFamily: "bold",
+        color: COLORS.black,
+    },
+    oldPrice: {
+        fontSize: 20,
+        fontFamily: "bold",
+        color: COLORS.gray3,
+        alignItems: "baseline",
+        textDecorationLine: "line-through",
     },
     cartBtn: {
         height: 58,
@@ -557,7 +727,77 @@ const styles = StyleSheet.create({
         width: 20,
         tintColor: COLORS.white,
         marginRight: 8
-    }
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+    row: {
+        flexDirection: 'row',
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        // justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 3,
+    },
+    evenRow: {
+        backgroundColor: 'rgb(245,245,245)',
+    },
+    oddRow: {
+        // backgroundColor: '#ffffff',
+        backgroundColor: 'rgb(245,245,245)',
+
+    },
+    keyText: {
+        flex: 0.8,
+        fontSize: 14,
+        color: '#333',
+        fontWeight: '500',
+    },
+    valueText: {
+        flex: 0.2,
+        fontSize: 14,
+        color: '#333',
+        textAlign: 'left',
+    },
+    noDataText: {
+        padding: 16,
+        textAlign: 'center',
+        color: '#666',
+        fontStyle: 'italic',
+    },
+
+
+
+    featureItem: {
+        flexDirection: "row",
+        alignItems: "flex-start",
+        marginVertical: 4,
+    },
+    bullet: {
+        color: "#d00",
+        marginRight: 8,
+        fontSize: 18,
+    },
+    featureText: {
+        flex: 1,
+        fontSize: 16,
+        color: "#333",
+    },
+    featuredImage: {
+        width: "100%",
+        height: 200,
+        marginTop: 16,
+        marginBottom: 90
+    },
 })
 
-export default SofaDetails
+export default ProductDetails

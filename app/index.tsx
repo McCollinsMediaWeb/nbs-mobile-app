@@ -1,3 +1,6 @@
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { fetchCollections } from '@/utils/actions/collectionActions';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from 'expo-router';
 import React, { useEffect } from 'react';
@@ -10,14 +13,51 @@ type Nav = {
 
 const Onboarding1 = () => {
     const { navigate } = useNavigation<Nav>();
-    // Add useEffect
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            navigate('onboarding');
-        }, 2000);
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(state => state.user);
+    const collections = useAppSelector((state) => state.collections.data);
+    const [hydrated, setHydrated] = React.useState(false);
 
-        return () => clearTimeout(timeout);
-    }, []); // run only once after component mounts
+    useEffect(() => {
+        // Simulate waiting for the store to hydrate
+        setHydrated(true);
+    }, []);
+
+    useEffect(() => {
+        if (!hydrated) return; // Wait for hydration
+
+        if (user?.accessToken) {
+            navigate('(tabs)');
+        } else {
+            const timeout = setTimeout(() => navigate('onboarding'), 2000);
+            return () => clearTimeout(timeout);
+        }
+    }, [hydrated, user?.accessToken, navigate]);
+
+    // Add useEffect
+    // useEffect(() => {
+    //     const timeout = setTimeout(() => {
+    //         navigate('onboarding');
+    //     }, 2000);
+
+    //     return () => clearTimeout(timeout);
+    // }, []); // run only once after component mounts
+
+    useEffect(() => {
+        const collectionIds = [
+            'gid://shopify/Collection/439108698324',
+            'gid://shopify/Collection/439109091540',
+            'gid://shopify/Collection/439668539604',
+        ];
+        dispatch(fetchCollections(collectionIds));
+    }, [dispatch]);
+
+    // Debug log (optional)
+    useEffect(() => {
+    }, [collections]);
+
+    if (user?.accessToken) return null;
+
 
     return (
         <ImageBackground
@@ -29,7 +69,6 @@ const Onboarding1 = () => {
                 style={styles.background}>
                 <Text style={styles.greetingText}>Welcome to 👋</Text>
                 <Text style={styles.logoName}>NBS</Text>
-                {/* <Text style={styles.subtitle}>The best furniture e-commerce app of the century for your daily needs!</Text> */}
                 <Text style={styles.subtitle}>Powering the future with reliable and renewable energy solutions for everyday needs!</Text>
             </LinearGradient>
         </ImageBackground>

@@ -2,44 +2,78 @@ import Category from '@/components/Category';
 import ProductCard from '@/components/ProductCard';
 import SubHeaderItem from '@/components/SubHeaderItem';
 import { COLORS, icons, images, SIZES } from '@/constants';
-import { banners, categories, popularProducts } from '@/data';
+import { banners, brands, cardsData, categories, ourProducts } from '@/data';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useRef, useState } from 'react';
-import { FlatList, Image, ListRenderItemInfo, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Dimensions, FlatList, Image, ImageBackground, ImageSourcePropType, ListRenderItemInfo, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 
 interface BannerItem {
   id: number;
+  label: string;
+  headline1: string;
+  headline2: string;
+  buttonText: string;
+  buttonLink: string;
+  image: ImageSourcePropType;
+}
+
+interface BrandItem {
+  id: number;
   discount: string;
   discountName: string;
   bottomTitle: string;
   bottomSubtitle: string;
+  image: ImageSourcePropType;
 }
+
+const { width } = Dimensions.get('window');
 
 const Home = () => {
   const navigation = useNavigation<NavigationProp<any>>();
+  const user = useAppSelector(state => state.user);
+  const collections = useAppSelector(state => state.collections);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentSquareIndex, setCurrentSquareIndex] = useState<number>(0);
   const { dark, colors } = useTheme();
   /**
   * Render header
   */
+
+  const getGreeting = () => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour >= 5 && currentHour < 12) {
+      return 'Good Morning 👋';
+    } else if (currentHour >= 12 && currentHour < 17) {
+      return 'Good Afternoon 👋';
+    } else if (currentHour >= 17 && currentHour < 21) {
+      return 'Good Evening 👋';
+    } else {
+      return 'Good Night 🌙';
+    }
+  };
+
+
   const renderHeader = () => {
     return (
       <View style={styles.headerContainer}>
         <View style={styles.viewLeft}>
           <Image
-            source={images.user1}
+            source={dark ? images.noUserWhite : images.noUser}
             resizeMode='contain'
             style={styles.userIcon}
           />
           <View style={styles.viewNameContainer}>
-            <Text style={styles.greeeting}>Good Morning👋</Text>
+            {/* <Text style={styles.greeeting}>Good Morning👋</Text> */}
+            <Text style={styles.greeeting}>{getGreeting()}</Text>
             <Text style={[styles.title, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}>Andrew Ainsley</Text>
+            }]}>{user.customer?.firstName} {user.customer?.lastName}</Text>
           </View>
         </View>
         <View style={styles.viewRight}>
@@ -111,29 +145,45 @@ const Home = () => {
 
   const renderBannerItem = ({ item }: ListRenderItemInfo<BannerItem>) => (
     <View style={[styles.bannerContainer, {
-      backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
+      // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
     }]}>
-      <View style={styles.bannerTopContainer}>
-        <View>
-          <Text style={[styles.bannerDicount, {
-            color: dark ? COLORS.white : COLORS.black,
-          }]}>{item.discount} OFF</Text>
-          <Text style={[styles.bannerDiscountName, {
-            color: dark ? COLORS.white : COLORS.black
-          }]}>{item.discountName}</Text>
+      <ImageBackground
+        source={item.image} // Ensure item.image is a local or remote image
+        style={styles.imageBackground}
+        imageStyle={{ borderRadius: 10 }}
+        resizeMode="cover"
+      >
+        <View style={styles.overlay}>
+          <View style={styles.bannerTextContainer}>
+            <View style={styles.bannerTopContainer}>
+              <View>
+                {/* <Text style={[styles.bannerDicount, {
+                  color: dark ? COLORS.white : COLORS.black,
+                }]}>{item.discount} OFF</Text> */}
+                <Text style={styles.inverterLabel}>{item.label}</Text>
+                <Text style={styles.headline}>{item.headline1}{"\n"}{item.headline2}</Text>
+                <TouchableOpacity style={styles.ctaButton}>
+                  <Text style={styles.ctaButtonText}>{item.buttonText}</Text>
+                </TouchableOpacity>
+                {/* <Text style={[styles.bannerDiscountName, {
+                  color: dark ? COLORS.white : COLORS.black
+                }]}>{item.discountName}</Text> */}
+              </View>
+              {/* <Text style={[styles.bannerDiscountNum, {
+                color: dark ? COLORS.white : COLORS.black
+              }]}>{item.discount}</Text> */}
+            </View>
+            {/* <View style={styles.bannerBottomContainer}>
+            <Text style={[styles.bannerBottomTitle, {
+              color: dark ? COLORS.white : COLORS.black
+            }]}>{item.bottomTitle}</Text>
+            <Text style={[styles.bannerBottomSubtitle, {
+              color: dark ? COLORS.white : COLORS.black
+            }]}>{item.bottomSubtitle}</Text>
+          </View> */}
+          </View>
         </View>
-        <Text style={[styles.bannerDiscountNum, {
-          color: dark ? COLORS.white : COLORS.black
-        }]}>{item.discount}</Text>
-      </View>
-      <View style={styles.bannerBottomContainer}>
-        <Text style={[styles.bannerBottomTitle, {
-          color: dark ? COLORS.white : COLORS.black
-        }]}>{item.bottomTitle}</Text>
-        <Text style={[styles.bannerBottomSubtitle, {
-          color: dark ? COLORS.white : COLORS.black
-        }]}>{item.bottomSubtitle}</Text>
-      </View>
+      </ImageBackground>
     </View>
   );
 
@@ -141,6 +191,10 @@ const Home = () => {
 
   const handleEndReached = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
+  };
+
+  const handleEndReached2 = () => {
+    setCurrentSquareIndex((prevIndex) => (prevIndex + 1) % cardsData.length);
   };
 
   const renderDot = (index: number) => {
@@ -157,7 +211,8 @@ const Home = () => {
   const renderBanner = () => {
     return (
       <View style={[styles.bannerItemContainer, {
-        backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
+        // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
+        backgroundColor: "#fff"
       }]}>
         <FlatList
           data={banners}
@@ -212,10 +267,19 @@ const Home = () => {
   /**
    * render popular products
    */
-  const RenderPopularProducts = () => {
+  const renderPopularProducts = () => {
     const [selectedCategories, setSelectedCategories] = useState<any[]>(["0"]);
 
-    const filteredProducts = popularProducts.filter(product => selectedCategories.includes("0") || selectedCategories.includes(product.categoryId));
+    // const filteredProducts = collections.data.filter(product => selectedCategories.includes("0"));
+
+    const targetCollection = collections.data.find(
+      (collection) => collection.id === "gid://shopify/Collection/439108698324"
+    );
+
+    const filteredProducts = targetCollection ? targetCollection.products : [];
+
+
+    // const filteredProducts = collections.data;
 
     // Category item
     const renderCategoryItem = ({ item }: { item: { id: string; name: string } }) => (
@@ -250,17 +314,28 @@ const Home = () => {
       setSelectedCategories(updatedCategories);
     };
     return (
-      <View>
-        <SubHeaderItem
+      <View style={{ padding: 16, width: width }}>
+        {/* <SubHeaderItem
           title="Most Popular"
           navTitle="See All"
           onPress={() => navigation.navigate("mostpopularproducts")}
-        />
+        /> */}
+        <Text style={[styles.subTitle, {
+          color: dark ? COLORS.white : COLORS.black
+        }]}>Exceptional Choices for Discerning Tastes</Text>
+        <Text style={[styles.mainTitle, {
+          color: dark ? COLORS.white : COLORS.black
+        }]}>Explore our Range</Text>
         <FlatList
           data={categories}
+          horizontal
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
-          horizontal
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: 'center', // center if there's extra space
+            alignItems: 'center',
+          }}
           renderItem={renderCategoryItem}
         />
         <View style={{
@@ -276,17 +351,285 @@ const Home = () => {
             renderItem={({ item }) => {
               return (
                 <ProductCard
-                  name={item.name}
-                  image={item.image}
-                  numSolds={item.numSolds}
+                  name={item.title}
+                  image={item?.image}
                   price={item.price}
-                  rating={item.rating}
-                  onPress={() => navigation.navigate(item.navigate)}
+                  oldPrice={item.oldPrice}
+                  onPress={() => navigation.navigate("productdetails", {
+                    id: item.id,
+                  })}
                 />
               )
             }}
           />
         </View>
+      </View>
+    )
+  };
+
+  const renderBrandItem = ({ item }: { item: { id: string; image: ImageSourcePropType } }) => (
+    <View>
+      <Image
+        source={item.image}
+        resizeMode="contain"
+        style={{ width: 200, height: 200 }} // fixed width/height so they don’t stretch
+      />
+    </View>
+  );
+
+
+  const renderOurBrands = () => {
+    return (
+      <View style={[styles.bannerItemContainer, {
+        // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
+        backgroundColor: dark ? COLORS.dark3 : 'rgb(244, 244, 244)'
+      }]}>
+        <Text style={[styles.subTitle, {
+          color: dark ? COLORS.white : COLORS.black
+        }]}>Our Brand Partners</Text>
+        <Text style={[styles.mainTitle, {
+          color: dark ? COLORS.white : COLORS.black
+        }]}>Select from a wide range of{'\n'}credible brands</Text>
+        <FlatList
+          data={brands}
+          horizontal
+          keyExtractor={(item) => item.id}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 16 }} // padding left & right
+          ItemSeparatorComponent={() => <View style={{ width: 20 }} />} // gap between images
+          renderItem={renderBrandItem}
+        />
+      </View>
+    )
+  }
+
+  const renderOurGenerators = () => {
+    const targetCollection = collections.data.find(
+      (collection) => collection.id === "gid://shopify/Collection/439108698324"
+    );
+    const filteredProducts = targetCollection ? targetCollection.products : [];
+    return (
+      <View style={[styles.bannerItemContainer, {
+        // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
+        backgroundColor: dark ? COLORS.dark3 : colors.background
+      }]}>
+        <Text style={[styles.subTitle, {
+          color: dark ? COLORS.white : COLORS.black
+        }]}>Discover NBS Group’s trusted generator{'\n'}solutions—engineered for excellence.</Text>
+        <Text style={[styles.mainTitle, {
+          color: dark ? COLORS.white : COLORS.black
+        }]}>Explore our Generators</Text>
+        <View style={{ padding: 16 }} >
+          <FlatList
+            data={filteredProducts}
+            keyExtractor={item => item.id}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => {
+              return (
+                <View>
+                  <ProductCard
+                    name={item.title}
+                    image={item?.image}
+                    price={item.price}
+                    oldPrice={item.oldPrice}
+                    onPress={() => navigation.navigate("productdetails", {
+                      id: item.id,
+                    })}
+                  />
+                </View>
+              )
+            }}
+          />
+        </View>
+      </View>
+    )
+  }
+
+  const renderOurProductItem = ({ item }: { item: { id: string; title: string; image: ImageSourcePropType } }) => (
+    <View>
+      <Image
+        source={item.image}
+        resizeMode="contain"
+        style={{ width: 400, height: 500 }} // fixed width/height so they don’t stretch
+      />
+      <Text style={[styles.ourProductTitle, {
+        color: COLORS.white
+      }]}>{item.title}</Text>
+    </View>
+  );
+
+  const renderOurProducts = () => {
+    return (
+      <View style={[styles.bannerItemContainer, {
+        backgroundColor: 'rgb(1, 73, 133)'
+      }]}>
+        <Text style={[styles.subTitle, {
+          color: COLORS.white
+        }]}>OUR Products</Text>
+        <Text style={[styles.mainTitle, {
+          color: COLORS.white
+        }]}>Browse our complete{'\n'}range of power and{'\n'}renewable energy{'\n'}solutions by category.</Text>
+        <FlatList
+          data={ourProducts}
+          horizontal
+          keyExtractor={(item) => item.id}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 16 }} // padding left & right
+          ItemSeparatorComponent={() => <View style={{ width: 20 }} />} // gap between images
+          renderItem={renderOurProductItem}
+        />
+      </View>
+    )
+  }
+
+  const renderOurInverters = () => {
+    const targetCollection = collections.data.find(
+      (collection) => collection.id === "gid://shopify/Collection/439108698324"
+    );
+    const filteredProducts = targetCollection ? targetCollection.products : [];
+    return (
+      <View style={[styles.bannerItemContainer, {
+        // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
+        backgroundColor: dark ? COLORS.dark3 : colors.background
+      }]}>
+        <Text style={[styles.subTitle, {
+          color: dark ? COLORS.white : COLORS.black
+        }]}>Efficient. Reliable. Built for every need.</Text>
+        <Text style={[styles.mainTitle, {
+          color: dark ? COLORS.white : COLORS.black
+        }]}>Explore our Inverters</Text>
+        <View style={{ padding: 16 }} >
+          <FlatList
+            data={filteredProducts}
+            keyExtractor={item => item.id}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => {
+              return (
+                <View>
+                  <ProductCard
+                    name={item.title}
+                    image={item?.image}
+                    price={item.price}
+                    oldPrice={item.oldPrice}
+                    onPress={() => navigation.navigate("productdetails", {
+                      id: item.id,
+                    })}
+                  />
+                </View>
+              )
+            }}
+          />
+        </View>
+      </View>
+    )
+  }
+
+  const renderOurWaterPumps = () => {
+    const targetCollection = collections.data.find(
+      (collection) => collection.id === "gid://shopify/Collection/439108698324"
+    );
+    const filteredProducts = targetCollection ? targetCollection.products : [];
+    return (
+      <View style={[styles.bannerItemContainer, {
+        // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
+        backgroundColor: dark ? COLORS.dark3 : colors.background
+      }]}>
+        <Text style={[styles.subTitle, {
+          color: dark ? COLORS.white : COLORS.black
+        }]}>Power. Precision. Performance.</Text>
+        <Text style={[styles.mainTitle, {
+          color: dark ? COLORS.white : COLORS.black
+        }]}>NBS Water Pumps</Text>
+        <View style={{ padding: 16 }} >
+          <FlatList
+            data={filteredProducts}
+            keyExtractor={item => item.id}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => {
+              return (
+                <View>
+                  <ProductCard
+                    name={item.title}
+                    image={item?.image}
+                    price={item.price}
+                    oldPrice={item.oldPrice}
+                    onPress={() => navigation.navigate("productdetails", {
+                      id: item.id,
+                    })}
+                  />
+                </View>
+              )
+            }}
+          />
+        </View>
+      </View>
+    )
+  }
+
+  const renderCardItem = ({ item }: { item: { id: string; title: string; subTitle: string; icon: ImageSourcePropType } }) => (
+    <View style={{ width, height: 200 }}>
+      <View style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1
+      }} >
+        <Image
+          source={item.icon}
+          resizeMode="contain"
+          style={{ width: 30, height: 30, alignSelf: 'center' }}
+        />
+        <Text style={[styles.subTitle, {
+          color: COLORS.white,
+          fontSize: 16
+        }]}>{item.title}</Text>
+        <Text style={[styles.name, {
+          color: COLORS.white
+        }]}>{item.subTitle}</Text>
+      </View>
+    </View >
+  );
+
+  const renderSquareDot = (index: number) => {
+    return (
+      <View
+        style={[styles.squareDot, index === currentSquareIndex ? styles.activeSquareDot : null]}
+        key={index}
+      />
+    );
+  };
+
+  const renderCards = () => {
+    return (
+      <View style={[styles.bannerItemContainer, {
+        backgroundColor: 'rgb(177, 18, 22)',
+        paddingBottom: 20
+      }]}>
+        <FlatList
+          data={cardsData}
+          horizontal
+          keyExtractor={(item) => item.id}
+          renderItem={renderCardItem}
+          pagingEnabled      // ✅ snap to one full screen
+          snapToAlignment="center"
+          decelerationRate="fast"
+          showsHorizontalScrollIndicator={false}
+        // onEndReached={handleEndReached2}
+        // onMomentumScrollEnd={(event) => {
+        //   const offsetX = event.nativeEvent.contentOffset.x;
+        //   console.log("offsetX", offsetX)
+        //   const viewWidth = event.nativeEvent.layoutMeasurement.width;
+        //   console.log("viewWidth", viewWidth)
+        //   const newIndex = Math.floor(offsetX / viewWidth); // use floor for proper page index
+        //   console.log("newIndex", newIndex)
+        //   setCurrentSquareIndex(newIndex);
+        // }}
+        />
+        {/* <View style={styles.squareDotContainer}>
+          {cardsData.map((_, index) => renderSquareDot(index))}
+        </View> */}
       </View>
     )
   }
@@ -296,10 +639,16 @@ const Home = () => {
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         {renderHeader()}
         {RenderSearchBar()}
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={true}>
           {renderBanner()}
-          {renderCategories()}
-          {RenderPopularProducts()}
+          {/* {renderCategories()} */}
+          {renderPopularProducts()}
+          {renderOurBrands()}
+          {renderOurGenerators()}
+          {renderOurProducts()}
+          {renderOurInverters()}
+          {renderCards()}
+          {renderOurWaterPumps()}
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -314,13 +663,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
-    padding: 16
+    // padding: 16
+    paddingBottom: 20
   },
   headerContainer: {
     flexDirection: "row",
     width: SIZES.width - 32,
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    paddingLeft: 16,
+    paddingTop: 16
   },
   userIcon: {
     width: 48,
@@ -368,7 +720,8 @@ const styles = StyleSheet.create({
     height: 52,
     marginVertical: 16,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    marginLeft: 16
   },
   searchIcon: {
     height: 24,
@@ -387,17 +740,25 @@ const styles = StyleSheet.create({
     tintColor: COLORS.primary
   },
   bannerContainer: {
-    width: SIZES.width - 32,
-    height: 154,
-    paddingHorizontal: 28,
-    paddingTop: 28,
-    borderRadius: 32,
-    backgroundColor: COLORS.secondary
+    // width: SIZES.width - 32,
+    width: width,
+    // height: 554,
+    // height: 154,
+    paddingHorizontal: 16,
+    // paddingTop: 28,
+    borderRadius: 10,
+    // backgroundColor: COLORS.secondary
+    // padding: 16
   },
   bannerTopContainer: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "flex-start"
+  },
+  bannerTopContainer2: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "flex-start"
   },
   bannerDicount: {
     fontSize: 12,
@@ -442,10 +803,11 @@ const styles = StyleSheet.create({
   },
   bannerItemContainer: {
     width: "100%",
-    paddingBottom: 10,
-    backgroundColor: COLORS.secondary,
-    height: 170,
-    borderRadius: 32,
+    // paddingBottom: 10,
+    // backgroundColor: COLORS.secondary,
+    // height: 570,
+    // height: 170,
+    // borderRadius: 32,
   },
   dotContainer: {
     flexDirection: 'row',
@@ -462,7 +824,149 @@ const styles = StyleSheet.create({
   },
   activeDot: {
     backgroundColor: COLORS.black,
-  }
+  },
+  squareDotContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  squareDot: {
+    width: 10,
+    height: 10,
+    backgroundColor: 'rgb(255,255,255)',
+    opacity: 0.3,
+    marginHorizontal: 5,
+  },
+  activeSquareDot: {
+    opacity: 1,
+  },
+
+
+
+
+  // bannerContainer: {
+  //   width: '100%',
+  // },
+  imageBackground: {
+    width: "100%",
+    height: 600,
+    borderRadius: 10,
+    overflow: 'hidden',
+    // objectFit: 'cover'
+  },
+  overlay: {
+    backgroundColor: 'rgba(0,0,0,0.3)', // semi-transparent dark overlay
+    padding: 20,
+    height: 600
+  },
+  bannerTextContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    // alignItems: 'center',
+  },
+  inverterLabel: {
+    color: '#FF3B3F', // red color like image
+    fontSize: 14,
+    letterSpacing: 1,
+    fontWeight: '600',
+    marginBottom: 10,
+  },
+  headline: {
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: '900',
+    lineHeight: 30,
+    marginBottom: 20,
+  },
+  ctaButton: {
+    backgroundColor: '#A40000',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignSelf: 'flex-start',
+    borderRadius: 4,
+  },
+  ctaButtonText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 14,
+  },
+  subTitle: {
+    color: '#fff', // red color like image
+    fontSize: 12,
+    letterSpacing: 1,
+    fontWeight: '600',
+    marginBottom: 8,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    marginTop: 20
+  },
+  mainTitle: {
+    color: '#fff',
+    fontSize: 28,
+    fontWeight: '900',
+    lineHeight: 30,
+    textTransform: 'uppercase',
+    textAlign: 'center'
+  },
+
+
+
+  flatListContainer: {
+    paddingHorizontal: 16,
+  },
+  brandCard: {
+    backgroundColor: COLORS.white, // Use your COLORS constant
+    borderRadius: 12,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 100,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  brandImage: {
+    width: '100%',
+    height: 60,
+  },
+
+  scrollContent: {
+    flexDirection: 'row',      // ✅ this is the important one
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginRight: 16,
+  },
+  ourProductTitle: {
+    color: '#fff',
+    fontSize: 28,
+    fontWeight: '900',
+    lineHeight: 30,
+    textTransform: 'uppercase',
+    position: 'absolute',
+    bottom: 80,
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+  },
+  name: {
+    fontSize: 18,
+    color: COLORS.greyscale900,
+    marginVertical: 4,
+    textAlign: "center",
+    maxWidth: 350,
+    // lineHeight: 40
+  },
+
 })
 
 export default Home

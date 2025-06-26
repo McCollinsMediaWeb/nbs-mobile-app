@@ -1,31 +1,40 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, SIZES } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
-import { FontAwesome } from "@expo/vector-icons";
 
 interface OrderListItemProps {
-    name: string;
-    image: any; // Replace with the proper type if you have one, e.g., ImageSourcePropType
-    price: string;
-    rating: number;
-    numReviews: number;
-    onPress?: () => void;
-    size?: string | null; // Optional, string or other type if needed
-    color: string;
+    // name: string;
+    // image: any;
+    // price: string;
+    // rating: number;
+    // numReviews: number;
+    // onPress?: () => void;
+    // size?: string | null;
+    // color: string;
+    // quantity: number;
+
+    merchandiseId: string;
+    id: string;
+    title: string;
+    price: number;
+    oldPrice?: number; // optional
     quantity: number;
+    image?: string;
+    productType: string;
+    onPress?: () => void;
 }
 
 const OrderListItem: React.FC<OrderListItemProps> = ({
-    name,
+    merchandiseId,
+    id,
+    title,
+    oldPrice,
+    quantity,
     image,
+    productType,
     price,
-    rating,
-    numReviews,
-    onPress,
-    size,
-    color,
-    quantity
+    onPress
 }) => {
     const { dark } = useTheme();
 
@@ -39,7 +48,7 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
                 backgroundColor: dark ? COLORS.dark3 : COLORS.silver
             }]}>
                 <Image
-                    source={image}
+                    source={{ uri: image }}
                     resizeMode='cover'
                     style={styles.image}
                 />
@@ -48,9 +57,9 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
                 <View style={styles.topViewContainer}>
                     <Text style={[styles.name, {
                         color: dark ? COLORS.secondaryWhite : COLORS.greyscale900
-                    }]}>{name}</Text>
+                    }]}>{title}</Text>
                 </View>
-                <View style={styles.viewContainer}>
+                {/* <View style={styles.viewContainer}>
                     <View style={[styles.color, {
                         backgroundColor: color
                     }]}></View>
@@ -65,12 +74,12 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
                             }]}>   | {" "} Size= {size}  </Text>
                         )
                     }
-                </View>
+                </View> */}
                 <View style={styles.bottomViewContainer}>
                     <View style={styles.priceContainer}>
                         <Text style={[styles.price, {
                             color: dark ? COLORS.white : COLORS.primary,
-                        }]}>${price}</Text>
+                        }]}>AED {price.toFixed(2)}</Text>
                     </View>
                     <View style={[styles.qtyContainer, {
                         backgroundColor: dark ? COLORS.dark3 : COLORS.silver

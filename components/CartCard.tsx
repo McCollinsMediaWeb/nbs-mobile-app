@@ -1,42 +1,57 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { decrementProduct, incrementProduct } from '@/utils/reducers/cartReducers';
+import { Feather } from '@expo/vector-icons';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, SIZES, icons } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
-import { FontAwesome } from '@expo/vector-icons';
 
 type CartCardProps = {
-    name: string; // Product name
-    image: any; // Image source
-    price: number; // Product price
-    rating: number; // Product rating
-    numReviews: number; // Number of reviews
+    merchandiseId: string;
+    id: string;
+    title: string;
+    price: number;
+    oldPrice?: number; // optional
+    quantity: number;
+    image?: string;
+    productType: string;
     onPress: () => void; // Function to call when card is pressed
-    size?: string; // Optional size of the product
-    color?: string; // Color of the product
 };
 
 const CartCard: React.FC<CartCardProps> = ({
-    name,
+    merchandiseId,
+    id,
+    title,
+    oldPrice,
+    quantity,
     image,
+    productType,
     price,
-    rating,
-    numReviews,
-    onPress,
-    size,
-    color
+    onPress
 }) => {
     const { dark } = useTheme();
-    const [quantity, setQuantity] = useState<number>(1);
+    // const [quantity, setQuantity] = useState<number>(quantity);
+    const dispatch = useAppDispatch();
 
-    const increase = () => {
-        setQuantity(prevQuantity => prevQuantity + 1);
+    // const increase = () => {
+    //     setQuantity(prevQuantity => prevQuantity + 1);
+    // };
+
+    // const decrease = () => {
+    //     if (quantity > 1) {
+    //         setQuantity(prevQuantity => prevQuantity - 1);
+    //     }
+    // };
+
+    const increase = (merchandiseId: string) => {
+        dispatch(incrementProduct({ merchandiseId }));
     };
 
-    const decrease = () => {
-        if (quantity > 1) {
-            setQuantity(prevQuantity => prevQuantity - 1);
-        }
+    const decrease = (merchandiseId: string) => {
+        dispatch(decrementProduct({ merchandiseId }));
     };
+
+
     return (
         <TouchableOpacity
             onPress={onPress}
@@ -48,7 +63,7 @@ const CartCard: React.FC<CartCardProps> = ({
                     backgroundColor: dark ? COLORS.dark3 : COLORS.silver
                 }]}>
                 <Image
-                    source={image}
+                    source={{ uri: image }}
                     resizeMode='cover'
                     style={styles.image}
                 />
@@ -57,7 +72,7 @@ const CartCard: React.FC<CartCardProps> = ({
                 <View style={styles.topViewContainer}>
                     <Text style={[styles.name, {
                         color: dark ? COLORS.secondaryWhite : COLORS.greyscale900
-                    }]}>{name}</Text>
+                    }]}>{title}</Text>
                     <TouchableOpacity onPress={onPress}>
                         <Image
                             source={icons.delete3}
@@ -66,7 +81,7 @@ const CartCard: React.FC<CartCardProps> = ({
                         />
                     </TouchableOpacity>
                 </View>
-                <View style={styles.viewContainer}>
+                {/* <View style={styles.viewContainer}>
                     <View style={[styles.color, { backgroundColor: color }]}></View>
                     <FontAwesome name="star" size={14} color="rgb(250, 159, 28)" />
                     <Text style={[styles.location, {
@@ -77,33 +92,60 @@ const CartCard: React.FC<CartCardProps> = ({
                             color: dark ? COLORS.greyscale300 : COLORS.grayscale700,
                         }]}>   | {" "} Size= {size}  </Text>
                     )}
+                </View> */}
+                <View style={styles.viewContainer}>
+                    <Text style={[styles.oldPrice, {
+                        color: dark ? COLORS.greyscale300 : COLORS.grayscale700,
+                    }]}>AED {oldPrice?.toFixed(3)}</Text>
                 </View>
                 <View style={styles.bottomViewContainer}>
                     <View style={styles.priceContainer}>
                         <Text style={[styles.price, {
-                            color: dark ? COLORS.white : COLORS.primary
-                        }]}>${price}</Text>
+                            color: "rgb(177, 18, 22)",
+                        }]}>AED {price.toFixed(2)}</Text>
                     </View>
                     <View style={[styles.qtyContainer, {
                         backgroundColor: dark ? COLORS.dark3 : COLORS.silver
                     }]}>
-                        <TouchableOpacity onPress={decrease}>
+                        {/* <TouchableOpacity onPress={() => decrease(merchandiseId)}>
                             <Text style={[styles.qtyText, {
                                 color: dark ? COLORS.white : COLORS.primary
                             }]}>-</Text>
+                        </TouchableOpacity> */}
+                        <TouchableOpacity
+                            onPress={() => decrease(merchandiseId)}
+                            style={{
+                                height: 40,
+                                width: 40,
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <Feather size={18} name='minus' />
                         </TouchableOpacity>
                         <Text style={[styles.qtyNum, {
                             color: dark ? COLORS.white : COLORS.primary,
                         }]}>{quantity}</Text>
-                        <TouchableOpacity onPress={increase}>
+                        {/* <TouchableOpacity onPress={() => increase(merchandiseId)}>
                             <Text style={[styles.qtyText, {
                                 color: dark ? COLORS.white : COLORS.primary
                             }]}>+</Text>
+                        </TouchableOpacity> */}
+                        <TouchableOpacity
+                            onPress={() => increase(merchandiseId)}
+                            style={{
+                                height: 40,
+                                width: 40,
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <Feather size={18} name='plus' />
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
-        </TouchableOpacity>
+        </TouchableOpacity >
     );
 };
 
@@ -115,8 +157,12 @@ const styles = StyleSheet.create({
         padding: 6,
         borderRadius: 16,
         marginBottom: 12,
-        height: 112,
+        height: 142,
         alignItems: 'center',
+        // borderColor: COLORS.secondaryWhite,
+        borderColor: '#dadcd3',
+        borderWidth: 1,
+        marginVertical: 10
     },
     image: {
         width: 100,
@@ -161,7 +207,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        width: SIZES.width - 164,
+        width: SIZES.width - 194,
     },
     bottomViewContainer: {
         flexDirection: 'row',
@@ -175,10 +221,18 @@ const styles = StyleSheet.create({
         marginVertical: 4,
     },
     price: {
-        fontSize: 16,
-        fontFamily: 'semiBold',
-        color: COLORS.primary,
+        fontSize: 18,
+        fontFamily: 'bold',
+        // color: COLORS.black,
+        color: "rgb(177, 18, 22)",
         marginRight: 8,
+    },
+    oldPrice: {
+        fontSize: 16,
+        fontFamily: "bold",
+        color: COLORS.gray3,
+        alignItems: "baseline",
+        textDecorationLine: "line-through",
     },
     color: {
         height: 16,
@@ -187,9 +241,9 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     qtyContainer: {
-        width: 93,
-        height: 36,
-        borderRadius: 18,
+        width: 130,
+        height: 46,
+        borderRadius: 24,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: COLORS.silver,
@@ -201,7 +255,7 @@ const styles = StyleSheet.create({
         color: COLORS.primary,
     },
     qtyNum: {
-        fontSize: 14,
+        fontSize: 18,
         fontFamily: 'semiBold',
         color: COLORS.primary,
         marginHorizontal: 12,

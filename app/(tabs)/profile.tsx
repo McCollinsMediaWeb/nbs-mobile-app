@@ -1,16 +1,18 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, Switch } from 'react-native';
-import React, { useState, useRef } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView } from 'react-native-virtualized-view';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useTheme } from '@/theme/ThemeProvider';
-import { COLORS, icons, images, SIZES } from '@/constants';
-import { launchImagePicker } from '@/utils/ImagePickerHelper';
-import SettingsItem from '@/components/SettingsItem';
-import { useNavigation } from 'expo-router';
 import Button from '@/components/Button';
 import ButtonFilled from '@/components/ButtonFilled';
+import SettingsItem from '@/components/SettingsItem';
+import { COLORS, icons, images, SIZES } from '@/constants';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { useTheme } from '@/theme/ThemeProvider';
+import { logoutCustomer } from '@/utils/actions/userActions';
+import { launchImagePicker } from '@/utils/ImagePickerHelper';
+import { useNavigation } from 'expo-router';
+import React, { useRef, useState } from 'react';
+import { Image, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-virtualized-view';
 
 type Nav = {
   navigate: (value: string) => void
@@ -20,6 +22,8 @@ const Profile = () => {
   const refRBSheet = useRef<any>(null);
   const { dark, colors, setScheme } = useTheme();
   const { navigate } = useNavigation<Nav>();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.user);
 
   /**
    * Render header
@@ -70,18 +74,18 @@ const Profile = () => {
       <View style={styles.profileContainer}>
         <View>
           <Image
-            source={image}
+            source={dark ? images.noUserWhite : images.noUser}
             resizeMode='cover'
             style={styles.avatar}
           />
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={pickImage}
             style={styles.picContainer}>
             <MaterialIcons name="edit" size={16} color={COLORS.white} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
-        <Text style={[styles.title, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>Nathalie Erneson</Text>
-        <Text style={[styles.subtitle, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>nathalie_erneson@gmail.com</Text>
+        <Text style={[styles.title, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>{user.customer?.firstName} {user.customer?.lastName}</Text>
+        <Text style={[styles.subtitle, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>{user.customer?.email}</Text>
       </View>
     )
   }
@@ -225,6 +229,12 @@ const Profile = () => {
       </View>
     )
   }
+
+  const handleLogout = () => {
+    dispatch(logoutCustomer());
+    refRBSheet.current.close()
+    navigate('login')
+  };
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -276,7 +286,8 @@ const Profile = () => {
           <ButtonFilled
             title="Yes, Logout"
             style={styles.logoutButton}
-            onPress={() => refRBSheet.current.close()}
+            // onPress={() => refRBSheet.current.close()}
+            onPress={handleLogout}
           />
         </View>
       </RBSheet>

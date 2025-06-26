@@ -2,10 +2,10 @@ const addFileOutline = require("../assets/icons/add-file-outline.png");
 const addFile = require("../assets/icons/add-file.png");
 const arrowBack = require("../assets/icons/arrow-back.png");
 const arrowDown = require("../assets/icons/arrow-down.png");
-const arrowRight = require("../assets/icons/arrow-right.png"); 
+const arrowRight = require("../assets/icons/arrow-right.png");
 const arrowUp = require("../assets/icons/arrow-up.png");
 const bag = require("../assets/icons/bag.png");
-const bellOutline = require("../assets/icons/bell-outline.png"); 
+const bellOutline = require("../assets/icons/bell-outline.png");
 const bell = require("../assets/icons/bell.png");
 const bookmarkOutline = require("../assets/icons/bookmark-outline.png");
 const bookmark = require("../assets/icons/bookmark.png");
@@ -35,7 +35,7 @@ const fileUpload = require("../assets/icons/file-upload.png");
 const folderOutline = require("../assets/icons/folder-outline.png");
 const folder = require("../assets/icons/folder.png");
 const graph = require("../assets/icons/graph.png");
-const graphOutline = require("../assets/icons/graph-outline.png"); 
+const graphOutline = require("../assets/icons/graph-outline.png");
 const heartOutline = require("../assets/icons/heart-outline.png");
 const heart = require("../assets/icons/heart.png");
 const hide = require("../assets/icons/hide.png");
@@ -66,7 +66,7 @@ const send = require("../assets/icons/send.png");
 const settingOutline = require("../assets/icons/setting-outline.png");
 const setting2Outline = require("../assets/icons/setting2-outline.png");
 const settings = require("../assets/icons/settings.png");
-const shieldOutline = require("../assets/icons/shield-outline.png"); 
+const shieldOutline = require("../assets/icons/shield-outline.png");
 const shield = require("../assets/icons/shield.png");
 const show = require("../assets/icons/show.png");
 const squareInfo = require("../assets/icons/square-info.png");
@@ -77,7 +77,7 @@ const ticket = require("../assets/icons/ticket.png");
 const timeCircle = require("../assets/icons/time-circle.png");
 const trash = require("../assets/icons/trash.png");
 const unlock = require("../assets/icons/unlock.png");
-const upAndDownArrow = require("../assets/icons/up-and-down-arrow.png"); 
+const upAndDownArrow = require("../assets/icons/up-and-down-arrow.png");
 const userOutline = require("../assets/icons/user-outline.png");
 const user = require("../assets/icons/user.png");
 const videoCameraOutline = require("../assets/icons/video-camera-outline.png");
@@ -127,7 +127,7 @@ const forwardPlay = require("../assets/icons/forward-play.png");
 const forwardPlay2 = require("../assets/icons/forward-play-2.png");
 const nextPlay = require("../assets/icons/next-play.png");
 const previousPlay = require("../assets/icons/previous-play.png");
-const speedometer =  require("../assets/icons/speedometer.png");
+const speedometer = require("../assets/icons/speedometer.png");
 const speedometer2 = require("../assets/icons/speedometer2.png");
 const stopwatch = require("../assets/icons/stopwatch.png");
 const cast = require("../assets/icons/cast.png");
@@ -223,7 +223,7 @@ const wifi = require("../assets/icons/wifi.png");
 const wifi2 = require("../assets/icons/wifi2.png");
 const pin = require("../assets/icons/pin.png");
 const pinOutline = require("../assets/icons/pin-outline.png");
-const calendar4   = require("../assets/icons/calendar4.png");
+const calendar4 = require("../assets/icons/calendar4.png");
 const location2 = require("../assets/icons/location2.png");
 const location2Outline = require("../assets/icons/location2-outline.png");
 const location3 = require("../assets/icons/location3.png");
@@ -262,7 +262,7 @@ const noodles = require("../assets/icons/noodles.png");
 const noodles2 = require("../assets/icons/noodles2.png");
 const pancake = require("../assets/icons/pancake.png");
 const pizza = require("../assets/icons/pizza.png");
-const rice  = require("../assets/icons/rice.png");
+const rice = require("../assets/icons/rice.png");
 const rice2 = require("../assets/icons/rice2.png");
 const salad = require("../assets/icons/salad.png");
 const salad2 = require("../assets/icons/salad2.png");
@@ -304,7 +304,7 @@ const heart6 = require("../assets/icons/heart6.png");
 const heart6Outline = require("../assets/icons/heart6-outline.png");
 const starHalf = require("../assets/icons/star-half.png");
 const starHalf2 = require("../assets/icons/star-half2.png");
-const bag3  = require("../assets/icons/bag3.png");
+const bag3 = require("../assets/icons/bag3.png");
 const bag3Outline = require("../assets/icons/bag3-outline.png");
 const search4 = require("../assets/icons/search4.png");
 const delete1 = require("../assets/icons/delete.png");
@@ -339,6 +339,11 @@ const vase1 = require("../assets/icons/vase1.png");
 const vase2 = require("../assets/icons/vase2.png");
 const more2 = require("../assets/icons/more2.png");
 const down = require("../assets/icons/down.png");
+
+const cardShipping = require("../assets/icons/cards-icon/shipping.png");
+const cardContact = require("../assets/icons/cards-icon/contact.png");
+const cardEmail = require("../assets/icons/cards-icon/email.png");
+const cardSecurity = require("../assets/icons/cards-icon/security.png");
 
 export default {
     addFileOutline,
@@ -681,5 +686,11 @@ export default {
     vase1,
     vase2,
     more2,
-    down
+    down,
+
+
+    cardShipping,
+    cardContact,
+    cardEmail,
+    cardSecurity
 }
