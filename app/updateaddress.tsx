@@ -1,14 +1,16 @@
+import Button from '@/components/Button';
 import ButtonFilled from '@/components/ButtonFilled';
 import Header from '@/components/Header';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { addNewAddress } from '@/utils/actions/userActions';
+import { deleteAddress, updateAddress } from '@/utils/actions/userActions';
 import { Picker } from '@react-native-picker/picker';
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Input from '../components/Input';
 import { COLORS, SIZES } from '../constants';
@@ -26,6 +28,7 @@ const initialState = {
         city: '',
         emirate: '',
         pinCode: '',
+        addressId: ''
     },
     inputValidities: {
         firstName: false,
@@ -35,6 +38,7 @@ const initialState = {
         city: false,
         emirate: false,
         pinCode: false,
+        addressId: true
     },
     formIsValid: false,
 }
@@ -43,9 +47,19 @@ type Nav = {
     navigate: (value: string) => void
 }
 
-const AddNewAddress = () => {
+type UpdateAddressParams = {
+    address: any;
+};
+
+type UpdateAddressRouteProp = RouteProp<
+    { updateaddress: UpdateAddressParams },
+    'updateaddress'
+>;
+
+const UpdateAddress = () => {
     const navigation = useNavigation<NavigationProp<any>>();
-    const bottomSheetRef = useRef<any>(null);
+    const route = useRoute<UpdateAddressRouteProp>();
+    const refRBSheet = useRef<any>(null);
     const dispatch = useAppDispatch();
     const [error, setError] = useState();
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
@@ -56,6 +70,8 @@ const AddNewAddress = () => {
     const handleLabelSelection = (label: any) => {
         setSelectedLabel(label)
     };
+
+    const { address } = route.params;
 
     const inputChangedHandler = useCallback(
         (inputId: string, inputValue: string) => {
@@ -73,8 +89,7 @@ const AddNewAddress = () => {
         }
     }, [error]);
 
-    const handleSaveAddress = async () => {
-
+    const handleUpdateAddress = async () => {
         if (!formState.formIsValid) {
             Alert.alert('Error', 'Please fill all required fields properly.');
             return;
@@ -82,6 +97,7 @@ const AddNewAddress = () => {
         // Gather all the data
         const addressData = {
             customerAccessToken: user.accessToken,
+            addressId: formState.inputValues.addressId,
             firstName: formState.inputValues.firstName,
             lastName: formState.inputValues.lastName,
             phoneNumber: formState.inputValues.phoneNumber,
@@ -93,19 +109,54 @@ const AddNewAddress = () => {
         };
 
         try {
-            await dispatch(addNewAddress(addressData));
-            console.log('Success', 'Address saved successfully');
+            await dispatch(updateAddress(addressData));
+            console.log('Success', 'Address updated successfully');
             navigation.goBack();
         } catch (error) {
-            console.log('Error', error || 'Could not save address');
+            console.log('Error', error || 'Could not update address');
         }
     };
+
+    const handleDeleteAddress = async () => {
+        try {
+
+            const addressData = {
+                customerAccessToken: user.accessToken,
+                addressId: formState.inputValues.addressId,
+            };
+            await dispatch(deleteAddress(addressData));
+            console.log('Success', 'Address deleted successfully');
+            navigation.goBack();
+        } catch (error) {
+            console.log('Error', error || 'Could not delete address');
+        }
+    }
+
+    useEffect(() => {
+        if (address) {
+            const addressFields = {
+                firstName: address.firstName ?? '',
+                lastName: address.lastName ?? '',
+                phoneNumber: address.phone ?? '',
+                address: address.address1 ?? '',
+                city: address.city ?? '',
+                emirate: address.province ?? '',
+                pinCode: address.zip ?? '',
+                addressId: address.id ?? ''
+            };
+
+            for (const key in addressFields) {
+                inputChangedHandler(key, addressFields[key as keyof typeof addressFields]);
+            }
+        }
+    }, [address]);
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
             <StatusBar hidden={true} />
             <View style={{ padding: 16 }}>
-                <Header title="Add New Address" />
+                <Header title="Update Address" />
             </View>
             <View>
                 <View
@@ -127,6 +178,7 @@ const AddNewAddress = () => {
                                 </Text>
                                 <Input
                                     id="firstName"
+                                    value={formState.inputValues.firstName}
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['firstName']}
                                     placeholder="Type your name"
@@ -145,6 +197,7 @@ const AddNewAddress = () => {
                                 </Text>
                                 <Input
                                     id="lastName"
+                                    value={formState.inputValues.lastName}
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['lastName']}
                                     placeholder="Type your name"
@@ -163,6 +216,7 @@ const AddNewAddress = () => {
                                 </Text>
                                 <Input
                                     id="phoneNumber"
+                                    value={formState.inputValues.phoneNumber}
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['phoneNumber']}
                                     placeholder="Type your mobile no."
@@ -181,6 +235,7 @@ const AddNewAddress = () => {
                                 </Text>
                                 <Input
                                     id="address"
+                                    value={formState.inputValues.address}
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['address']}
                                     placeholder="Enter Address"
@@ -195,6 +250,7 @@ const AddNewAddress = () => {
                                 </Text>
                                 <Input
                                     id="city"
+                                    value={formState.inputValues.city}
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['city']}
                                     placeholder="Enter city"
@@ -242,6 +298,7 @@ const AddNewAddress = () => {
                                     </Text>
                                     <Input
                                         id="pinCode"
+                                        value={formState.inputValues.pinCode}
                                         onInputChanged={inputChangedHandler}
                                         errorText={formState.inputValidities['pinCode']}
                                         placeholder="Enter Pin Code"
@@ -302,9 +359,23 @@ const AddNewAddress = () => {
                             </TouchableOpacity>
                         </View>
                         <ButtonFilled
-                            title="SAVE ADDRESS"
+                            title="DELETE ADDRESS"
                             onPress={() => {
-                                handleSaveAddress()
+                                refRBSheet.current?.open()
+                                // handleUpdateAddress()
+                                // setTimeout(() => {
+                                //     navigation.goBack()
+                                // }, 1000)
+                            }}
+                            style={{
+                                borderRadius: 30,
+                                marginBottom: 20
+                            }}
+                        />
+                        <ButtonFilled
+                            title="UPDATE ADDRESS"
+                            onPress={() => {
+                                handleUpdateAddress()
                                 setTimeout(() => {
                                     navigation.goBack()
                                 }, 1000)
@@ -316,6 +387,61 @@ const AddNewAddress = () => {
                     </View>
                 </View>
             </View>
+
+            <RBSheet
+                ref={refRBSheet}
+                closeOnPressMask={true}
+                height={380}
+                customStyles={{
+                    wrapper: {
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                    },
+                    draggableIcon: {
+                        backgroundColor: dark ? COLORS.greyscale300 : COLORS.greyscale300,
+                    },
+                    container: {
+                        borderTopRightRadius: 32,
+                        borderTopLeftRadius: 32,
+                        height: 250,
+                        backgroundColor: dark ? COLORS.dark2 : COLORS.white,
+                        alignItems: "center",
+                        width: "100%",
+                        paddingVertical: 12
+                    }
+                }}>
+                <Text style={[styles.bottomSubtitle, { color: dark ? COLORS.white : COLORS.black }]}>
+                    Delete this Address?
+                </Text>
+                <View style={styles.separateLine} />
+
+                <View style={{ padding: 20 }}>
+                    <Text style={[styles.featureText, {
+                        color: dark ? COLORS.white : COLORS.greyscale900
+                    }]}>
+                        Are you sure you want to delete this address? This action cannot be undone.
+                    </Text>
+                </View>
+                <View style={styles.bottomContainer}>
+                    <Button
+                        title="Cancel"
+                        style={{
+                            width: (SIZES.width - 32) / 2 - 8,
+                            backgroundColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary,
+                            borderRadius: 32,
+                            borderColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary
+                        }}
+                        textColor={dark ? COLORS.white : COLORS.primary}
+                        onPress={() => refRBSheet.current?.close()}
+                    />
+                    <ButtonFilled
+                        title="Yes, Delete"
+                        style={styles.removeButton}
+                        onPress={handleDeleteAddress}
+                    />
+                </View>
+
+
+            </RBSheet>
         </SafeAreaView>
     )
 }
@@ -421,6 +547,46 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginRight: 6,
     },
+
+
+
+
+    bottomSubtitle: {
+        fontSize: 22,
+        fontFamily: "bold",
+        color: COLORS.greyscale900,
+        textAlign: "center",
+        marginVertical: 12
+    },
+    separateLine: {
+        width: "100%",
+        height: .2,
+        backgroundColor: COLORS.greyscale300,
+        marginHorizontal: 16
+    },
+    selectedBookmarkContainer: {
+        // marginVertical: 16,
+        padding: 20
+        // backgroundColor: COLORS.tertiaryWhite
+    },
+    bottomContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginVertical: 12,
+        paddingHorizontal: 16,
+        width: "100%"
+    },
+    featureText: {
+        fontSize: 16,
+        color: "#333",
+    },
+    removeButton: {
+        width: (SIZES.width - 32) / 2 - 8,
+        // backgroundColor: COLORS.primary,
+        backgroundColor: 'red',
+        borderRadius: 32
+    },
 })
 
-export default AddNewAddress
+export default UpdateAddress

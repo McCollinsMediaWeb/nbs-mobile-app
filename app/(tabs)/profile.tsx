@@ -108,40 +108,45 @@ const Profile = () => {
           onPress={() => navigate("cart")}
         />
         <SettingsItem
+          icon={icons.heart2Outline}
+          name="My Wishlist"
+          onPress={() => navigate("mywishlist")}
+        />
+        {/* <SettingsItem
           icon={icons.chatBubble2Outline}
           name="Inbox"
           onPress={() => navigate("inbox")}
-        />
-        <SettingsItem
+        /> */}
+        {/* <SettingsItem
           icon={icons.bell3}
           name="My Notification"
           onPress={() => navigate("notifications")}
-        />
+        /> */}
         <SettingsItem
           icon={icons.location2Outline}
           name="Address"
           onPress={() => navigate("address")}
         />
-        <SettingsItem
+        {/* <SettingsItem
           icon={icons.userOutline}
           name="Edit Profile"
           onPress={() => navigate("editprofile")}
-        />
-        <SettingsItem
+        /> */}
+        {/* <SettingsItem
           icon={icons.bell2}
           name="Notification"
           onPress={() => navigate("settingsnotifications")}
-        />
-        <SettingsItem
+        /> */}
+        {/* <SettingsItem
           icon={icons.wallet2Outline}
           name="Payment"
           onPress={() => navigate("settingspayment")}
-        />
-        <SettingsItem
+        /> */}
+        {/* <SettingsItem
           icon={icons.shieldOutline}
           name="Security"
           onPress={() => navigate("settingssecurity")}
-        />
+        /> */}
         <TouchableOpacity
           onPress={() => navigate("settingslanguage")}
           style={styles.settingsItemContainer}>
@@ -205,11 +210,11 @@ const Profile = () => {
           name="Help Center"
           onPress={() => navigate("settingshelpcenter")}
         />
-        <SettingsItem
+        {/* <SettingsItem
           icon={icons.people4}
           name="Invite Friends"
           onPress={() => navigate("settingsinvitefriends")}
-        />
+        /> */}
         <TouchableOpacity
           onPress={() => refRBSheet.current.open()}
           style={styles.logoutContainer}>

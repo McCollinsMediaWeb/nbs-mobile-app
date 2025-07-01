@@ -1,5 +1,7 @@
 import OrderListItem from '@/components/OrderListItem';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { updateSelectedAddress } from '@/utils/actions/selectedAddressActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useEffect, useState } from 'react';
@@ -14,8 +16,10 @@ import { useTheme } from '../theme/ThemeProvider';
 const Checkout = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const { colors, dark } = useTheme();
+  const dispatch = useAppDispatch();
   const cartItems = useAppSelector(state => state.cart.cartItems);
   const user = useAppSelector(state => state.user);
+  const selectedAddress = useAppSelector(state => state.selectedAddress.selectedAddress);
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
@@ -29,7 +33,28 @@ const Checkout = () => {
     }
   }, [cartItems]);
 
-  console.log("user", user)
+  useEffect(() => {
+    dispatch(updateSelectedAddress(user?.customer?.addresses?.edges[0]?.node))
+  }, [user]);
+
+  // const confirmCheckout = () => {
+  //   setLoading(true);
+
+  //   const formattedCartItems = cart?.map((item) => ({
+  //     quantity: item?.quantity,
+  //     merchandiseId: item?.merchandiseId,
+  //   }));
+
+  //   const cartDetail = user
+  //     ? { formattedCartItems, selectedAdd, email: user?.email }
+  //     : { formattedCartItems };
+
+  //   dispatch(createShopifyCart(cartDetail));
+  //   setShowWebView(true);
+  //   if (refRBSheet.current) {
+  //     refRBSheet.current.close();
+  //   }
+  // };
 
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
@@ -71,17 +96,22 @@ const Checkout = () => {
                   <View style={styles.viewView}>
                     <Text style={[styles.homeTitle, {
                       color: dark ? COLORS.white : COLORS.greyscale900
-                    }]}>Home</Text>
-                    <View style={styles.defaultView}>
-                      <Text style={[styles.defaultTitle, {
-                        color: dark ? COLORS.white : COLORS.primary
-                      }]}>Default</Text>
-                    </View>
+                    }]}>{selectedAddress?.firstName + " " + selectedAddress?.lastName}</Text>
+
+                    {user?.customer?.addresses?.edges[0]?.node?.id === selectedAddress?.id &&
+                      (
+                        <View style={styles.defaultView}>
+                          <Text style={[styles.defaultTitle, {
+                            color: dark ? COLORS.white : COLORS.primary
+                          }]}>Default</Text>
+                        </View>
+                      )}
+
                   </View>
                   <Text style={[styles.addressTitle, {
                     color: dark ? COLORS.grayscale200 : COLORS.grayscale700
                   }]}>
-                    Time Square NYC, Nanhattan</Text>
+                    {selectedAddress?.city + ", " + selectedAddress?.province}</Text>
                 </View>
               </View>
               <Image
@@ -220,7 +250,7 @@ const Checkout = () => {
         backgroundColor: dark ? COLORS.dark2 : COLORS.white,
       }]}>
         <ButtonFilled
-          title="Continue to Payment"
+          title="Continue to Checkout"
           onPress={() => navigation.navigate("paymentmethods")}
           style={styles.placeOrderButton}
         />

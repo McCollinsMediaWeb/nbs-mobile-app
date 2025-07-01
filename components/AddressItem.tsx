@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, SIZES, icons } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 
@@ -73,7 +73,9 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         alignItems: 'center',
         marginVertical: 12,
-        borderRadius: 12
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: '#dadcd3',
     },
     routeLeftContainer: {
         flexDirection: "row",

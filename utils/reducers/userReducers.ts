@@ -5,11 +5,12 @@ interface Customer {
     email: string;
     firstName?: string;
     lastName?: string;
+    addresses?: any
 }
 
 interface UserState {
     accessToken: string | null;
-    expiresAt: string | null;
+    // expiresAt: string | null;
     customer: Customer | null;
     loading: boolean;
     error: string | null;
@@ -17,7 +18,7 @@ interface UserState {
 
 const initialState: UserState = {
     accessToken: null,
-    expiresAt: null,
+    // expiresAt: null,
     customer: null,
     loading: false,
     error: null,
@@ -34,14 +35,14 @@ const userSlice = createSlice({
         userAuthSuccess: (
             state,
             action: PayloadAction<{
-                accessToken: string;
-                expiresAt: string;
+                accessToken: string | null;
+                // expiresAt: string;
                 customer: Customer;
             }>
         ) => {
             state.loading = false;
             state.accessToken = action.payload.accessToken;
-            state.expiresAt = action.payload.expiresAt;
+            // state.expiresAt = action.payload.expiresAt;
             state.customer = action.payload.customer;
         },
         userAuthFailure: (state, action: PayloadAction<string>) => {

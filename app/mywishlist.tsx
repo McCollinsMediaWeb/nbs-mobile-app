@@ -1,14 +1,15 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import NotFoundCard from '@/components/NotFoundCard';
+import WishlistCard from '@/components/WishlistCard';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from 'expo-router';
 import React, { useState } from 'react';
-import { COLORS, icons } from '../constants';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
-import { useTheme } from '../theme/ThemeProvider';
-import { categories, myWishlist } from '../data';
 import HeaderWithSearch from '../components/HeaderWithSearch';
-import { NavigationProp } from '@react-navigation/native';
-import WishlistCard from '@/components/WishlistCard';
-import { useNavigation } from 'expo-router';
+import { COLORS, icons } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
 
 // Define the type for the component props
 interface MyWishlistProps {
@@ -19,11 +20,14 @@ const MyWishlist: React.FC<MyWishlistProps> = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const { dark, colors } = useTheme();
   const [selectedCategories, setSelectedCategories] = useState<string[]>(["0"]);
+  const wishlistItems = useAppSelector(state => state.wishlist);
 
   // Filter products based on selected categories
-  const filteredProducts = myWishlist.filter(product =>
-    selectedCategories.includes("0") || selectedCategories.includes(product.categoryId)
-  );
+  // const filteredProducts = myWishlist.filter(product =>
+  //   selectedCategories.includes("0") || selectedCategories.includes(product.categoryId)
+  // );
+
+  const filteredProducts = wishlistItems.wishlistItems;
 
   // Render category item
   const renderCategoryItem = ({ item }: { item: { id: string; name: string } }) => (
@@ -70,34 +74,42 @@ const MyWishlist: React.FC<MyWishlistProps> = () => {
           onPress={() => navigation.navigate("search")}
         />
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-          <FlatList
+          {/* <FlatList
             data={categories}
             keyExtractor={item => item.id}
             showsHorizontalScrollIndicator={false}
             horizontal
             renderItem={renderCategoryItem}
-          />
+          /> */}
           <View style={{
             backgroundColor: dark ? COLORS.dark1 : COLORS.white,
             marginVertical: 16
           }}>
-            <FlatList
-              data={filteredProducts}
-              keyExtractor={item => item.id}
-              numColumns={2}
-              columnWrapperStyle={{ gap: 16 }}
-              showsVerticalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <WishlistCard
-                  name={item.name}
-                  image={item.image}
-                  numSolds={item.numSolds}
-                  price={item.price}
-                  rating={item.rating}
-                  onPress={() => navigation.navigate(item.navigate)}
-                />
-              )}
-            />
+            {filteredProducts?.length > 0 ? (
+              <FlatList
+                data={filteredProducts}
+                keyExtractor={item => item.merchandiseId}
+                numColumns={2}
+                columnWrapperStyle={{ gap: 16 }}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item }) => (
+                  <WishlistCard
+                    name={item.title}
+                    image={item.image}
+                    price={item.price}
+                    oldPrice={item.oldPrice}
+                    merchandiseId={item.merchandiseId}
+                    productType={item.productType ? item.productType : ''}
+                    onPress={() => navigation.navigate("productdetails", {
+                      id: item.merchandiseId,
+                    })}
+                  />
+                )}
+              />
+            ) : (
+              <NotFoundCard />
+            )}
+
           </View>
         </ScrollView>
       </View>

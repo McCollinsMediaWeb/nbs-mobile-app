@@ -78,7 +78,7 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
                 <View style={styles.bottomViewContainer}>
                     <View style={styles.priceContainer}>
                         <Text style={[styles.price, {
-                            color: dark ? COLORS.white : COLORS.primary,
+                            color: "rgb(177, 18, 22)",
                         }]}>AED {price.toFixed(2)}</Text>
                     </View>
                     <View style={[styles.qtyContainer, {

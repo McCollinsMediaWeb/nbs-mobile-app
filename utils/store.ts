@@ -17,19 +17,23 @@ import { persistReducer, persistStore } from "redux-persist";
 import cartReducer from './reducers/cartReducers';
 import collectionReducer from './reducers/collectionReducers';
 import productReducer from './reducers/productReducers';
+import selectedAddressReducer from './reducers/selectedAddressReducers';
 import userReducer from "./reducers/userReducers";
+import wishlistReducer from "./reducers/wishListReducers";
 
 const rootReducer = combineReducers({
     user: userReducer,
     collections: collectionReducer,
     product: productReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    selectedAddress: selectedAddressReducer,
+    wishlist: wishlistReducer
 });
 
 const persistConfig = {
     key: "root",
     storage: AsyncStorage,
-    blacklist: ["collections"], // optional
+    blacklist: ["collections", "selectedAddress"], // optional
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -351,6 +351,7 @@ const Home = () => {
             renderItem={({ item }) => {
               return (
                 <ProductCard
+                  merchandiseId={item.id}
                   name={item.title}
                   image={item?.image}
                   price={item.price}
@@ -429,6 +430,7 @@ const Home = () => {
               return (
                 <View>
                   <ProductCard
+                    merchandiseId={item.id}
                     name={item.title}
                     image={item?.image}
                     price={item.price}
@@ -509,6 +511,7 @@ const Home = () => {
               return (
                 <View>
                   <ProductCard
+                    merchandiseId={item.id}
                     name={item.title}
                     image={item?.image}
                     price={item.price}
@@ -552,6 +555,7 @@ const Home = () => {
               return (
                 <View>
                   <ProductCard
+                    merchandiseId={item.id}
                     name={item.title}
                     image={item?.image}
                     price={item.price}

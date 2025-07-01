@@ -2,6 +2,7 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { addProductToCart } from "@/utils/actions/cartActions";
 import { clearProductFirst, fetchProduct } from "@/utils/actions/productActions";
+import { addProductToWishlist, checkWishlistStatus } from "@/utils/actions/wishListActions";
 import { Feather, FontAwesome } from "@expo/vector-icons";
 import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
@@ -63,7 +64,7 @@ const ProductDetails = () => {
     const [quantity, setQuantity] = useState(1);
 
     const { id } = route.params; // ✅ Now `id` is available
-    const [isFavorite, setIsFavorite] = useState(false);
+    const [isFavourite, setIsFavourite] = useState(false);
     const { dark } = useTheme();
     const refRBSheet = useRef<any>(null);
 
@@ -102,6 +103,15 @@ const ProductDetails = () => {
         }
     };
 
+    useEffect(() => {
+        const checkStatus = async () => {
+            const merchandiseId = product?.id;
+            if (!merchandiseId) return;
+            const exists = await dispatch(checkWishlistStatus(merchandiseId));
+            setIsFavourite(exists);
+        };
+        checkStatus();
+    }, [dispatch, product]);
 
 
     // render header
@@ -120,14 +130,25 @@ const ProductDetails = () => {
 
                 <View style={styles.iconContainer}>
                     <TouchableOpacity
-                        onPress={() => setIsFavorite(!isFavorite)}>
+                        onPress={() => {
+                            dispatch(addProductToWishlist({
+                                merchandiseId: product?.id ?? '',
+                                title: product?.title ?? 'Untitled',
+                                image: product?.variants[0]?.image,
+                                price: parseFloat(product?.variants[0]?.price ?? '0'),
+                                oldPrice: product?.variants[0]?.oldPrice ? parseFloat(product.variants[0].oldPrice) : undefined,
+                                productType: product?.productType ?? ''
+                            }));
+                            setIsFavourite(prev => !prev);
+                        }}
+                    >
                         <Image
-                            source={isFavorite ? icons.heart2 : icons.heart2Outline}
+                            source={isFavourite ? icons.heart2 : icons.heart2Outline}
                             resizeMode='contain'
                             style={styles.bookmarkIcon}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles.sendIconContainer}
                         onPress={() => refRBSheet.current.open()}>
                         <Image
@@ -135,7 +156,7 @@ const ProductDetails = () => {
                             resizeMode='contain'
                             style={styles.sendIcon}
                         />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         )
@@ -216,9 +237,21 @@ const ProductDetails = () => {
                         {product?.title}
                     </Text>
                     <TouchableOpacity
-                        onPress={() => setIsFavorite(!isFavorite)}>
+                        // onPress={() => setIsFavourite(!isFavourite)}
+                        onPress={() => {
+                            dispatch(addProductToWishlist({
+                                merchandiseId: product?.id ?? '',
+                                title: product?.title ?? 'Untitled',
+                                image: product?.variants[0]?.image,
+                                price: parseFloat(product?.variants[0]?.price ?? '0'),
+                                oldPrice: product?.variants[0]?.oldPrice ? parseFloat(product.variants[0].oldPrice) : undefined,
+                                productType: product?.productType ?? ''
+                            }));
+                            setIsFavourite(prev => !prev);
+                        }}
+                    >
                         <Image
-                            source={isFavorite ? icons.heart2 : icons.heart2Outline}
+                            source={isFavourite ? icons.heart2 : icons.heart2Outline}
                             resizeMode='contain'
                             style={[styles.bookmarkIcon, {
                                 tintColor: dark ? COLORS.white : COLORS.black

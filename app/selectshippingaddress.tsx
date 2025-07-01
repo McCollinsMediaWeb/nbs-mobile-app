@@ -1,31 +1,56 @@
-import { View, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
-import { COLORS, SIZES } from '../constants';
+import AddressItem from '@/components/AddressItem';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { updateSelectedAddress } from '@/utils/actions/selectedAddressActions';
+import { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme } from '../theme/ThemeProvider';
-import Header from '../components/Header';
 import { ScrollView } from 'react-native-virtualized-view';
 import Button from '../components/Button';
 import ButtonFilled from '../components/ButtonFilled';
-import { NavigationProp } from '@react-navigation/native';
-import AddressItem from '@/components/AddressItem';
-import { useNavigation } from 'expo-router';
+import Header from '../components/Header';
+import { COLORS, SIZES } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
+
+interface AddressNode {
+  address1: string;
+  address2: string | null;
+  city: string;
+  country: string;
+  firstName: string;
+  id: string;
+  lastName: string;
+  phone: string;
+  province: string;
+  zip: string;
+}
+
 
 const SelectShippingAddress = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const { colors, dark } = useTheme();
-  const [selectedItem, setSelectedItem] = useState(null);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const selectedAddress = useAppSelector((state) => state.selectedAddress.selectedAddress); // This is a string id or null
+  const [selectedItem, setSelectedItem] = useState<AddressNode | null>(null);
 
   // Handle checkbox
-  const handleCheckboxPress = (itemTitle:any) => {
-    if (selectedItem === itemTitle) {
-      // If the clicked item is already selected, deselect it
-      setSelectedItem(null);
-    } else {
-      // Otherwise, select the clicked item
-      setSelectedItem(itemTitle);
-    }
+  const handleCheckboxPress = (address: AddressNode) => {
+    setSelectedItem(address);
   };
+
+  useEffect(() => {
+    setSelectedItem(selectedAddress); // Sync with global state
+  }, [selectedAddress]);
+
+  const addresses = user?.customer?.addresses?.edges || [];
+
+  const handleApply = () => {
+    dispatch(updateSelectedAddress(selectedItem))
+    navigation.goBack()
+  }
 
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
@@ -33,40 +58,20 @@ const SelectShippingAddress = () => {
         <Header title="Deliver To" />
         <ScrollView
           contentContainerStyle={{
-            backgroundColor: dark ? COLORS.dark1 : COLORS.tertiaryWhite,
             marginVertical: 12
           }}
           showsVerticalScrollIndicator={false}>
-          <AddressItem
-            checked={selectedItem === 'Home'}
-            onPress={() => handleCheckboxPress('Home')}
-            name="Home"
-            address="Times Square NYC, Manhattan 27"
-          />
-          <AddressItem
-            checked={selectedItem === 'My Office'}
-            onPress={() => handleCheckboxPress('My Office')}
-            name="My Office"
-            address="5259 Blue Bill Park, PC 4629"
-          />
-          <AddressItem
-            checked={selectedItem === 'My Appartment'}
-            onPress={() => handleCheckboxPress('My Appartment')}
-            name="My Appartment"
-            address="21833 Clyde Gallagher, PC 4629 "
-          />
-          <AddressItem
-            checked={selectedItem === "My Parent's House"}
-            onPress={() => handleCheckboxPress("My Parent's House")}
-            name="My Parent's House"
-            address="61480 Sunbrook Park, PC 45"
-          />
-          <AddressItem
-            checked={selectedItem === "My Villa"}
-            onPress={() => handleCheckboxPress("My Villa")}
-            name="My Villa"
-            address="61480 Sunbrook Park, PC 45"
-          />
+
+          {addresses.length > 0 &&
+            addresses.map((item: { node: AddressNode }) => (
+              <AddressItem
+                key={item.node.id}
+                checked={selectedItem?.id === item.node.id}
+                onPress={() => handleCheckboxPress(item.node)}
+                name={`${item.node.firstName} ${item.node.lastName}`}
+                address={`${item.node.city}, ${item.node.province}`}
+              />
+            ))}
           <Button
             title="Add New Address"
             style={{
@@ -81,7 +86,7 @@ const SelectShippingAddress = () => {
         </ScrollView>
         <ButtonFilled
           title="Apply"
-          onPress={() => navigation.goBack()}
+          onPress={handleApply}
         />
       </View>
     </SafeAreaView>

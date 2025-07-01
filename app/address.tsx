@@ -1,14 +1,16 @@
-import { View, StyleSheet, FlatList } from 'react-native';
-import React from 'react';
-import { COLORS, SIZES } from '../constants';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Header from '../components/Header';
-import { ScrollView } from 'react-native-virtualized-view';
-import { userAddresses } from '../data';
-import { useTheme } from '../theme/ThemeProvider';
-import ButtonFilled from '../components/ButtonFilled';
+import NotFoundCard from '@/components/NotFoundCard';
 import UserAddressItem from '@/components/UserAddressItem';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import React from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-virtualized-view';
+import ButtonFilled from '../components/ButtonFilled';
+import Header from '../components/Header';
+import { COLORS, SIZES } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
 
 type Nav = {
     navigate: (value: string) => void
@@ -16,8 +18,14 @@ type Nav = {
 
 // User address location
 const Address = () => {
+    const navigation = useNavigation<NavigationProp<any>>();
     const { navigate } = useNavigation<Nav>();
     const { colors } = useTheme();
+    const user = useAppSelector((state) => state.user);
+
+    const addresses = user?.customer?.addresses?.edges || [];
+
+    console.log('adress', addresses)
 
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
@@ -26,17 +34,25 @@ const Address = () => {
                 <ScrollView
                     contentContainerStyle={{ marginVertical: 12 }}
                     showsVerticalScrollIndicator={false}>
-                    <FlatList
-                        data={userAddresses}
-                        keyExtractor={item => item.id}
-                        renderItem={({ item }) => (
-                            <UserAddressItem
-                                name={item.name}
-                                address={item.address}
-                                onPress={() => console.log("Clicked")}
-                            />
-                        )}
-                    />
+                    {addresses.length > 0 ? (
+                        <FlatList
+                            data={addresses}
+                            keyExtractor={item => item.node.id}
+                            renderItem={({ item }) => (
+                                <UserAddressItem
+                                    name={`${item.node.firstName} ${item.node.lastName}`}
+                                    address={`${item.node.city}, ${item.node.province}`}
+                                    onPress={() =>
+                                        navigation.navigate("updateaddress", { address: item.node })
+                                    }
+
+                                />
+                            )}
+                        />
+                    ) : (
+                        <NotFoundCard />
+                    )}
+
                 </ScrollView>
             </View>
             <View style={styles.btnContainer}>
