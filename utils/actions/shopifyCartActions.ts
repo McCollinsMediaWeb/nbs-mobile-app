@@ -8,6 +8,8 @@ import {
 export const createShopifyCheckoutUrl = (cartDetail: any) => async (dispatch: any) => {
     dispatch(shopifyCartCreateStart());
 
+    console.log("cartDetails", cartDetail)
+
     const lines = cartDetail.formattedCartItems
         .map(
             (product: any) => `
@@ -32,13 +34,13 @@ export const createShopifyCheckoutUrl = (cartDetail: any) => async (dispatch: an
               deliveryAddressPreferences: {
                 deliveryAddress: {
                   
-                  firstName: "${cartDetail.selectedAdd.firstName}",
-              		lastName: "${cartDetail.selectedAdd.lastName}",
-              		address1: "${cartDetail.selectedAdd.address1}",
-              		city: "${cartDetail.selectedAdd.city}",
-              		province: "${cartDetail.selectedAdd.province}",
+                  firstName: "${cartDetail.selectedAddress.firstName}",
+              		lastName: "${cartDetail.selectedAddress.lastName}",
+              		address1: "${cartDetail.selectedAddress.address1}",
+              		city: "${cartDetail.selectedAddress.city}",
+              		province: "${cartDetail.selectedAddress.province}",
               		country: "AE",
-              		zip: "${cartDetail.selectedAdd.zip}",
+              		zip: "${cartDetail.selectedAddress.zip}",
                 },
               }
             },
@@ -68,7 +70,11 @@ export const createShopifyCheckoutUrl = (cartDetail: any) => async (dispatch: an
             input: { cartDetail, formattedLines },
         });
 
+        console.log("response", res);
+
         const checkoutUrl = res.data.cartCreate.cart.checkoutUrl;
+
+        console.log("checkoutUrl", checkoutUrl);
 
         dispatch(
             shopifyCartCreateSuccess({

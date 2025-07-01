@@ -2,6 +2,7 @@ import OrderListItem from '@/components/OrderListItem';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { updateSelectedAddress } from '@/utils/actions/selectedAddressActions';
+import { createShopifyCheckoutUrl } from '@/utils/actions/shopifyCartActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useEffect, useState } from 'react';
@@ -20,7 +21,10 @@ const Checkout = () => {
   const cartItems = useAppSelector(state => state.cart.cartItems);
   const user = useAppSelector(state => state.user);
   const selectedAddress = useAppSelector(state => state.selectedAddress.selectedAddress);
+  const checkoutUrl = useAppSelector(state => state.shopifyCart.checkoutUrl);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [showWebView, setShowWebView] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (cartItems && cartItems.length > 0) {
@@ -37,119 +41,120 @@ const Checkout = () => {
     dispatch(updateSelectedAddress(user?.customer?.addresses?.edges[0]?.node))
   }, [user]);
 
-  // const confirmCheckout = () => {
-  //   setLoading(true);
+  const confirmCheckout = () => {
+    setLoading(true);
 
-  //   const formattedCartItems = cart?.map((item) => ({
-  //     quantity: item?.quantity,
-  //     merchandiseId: item?.merchandiseId,
-  //   }));
+    const formattedCartItems = cartItems?.map((item) => ({
+      quantity: item?.quantity,
+      merchandiseId: item?.merchandiseId,
+    }));
 
-  //   const cartDetail = user
-  //     ? { formattedCartItems, selectedAdd, email: user?.email }
-  //     : { formattedCartItems };
+    const cartDetail = user
+      ? { formattedCartItems, selectedAddress, email: user?.customer?.email }
+      : { formattedCartItems };
 
-  //   dispatch(createShopifyCart(cartDetail));
-  //   setShowWebView(true);
-  //   if (refRBSheet.current) {
-  //     refRBSheet.current.close();
-  //   }
-  // };
+    dispatch(createShopifyCheckoutUrl(cartDetail));
+    setShowWebView(true);
+  };
 
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <HeaderWithSearch
-          title="Select Address"
-          icon={icons.moreCircle}
-          onPress={() => null}
-        />
-        <ScrollView
-          contentContainerStyle={{
-            // backgroundColor: dark ? COLORS.dark1 : COLORS.tertiaryWhite,
-            marginTop: 12
-          }}
-          showsVerticalScrollIndicator={false}>
-          <Text style={[styles.summaryTitle, {
-            color: dark ? COLORS.white : COLORS.greyscale900
-          }]}>Shipping Address</Text>
-          <View style={[styles.summaryContainer, {
-            backgroundColor: dark ? COLORS.dark2 : COLORS.white,
-          }]}>
-            {/* <View style={[styles.separateLine, {
+
+      {!showWebView ? (
+
+        <>
+          <View style={[styles.container, { backgroundColor: colors.background }]}>
+            <HeaderWithSearch
+              title="Select Address"
+              icon={icons.moreCircle}
+              onPress={() => null}
+            />
+            <ScrollView
+              contentContainerStyle={{
+                // backgroundColor: dark ? COLORS.dark1 : COLORS.tertiaryWhite,
+                marginTop: 12
+              }}
+              showsVerticalScrollIndicator={false}>
+              <Text style={[styles.summaryTitle, {
+                color: dark ? COLORS.white : COLORS.greyscale900
+              }]}>Shipping Address</Text>
+              <View style={[styles.summaryContainer, {
+                backgroundColor: dark ? COLORS.dark2 : COLORS.white,
+              }]}>
+                {/* <View style={[styles.separateLine, {
               backgroundColor: dark ? COLORS.grayscale700 : COLORS.grayscale200
             }]} /> */}
-            <TouchableOpacity
-              onPress={() => navigation.navigate("selectshippingaddress")}
-              style={styles.addressContainer}>
-              <View style={styles.addressLeftContainer}>
-                <View style={styles.view1}>
-                  <View style={styles.view2}>
-                    <Image
-                      source={icons.location2}
-                      resizeMode='contain'
-                      style={styles.locationIcon}
-                    />
-                  </View>
-                </View>
-                <View style={styles.viewAddress}>
-                  <View style={styles.viewView}>
-                    <Text style={[styles.homeTitle, {
-                      color: dark ? COLORS.white : COLORS.greyscale900
-                    }]}>{selectedAddress?.firstName + " " + selectedAddress?.lastName}</Text>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("selectshippingaddress")}
+                  style={styles.addressContainer}>
+                  <View style={styles.addressLeftContainer}>
+                    <View style={styles.view1}>
+                      <View style={styles.view2}>
+                        <Image
+                          source={icons.location2}
+                          resizeMode='contain'
+                          style={styles.locationIcon}
+                        />
+                      </View>
+                    </View>
+                    <View style={styles.viewAddress}>
+                      <View style={styles.viewView}>
+                        <Text style={[styles.homeTitle, {
+                          color: dark ? COLORS.white : COLORS.greyscale900
+                        }]}>{selectedAddress?.firstName + " " + selectedAddress?.lastName}</Text>
 
-                    {user?.customer?.addresses?.edges[0]?.node?.id === selectedAddress?.id &&
-                      (
-                        <View style={styles.defaultView}>
-                          <Text style={[styles.defaultTitle, {
-                            color: dark ? COLORS.white : COLORS.primary
-                          }]}>Default</Text>
-                        </View>
-                      )}
+                        {user?.customer?.addresses?.edges[0]?.node?.id === selectedAddress?.id &&
+                          (
+                            <View style={styles.defaultView}>
+                              <Text style={[styles.defaultTitle, {
+                                color: dark ? COLORS.white : COLORS.primary
+                              }]}>Default</Text>
+                            </View>
+                          )}
 
+                      </View>
+                      <Text style={[styles.addressTitle, {
+                        color: dark ? COLORS.grayscale200 : COLORS.grayscale700
+                      }]}>
+                        {selectedAddress?.city + ", " + selectedAddress?.province}</Text>
+                    </View>
                   </View>
-                  <Text style={[styles.addressTitle, {
-                    color: dark ? COLORS.grayscale200 : COLORS.grayscale700
-                  }]}>
-                    {selectedAddress?.city + ", " + selectedAddress?.province}</Text>
-                </View>
+                  <Image
+                    source={icons.arrowRight}
+                    resizeMode='contain'
+                    style={[styles.arrowRightIcon, {
+                      tintColor: dark ? COLORS.white : COLORS.greyscale900
+                    }]}
+                  />
+                </TouchableOpacity>
               </View>
-              <Image
-                source={icons.arrowRight}
-                resizeMode='contain'
-                style={[styles.arrowRightIcon, {
-                  tintColor: dark ? COLORS.white : COLORS.greyscale900
-                }]}
-              />
-            </TouchableOpacity>
-          </View>
 
-          <Text style={[styles.summaryTitle, {
-            color: dark ? COLORS.white : COLORS.greyscale900
-          }]}>Order List</Text>
-          <FlatList
-            // data={orderList}
-            data={cartItems}
-            keyExtractor={item => item.id}
-            style={{ marginTop: 12 }}
-            renderItem={({ item }) => (
-              <OrderListItem
-                title={item.title}
-                image={item.image}
-                price={item.price}
-                oldPrice={item.oldPrice}
-                id={item.id}
-                merchandiseId={item.merchandiseId}
-                productType={item.productType}
-                quantity={item.quantity}
-                onPress={() => { }}
+              <Text style={[styles.summaryTitle, {
+                color: dark ? COLORS.white : COLORS.greyscale900
+              }]}>Order List</Text>
+              <FlatList
+                // data={orderList}
+                data={cartItems}
+                keyExtractor={item => item.id}
+                style={{ marginTop: 12 }}
+                renderItem={({ item }) => (
+                  <OrderListItem
+                    title={item.title}
+                    image={item.image}
+                    price={item.price}
+                    oldPrice={item.oldPrice}
+                    id={item.id}
+                    merchandiseId={item.merchandiseId}
+                    productType={item.productType}
+                    quantity={item.quantity}
+                    onPress={() => { }}
+                  />
+                )}
               />
-            )}
-          />
-          {/* <View style={[styles.separateLine, {
+              {/* <View style={[styles.separateLine, {
             backgroundColor: dark ? COLORS.grayscale700 : COLORS.grayscale200
           }]} /> */}
-          {/* <Text style={[styles.summaryTitle, {
+              {/* <Text style={[styles.summaryTitle, {
             color: dark ? COLORS.white : COLORS.greyscale900
           }]}>Choose Shipping</Text>
 
@@ -184,13 +189,13 @@ const Checkout = () => {
               }]}
             />
           </TouchableOpacity> */}
-          {/* <View style={[styles.separateLine, {
+              {/* <View style={[styles.separateLine, {
             backgroundColor: dark ? COLORS.grayscale700 : COLORS.grayscale200,
             marginTop: 4,
             marginBottom: 16
           }]} /> */}
 
-          {/* <Text style={[styles.summaryTitle, {
+              {/* <Text style={[styles.summaryTitle, {
             color: dark ? COLORS.white : COLORS.greyscale900
           }]}>Promo Code</Text>
           <View style={[styles.promoCodeContainer, {
@@ -213,10 +218,10 @@ const Checkout = () => {
             </TouchableOpacity>
           </View> */}
 
-          <View style={[styles.summaryContainer, {
-            backgroundColor: dark ? COLORS.dark2 : COLORS.white,
-          }]}>
-            {/* <View style={styles.view}>
+              <View style={[styles.summaryContainer, {
+                backgroundColor: dark ? COLORS.dark2 : COLORS.white,
+              }]}>
+                {/* <View style={styles.view}>
               <Text style={[styles.viewLeft, {
                 color: dark ? COLORS.grayscale200 : COLORS.grayscale700
               }]}>Subtitle</Text>
@@ -234,27 +239,59 @@ const Checkout = () => {
               }]}>Promo</Text>
               <Text style={[styles.viewRight, { color: dark ? COLORS.white : COLORS.primary }]}>- $12.80</Text>
             </View> */}
-            <View style={[styles.separateLine, {
-              backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200
-            }]} />
-            <View style={styles.view}>
-              <Text style={[styles.totalPrice, {
-                color: dark ? COLORS.grayscale200 : COLORS.grayscale700
-              }]}>Total</Text>
-              <Text style={[styles.totalPrice, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>AED {totalPrice.toFixed(2)}</Text>
-            </View>
+                <View style={[styles.separateLine, {
+                  backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200
+                }]} />
+                <View style={styles.view}>
+                  <Text style={[styles.totalPrice, {
+                    color: dark ? COLORS.grayscale200 : COLORS.grayscale700
+                  }]}>Total</Text>
+                  <Text style={[styles.totalPrice, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>AED {totalPrice.toFixed(2)}</Text>
+                </View>
+              </View>
+            </ScrollView>
           </View>
-        </ScrollView>
-      </View>
-      <View style={[styles.buttonContainer, {
-        backgroundColor: dark ? COLORS.dark2 : COLORS.white,
-      }]}>
-        <ButtonFilled
-          title="Continue to Checkout"
-          onPress={() => navigation.navigate("paymentmethods")}
-          style={styles.placeOrderButton}
-        />
-      </View>
+          <View style={[styles.buttonContainer, {
+            backgroundColor: dark ? COLORS.dark2 : COLORS.white,
+          }]}>
+            <ButtonFilled
+              title="Continue to Checkout"
+              // onPress={() => navigation.navigate("paymentmethods")}
+              onPress={confirmCheckout}
+              style={styles.placeOrderButton}
+            />
+          </View>
+        </>
+      ) : (
+
+        checkoutUrl !== null && (
+          <View style={[styles.container, { backgroundColor: colors.background }]}>
+            <HeaderWithSearch
+              title="Checkout"
+              icon={icons.moreCircle}
+              onPress={() => null}
+            />
+            {/* <CustomButton
+              color={COLORS.secondary}
+              onPress={() => {
+                setCheckoutUrlAvailable(false);
+                setShowWebView(false);
+                isThankYouPage && navigation.navigate("Home");
+              }}
+              title={isThankYouPage ? "Done" : "Back"}
+            /> */}
+            {/* <WebView
+              ref={webViewRef}
+              source={{ uri: checkoutUrl }}
+              onNavigationStateChange={handleNavigationStateChange}
+              onLoadStart={() => setLoading(true)}
+              onLoadEnd={() => setLoading(false)}
+            /> */}
+          </View>
+        )
+      )}
+
+
     </SafeAreaView>
   )
 };
