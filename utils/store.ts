@@ -16,6 +16,7 @@ import { persistReducer, persistStore } from "redux-persist";
 
 import cartReducer from './reducers/cartReducers';
 import collectionReducer from './reducers/collectionReducers';
+import orderReducer from "./reducers/orderReducers";
 import productReducer from './reducers/productReducers';
 import selectedAddressReducer from './reducers/selectedAddressReducers';
 import shopifyCartReducer from "./reducers/shopifyCartReducers";
@@ -29,13 +30,14 @@ const rootReducer = combineReducers({
     cart: cartReducer,
     selectedAddress: selectedAddressReducer,
     wishlist: wishlistReducer,
-    shopifyCart: shopifyCartReducer
+    shopifyCart: shopifyCartReducer,
+    orders: orderReducer
 });
 
 const persistConfig = {
     key: "root",
     storage: AsyncStorage,
-    blacklist: ["collections", "selectedAddress", "shopifyCart"], // optional
+    blacklist: ["collections", "selectedAddress", "shopifyCart", "orders"], // optional
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

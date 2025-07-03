@@ -1,82 +1,112 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
-import React, { useState } from 'react';
-import { SIZES, COLORS } from '../constants';
-import { useTheme } from '../theme/ThemeProvider';
+import NotFoundCard from "@/components/NotFoundCard";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { addProductToCart } from "@/utils/actions/cartActions";
+import { addOrderUrl } from "@/utils/actions/orderActions";
 import { NavigationProp } from '@react-navigation/native';
-import { FontAwesome } from "@expo/vector-icons";
-import { cancelledOrders } from '../data';
 import { useNavigation } from 'expo-router';
+import React, { useState } from 'react';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { COLORS, SIZES } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
 
-const CancelledOrders = () => {
-  const [orders, setOrders] = useState(cancelledOrders);
+const CancelledOrders = ({ orders }: { orders: any[] }) => {
   const { dark } = useTheme();
   const navigation = useNavigation<NavigationProp<any>>();
+  const [thankyouUrl, setThankyouUrl] = useState("");
+  const dispatch = useAppDispatch();
+
+  const handleOrderAgain = (order: any) => {
+    const productsToAdd = order?.lineItems?.edges
+      ?.filter((edge: any) => edge.node.variant)
+      .map((edge: any) => ({
+        merchandiseId: edge.node.variant.id,
+        id: edge.node.variant.product.id,
+        quantity: edge.node.quantity,
+        image: edge.node.variant.image.src,
+        price: edge.node.discountedTotalPrice.amount,
+        oldPrice: edge.node.originalTotalPrice.amount,
+        title: edge.node.title,
+        productType: edge.node.variant.product.productType,
+      }));
+    alert(`Added Items to Cart`);
+
+    dispatch(addProductToCart(productsToAdd)); // Dispatch the action
+  };
 
   return (
     <View style={[styles.container, {
       backgroundColor: dark ? COLORS.dark1 : COLORS.tertiaryWhite
     }]}>
-      <FlatList
-        data={orders} 
-        keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={[styles.cardContainer, {
-            backgroundColor: dark ? COLORS.dark2 : COLORS.white,
-          }]}>
+      {orders.length > 0 ? (
+        <FlatList
+          data={orders}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={[styles.cardContainer, {
+              backgroundColor: dark ? COLORS.dark2 : COLORS.white,
+            }]}>
 
-            <View style={styles.detailsContainer}>
-              <View>
-                <View style={styles.productImageContainer}>
-                  <Image
-                    source={item.image}
-                    resizeMode='cover'
-                    style={styles.productImage}
-                  />
+              <View style={styles.detailsContainer}>
+                <View>
+                  <View style={styles.productImageContainer}>
+                    <Image
+                      source={{ uri: item?.lineItems?.edges[0]?.node?.variant?.image?.src }}
+                      resizeMode='cover'
+                      style={styles.productImage}
+                    />
+                  </View>
+                  {/* <View style={styles.reviewContainer}>
+                    <FontAwesome name="star" size={12} color="orange" />
+                    <Text style={styles.rating}>{item.rating}</Text>
+                  </View> */}
                 </View>
-                <View style={styles.reviewContainer}>
-                  <FontAwesome name="star" size={12} color="orange" />
-                  <Text style={styles.rating}>{item.rating}</Text>
+                <View style={styles.detailsRightContainer}>
+                  <Text style={[styles.name, {
+                    color: dark ? COLORS.secondaryWhite : COLORS.greyscale900
+                  }]}>{item.name}</Text>
+                  <Text style={[styles.address, {
+                    color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
+                  }]}>{item?.billingAddress?.address1},{item?.billingAddress?.formattedArea}</Text>
+                  <View style={styles.priceContainer}>
+                    <View style={styles.priceItemContainer}>
+                      <Text style={[styles.totalPrice, {
+                        color: dark ? COLORS.white : COLORS.primary,
+                      }]}>AED {item.totalPriceV2.amount}</Text>
+                    </View>
+                    <View style={[styles.statusContainer, {
+                      borderColor: dark ? COLORS.dark3 : COLORS.primary,
+                      backgroundColor: dark ? COLORS.dark3 : "transparent"
+                    }]}>
+                      <Text style={[styles.statusText, {
+                        color: dark ? COLORS.white : COLORS.primary,
+                      }]}>{item.financialStatus}</Text>
+                    </View>
+                  </View>
                 </View>
               </View>
-              <View style={styles.detailsRightContainer}>
-                <Text style={[styles.name, {
-                  color: dark ? COLORS.secondaryWhite : COLORS.greyscale900
-                }]}>{item.name}</Text>
-                <Text style={[styles.address, {
-                  color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
-                }]}>{item.address}</Text>
-                <View style={styles.priceContainer}>
-                  <View style={styles.priceItemContainer}>
-                    <Text style={[styles.totalPrice, {
-                      color: dark ? COLORS.white : COLORS.primary,
-                    }]}>${item.price}</Text>
-                  </View>
-                  <View style={[styles.statusContainer, {
-                    borderColor: dark ? COLORS.dark3 : COLORS.primary,
-                    backgroundColor: dark ? COLORS.dark3 : "transparent"
-                  }]}>
-                    <Text style={[styles.statusText, {
-                      color: dark ? COLORS.white : COLORS.primary,
-                    }]}>{item.status}</Text>
-                  </View>
-                </View>
+              <View style={[styles.separateLine, {
+                marginVertical: 10,
+                backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200,
+              }]} />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  // onPress={() => navigation.navigate(item.navigate)}
+                  onPress={() => {
+                    // setThankyouUrl(item.statusUrl);
+                    dispatch(addOrderUrl(item.statusUrl))
+                  }}
+                  style={styles.receiptBtn}>
+                  <Text style={styles.receiptBtnText}>More Details</Text>
+                </TouchableOpacity>
               </View>
-            </View>
-            <View style={[styles.separateLine, {
-              marginVertical: 10,
-              backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200,
-            }]} />
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate(item.navigate)}
-                style={styles.receiptBtn}>
-                <Text style={styles.receiptBtnText}>View</Text>
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
-        )}
-      />
+            </TouchableOpacity>
+          )}
+        />
+      ) : (
+        <NotFoundCard />
+      )}
+
     </View>
   )
 };

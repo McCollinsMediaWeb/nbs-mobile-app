@@ -31,7 +31,7 @@ const TabLayout = () => {
               <View style={{
                 alignItems: "center",
                 paddingTop: 16,
-                width: SIZES.width/5
+                width: SIZES.width / 5
               }}>
                 <Image
                   source={focused ? icons.home : icons.home2Outline}
@@ -60,7 +60,7 @@ const TabLayout = () => {
               <View style={{
                 alignItems: "center",
                 paddingTop: 16,
-                width: SIZES.width/5
+                width: SIZES.width / 5
               }}>
                 <Image
                   source={focused ? icons.bag3 : icons.bag3Outline}
@@ -89,7 +89,7 @@ const TabLayout = () => {
               <View style={{
                 alignItems: "center",
                 paddingTop: 16,
-                width: SIZES.width/5
+                width: SIZES.width / 5
               }}>
                 <Image
                   source={focused ? icons.cart : icons.cartOutline}
@@ -110,6 +110,35 @@ const TabLayout = () => {
         }}
       />
       <Tabs.Screen
+        name="wishlist"
+        options={{
+          title: "",
+          tabBarIcon: ({ focused }: { focused: boolean }) => {
+            return (
+              <View style={{
+                alignItems: "center",
+                paddingTop: 16,
+                width: SIZES.width / 5
+              }}>
+                <Image
+                  source={focused ? icons.heart2 : icons.heart2Outline}
+                  resizeMode="contain"
+                  style={{
+                    width: 24,
+                    height: 24,
+                    tintColor: focused ? dark ? COLORS.white : COLORS.primary : dark ? COLORS.gray3 : COLORS.gray3,
+                  }}
+                />
+                <Text style={{
+                  ...FONTS.body4,
+                  color: focused ? dark ? COLORS.white : COLORS.primary : dark ? COLORS.gray3 : COLORS.gray3,
+                }}>Wishlist</Text>
+              </View>
+            )
+          },
+        }}
+      />
+      {/* <Tabs.Screen
         name="wallet"
         options={{
           title: "",
@@ -118,7 +147,7 @@ const TabLayout = () => {
               <View style={{
                 alignItems: "center",
                 paddingTop: 16,
-                width: SIZES.width/5
+                width: SIZES.width / 5
               }}>
                 <Image
                   source={focused ? icons.wallet2 : icons.wallet2Outline}
@@ -137,7 +166,7 @@ const TabLayout = () => {
             )
           },
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="profile"
         options={{
@@ -147,7 +176,7 @@ const TabLayout = () => {
               <View style={{
                 alignItems: "center",
                 paddingTop: 16,
-                width: SIZES.width/5
+                width: SIZES.width / 5
               }}>
                 <Image
                   source={focused ? icons.user : icons.userOutline}

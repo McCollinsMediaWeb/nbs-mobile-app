@@ -1,16 +1,20 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
-import React, { useState } from 'react';
-import { completedOrders } from '../data';
-import { SIZES, COLORS } from '../constants';
-import { useTheme } from '../theme/ThemeProvider';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { addOrderUrl } from '@/utils/actions/orderActions';
 import { NavigationProp } from '@react-navigation/native';
-import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from 'expo-router';
+import React from 'react';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { COLORS, SIZES } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
 
-const CompletedOrders = () => {
-  const [orders, setOrders] = useState(completedOrders);
+const CompletedOrders = ({ orders }: { orders: any[] }) => {
   const { dark } = useTheme();
   const navigation = useNavigation<NavigationProp<any>>();
+
+  const dispatch = useAppDispatch();
+  // dispatch(addOrderUrl(""));
+
+  // console.log("Completing orders", orders[0].lineItems.edges[0].node.variant.image);
 
   return (
     <View style={[styles.container, {
@@ -30,15 +34,15 @@ const CompletedOrders = () => {
               <View>
                 <View style={styles.productImageContainer}>
                   <Image
-                    source={item.image}
+                    source={{ uri: item?.lineItems?.edges[0]?.node?.variant?.image?.src }}
                     resizeMode='cover'
                     style={styles.productImage}
                   />
                 </View>
-                <View style={styles.reviewContainer}>
+                {/* <View style={styles.reviewContainer}>
                   <FontAwesome name="star" size={12} color="orange" />
                   <Text style={styles.rating}>{item.rating}</Text>
-                </View>
+                </View> */}
               </View>
               <View style={styles.detailsRightContainer}>
                 <Text style={[styles.name, {
@@ -46,12 +50,12 @@ const CompletedOrders = () => {
                 }]}>{item.name}</Text>
                 <Text style={[styles.address, {
                   color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
-                }]}>{item.address}</Text>
+                }]}>{item?.billingAddress?.address1},{item?.billingAddress?.formattedArea}</Text>
                 <View style={styles.priceContainer}>
                   <View style={styles.priceItemContainer}>
                     <Text style={[styles.totalPrice, {
                       color: dark ? COLORS.white : COLORS.primary,
-                    }]}>${item.price}</Text>
+                    }]}>AED {item.totalPriceV2.amount}</Text>
                   </View>
                   <View style={[styles.statusContainer, {
                     borderColor: dark ? COLORS.dark3 : COLORS.primary,
@@ -59,7 +63,7 @@ const CompletedOrders = () => {
                   }]}>
                     <Text style={[styles.statusText, {
                       color: dark ? COLORS.white : COLORS.primary,
-                    }]}>{item.status}</Text>
+                    }]}>{item.financialStatus}</Text>
                   </View>
                 </View>
               </View>
@@ -70,9 +74,11 @@ const CompletedOrders = () => {
             }]} />
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                onPress={() => navigation.navigate("productereceipt")}
+                onPress={() => {
+                  dispatch(addOrderUrl(item.statusUrl))
+                }}
                 style={styles.receiptBtn}>
-                <Text style={styles.receiptBtnText}>View E-Receipt</Text>
+                <Text style={styles.receiptBtnText}>More Details</Text>
               </TouchableOpacity>
             </View>
           </TouchableOpacity>

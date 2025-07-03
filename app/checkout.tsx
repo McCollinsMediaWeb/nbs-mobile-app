@@ -1,14 +1,16 @@
 import OrderListItem from '@/components/OrderListItem';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { emptyCartThunk } from '@/utils/actions/cartActions';
 import { updateSelectedAddress } from '@/utils/actions/selectedAddressActions';
 import { createShopifyCheckoutUrl } from '@/utils/actions/shopifyCartActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
+import { WebView } from 'react-native-webview';
 import ButtonFilled from '../components/ButtonFilled';
 import HeaderWithSearch from '../components/HeaderWithSearch';
 import { COLORS, SIZES, icons } from '../constants';
@@ -18,12 +20,14 @@ const Checkout = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const { colors, dark } = useTheme();
   const dispatch = useAppDispatch();
+  const webViewRef = useRef<WebView>(null);
   const cartItems = useAppSelector(state => state.cart.cartItems);
   const user = useAppSelector(state => state.user);
   const selectedAddress = useAppSelector(state => state.selectedAddress.selectedAddress);
   const checkoutUrl = useAppSelector(state => state.shopifyCart.checkoutUrl);
   const [totalPrice, setTotalPrice] = useState(0);
   const [showWebView, setShowWebView] = useState(false);
+  const [isThankYouPage, setIsThankYouPage] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -41,6 +45,14 @@ const Checkout = () => {
     dispatch(updateSelectedAddress(user?.customer?.addresses?.edges[0]?.node))
   }, [user]);
 
+  useEffect(() => {
+    if (webViewRef?.current) {
+      webViewRef?.current?.injectJavaScript(`
+        window.ReactNativeWebView.postMessage('navigation');
+      `);
+    }
+  }, [checkoutUrl]);
+
   const confirmCheckout = () => {
     setLoading(true);
 
@@ -55,6 +67,18 @@ const Checkout = () => {
 
     dispatch(createShopifyCheckoutUrl(cartDetail));
     setShowWebView(true);
+  };
+
+  const handleNavigationStateChange = (navState: any) => {
+    if (
+      navState?.url?.includes("/thank-you") ||
+      navState?.url?.includes("/thank_you") ||
+      navState?.url?.includes("thankyou")
+    ) {
+      setIsThankYouPage(true);
+      dispatch(emptyCartThunk());
+    }
+
   };
 
   return (
@@ -267,31 +291,40 @@ const Checkout = () => {
         checkoutUrl !== null && (
           <View style={[styles.container, { backgroundColor: colors.background }]}>
             <HeaderWithSearch
-              title="Checkout"
+              title={isThankYouPage ? "Thankyou for the Order" : "Checkout"}
               icon={icons.moreCircle}
-              onPress={() => null}
+              onPress={() => navigation.navigate(isThankYouPage ? "(tabs)" : "cart")}
             />
-            {/* <CustomButton
-              color={COLORS.secondary}
-              onPress={() => {
-                setCheckoutUrlAvailable(false);
-                setShowWebView(false);
-                isThankYouPage && navigation.navigate("Home");
-              }}
-              title={isThankYouPage ? "Done" : "Back"}
-            /> */}
-            {/* <WebView
+            <WebView
               ref={webViewRef}
               source={{ uri: checkoutUrl }}
               onNavigationStateChange={handleNavigationStateChange}
               onLoadStart={() => setLoading(true)}
               onLoadEnd={() => setLoading(false)}
-            /> */}
+            />
           </View>
         )
       )}
 
-
+      {loading && (
+        <ActivityIndicator
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            right: "50%",
+            bottom: "50%",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 999,
+            width: 0,
+            height: 0,
+            backgroundColor: "black", // Ensure the background is transparent
+          }}
+          size="large"
+          color={COLORS.black}
+        />
+      )}
     </SafeAreaView>
   )
 };

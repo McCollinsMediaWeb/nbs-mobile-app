@@ -1,18 +1,17 @@
+import Button from '@/components/Button';
 import { COLORS, icons, images, SIZES } from '@/constants';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { CancelledOrders, CompletedOrders, OngoingOrders } from '@/tabs';
 import { useTheme } from '@/theme/ThemeProvider';
+import { addOrderUrl, fetchOrders } from '@/utils/actions/orderActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
-
-const renderScene = SceneMap({
-  first: OngoingOrders,
-  second: CompletedOrders,
-  third: CancelledOrders
-});
+import { WebView } from 'react-native-webview';
 
 interface TabRoute {
   key: string;
@@ -24,10 +23,28 @@ interface RenderLabelProps {
   focused: boolean;
 }
 
+const groupedOrders: {
+  ongoing: any[];
+  completed: any[];
+  cancelled: any[];
+} = {
+  ongoing: [],
+  completed: [],
+  cancelled: []
+};
+
 const Orders = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const layout = useWindowDimensions();
   const { dark, colors } = useTheme();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.user);
+  const orders = useAppSelector(state => state.orders.orderItems);
+  const orderUrl = useAppSelector((state) => state.orders.orderUrl);
+  const [showWebView, setShowWebView] = useState(false);
+  const webViewRef = useRef<WebView>(null);
+  const [loading, setLoading] = useState(false);
+
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -35,6 +52,69 @@ const Orders = () => {
     { key: 'second', title: 'Completed' },
     { key: 'third', title: 'Cancelled' }
   ]);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchOrders(user?.accessToken));
+    }
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    if (orderUrl !== "") {
+      setShowWebView(true);
+    }
+  }, [orderUrl]);
+
+  useEffect(() => {
+    if (!orderUrl) {
+      setShowWebView(false);
+    }
+  }, [orderUrl]);
+
+  useEffect(() => {
+    if (webViewRef?.current) {
+      webViewRef?.current?.injectJavaScript(`
+          window.ReactNativeWebView.postMessage('navigation');
+        `);
+    }
+  }, [orderUrl]);
+
+
+  const groupedOrders = React.useMemo(() => {
+    const groups = {
+      ongoing: [] as any[],
+      completed: [] as any[],
+      cancelled: [] as any[],
+    };
+
+    orders?.forEach((order: any) => {
+      if (order.canceledAt !== null) {
+        groups.cancelled.push(order);
+      } else if (order.fulfillmentStatus === "FULFILLED") {
+        groups.completed.push(order);
+      } else {
+        groups.ongoing.push(order);
+      }
+    });
+
+    return groups;
+  }, [orders]);
+
+
+  const renderScene = SceneMap({
+    first: () => <OngoingOrders orders={groupedOrders.ongoing} />,
+    second: () => <CompletedOrders orders={groupedOrders.completed} />,
+    third: () => <CancelledOrders orders={groupedOrders.cancelled} />,
+  });
+
+  const handleNavigationStateChange = (navState: any) => {
+    console.log("navState?.url", navState?.url);
+    if (!navState?.url.includes("/account/orders/")) {
+      setShowWebView(false);
+      dispatch(addOrderUrl(""));
+    }
+
+  };
 
   const renderTabBar = (props: any) => (
     <TabBar
@@ -97,16 +177,73 @@ const Orders = () => {
 
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
-        {renderHeader()}
-        <TabView
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={{ width: layout.width }}
-          renderTabBar={renderTabBar}
-        />
-      </View>
+      {!showWebView ? (
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
+          {renderHeader()}
+          <TabView
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: layout.width }}
+            renderTabBar={renderTabBar}
+          />
+        </View>
+      ) : (
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
+          {/* <HeaderWithSearch
+            title="Order"
+            icon={icons.moreCircle}
+            onPress={() => {
+              setShowWebView(false);
+              dispatch(addOrderUrl(""));
+            }}
+          /> */}
+          <Button
+            title='Go Back'
+            onPress={() => {
+              setShowWebView(false);
+              dispatch(addOrderUrl(""));
+            }}
+            style={{ margin: 10 }}
+            filled
+          />
+          {/* <WebView
+
+            source={{
+              uri: orderUrl,
+            }}
+          /> */}
+          <WebView
+            ref={webViewRef}
+            source={{ uri: orderUrl }}
+            onNavigationStateChange={handleNavigationStateChange}
+            onLoadStart={() => setLoading(true)}
+            onLoadEnd={() => setLoading(false)}
+          />
+
+          {loading && (
+            <ActivityIndicator
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                right: "50%",
+                bottom: "50%",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 999,
+                width: 0,
+                height: 0,
+                backgroundColor: "black", // Ensure the background is transparent
+              }}
+              size="large"
+              color={COLORS.black}
+            />
+          )}
+
+        </View>
+      )}
+
     </SafeAreaView>
   )
 };

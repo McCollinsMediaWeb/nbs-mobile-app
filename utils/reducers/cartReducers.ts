@@ -60,6 +60,7 @@ const cartSlice = createSlice({
         },
 
         emptyCart: (state) => {
+            console.log("here is backend")
             state.cartItems = [];
         },
     },

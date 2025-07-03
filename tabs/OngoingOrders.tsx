@@ -1,20 +1,25 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
-import React, { useRef, useState } from 'react';
-import { ongoingOrders } from '../data';
-import { SIZES, COLORS } from '../constants';
-import RBSheet from "react-native-raw-bottom-sheet";
-import { useTheme } from '../theme/ThemeProvider';
-import Button from '../components/Button';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { addOrderUrl } from '@/utils/actions/orderActions';
 import { NavigationProp } from '@react-navigation/native';
-import { FontAwesome } from "@expo/vector-icons";
-import ButtonFilled from '../components/ButtonFilled';
 import { useNavigation } from 'expo-router';
+import React, { useRef } from 'react';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import RBSheet from "react-native-raw-bottom-sheet";
+import Button from '../components/Button';
+import ButtonFilled from '../components/ButtonFilled';
+import { COLORS, SIZES } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
 
-const OngoingOrders = () => {
-  const [orders, setOrders] = useState(ongoingOrders);
+const OngoingOrders = ({ orders }: { orders: any[] }) => {
+  // const [orders, setOrders] = useState(ongoingOrders);
   const refRBSheet = useRef<any>(null);
   const { dark } = useTheme();
   const navigation = useNavigation<NavigationProp<any>>();
+
+  const dispatch = useAppDispatch();
+  // dispatch(addOrderUrl(""));
+
+  // console.log("onGoing orders", orders)
 
   return (
     <View style={[styles.container, {
@@ -22,7 +27,7 @@ const OngoingOrders = () => {
     }]}>
       <FlatList
         data={orders}
-        keyExtractor={item => item.id}
+        // keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <TouchableOpacity style={[styles.cardContainer, {
@@ -36,15 +41,16 @@ const OngoingOrders = () => {
                   backgroundColor: dark ? COLORS.dark3 : COLORS.silver
                 }]}>
                   <Image
-                    source={item.image}
+                    // source={item.image}
+                    source={{ uri: item?.lineItems?.edges[0]?.node?.variant?.image?.src }}
                     resizeMode='cover'
                     style={styles.productImage}
                   />
                 </View>
-                <View style={styles.reviewContainer}>
+                {/* <View style={styles.reviewContainer}>
                   <FontAwesome name="star" size={12} color="orange" />
                   <Text style={styles.rating}>{item.rating}</Text>
-                </View>
+                </View> */}
               </View>
               <View style={styles.detailsRightContainer}>
                 <Text style={[styles.name, {
@@ -52,12 +58,12 @@ const OngoingOrders = () => {
                 }]}>{item.name}</Text>
                 <Text style={[styles.address, {
                   color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
-                }]}>{item.address}</Text>
+                }]}>{item?.billingAddress?.address1}, {item?.billingAddress?.formattedArea}</Text>
                 <View style={styles.priceContainer}>
                   <View style={styles.priceItemContainer}>
                     <Text style={[styles.totalPrice, {
                       color: dark ? COLORS.white : COLORS.primary,
-                    }]}>${item.price}</Text>
+                    }]}>AED {item.totalPriceV2.amount}</Text>
                   </View>
                   <View style={[styles.statusContainer, {
                     borderColor: dark ? COLORS.dark3 : COLORS.primary,
@@ -65,7 +71,7 @@ const OngoingOrders = () => {
                   }]}>
                     <Text style={[styles.statusText, {
                       color: dark ? COLORS.white : COLORS.primary,
-                    }]}>{item.status}</Text>
+                    }]}>{item.financialStatus}</Text>
                   </View>
                 </View>
               </View>
@@ -82,15 +88,17 @@ const OngoingOrders = () => {
                 }]}>
                 <Text style={[styles.cancelBtnText, {
                   color: dark ? COLORS.white : COLORS.primary,
-                }]}>Cancel Order</Text>
+                }]}>Order Again</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigation.navigate("trackorder")}
+                onPress={() => {
+                  dispatch(addOrderUrl(item.statusUrl))
+                }}
                 style={[styles.receiptBtn, {
                   backgroundColor: dark ? COLORS.dark3 : COLORS.primary,
                   borderColor: dark ? COLORS.dark3 : COLORS.primary,
                 }]}>
-                <Text style={styles.receiptBtnText}>Track Order</Text>
+                <Text style={styles.receiptBtnText}>More Details</Text>
               </TouchableOpacity>
             </View>
           </TouchableOpacity>
@@ -118,7 +126,7 @@ const OngoingOrders = () => {
         }}>
         <Text style={[styles.bottomSubtitle, {
           color: dark ? COLORS.red : COLORS.red
-        }]}>Cancel Order</Text>
+        }]}>Order Again</Text>
         <View style={[styles.separateLine, {
           backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200,
         }]} />
@@ -145,7 +153,7 @@ const OngoingOrders = () => {
             onPress={() => refRBSheet.current.close()}
           />
           <ButtonFilled
-            title="Yes, Cancel"
+            title="Yes, Order Again"
             style={styles.removeButton}
             onPress={() => {
               refRBSheet.current.close();
