@@ -1,89 +1,223 @@
+import Button from '@/components/Button';
+import ButtonFilled from '@/components/ButtonFilled';
+import NotFoundCard from '@/components/NotFoundCard';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { addProductToCart } from '@/utils/actions/cartActions';
 import { addOrderUrl } from '@/utils/actions/orderActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
-import React from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { Alert, FlatList, Image, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import { COLORS, SIZES } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 
-const CompletedOrders = ({ orders }: { orders: any[] }) => {
+interface CancelledOrdersProps {
+  orders: any[];
+  refreshing: boolean;
+  onRefresh: () => void;
+}
+
+const CompletedOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps) => {
   const { dark } = useTheme();
   const navigation = useNavigation<NavigationProp<any>>();
-
+  const refRBSheet = useRef<any>(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const dispatch = useAppDispatch();
-  // dispatch(addOrderUrl(""));
 
-  // console.log("Completing orders", orders[0].lineItems.edges[0].node.variant.image);
+  const handleOrderAgain = (order: any) => {
+
+    if (!order?.lineItems?.edges?.length) {
+      alert("No items found in this order.");
+      return;
+    }
+
+    const productsToAdd = order.lineItems.edges
+      .filter((edge: any) => edge?.node?.variant && edge.node.variant.product) // ✅ filter properly
+      .map((edge: any) => {
+        const variant = edge.node.variant;
+        const product = variant.product;
+
+        return {
+          merchandiseId: variant.id,
+          id: product.id,
+          quantity: edge.node.quantity,
+          image: variant.image?.src || "", // fallback to empty string if null
+          // price: Number(edge.node.discountedTotalPrice?.amount || 0),
+          price: Number(variant.price.amount || 0),
+          // oldPrice: Number(edge.node.originalTotalPrice?.amount || 0),
+          oldPrice: Number(variant.compareAtPrice.amount || 0),
+          title: edge.node.title || "Unknown Product",
+          productType: product.productType || "General",
+        };
+      });
+
+    if (!productsToAdd.length) {
+      alert("No valid products to add to cart.");
+      return;
+    }
+
+    productsToAdd.forEach((product: any) => {
+      dispatch(addProductToCart(product));
+    });
+
+
+    Alert.alert("Added Items to Cart");
+    navigation.navigate("cart");
+  };
 
   return (
     <View style={[styles.container, {
       backgroundColor: dark ? COLORS.dark1 : COLORS.tertiaryWhite
     }]}>
-      <FlatList
-        data={orders}
-        keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={[styles.cardContainer, {
-            backgroundColor: dark ? COLORS.dark2 : COLORS.white,
-          }]}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("productreviews")}
-              style={styles.detailsContainer}>
-              <View>
-                <View style={styles.productImageContainer}>
-                  <Image
-                    source={{ uri: item?.lineItems?.edges[0]?.node?.variant?.image?.src }}
-                    resizeMode='cover'
-                    style={styles.productImage}
-                  />
-                </View>
-                {/* <View style={styles.reviewContainer}>
-                  <FontAwesome name="star" size={12} color="orange" />
-                  <Text style={styles.rating}>{item.rating}</Text>
-                </View> */}
-              </View>
-              <View style={styles.detailsRightContainer}>
-                <Text style={[styles.name, {
-                  color: dark ? COLORS.secondaryWhite : COLORS.greyscale900
-                }]}>{item.name}</Text>
-                <Text style={[styles.address, {
-                  color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
-                }]}>{item?.billingAddress?.address1},{item?.billingAddress?.formattedArea}</Text>
-                <View style={styles.priceContainer}>
-                  <View style={styles.priceItemContainer}>
-                    <Text style={[styles.totalPrice, {
-                      color: dark ? COLORS.white : COLORS.primary,
-                    }]}>AED {item.totalPriceV2.amount}</Text>
-                  </View>
-                  <View style={[styles.statusContainer, {
-                    borderColor: dark ? COLORS.dark3 : COLORS.primary,
-                    backgroundColor: dark ? COLORS.dark3 : "transparent"
-                  }]}>
-                    <Text style={[styles.statusText, {
-                      color: dark ? COLORS.white : COLORS.primary,
-                    }]}>{item.financialStatus}</Text>
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <View style={[styles.separateLine, {
-              marginVertical: 10,
-              backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200,
-            }]} />
-            <View style={styles.buttonContainer}>
+      {orders.length > 0 ? (
+        <FlatList
+          data={orders}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor={dark ? COLORS.white : COLORS.primary}
+            />
+          }
+          renderItem={({ item }) => (
+            <TouchableOpacity style={[styles.cardContainer, {
+              backgroundColor: dark ? COLORS.dark2 : COLORS.white,
+            }]}>
               <TouchableOpacity
                 onPress={() => {
                   dispatch(addOrderUrl(item.statusUrl))
                 }}
-                style={styles.receiptBtn}>
-                <Text style={styles.receiptBtnText}>More Details</Text>
+                style={styles.detailsContainer}>
+                <View>
+                  <View style={styles.productImageContainer}>
+                    <Image
+                      source={{ uri: item?.lineItems?.edges[0]?.node?.variant?.image?.src }}
+                      resizeMode='cover'
+                      style={styles.productImage}
+                    />
+                  </View>
+                  {/* <View style={styles.reviewContainer}>
+                  <FontAwesome name="star" size={12} color="orange" />
+                  <Text style={styles.rating}>{item.rating}</Text>
+                </View> */}
+                </View>
+                <View style={styles.detailsRightContainer}>
+                  <Text style={[styles.name, {
+                    color: dark ? COLORS.secondaryWhite : COLORS.greyscale900
+                  }]}>{item.name}</Text>
+                  <Text style={[styles.address, {
+                    color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
+                  }]}>{item?.billingAddress?.address1},{item?.billingAddress?.formattedArea}</Text>
+                  <View style={styles.priceContainer}>
+                    <View style={styles.priceItemContainer}>
+                      <Text style={[styles.totalPrice, {
+                        color: dark ? COLORS.white : COLORS.primary,
+                      }]}>AED {item.totalPriceV2.amount}</Text>
+                    </View>
+                    <View style={[styles.statusContainer, {
+                      borderColor: dark ? COLORS.dark3 : COLORS.primary,
+                      backgroundColor: dark ? COLORS.dark3 : "transparent"
+                    }]}>
+                      <Text style={[styles.statusText, {
+                        color: dark ? COLORS.white : COLORS.primary,
+                      }]}>{item.financialStatus}</Text>
+                    </View>
+                  </View>
+                </View>
               </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
-        )}
-      />
+              <View style={[styles.separateLine, {
+                marginVertical: 10,
+                backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200,
+              }]} />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelectedOrder(item);
+                    refRBSheet.current.open();
+                  }}
+                  style={[styles.cancelBtn, {
+                    borderColor: dark ? COLORS.white : COLORS.primary
+                  }]}>
+                  <Text style={[styles.cancelBtnText, {
+                    color: dark ? COLORS.white : COLORS.primary,
+                  }]}>Order Again</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    dispatch(addOrderUrl(item.statusUrl))
+                  }}
+                  style={styles.receiptBtn}>
+                  <Text style={styles.receiptBtnText}>More Details</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+      ) : (
+        <NotFoundCard />
+      )}
+
+      <RBSheet
+        ref={refRBSheet}
+        closeOnPressMask={true}
+        height={332}
+        customStyles={{
+          wrapper: {
+            backgroundColor: "rgba(0,0,0,0.5)",
+          },
+          draggableIcon: {
+            backgroundColor: dark ? COLORS.greyscale300 : COLORS.greyscale300,
+          },
+          container: {
+            borderTopRightRadius: 32,
+            borderTopLeftRadius: 32,
+            height: 332,
+            backgroundColor: dark ? COLORS.dark2 : COLORS.white,
+            alignItems: "center",
+            width: "100%"
+          }
+        }}>
+        <Text style={[styles.bottomSubtitle, {
+          color: dark ? COLORS.red : COLORS.red
+        }]}>Order Again</Text>
+        <View style={[styles.separateLine, {
+          backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200,
+        }]} />
+
+        <View style={styles.selectedCancelContainer}>
+          <Text style={[styles.cancelTitle, {
+            color: dark ? COLORS.secondaryWhite : COLORS.greyscale900
+          }]}>Product prices may vary</Text>
+          <Text style={[styles.cancelSubtitle, {
+            color: dark ? COLORS.grayscale400 : COLORS.grayscale700
+          }]}>Please review the final price in your cart before proceeding to checkout.</Text>
+        </View>
+
+        <View style={styles.bottomContainer}>
+          <Button
+            title="Cancel"
+            style={{
+              width: (SIZES.width - 32) / 2 - 8,
+              backgroundColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary,
+              borderRadius: 32,
+              borderColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary
+            }}
+            textColor={dark ? COLORS.white : COLORS.primary}
+            onPress={() => refRBSheet.current.close()}
+          />
+          <ButtonFilled
+            title="Yes, Order Again"
+            style={styles.removeButton}
+            onPress={() => {
+              refRBSheet.current.close();
+              handleOrderAgain(selectedOrder)
+            }}
+          />
+        </View>
+      </RBSheet>
     </View>
   )
 };
@@ -191,7 +325,7 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
   },
   receiptBtn: {
-    width: (SIZES.width - 32) - 12,
+    width: (SIZES.width - 32) / 2 - 16,
     height: 36,
     borderRadius: 24,
     backgroundColor: COLORS.primary,

@@ -84,8 +84,18 @@ const Profile = () => {
             <MaterialIcons name="edit" size={16} color={COLORS.white} />
           </TouchableOpacity> */}
         </View>
-        <Text style={[styles.title, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>{user.customer?.firstName} {user.customer?.lastName}</Text>
-        <Text style={[styles.subtitle, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>{user.customer?.email}</Text>
+        <Text style={[styles.title, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>
+          {user?.accessToken
+            ? `${user.customer?.firstName ?? ''} ${user.customer?.lastName ?? ''}`.trim()
+            : "Guest User"}
+        </Text>
+
+        <Text style={[styles.subtitle, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>
+          {user?.accessToken
+            ? user.customer?.email ?? "No email provided"
+            : "Please login to make purchases"}
+        </Text>
+
       </View>
     )
   }
@@ -122,11 +132,14 @@ const Profile = () => {
           name="My Notification"
           onPress={() => navigate("notifications")}
         /> */}
-        <SettingsItem
-          icon={icons.location2Outline}
-          name="Address"
-          onPress={() => navigate("address")}
-        />
+        {user?.accessToken && (
+          <SettingsItem
+            icon={icons.location2Outline}
+            name="Address"
+            onPress={() => navigate("address")}
+          />
+        )}
+
         {/* <SettingsItem
           icon={icons.userOutline}
           name="Edit Profile"
@@ -215,22 +228,42 @@ const Profile = () => {
           name="Invite Friends"
           onPress={() => navigate("settingsinvitefriends")}
         /> */}
-        <TouchableOpacity
-          onPress={() => refRBSheet.current.open()}
-          style={styles.logoutContainer}>
-          <View style={styles.logoutLeftContainer}>
-            <Image
-              source={icons.logout}
-              resizeMode='contain'
-              style={[styles.logoutIcon, {
-                tintColor: "red"
-              }]}
-            />
-            <Text style={[styles.logoutName, {
-              color: "red"
-            }]}>Logout</Text>
-          </View>
-        </TouchableOpacity>
+        {user?.accessToken ? (
+          <TouchableOpacity
+            onPress={() => refRBSheet.current.open()}
+            style={styles.logoutContainer}>
+            <View style={styles.logoutLeftContainer}>
+              <Image
+                source={icons.logout}
+                resizeMode='contain'
+                style={[styles.logoutIcon, {
+                  tintColor: "red"
+                }]}
+              />
+              <Text style={[styles.logoutName, {
+                color: "red"
+              }]}>Logout</Text>
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={() => navigate('login')}
+            style={styles.logoutContainer}>
+            <View style={styles.logoutLeftContainer}>
+              <Image
+                source={icons.logout}
+                resizeMode='contain'
+                style={[styles.logoutIcon, {
+                  tintColor: "red"
+                }]}
+              />
+              <Text style={[styles.logoutName, {
+                color: "red"
+              }]}>Login</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+
       </View>
     )
   }

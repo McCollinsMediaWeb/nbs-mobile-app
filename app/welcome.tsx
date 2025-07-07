@@ -42,7 +42,16 @@ const Welcome = () => {
                         backgroundColor: dark ? COLORS.white : COLORS.primary
                     }}
                 />
-                <View style={{ flexDirection: "row" }}>
+                <Button
+                    title="Continue as Guest"
+                    onPress={() => navigate("(tabs)")}
+                    textColor={dark ? "#101010" : COLORS.white}
+                    style={{
+                        width: "100%",
+                        backgroundColor: dark ? COLORS.white : COLORS.primary
+                    }}
+                />
+                <View style={{ flexDirection: "row", marginTop: 22 }}>
                     <Text style={[styles.loginTitle, {
                         color: dark ? COLORS.white : "black"
                     }]}>Don’t have an account? </Text>

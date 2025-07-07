@@ -1,18 +1,20 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { COLORS, SIZES, icons } from '../constants';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView } from 'react-native-virtualized-view';
-import { baseProducts, categories, ratings, sorts } from '../data';
-import NotFoundCard from '../components/NotFoundCard';
-import RBSheet from "react-native-raw-bottom-sheet";
-import Button from '../components/Button';
-import { useTheme } from '../theme/ThemeProvider';
+import NotFoundCard from '@/components/NotFoundCard';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { fetchSearchSuggestions, searchProducts } from '@/utils/actions/searchActions';
+import { Feather, FontAwesome } from "@expo/vector-icons";
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import { FontAwesome } from "@expo/vector-icons";
-import ProductCard from '../components/ProductCard';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import React, { useEffect, useRef, useState } from 'react';
+import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import RBSheet from "react-native-raw-bottom-sheet";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-virtualized-view';
+import Button from '../components/Button';
+import { COLORS, SIZES, icons } from '../constants';
+import { categories, ratings, sorts } from '../data';
+import { useTheme } from '../theme/ThemeProvider';
 
 interface SliderHandleProps {
   enabled: boolean;
@@ -42,14 +44,25 @@ const Search = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const refRBSheet = useRef<any>(null);
   const { dark, colors } = useTheme();
+  const dispatch = useAppDispatch();
+  const collections = useAppSelector(state => state.collections);
+  const suggestions = useAppSelector((state) => state.search.suggestions);
   const [selectedCategories, setSelectedCategories] = useState(["1"]);
   const [selectedSorts, setSelectedSorts] = useState(["1"]);
   const [selectedRating, setSelectedRating] = useState(["1"]);
   const [priceRange, setPriceRange] = useState([0, 100]); // Initial price range
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSliderChange = (values: number[]) => {
     setPriceRange(values);
   };
+
+  const targetCollection = collections.data.find(
+    (collection) => collection.id === "gid://shopify/Collection/439108698324"
+  );
+
+  // const filteredProducts = targetCollection ? targetCollection.products : [];
+
   /**
   * Render header
   */
@@ -73,7 +86,7 @@ const Search = () => {
             Search
           </Text>
         </View>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Image
             source={icons.moreCircle}
             resizeMode='contain'
@@ -81,7 +94,7 @@ const Search = () => {
               tintColor: dark ? COLORS.white : COLORS.greyscale900
             }]}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     )
   }
@@ -91,7 +104,8 @@ const Search = () => {
   const renderContent = () => {
     const [selectedTab, setSelectedTab] = useState('row');
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredProducts, setFilteredProducts] = useState(baseProducts);
+    // const [filteredProducts, setFilteredProducts] = useState(baseProducts);
+    const [filteredProducts, setFilteredProducts] = useState(targetCollection ? targetCollection.products : [])
     const [resultsCount, setResultsCount] = useState(0);
 
     useEffect(() => {
@@ -99,16 +113,32 @@ const Search = () => {
     }, [searchQuery, selectedTab]);
 
     const handleSearch = () => {
-      const allProducts = baseProducts.filter((product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      // const allProducts = baseProducts.filter((product) =>
+      //   product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      // );
+
+      const allProducts = targetCollection ? targetCollection.products : [];
       setFilteredProducts(allProducts);
       setResultsCount(allProducts.length);
     };
+
+    useEffect(() => {
+      if (searchTerm) {
+        dispatch(searchProducts(searchTerm));
+        dispatch(fetchSearchSuggestions(searchTerm));
+      }
+    }, [searchTerm, dispatch]);
+
+    const searchHandle = () => {
+      navigation.navigate("searchproducts");
+    };
+
+    console.log("search term", searchTerm);
+
     return (
       <View>
         {/* Search bar */}
-        <View
+        {/* <View
           style={[styles.searchBarContainer, {
             backgroundColor: dark ? COLORS.dark2 : COLORS.silver
           }]}>
@@ -122,12 +152,12 @@ const Search = () => {
           </TouchableOpacity>
           <TextInput
             placeholder='Search'
-            placeholderTextColor={COLORS.gray}
+            placeholderTextColor={COLORS.black}
             style={[styles.searchInput, {
               color: dark ? COLORS.white : COLORS.greyscale900
             }]}
-            value={searchQuery}
-            onChangeText={(text) => setSearchQuery(text)}
+            value={searchTerm}
+            onChangeText={(text) => setSearchTerm(text)}
           />
           <TouchableOpacity
             onPress={() => refRBSheet.current.open()}>
@@ -139,8 +169,67 @@ const Search = () => {
               }]}
             />
           </TouchableOpacity>
-        </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        </View> */}
+
+        <TextInput
+          placeholder='Search'
+          // placeholderTextColor={COLORS.black}
+          style={[styles.searchInput2, {
+            color: dark ? COLORS.white : COLORS.greyscale900
+          }]}
+          value={searchTerm}
+          onChangeText={(text) => setSearchTerm(text)}
+        />
+
+        <ScrollView
+          contentContainerStyle={{
+            paddingVertical: 10,
+          }}
+        >
+          {suggestions.length > 0 ? (
+            suggestions.map((data, index) => (
+              <TouchableOpacity
+                onPress={() => {
+                  if (data.title) {
+                    dispatch(searchProducts(data.title)).then(() => {
+                      searchHandle();
+                    });
+                  }
+                }}
+                key={index}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingHorizontal: 15,
+                  paddingVertical: 12,
+                }}
+              >
+                <Image
+                  source={icons.search2}
+                  resizeMode='contain'
+                  style={[styles.searchIcon, { marginRight: 10 }]}
+                />
+                <Text
+                  numberOfLines={2}
+                  style={{
+                    flex: 1,
+                  }}
+                >
+                  {data.title}
+                </Text>
+                <Feather
+                  style={{ opacity: 0.6 }}
+                  color={colors.text}
+                  size={20}
+                  name="arrow-up-left"
+                />
+              </TouchableOpacity>
+            ))
+          ) : (
+            <NotFoundCard />
+          )}
+        </ScrollView>
+        {/* <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.reusltTabContainer}>
             {
               searchQuery && searchQuery.length > 0 ? (
@@ -162,9 +251,7 @@ const Search = () => {
             </View>
           </View>
 
-          {/* Results container  */}
           <View>
-            {/* result list */}
             <View style={{
               backgroundColor: dark ? COLORS.dark1 : COLORS.white,
               marginVertical: 16
@@ -179,12 +266,14 @@ const Search = () => {
                     renderItem={({ item }) => {
                       return (
                         <ProductCard
-                          name={item.name}
-                          image={item.image}
-                          numSolds={item.numSolds}
+                          merchandiseId={item.id}
+                          name={item.title}
+                          image={item?.image}
                           price={item.price}
-                          rating={item.rating}
-                          onPress={() => navigation.navigate(item.navigate)}
+                          oldPrice={item.oldPrice}
+                          onPress={() => navigation.navigate("productdetails", {
+                            id: item.id,
+                          })}
                         />
                       )
                     }}
@@ -195,7 +284,7 @@ const Search = () => {
               )}
             </View>
           </View>
-        </ScrollView>
+        </ScrollView> */}
       </View>
     )
   }
@@ -311,7 +400,7 @@ const Search = () => {
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         {renderHeader()}
-        <View>
+        <View style={{ paddingBottom: 120 }}>
           {renderContent()}
         </View>
         <RBSheet
@@ -419,7 +508,7 @@ const Search = () => {
 const styles = StyleSheet.create({
   area: {
     flex: 1,
-    backgroundColor: COLORS.white
+    backgroundColor: COLORS.white,
   },
   container: {
     flex: 1,
@@ -472,6 +561,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "regular",
     marginHorizontal: 8
+  },
+  searchInput2: {
+    // flex: 1,
+    fontSize: 16,
+    fontFamily: "regular",
+    padding: 16,
+    borderRadius: 12,
+    backgroundColor: COLORS.secondaryWhite,
   },
   filterIcon: {
     width: 24,

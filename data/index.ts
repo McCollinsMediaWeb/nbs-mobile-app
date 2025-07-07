@@ -508,32 +508,38 @@ export const ourProducts = [
     {
         id: "1",
         title: "NBS solar",
-        image: images.ourProduct1
+        image: images.ourProduct1,
+        collectionId: "gid://shopify/Collection/439108534484"
     },
     {
         id: "2",
         title: "Generator",
-        image: images.ourProduct2
+        image: images.ourProduct2,
+        collectionId: "gid://shopify/Collection/439108534484"
     },
     {
         id: "3",
         title: "Battery",
-        image: images.ourProduct3
+        image: images.ourProduct3,
+        collectionId: "gid://shopify/Collection/439108534484"
     },
     {
         id: "4",
         title: "Sunride Solar",
-        image: images.ourProduct4
+        image: images.ourProduct4,
+        collectionId: "gid://shopify/Collection/439108534484"
     },
     {
         id: "5",
         title: "Generators",
-        image: images.ourProduct5
+        image: images.ourProduct5,
+        collectionId: "gid://shopify/Collection/439108534484"
     },
     {
         id: "6",
         title: "Water Pump",
-        image: images.ourProduct6
+        image: images.ourProduct6,
+        collectionId: "gid://shopify/Collection/439108534484"
     }
 ];
 

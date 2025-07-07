@@ -25,8 +25,6 @@ const Address = () => {
 
     const addresses = user?.customer?.addresses?.edges || [];
 
-    console.log('adress', addresses)
-
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>

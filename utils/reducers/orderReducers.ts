@@ -5,13 +5,15 @@ interface OrderState {
     loading: boolean;
     error: string | null;
     orderUrl: any;
+    urlLoading: boolean;
 }
 
 const initialState: OrderState = {
     orderItems: [],
     loading: false,
     error: null,
-    orderUrl: ""
+    orderUrl: "",
+    urlLoading: false,
 };
 
 const ordersSlice = createSlice({
@@ -37,9 +39,13 @@ const ordersSlice = createSlice({
         },
         orderUrlAdd: (state, action: PayloadAction<any>) => {
             state.orderUrl = action.payload.orderUrl;
+            state.urlLoading = false;
+        },
+        orderUrlLoading: (state, action: PayloadAction<any>) => {
+            state.urlLoading = true;
         },
     },
 });
 
-export const { orderFetchStart, orderFetchSuccess, orderFetchFailure, orderUrlAdd } = ordersSlice.actions;
+export const { orderFetchStart, orderFetchSuccess, orderFetchFailure, orderUrlAdd, orderUrlLoading } = ordersSlice.actions;
 export default ordersSlice.reducer;

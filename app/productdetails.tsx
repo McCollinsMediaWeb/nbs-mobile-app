@@ -3,6 +3,7 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { addProductToCart } from "@/utils/actions/cartActions";
 import { clearProductFirst, fetchProduct } from "@/utils/actions/productActions";
 import { addProductToWishlist, checkWishlistStatus } from "@/utils/actions/wishListActions";
+import { decrementProduct, incrementProduct } from "@/utils/reducers/cartReducers";
 import { Feather, FontAwesome } from "@expo/vector-icons";
 import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
@@ -60,6 +61,7 @@ const ProductDetails = () => {
     const dispatch = useAppDispatch();
     const product = useAppSelector(state => state.product.data);
     // const [totalPrice, setTotalPrice] = useState<string>(parseFloat(product?.variants[0]?.price ?? "0").toFixed(2));
+    const cartItems = useAppSelector(state => state.cart.cartItems);
     const [totalPrice, setTotalPrice] = useState<number>(parseFloat(product?.variants[0]?.price ?? "0")); // store as number
     const [quantity, setQuantity] = useState(1);
 
@@ -113,6 +115,17 @@ const ProductDetails = () => {
         checkStatus();
     }, [dispatch, product]);
 
+    const getCartItem = (merchId: string) => {
+        return cartItems.find(item => item.merchandiseId === merchId);
+    };
+
+    const increase = (merchandiseId: string) => {
+        dispatch(incrementProduct({ merchandiseId }));
+    };
+
+    const decrease = (merchandiseId: string) => {
+        dispatch(decrementProduct({ merchandiseId }));
+    };
 
     // render header
     const renderHeader = () => {
@@ -189,22 +202,6 @@ const ProductDetails = () => {
      */
     const renderContent = () => {
         const [selectedColor, setSelectedColor] = useState(null);
-
-        const increaseQty = () => {
-            // setQuantity(quantity + 1);
-            const newQty = quantity + 1;
-            setQuantity(newQty);
-            setTotalPrice(newQty * parseFloat(product?.variants[0]?.price ?? "0"));
-        }
-
-        const decreaseQty = () => {
-            if (quantity > 1) {
-                // setQuantity(quantity - 1);
-                const newQty = quantity - 1;
-                setQuantity(newQty);
-                setTotalPrice(newQty * parseFloat(product?.variants[0]?.price ?? "0"));
-            }
-        }
 
         const handleColorSelect = (color: any) => {
             setSelectedColor(color);
@@ -298,7 +295,7 @@ const ProductDetails = () => {
                 <View style={[styles.separateLine, {
                     backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
                 }]} />
-                <View style={styles.qtyContainer}>
+                {/* <View style={styles.qtyContainer}>
                     <Text style={[styles.descTitle, {
                         color: dark ? COLORS.white : COLORS.greyscale900
                     }]}>Quantity</Text>
@@ -321,7 +318,7 @@ const ProductDetails = () => {
 
                 <View style={[styles.separateLine, {
                     backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
-                }]} />
+                }]} /> */}
 
                 {/* <View style={{ marginVertical: 10 }}>
                     {specifications.map((spec, index) => (
@@ -403,8 +400,7 @@ const ProductDetails = () => {
                         color: dark ? COLORS.white : COLORS.black,
                     }]}>AED {totalPrice.toFixed(2)}</Text>
                 </View>
-                <TouchableOpacity
-                    // onPress={() => navigation.navigate("(tabs)")}
+                {/* <TouchableOpacity
                     onPress={() => handleAddToCart(product)}
                     style={[styles.cartBtn, {
                         backgroundColor: dark ? COLORS.white : COLORS.black
@@ -420,7 +416,63 @@ const ProductDetails = () => {
                     <Text style={[styles.cartBtnText, {
                         color: dark ? COLORS.black : COLORS.white,
                     }]}>{product?.variants && product.variants[0]?.available ? "Add to Cart" : "Out of Stock"}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+
+                {!product?.variants || !product.variants[0]?.available ? (
+                    // Out of stock button
+                    <TouchableOpacity
+                        style={[styles.cartBtn, {
+                            backgroundColor: dark ? COLORS.dark3 : COLORS.silver
+                        }]}
+                        disabled={true}
+                    >
+                        <Text style={[styles.cartBtnText, {
+                            color: dark ? COLORS.white : COLORS.black,
+                        }]}>Out of Stock</Text>
+                    </TouchableOpacity>
+                ) : getCartItem(product.variants[0].id) ? (
+                    // Show increment/decrement if in cart
+                    <View style={[styles.qtyViewContainer, {
+                        backgroundColor: dark ? COLORS.dark3 : COLORS.silver
+                    }]}>
+                        <TouchableOpacity
+                            onPress={() => decrease(product.variants[0].id)}
+                        >
+                            <Feather name="minus" size={20} color={dark ? COLORS.white : "black"} />
+                        </TouchableOpacity>
+                        <Text style={[styles.qtyMidText, {
+                            color: dark ? COLORS.white : COLORS.black
+                        }]}>
+                            {getCartItem(product.variants[0].id)?.quantity ?? 1}
+                        </Text>
+
+                        <TouchableOpacity
+                            onPress={() => increase(product.variants[0].id)}
+                        >
+                            <Feather name="plus" size={20} color={dark ? COLORS.white : "black"} />
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    // Show Add to Cart
+                    <TouchableOpacity
+                        onPress={() => handleAddToCart(product)}
+                        style={[styles.cartBtn, {
+                            backgroundColor: dark ? COLORS.white : COLORS.black
+                        }]}
+                    >
+                        <Image
+                            source={icons.bags}
+                            resizeMode='contain'
+                            style={[styles.bagIcon, {
+                                tintColor: dark ? COLORS.black : COLORS.white
+                            }]}
+                        />
+                        <Text style={[styles.cartBtnText, {
+                            color: dark ? COLORS.black : COLORS.white,
+                        }]}>Add to Cart</Text>
+                    </TouchableOpacity>
+                )}
+
             </View>
             {/* </ScrollView> */}
             <RBSheet

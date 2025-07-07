@@ -1,18 +1,17 @@
-import { View, StyleSheet, FlatList } from 'react-native';
-import React from 'react';
-import { COLORS, icons } from '../constants';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView } from 'react-native-virtualized-view';
-import { useTheme } from '../theme/ThemeProvider';
-import { products } from '../data';
-import ProductCard from '../components/ProductCard';
-import HeaderWithSearch from '../components/HeaderWithSearch';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import React, { useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-virtualized-view';
+import HeaderWithSearch from '../components/HeaderWithSearch';
+import { COLORS, icons } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
 
 const CategoryCupboard = () => {
     const navigation = useNavigation<NavigationProp<any>>();
     const { dark, colors } = useTheme()
+    const [loading, setLoading] = useState(false);
 
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
@@ -29,7 +28,7 @@ const CategoryCupboard = () => {
                         backgroundColor: dark ? COLORS.dark1 : COLORS.white,
                         marginVertical: 16
                     }}>
-                        <FlatList
+                        {/* <FlatList
                             data={products.cupboards}
                             keyExtractor={item => item.id}
                             numColumns={2}
@@ -47,9 +46,28 @@ const CategoryCupboard = () => {
                                     />
                                 )
                             }}
-                        />
+                        /> */}
                     </View>
                 </ScrollView>
+                {loading && (
+                    <ActivityIndicator
+                        style={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            right: "50%",
+                            bottom: "50%",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            zIndex: 999,
+                            width: 0,
+                            height: 0,
+                            backgroundColor: "black", // Ensure the background is transparent
+                        }}
+                        size="large"
+                        color={COLORS.black}
+                    />
+                )}
             </View>
         </SafeAreaView>
     )

@@ -44,6 +44,7 @@ const Orders = () => {
   const [showWebView, setShowWebView] = useState(false);
   const webViewRef = useRef<WebView>(null);
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
 
   const [index, setIndex] = React.useState(0);
@@ -79,6 +80,12 @@ const Orders = () => {
     }
   }, [orderUrl]);
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await dispatch(fetchOrders(user?.accessToken));
+    setRefreshing(false);
+  };
+
 
   const groupedOrders = React.useMemo(() => {
     const groups = {
@@ -102,18 +109,25 @@ const Orders = () => {
 
 
   const renderScene = SceneMap({
-    first: () => <OngoingOrders orders={groupedOrders.ongoing} />,
-    second: () => <CompletedOrders orders={groupedOrders.completed} />,
-    third: () => <CancelledOrders orders={groupedOrders.cancelled} />,
+    first: () => <OngoingOrders
+      orders={groupedOrders.ongoing}
+      refreshing={refreshing}
+      onRefresh={onRefresh} />,
+    second: () => <CompletedOrders
+      orders={groupedOrders.completed}
+      refreshing={refreshing}
+      onRefresh={onRefresh} />,
+    third: () => <CancelledOrders
+      orders={groupedOrders.cancelled}
+      refreshing={refreshing}
+      onRefresh={onRefresh} />,
   });
 
   const handleNavigationStateChange = (navState: any) => {
-    console.log("navState?.url", navState?.url);
     if (!navState?.url.includes("/account/orders/")) {
       setShowWebView(false);
       dispatch(addOrderUrl(""));
     }
-
   };
 
   const renderTabBar = (props: any) => (
@@ -177,6 +191,7 @@ const Orders = () => {
 
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
+      {/* <Button onPress={() => dispatch(emptyCartThunk())} >Hi all</Button> */}
       {!showWebView ? (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
           {renderHeader()}

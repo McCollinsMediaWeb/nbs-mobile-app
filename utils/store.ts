@@ -18,6 +18,7 @@ import cartReducer from './reducers/cartReducers';
 import collectionReducer from './reducers/collectionReducers';
 import orderReducer from "./reducers/orderReducers";
 import productReducer from './reducers/productReducers';
+import searchReducer from "./reducers/searchReducers";
 import selectedAddressReducer from './reducers/selectedAddressReducers';
 import shopifyCartReducer from "./reducers/shopifyCartReducers";
 import userReducer from "./reducers/userReducers";
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
     selectedAddress: selectedAddressReducer,
     wishlist: wishlistReducer,
     shopifyCart: shopifyCartReducer,
-    orders: orderReducer
+    orders: orderReducer,
+    search: searchReducer
 });
 
 const persistConfig = {

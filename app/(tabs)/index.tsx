@@ -73,7 +73,9 @@ const Home = () => {
             <Text style={styles.greeeting}>{getGreeting()}</Text>
             <Text style={[styles.title, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}>{user.customer?.firstName} {user.customer?.lastName}</Text>
+            }]}>{user?.accessToken
+              ? `${user.customer?.firstName ?? ''} ${user.customer?.lastName ?? ''}`.trim()
+              : "Guest User"}</Text>
           </View>
         </View>
         <View style={styles.viewRight}>
@@ -162,7 +164,7 @@ const Home = () => {
                 }]}>{item.discount} OFF</Text> */}
                 <Text style={styles.inverterLabel}>{item.label}</Text>
                 <Text style={styles.headline}>{item.headline1}{"\n"}{item.headline2}</Text>
-                <TouchableOpacity style={styles.ctaButton}>
+                <TouchableOpacity style={styles.ctaButton} onPress={() => navigation.navigate("allproducts")}>
                   <Text style={styles.ctaButtonText}>{item.buttonText}</Text>
                 </TouchableOpacity>
                 {/* <Text style={[styles.bannerDiscountName, {
@@ -448,16 +450,19 @@ const Home = () => {
     )
   }
 
-  const renderOurProductItem = ({ item }: { item: { id: string; title: string; image: ImageSourcePropType } }) => (
+  const renderOurProductItem = ({ item }: { item: { id: string; title: string; image: ImageSourcePropType; collectionId: string; } }) => (
     <View>
-      <Image
-        source={item.image}
-        resizeMode="contain"
-        style={{ width: 400, height: 500 }} // fixed width/height so they don’t stretch
-      />
-      <Text style={[styles.ourProductTitle, {
-        color: COLORS.white
-      }]}>{item.title}</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("collectionscreen", { collectionId: item.collectionId, collectionTitle: item.title, collectionImage: item.image })}>
+        <Image
+          source={item.image}
+          resizeMode="contain"
+          style={{ width: 400, height: 500 }} // fixed width/height so they don’t stretch
+        />
+        <Text style={[styles.ourProductTitle, {
+          color: COLORS.white
+        }]}>{item.title}</Text>
+      </TouchableOpacity>
     </View>
   );
 

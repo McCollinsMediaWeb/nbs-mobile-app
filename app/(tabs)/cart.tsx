@@ -29,6 +29,7 @@ interface Product {
 const Cart: React.FC = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const refRBSheet = useRef<any>(null);
+  const refLoginSheet = useRef<any>(null);
   const { dark, colors } = useTheme();
   const dispatch = useAppDispatch();
   const [selectedBookmarkItem, setSelectedBookmarkItem] = useState<Product | null>(null);
@@ -36,6 +37,7 @@ const Cart: React.FC = () => {
   const [resultsCount, setResultsCount] = useState(0);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(["0"]);
   const cartItems = useAppSelector(state => state.cart.cartItems);
+  const user = useAppSelector(state => state.user);
 
   const handleRemoveBookmark = () => {
     if (selectedBookmarkItem) {
@@ -209,7 +211,7 @@ const Cart: React.FC = () => {
             </Text>
           </View>
           <TouchableOpacity
-            onPress={() => navigation.navigate("checkout")}
+            onPress={() => user.accessToken ? navigation.navigate("checkout") : refLoginSheet.current?.open()}
             style={styles.cartBtn}>
             <Text style={styles.cartBtnText}>Continue</Text>
             <Image
@@ -281,6 +283,75 @@ const Cart: React.FC = () => {
           />
         </View>
       </RBSheet>
+
+      <RBSheet
+        ref={refLoginSheet}
+        closeOnPressMask={true}
+        height={300}
+        customStyles={{
+          wrapper: {
+            backgroundColor: "rgba(0,0,0,0.5)",
+          },
+          draggableIcon: {
+            backgroundColor: dark ? COLORS.greyscale300 : COLORS.greyscale300,
+          },
+          container: {
+            borderTopRightRadius: 32,
+            borderTopLeftRadius: 32,
+            height: 300,
+            backgroundColor: dark ? COLORS.dark2 : COLORS.white,
+            alignItems: "center",
+            padding: 20,
+            justifyContent: "center",
+          },
+        }}
+      >
+        <Text
+          style={[
+            styles.bottomSubtitle,
+            {
+              color: dark ? COLORS.white : COLORS.black,
+              textAlign: "center",
+              marginBottom: 16,
+            },
+          ]}
+        >
+          You're not logged in
+        </Text>
+
+        <View style={styles.separateLine} />
+
+        <View style={{ padding: 20 }}>
+          <Text style={[styles.featureText, {
+            color: dark ? COLORS.white : COLORS.greyscale900
+          }]}>
+            Please log in to continue shopping and complete your purchase.
+          </Text>
+        </View>
+
+        <View style={styles.bottomContainer}>
+          <Button
+            title="Cancel"
+            style={{
+              width: (SIZES.width - 92) / 2 - 8,
+              backgroundColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary,
+              borderRadius: 32,
+              borderColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary,
+            }}
+            textColor={dark ? COLORS.white : COLORS.primary}
+            onPress={() => refLoginSheet.current?.close()}
+          />
+          <ButtonFilled
+            title="Login"
+            style={styles.removeButton2}
+            onPress={() => {
+              refLoginSheet.current?.close();
+              navigation.navigate("login");
+            }}
+          />
+        </View>
+      </RBSheet>
+
     </SafeAreaView>
   );
 };
@@ -345,6 +416,11 @@ const styles = StyleSheet.create({
   },
   removeButton: {
     width: (SIZES.width - 32) / 2 - 8,
+    backgroundColor: COLORS.primary,
+    borderRadius: 32
+  },
+  removeButton2: {
+    width: (SIZES.width - 92) / 2 - 8,
     backgroundColor: COLORS.primary,
     borderRadius: 32
   },
@@ -516,7 +592,11 @@ const styles = StyleSheet.create({
     width: 20,
     tintColor: COLORS.white,
     marginLeft: 8
-  }
+  },
+  featureText: {
+    fontSize: 16,
+    color: "#333",
+  },
 });
 
 export default Cart;

@@ -1,20 +1,20 @@
 import { fetchGraphQL } from '../fetchGraphql';
 import {
-    orderFetchFailure,
-    orderFetchStart,
-    orderFetchSuccess,
-    orderUrlAdd
+  orderFetchFailure,
+  orderFetchStart,
+  orderFetchSuccess,
+  orderUrlAdd
 } from '../reducers/orderReducers';
 
 
 export const addOrderUrl = (orderUrl: any) => async (dispatch: any) => {
-    dispatch(orderUrlAdd({ orderUrl }));
+  dispatch(orderUrlAdd({ orderUrl }));
 };
 
 export const fetchOrders = (customerAccessToken: string | null) => async (dispatch: any) => {
-    dispatch(orderFetchStart());
+  dispatch(orderFetchStart());
 
-    const query = `
+  const query = `
       query {
         customer(customerAccessToken: "${customerAccessToken}") {
           email
@@ -54,6 +54,12 @@ export const fetchOrders = (customerAccessToken: string | null) => async (dispat
                         image {
                           src
                         }
+                        price {
+                          amount
+                        }
+                        compareAtPrice {
+                          amount
+                        }
                         product {
                           vendor
                           productType
@@ -71,17 +77,17 @@ export const fetchOrders = (customerAccessToken: string | null) => async (dispat
       }
     `;
 
-    try {
-        const res = await fetchGraphQL(query, {
-            input: { customerAccessToken },
-        });
+  try {
+    const res = await fetchGraphQL(query, {
+      input: { customerAccessToken },
+    });
 
-        dispatch(
-            orderFetchSuccess({
-                orderItems: res.data.customer.orders.edges.map((edge: any) => edge.node),
-            })
-        );
-    } catch (err: any) {
-        dispatch(orderFetchFailure(err.message || 'Something went wrong'));
-    }
+    dispatch(
+      orderFetchSuccess({
+        orderItems: res.data.customer.orders.edges.map((edge: any) => edge.node),
+      })
+    );
+  } catch (err: any) {
+    dispatch(orderFetchFailure(err.message || 'Something went wrong'));
+  }
 };
