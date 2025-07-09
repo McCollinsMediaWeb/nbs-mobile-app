@@ -11,6 +11,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-virtualized-view";
 import AutoSlider from '../components/AutoSlider';
 import SocialIcon from '../components/SocialIcon';
@@ -64,6 +65,7 @@ const ProductDetails = () => {
     const cartItems = useAppSelector(state => state.cart.cartItems);
     const [totalPrice, setTotalPrice] = useState<number>(parseFloat(product?.variants[0]?.price ?? "0")); // store as number
     const [quantity, setQuantity] = useState(1);
+    const insets = useSafeAreaInsets();
 
     const { id } = route.params; // ✅ Now `id` is available
     const [isFavourite, setIsFavourite] = useState(false);
@@ -375,7 +377,10 @@ const ProductDetails = () => {
     }
     return (
         <View style={[styles.area,
-        { backgroundColor: dark ? COLORS.dark1 : COLORS.white }]}>
+        {
+            backgroundColor: dark ? COLORS.dark1 : COLORS.white,
+            paddingBottom: insets.bottom
+        }]}>
             <StatusBar hidden />
             {/* <ScrollView showsVerticalScrollIndicator={true}> */}
             <AutoSlider images={sliderImages} />
@@ -386,6 +391,7 @@ const ProductDetails = () => {
             <View style={[styles.cartBottomContainer, {
                 backgroundColor: dark ? COLORS.dark1 : COLORS.white,
                 borderTopColor: dark ? COLORS.dark1 : COLORS.white,
+                bottom: insets.bottom
             }]}>
                 <View>
                     <Text style={[styles.cartTitle, {
@@ -457,7 +463,8 @@ const ProductDetails = () => {
                     <TouchableOpacity
                         onPress={() => handleAddToCart(product)}
                         style={[styles.cartBtn, {
-                            backgroundColor: dark ? COLORS.white : COLORS.black
+                            // backgroundColor: dark ? COLORS.white : COLORS.black
+                            backgroundColor: COLORS.primaryRed
                         }]}
                     >
                         <Image

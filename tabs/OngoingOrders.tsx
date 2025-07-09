@@ -156,8 +156,10 @@ const OngoingOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps) 
                     dispatch(addOrderUrl(item.statusUrl))
                   }}
                   style={[styles.receiptBtn, {
-                    backgroundColor: dark ? COLORS.dark3 : COLORS.primary,
-                    borderColor: dark ? COLORS.dark3 : COLORS.primary,
+                    // backgroundColor: dark ? COLORS.dark3 : COLORS.primary,
+                    // borderColor: dark ? COLORS.dark3 : COLORS.primary,
+                    backgroundColor: COLORS.primaryRed,
+                    borderColor: COLORS.primaryRed,
                   }]}>
                   <Text style={styles.receiptBtnText}>More Details</Text>
                 </TouchableOpacity>
@@ -338,11 +340,13 @@ const styles = StyleSheet.create({
     width: (SIZES.width - 32) / 2 - 16,
     height: 36,
     borderRadius: 24,
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.primaryRed,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 6,
-    borderColor: COLORS.primary,
+    // borderColor: COLORS.primary,
+    borderColor: COLORS.primaryRed,
     borderWidth: 1.4,
     marginBottom: 12
   },

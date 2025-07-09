@@ -1,6 +1,10 @@
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { loginCustomer } from '@/utils/actions/userActions';
+import {
+    GoogleSignin,
+    isErrorWithCode
+} from '@react-native-google-signin/google-signin';
 import Checkbox from 'expo-checkbox';
 import { useNavigation } from 'expo-router';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
@@ -15,6 +19,12 @@ import { COLORS, SIZES, icons } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducers';
+
+GoogleSignin.configure({
+    webClientId: "718209129465-7msnbbuimc59gsntph4o9drd9n7ikikm.apps.googleusercontent.com",
+    iosClientId: "718209129465-kl54tsra6p0glvmi6ofg3u6dq53ptpsg.apps.googleusercontent.com",
+    scopes: ["profile", "email"],
+});
 
 const isTestMode = false;
 
@@ -40,6 +50,7 @@ const Login = () => {
     const user = useAppSelector(state => state.user);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
     const [error, setError] = useState(null);
+    const [googleData, setGoogleData] = useState<any>(null);
     const [isChecked, setChecked] = useState(false);
     const { colors, dark } = useTheme();
 
@@ -87,9 +98,48 @@ const Login = () => {
         console.log("Facebook Authentication")
     };
 
-    // Implementing google authentication
-    const googleAuthHandler = () => {
-        console.log("Google Authentication")
+
+    const googleAuthHandler = async () => {
+        try {
+            await GoogleSignin.hasPlayServices();
+
+            await GoogleSignin.signOut();
+
+            const userInfo = await GoogleSignin.signIn();
+
+            const email = userInfo?.data?.user?.email ?? '';
+            const googleId = userInfo?.data?.user?.id ?? '';
+
+            // Generate deterministic password
+            const generateFixedPassword = (id: string, email: string): string => {
+                const idSuffix = id.slice(-5);
+                const emailPrefix = email.split('@')[0].slice(0, 4);
+                return `GGL-${emailPrefix}${idSuffix}@2024`;
+            };
+
+            const password = generateFixedPassword(googleId, email);
+
+            const customerData = {
+                email,
+                password
+            };
+
+            if (!email || !password) {
+                return;
+            }
+
+            console.log("Customer Data for Shopify:", customerData);
+
+            dispatch(loginCustomer(email, password));
+
+        } catch (err) {
+            if (isErrorWithCode(err)) {
+                console.log("Google Sign-In error code:", err.code);
+            } else {
+                console.log("Non-Google sign-in error:", err);
+            }
+            return null;
+        }
     };
 
     return (
@@ -140,9 +190,10 @@ const Login = () => {
                         // onPress={() => navigate("(tabs)")}
                         onPress={handleSignin}
                         style={styles.button}
+                        isLoading={user?.loading}
                     />
                     <TouchableOpacity
-                        onPress={() => navigate("forgotpasswordmethods")}>
+                        onPress={() => navigate("forgotpasswordemail")}>
                         <Text style={[styles.forgotPasswordBtnText, {
                             color: dark ? COLORS.white : COLORS.primary
                         }]}>Forgot the password?</Text>
@@ -150,11 +201,11 @@ const Login = () => {
                     <View>
                         <OrSeparator text="or continue with" />
                         <View style={styles.socialBtnContainer}>
-                            <SocialButton
+                            {/* <SocialButton
                                 icon={icons.appleLogo}
                                 onPress={appleAuthHandler}
                                 tintColor={dark ? COLORS.white : COLORS.black}
-                            />
+                            /> */}
                             {/* <SocialButton
                                 icon={icons.facebook}
                                 onPress={facebookAuthHandler}

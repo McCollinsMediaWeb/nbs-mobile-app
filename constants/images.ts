@@ -1,5 +1,6 @@
 const ornament = require("../assets/images/ornament.png");
 const logo = require("../assets/images/logo.png");
+const nbsLogo = require("../assets/images/nbs-icon.png");
 const splashOnboarding = require("../assets/images/splash_onboarding.jpeg");
 const splashOnboarding2 = require("../assets/images/splash_onboarding2.jpeg");
 const splashOnboarding3 = require("../assets/images/splash_onboarding3.jpeg");
@@ -134,6 +135,7 @@ const backgroundAvatar3 = require("../assets/images/background_avatar3.png");
 export default {
     ornament,
     logo,
+    nbsLogo,
 
     banner1,
 

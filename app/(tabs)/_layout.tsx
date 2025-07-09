@@ -1,10 +1,12 @@
 import { useTheme } from "@/theme/ThemeProvider";
 import { Tabs } from "expo-router";
 import { Image, Platform, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { COLORS, FONTS, icons, SIZES } from "../../constants";
 
 const TabLayout = () => {
   const { dark } = useTheme();
+  const insets = useSafeAreaInsets();
 
   return (
     <Tabs
@@ -13,7 +15,8 @@ const TabLayout = () => {
         tabBarHideOnKeyboard: Platform.OS !== 'ios',
         tabBarStyle: {
           position: 'absolute',
-          bottom: 0,
+          // bottom: 0,
+          bottom: insets.bottom,
           right: 0,
           left: 0,
           elevation: 0,

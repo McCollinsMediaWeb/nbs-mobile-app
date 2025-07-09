@@ -213,8 +213,8 @@ const Home = () => {
   const renderBanner = () => {
     return (
       <View style={[styles.bannerItemContainer, {
-        // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
-        backgroundColor: "#fff"
+        // backgroundColor: dark ? COLORS.dark3 : "#fff"
+        // backgroundColor: "#fff"
       }]}>
         <FlatList
           data={banners}
@@ -385,7 +385,7 @@ const Home = () => {
     return (
       <View style={[styles.bannerItemContainer, {
         // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
-        backgroundColor: dark ? COLORS.dark3 : 'rgb(244, 244, 244)'
+        // backgroundColor: dark ? COLORS.dark3 : 'rgb(244, 244, 244)'
       }]}>
         <Text style={[styles.subTitle, {
           color: dark ? COLORS.white : COLORS.black
@@ -414,7 +414,7 @@ const Home = () => {
     return (
       <View style={[styles.bannerItemContainer, {
         // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
-        backgroundColor: dark ? COLORS.dark3 : colors.background
+        // backgroundColor: dark ? COLORS.dark3 : colors.background
       }]}>
         <Text style={[styles.subTitle, {
           color: dark ? COLORS.white : COLORS.black
@@ -498,7 +498,7 @@ const Home = () => {
     return (
       <View style={[styles.bannerItemContainer, {
         // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
-        backgroundColor: dark ? COLORS.dark3 : colors.background
+        // backgroundColor: dark ? COLORS.dark3 : colors.background
       }]}>
         <Text style={[styles.subTitle, {
           color: dark ? COLORS.white : COLORS.black
@@ -542,7 +542,7 @@ const Home = () => {
     return (
       <View style={[styles.bannerItemContainer, {
         // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
-        backgroundColor: dark ? COLORS.dark3 : colors.background
+        // backgroundColor: dark ? COLORS.dark3 : colors.background
       }]}>
         <Text style={[styles.subTitle, {
           color: dark ? COLORS.white : COLORS.black

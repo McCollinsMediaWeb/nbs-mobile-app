@@ -13,10 +13,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/nbs-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.sahadmccollins.NBS"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +38,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "01a2c8fe-b75c-490e-8461-9a026e5c31eb"
+      }
+    },
+    "owner": "sahadmccollins"
   }
 }

@@ -8,7 +8,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 import { WebView } from 'react-native-webview';
 import ButtonFilled from '../components/ButtonFilled';
@@ -21,6 +21,7 @@ const Checkout = () => {
   const { colors, dark } = useTheme();
   const dispatch = useAppDispatch();
   const webViewRef = useRef<WebView>(null);
+  const insets = useSafeAreaInsets();
   const cartItems = useAppSelector(state => state.cart.cartItems);
   const user = useAppSelector(state => state.user);
   const selectedAddress = useAppSelector(state => state.selectedAddress.selectedAddress);
@@ -121,27 +122,43 @@ const Checkout = () => {
                         />
                       </View>
                     </View>
-                    <View style={styles.viewAddress}>
-                      <View style={styles.viewView}>
-                        <Text style={[styles.homeTitle, {
-                          color: dark ? COLORS.white : COLORS.greyscale900
-                        }]}>{selectedAddress?.firstName + " " + selectedAddress?.lastName}</Text>
+                    {selectedAddress ? (
+                      <View style={styles.viewAddress}>
+                        <View style={styles.viewView}>
+                          <Text style={[styles.homeTitle, {
+                            color: dark ? COLORS.white : COLORS.greyscale900
+                          }]}>{selectedAddress?.firstName + " " + selectedAddress?.lastName}</Text>
 
-                        {user?.customer?.addresses?.edges[0]?.node?.id === selectedAddress?.id &&
-                          (
-                            <View style={styles.defaultView}>
-                              <Text style={[styles.defaultTitle, {
-                                color: dark ? COLORS.white : COLORS.primary
-                              }]}>Default</Text>
-                            </View>
-                          )}
+                          {user?.customer?.addresses?.edges[0]?.node?.id === selectedAddress?.id &&
+                            (
+                              <View style={styles.defaultView}>
+                                <Text style={[styles.defaultTitle, {
+                                  color: dark ? COLORS.white : COLORS.primary
+                                }]}>Default</Text>
+                              </View>
+                            )}
 
+                        </View>
+                        <Text style={[styles.addressTitle, {
+                          color: dark ? COLORS.grayscale200 : COLORS.grayscale700
+                        }]}>
+                          {selectedAddress?.city + ", " + selectedAddress?.province}</Text>
                       </View>
-                      <Text style={[styles.addressTitle, {
-                        color: dark ? COLORS.grayscale200 : COLORS.grayscale700
-                      }]}>
-                        {selectedAddress?.city + ", " + selectedAddress?.province}</Text>
-                    </View>
+                    ) : (
+                      <View style={styles.viewAddress}>
+                        <View style={styles.viewView}>
+                          <Text style={[styles.homeTitle, {
+                            color: dark ? COLORS.white : COLORS.greyscale900
+                          }]}>No Address Selected</Text>
+
+                        </View>
+                        <Text style={[styles.addressTitle, {
+                          color: dark ? COLORS.grayscale200 : COLORS.grayscale700
+                        }]}>
+                          Please select or add a shipping address to continue.</Text>
+                      </View>
+                    )}
+
                   </View>
                   <Image
                     source={icons.arrowRight}
@@ -277,11 +294,13 @@ const Checkout = () => {
           </View>
           <View style={[styles.buttonContainer, {
             backgroundColor: dark ? COLORS.dark2 : COLORS.white,
+            bottom: insets.bottom,
+            opacity: selectedAddress != null ? 1 : 0.5
           }]}>
             <ButtonFilled
               title="Continue to Checkout"
               // onPress={() => navigation.navigate("paymentmethods")}
-              onPress={confirmCheckout}
+              onPress={selectedAddress != null ? confirmCheckout : () => { }}
               style={styles.placeOrderButton}
             />
           </View>

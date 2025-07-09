@@ -1,4 +1,5 @@
 import AddressItem from '@/components/AddressItem';
+import NotFoundCard from '@/components/NotFoundCard';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { updateSelectedAddress } from '@/utils/actions/selectedAddressActions';
@@ -62,7 +63,7 @@ const SelectShippingAddress = () => {
           }}
           showsVerticalScrollIndicator={false}>
 
-          {addresses.length > 0 &&
+          {addresses.length > 0 ? (
             addresses.map((item: { node: AddressNode }) => (
               <AddressItem
                 key={item.node.id}
@@ -71,7 +72,11 @@ const SelectShippingAddress = () => {
                 name={`${item.node.firstName} ${item.node.lastName}`}
                 address={`${item.node.city}, ${item.node.province}`}
               />
-            ))}
+            ))
+          ) : (
+            <NotFoundCard />
+          )}
+
           <Button
             title="Add New Address"
             style={{
@@ -86,7 +91,8 @@ const SelectShippingAddress = () => {
         </ScrollView>
         <ButtonFilled
           title="Apply"
-          onPress={handleApply}
+          onPress={addresses.length <= 0 ? () => { } : handleApply}
+          style={{ opacity: addresses.length <= 0 ? 0.5 : 1 }}
         />
       </View>
     </SafeAreaView>

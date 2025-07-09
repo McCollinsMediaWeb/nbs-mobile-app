@@ -483,7 +483,8 @@ const styles = StyleSheet.create({
   },
   logoutButton: {
     width: (SIZES.width - 32) / 2 - 8,
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.primaryRed,
     borderRadius: 32
   },
   bottomTitle: {

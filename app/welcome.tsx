@@ -22,10 +22,10 @@ const Welcome = () => {
                 <Image source={dark ? illustrations.welcomeDark : illustrations.welcome} resizeMode="contain" style={styles.logo} />
                 <Text style={[styles.title, { color: colors.text }]}>Let’s you in</Text>
                 <View style={{ marginVertical: 22 }}>
-                    <SocialButtonV2 title="Continue with Facebook" icon={icons.facebook} onPress={() => navigate("signup")} />
+                    {/* <SocialButtonV2 title="Continue with Facebook" icon={icons.facebook} onPress={() => navigate("signup")} /> */}
                     <SocialButtonV2 title="Continue with Google" icon={icons.google} onPress={() => navigate("signup")} />
-                    <SocialButtonV2 title="Continue with Apple" icon={icons.appleLogo} onPress={() => navigate("signup")}
-                        iconStyles={{ tintColor: dark ? COLORS.white : COLORS.black }} />
+                    {/* <SocialButtonV2 title="Continue with Apple" icon={icons.appleLogo} onPress={() => navigate("signup")}
+                        iconStyles={{ tintColor: dark ? COLORS.white : COLORS.black }} /> */}
                 </View>
                 <View style={styles.lineContainer}>
                     <View style={[styles.line, { backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200 }]} />
@@ -39,7 +39,8 @@ const Welcome = () => {
                     style={{
                         width: "100%",
                         marginVertical: 22,
-                        backgroundColor: dark ? COLORS.white : COLORS.primary
+                        // backgroundColor: dark ? COLORS.white : COLORS.primary
+                        backgroundColor: COLORS.primaryRed
                     }}
                 />
                 <Button
@@ -48,7 +49,8 @@ const Welcome = () => {
                     textColor={dark ? "#101010" : COLORS.white}
                     style={{
                         width: "100%",
-                        backgroundColor: dark ? COLORS.white : COLORS.primary
+                        // backgroundColor: dark ? COLORS.white : COLORS.primary
+                        backgroundColor: COLORS.primaryRed
                     }}
                 />
                 <View style={{ flexDirection: "row", marginTop: 22 }}>

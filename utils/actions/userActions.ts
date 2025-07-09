@@ -336,3 +336,33 @@ export const updateAddress = (addressData: {
 export const logoutCustomer = () => (dispatch: any) => {
   dispatch(userLogout());
 };
+
+export const forgotPassword = async (email: string) => {
+  const query = `
+    mutation {
+      customerRecover(email: "${email}") {
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  try {
+    const res = await fetchGraphQL(query, {
+      input: { email },
+    });
+
+    const errors = res?.data?.customerRecover?.userErrors;
+
+    if (errors?.length > 0) {
+      throw new Error(errors[0].message);
+    }
+
+    alert('Password reset link sent to your email.');
+  } catch (err: any) {
+    alert('Something went wrong.');
+    console.error('Forgot password error:', err);
+  }
+};

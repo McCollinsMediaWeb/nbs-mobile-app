@@ -1,4 +1,5 @@
-import Checkbox from 'expo-checkbox';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { forgotPassword } from '@/utils/actions/userActions';
 import { useNavigation } from 'expo-router';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -11,7 +12,7 @@ import { useTheme } from '../theme/ThemeProvider';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducers';
 
-const isTestMode = true;
+const isTestMode = false;
 
 const initialState = {
     inputValues: {
@@ -29,7 +30,9 @@ type Nav = {
 
 const ForgotPasswordEmail = () => {
     const { navigate } = useNavigation<Nav>();
+    const dispatch = useAppDispatch();
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [isChecked, setChecked] = useState(false);
     const { colors, dark } = useTheme();
@@ -50,6 +53,21 @@ const ForgotPasswordEmail = () => {
         }
     }, [error])
 
+    const handleForgotPassword = async () => {
+        const isFormValid = Object.values(formState.inputValidities).every(v => v === undefined);
+        if (!isFormValid) {
+            Alert.alert('Invalid Input', 'Please fill all fields correctly.');
+            return;
+        }
+
+        const { email } = formState.inputValues;
+
+        setLoading(true);
+        await forgotPassword(email);
+        setLoading(false);
+        navigate("login")
+    };
+
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -57,7 +75,7 @@ const ForgotPasswordEmail = () => {
                 <ScrollView style={{ marginVertical: 54 }} showsVerticalScrollIndicator={false}>
                     <View style={styles.logoContainer}>
                         <Image
-                            source={images.logo}
+                            source={images.nbsLogo}
                             resizeMode='contain'
                             style={[styles.logo, {
                                 tintColor: dark ? COLORS.white : COLORS.black
@@ -76,7 +94,7 @@ const ForgotPasswordEmail = () => {
                         icon={icons.email}
                         keyboardType="email-address"
                     />
-                    <View style={styles.checkBoxContainer}>
+                    {/* <View style={styles.checkBoxContainer}>
                         <Checkbox
                             style={styles.checkbox}
                             value={isChecked}
@@ -88,17 +106,19 @@ const ForgotPasswordEmail = () => {
                                 color: dark ? COLORS.white : COLORS.black
                             }]}>Remenber me</Text>
                         </View>
-                    </View>
+                    </View> */}
                     <ButtonFilled
                         title="Reset Password"
-                        onPress={() => navigate("otpverification")}
+                        // onPress={() => navigate("otpverification")}
+                        onPress={handleForgotPassword}
                         style={styles.button}
+                        isLoading={loading}
                     />
                     <TouchableOpacity
                         onPress={() => navigate("login")}>
                         <Text style={[styles.forgotPasswordBtnText, {
                             color: dark ? COLORS.white : COLORS.primary
-                        }]}>Remenber the password?</Text>
+                        }]}>Remember the password?</Text>
                     </TouchableOpacity>
                     <View>
                     </View>

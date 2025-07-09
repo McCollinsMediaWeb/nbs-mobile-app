@@ -5,6 +5,7 @@ import { useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useRef, useState } from 'react';
 import { FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface Slide {
     id: string;
@@ -43,6 +44,7 @@ const OnboardingScreen: React.FC<{ onDone?: () => void }> = ({ onDone }) => {
     const navigation = useNavigation<NavigationProp<any>>();
     const [currentIndex, setCurrentIndex] = useState(0);
     const listRef = useRef<FlatList>(null);
+    const insets = useSafeAreaInsets();
     const { colors, dark } = useTheme();
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 });
@@ -78,7 +80,7 @@ const OnboardingScreen: React.FC<{ onDone?: () => void }> = ({ onDone }) => {
     );
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+        <SafeAreaView style={[styles.container, { backgroundColor: colors.background, paddingBottom: insets.bottom }]}>
             <StatusBar style="dark" />
             <FlatList
                 data={slides}
@@ -105,7 +107,10 @@ const OnboardingScreen: React.FC<{ onDone?: () => void }> = ({ onDone }) => {
                         />
                     ))}
                 </View>
-                <TouchableOpacity style={[styles.button, { backgroundColor: dark ? COLORS.white : COLORS.primary }]} onPress={handleNext} activeOpacity={0.7}>
+                <TouchableOpacity style={[styles.button,
+                //  { backgroundColor: dark ? COLORS.white : COLORS.primary }
+                { backgroundColor: COLORS.primaryRed }
+                ]} onPress={handleNext} activeOpacity={0.7}>
                     <Text style={[styles.buttonText, { color: dark ? "#101010" : COLORS.white }]}>{currentIndex === slides.length - 1 ? 'Get Started' : 'Next'}</Text>
                 </TouchableOpacity>
             </View>

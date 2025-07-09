@@ -1,9 +1,9 @@
 import React from 'react';
 import {
+    ActivityIndicator,
+    StyleSheet,
     Text,
     TouchableOpacity,
-    StyleSheet,
-    ActivityIndicator,
 } from 'react-native';
 import { COLORS, SIZES } from '../constants';
 
@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
     btn: {
         paddingHorizontal: SIZES.padding,
         paddingVertical: SIZES.padding,
-        borderColor: COLORS.primary,
+        // borderColor: COLORS.primary,
+        borderColor: COLORS.primaryRed,
         borderWidth: 1,
         borderRadius: 25,
         alignItems: 'center',

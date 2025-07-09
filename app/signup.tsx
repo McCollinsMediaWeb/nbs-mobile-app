@@ -3,6 +3,7 @@ import Input from '@/components/Input';
 import OrSeparator from '@/components/OrSeparator';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { GoogleSignin, isErrorWithCode } from '@react-native-google-signin/google-signin';
 import Checkbox from 'expo-checkbox';
 import { useNavigation } from 'expo-router';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
@@ -10,7 +11,7 @@ import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'rea
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonFilled from '../components/ButtonFilled';
 import SocialButton from '../components/SocialButton';
-import { COLORS, SIZES, icons } from '../constants';
+import { COLORS, icons, SIZES } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 import { validateInput } from '../utils/actions/formActions';
 import { signupCustomer } from '../utils/actions/userActions';
@@ -94,10 +95,51 @@ const Signup = () => {
         console.log("Facebook Authentication")
     };
 
-    // Implementing google authentication
-    const googleAuthHandler = () => {
-        console.log("Google Authentication")
+    const googleAuthHandler = async () => {
+        try {
+            await GoogleSignin.hasPlayServices();
+
+            await GoogleSignin.signOut();
+
+            const userInfo = await GoogleSignin.signIn();
+
+            const email = userInfo?.data?.user?.email ?? '';
+            const firstName = userInfo?.data?.user?.givenName ?? '';
+            const lastName = userInfo?.data?.user?.familyName ?? '';
+            const googleId = userInfo?.data?.user?.id ?? '';
+
+            // Generate deterministic password
+            const generateFixedPassword = (id: string, email: string): string => {
+                const idSuffix = id.slice(-5);
+                const emailPrefix = email.split('@')[0].slice(0, 4);
+                return `GGL-${emailPrefix}${idSuffix}@2024`;
+            };
+
+            const password = generateFixedPassword(googleId, email);
+
+            const customerData = {
+                email,
+                firstName,
+                lastName,
+                password,
+            };
+
+            if (!email || !password) {
+                return;
+            }
+
+            dispatch(signupCustomer(email, password, firstName, lastName));
+
+        } catch (err) {
+            if (isErrorWithCode(err)) {
+                console.log("Google Sign-up error code:", err.code);
+            } else {
+                console.log("Non-Google sign-up error:", err);
+            }
+            return null;
+        }
     };
+
 
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
@@ -164,15 +206,16 @@ const Signup = () => {
                         title="Sign Up"
                         onPress={handleSignup}
                         style={styles.button}
+                        isLoading={user.loading}
                     />
                     <View>
                         <OrSeparator text="or continue with" />
                         <View style={styles.socialBtnContainer}>
-                            <SocialButton
+                            {/* <SocialButton
                                 icon={icons.appleLogo}
                                 onPress={appleAuthHandler}
                                 tintColor={dark ? COLORS.white : COLORS.black}
-                            />
+                            /> */}
                             {/* <SocialButton
                                 icon={icons.facebook}
                                 onPress={facebookAuthHandler}

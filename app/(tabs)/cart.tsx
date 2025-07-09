@@ -211,8 +211,12 @@ const Cart: React.FC = () => {
             </Text>
           </View>
           <TouchableOpacity
+            disabled={resultsCount <= 0}
             onPress={() => user.accessToken ? navigation.navigate("checkout") : refLoginSheet.current?.open()}
-            style={styles.cartBtn}>
+            style={[
+              styles.cartBtn,
+              resultsCount <= 0 && { opacity: 0.5 },
+            ]}>
             <Text style={styles.cartBtnText}>Continue</Text>
             <Image
               source={icons.rightArrow2}
@@ -220,6 +224,7 @@ const Cart: React.FC = () => {
               style={styles.bagIcon}
             />
           </TouchableOpacity>
+
         </View>
       </View>
       <RBSheet
@@ -416,12 +421,14 @@ const styles = StyleSheet.create({
   },
   removeButton: {
     width: (SIZES.width - 32) / 2 - 8,
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.primaryRed,
     borderRadius: 32
   },
   removeButton2: {
     width: (SIZES.width - 92) / 2 - 8,
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.primaryRed,
     borderRadius: 32
   },
   bottomTitle: {
@@ -578,7 +585,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 32,
-    backgroundColor: COLORS.black,
+    // backgroundColor: COLORS.black,
+    backgroundColor: COLORS.primaryRed,
     flexDirection: "row",
   },
   cartBtnText: {
