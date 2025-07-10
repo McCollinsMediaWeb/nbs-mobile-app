@@ -16,6 +16,7 @@ import { persistReducer, persistStore } from "redux-persist";
 
 import cartReducer from './reducers/cartReducers';
 import collectionReducer from './reducers/collectionReducers';
+import generalSettingsReducer from "./reducers/generalSettingsReducers";
 import orderReducer from "./reducers/orderReducers";
 import productReducer from './reducers/productReducers';
 import recommendedProductsReducer from "./reducers/recommendedProductsReducers";
@@ -35,7 +36,8 @@ const rootReducer = combineReducers({
     shopifyCart: shopifyCartReducer,
     orders: orderReducer,
     search: searchReducer,
-    recommendedProducts: recommendedProductsReducer
+    recommendedProducts: recommendedProductsReducer,
+    generalSettings: generalSettingsReducer
 });
 
 const persistConfig = {

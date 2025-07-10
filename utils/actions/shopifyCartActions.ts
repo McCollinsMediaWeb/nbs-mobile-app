@@ -1,8 +1,8 @@
 import { fetchGraphQL } from '../fetchGraphql';
 import {
-    shopifyCartCreateFailure,
-    shopifyCartCreateStart,
-    shopifyCartCreateSuccess
+  shopifyCartCreateFailure,
+  shopifyCartCreateStart,
+  shopifyCartCreateSuccess
 } from '../reducers/shopifyCartReducers';
 
 export const createShopifyCheckoutUrl = (cartDetail: any) => async (dispatch: any) => {

@@ -24,6 +24,18 @@ const Profile = () => {
   const { navigate } = useNavigation<Nav>();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.user);
+  const appLanguage = useAppSelector(state => state.generalSettings.language);
+  // const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
+
+  // useEffect(() => {
+  //   const loadLanguage = async () => {
+  //     const lang = await AsyncStorage.getItem('language');
+  //     if (lang) setSelectedLanguage(lang);
+  //   };
+  //   loadLanguage();
+  // }, []);
+
+  // console.log("setSelectedLanguage", selectedLanguage)
 
   /**
    * Render header
@@ -178,7 +190,7 @@ const Profile = () => {
           <View style={styles.rightContainer}>
             <Text style={[styles.rightLanguage, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}>English (US)</Text>
+            }]}>{appLanguage === "ar" ? "Arabic" : "English (US)"}</Text>
             <Image
               source={icons.arrowRight}
               resizeMode='contain'

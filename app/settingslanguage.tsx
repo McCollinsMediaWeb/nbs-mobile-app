@@ -1,26 +1,57 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
-import { COLORS } from '../constants';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Header from '../components/Header';
-import { ScrollView } from 'react-native-virtualized-view';
-import { useTheme } from '../theme/ThemeProvider';
 import LanguageItem from '@/components/LanguageItem';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { fetchCollections } from '@/utils/actions/collectionActions';
+import { changeAppLanguage } from '@/utils/actions/generalSettingsActions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-virtualized-view';
+import Header from '../components/Header';
+import { COLORS } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
 
 // Select your prefered language
 const SettingsLanguage = () => {
-    const [selectedItem, setSelectedItem] = useState(null);
+    const dispatch = useAppDispatch();
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
     const { colors, dark } = useTheme();
 
-    const handleCheckboxPress = (itemTitle: any) => {
-        if (selectedItem === itemTitle) {
-            // If the clicked item is already selected, deselect it
-            setSelectedItem(null);
-        } else {
-            // Otherwise, select the clicked item
-            setSelectedItem(itemTitle);
+    const handleCheckboxPress = async (itemTitle: string) => {
+        if (appLanguage !== itemTitle) {
+            try {
+                await AsyncStorage.setItem('language', itemTitle);
+                dispatch(changeAppLanguage(itemTitle));
+
+                const collectionIds = [
+                    'gid://shopify/Collection/439108698324',
+                    'gid://shopify/Collection/439109091540',
+                    'gid://shopify/Collection/439668539604',
+                ];
+                dispatch(fetchCollections(collectionIds));
+
+            } catch (error) {
+                console.error("Failed to update language:", error);
+            }
         }
     };
+
+    // const handleCheckboxPress = async (langCode: string) => {
+    //     if (langCode !== selectedLanguage) {
+    //         await AsyncStorage.setItem('language', langCode);
+    //         setSelectedLanguage(langCode);
+    //     }
+    // };
+
+    // Load language from AsyncStorage on mount
+    // useEffect(() => {
+    //     const loadLanguage = async () => {
+    //         const lang = await AsyncStorage.getItem('language');
+    //         if (lang) setSelectedLanguage(lang);
+    //     };
+    //     loadLanguage();
+    // }, [handleCheckboxPress]);
 
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
@@ -30,17 +61,17 @@ const SettingsLanguage = () => {
                     <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.black }]}>Suggested</Text>
                     <View style={{ marginTop: 12 }}>
                         <LanguageItem
-                            checked={selectedItem === 'English (US)'}
+                            checked={appLanguage === 'en'}
                             name="English (US)"
-                            onPress={() => handleCheckboxPress('English (US)')}
+                            onPress={() => handleCheckboxPress('en')}
                         />
                         <LanguageItem
-                            checked={selectedItem === 'English (UK)'}
-                            name="English (UK)"
-                            onPress={() => handleCheckboxPress('English (UK)')}
+                            checked={appLanguage === 'ar'}
+                            name="Arabic"
+                            onPress={() => handleCheckboxPress('ar')}
                         />
                     </View>
-                    <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.black }]}>Others</Text>
+                    {/* <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.black }]}>Others</Text>
                     <LanguageItem
                         checked={selectedItem === 'Mandarin'}
                         name="Mandarin"
@@ -120,7 +151,7 @@ const SettingsLanguage = () => {
                         checked={selectedItem === 'Kannada'}
                         name="Kannada"
                         onPress={() => handleCheckboxPress('Kannada')}
-                    />
+                    /> */}
                 </ScrollView>
             </View>
         </SafeAreaView>

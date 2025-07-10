@@ -1,4 +1,5 @@
 import ProductCard from '@/components/ProductCard';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { fetchGraphQL } from '@/utils/fetchGraphql';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
@@ -31,6 +32,7 @@ const AllProducts = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [hasNextPage, setHasNextPage] = useState(false);
     const [endCursor, setEndCursor] = useState<string | null>(null);
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
 
 
     useEffect(() => {

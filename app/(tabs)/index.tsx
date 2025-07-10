@@ -541,6 +541,7 @@ const Home = () => {
     const filteredProducts = targetCollection ? targetCollection.products : [];
     return (
       <View style={[styles.bannerItemContainer, {
+        paddingBottom: 30
         // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
         // backgroundColor: dark ? COLORS.dark3 : colors.background
       }]}>

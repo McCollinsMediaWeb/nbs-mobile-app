@@ -15,6 +15,7 @@ const Onboarding1 = () => {
     const { navigate } = useNavigation<Nav>();
     const dispatch = useAppDispatch();
     const user = useAppSelector(state => state.user);
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
     const collections = useAppSelector((state) => state.collections.data);
     const [hydrated, setHydrated] = React.useState(false);
 

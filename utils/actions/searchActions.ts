@@ -1,7 +1,7 @@
 import { fetchGraphQL } from '../fetchGraphql';
 import {
-    searchProductsSuccess,
-    searchSuggestionSuccess
+  searchProductsSuccess,
+  searchSuggestionSuccess
 } from '../reducers/searchReducers';
 
 export const searchProducts = (searchTerm: any) => async (dispatch: any) => {
@@ -47,7 +47,7 @@ export const searchProducts = (searchTerm: any) => async (dispatch: any) => {
 
     try {
         const res = await fetchGraphQL(query, {
-            input: { searchTerm },
+            input: { searchTerm }
         });
 
         const products = res.data.products.edges.map((edge: any) => ({
