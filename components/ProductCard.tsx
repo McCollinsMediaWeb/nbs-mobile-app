@@ -121,9 +121,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
                     <View style={styles.priceContainer}>
                         <Text style={styles.price}>{"AED " + parseFloat(price).toFixed(2)}</Text>
                     </View>
-                    <View style={styles.oldPriceContainer}>
-                        <Text style={styles.oldPrice}>{"AED " + parseFloat(oldPrice).toFixed(2)}</Text>
-                    </View>
+                    {Number(oldPrice) > 0 && (
+                        <View style={styles.oldPriceContainer}>
+                            <Text style={styles.oldPrice}>{"AED " + parseFloat(oldPrice).toFixed(2)}</Text>
+                        </View>
+                    )}
                 </View>
             </TouchableOpacity>
 

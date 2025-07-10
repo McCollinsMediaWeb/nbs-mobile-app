@@ -18,6 +18,7 @@ import cartReducer from './reducers/cartReducers';
 import collectionReducer from './reducers/collectionReducers';
 import orderReducer from "./reducers/orderReducers";
 import productReducer from './reducers/productReducers';
+import recommendedProductsReducer from "./reducers/recommendedProductsReducers";
 import searchReducer from "./reducers/searchReducers";
 import selectedAddressReducer from './reducers/selectedAddressReducers';
 import shopifyCartReducer from "./reducers/shopifyCartReducers";
@@ -33,7 +34,8 @@ const rootReducer = combineReducers({
     wishlist: wishlistReducer,
     shopifyCart: shopifyCartReducer,
     orders: orderReducer,
-    search: searchReducer
+    search: searchReducer,
+    recommendedProducts: recommendedProductsReducer
 });
 
 const persistConfig = {

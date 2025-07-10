@@ -1,7 +1,9 @@
+import ProductCard from "@/components/ProductCard";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { addProductToCart } from "@/utils/actions/cartActions";
 import { clearProductFirst, fetchProduct } from "@/utils/actions/productActions";
+import { fetchRecommendedProducts } from "@/utils/actions/recommendedProductsActions";
 import { addProductToWishlist, checkWishlistStatus } from "@/utils/actions/wishListActions";
 import { decrementProduct, incrementProduct } from "@/utils/reducers/cartReducers";
 import { Feather, FontAwesome } from "@expo/vector-icons";
@@ -61,6 +63,7 @@ const ProductDetails = () => {
     const route = useRoute<ProductDetailsRouteProp>();
     const dispatch = useAppDispatch();
     const product = useAppSelector(state => state.product.data);
+    const recommendedProducts = useAppSelector(state => state.recommendedProducts.data)
     // const [totalPrice, setTotalPrice] = useState<string>(parseFloat(product?.variants[0]?.price ?? "0").toFixed(2));
     const cartItems = useAppSelector(state => state.cart.cartItems);
     const [totalPrice, setTotalPrice] = useState<number>(parseFloat(product?.variants[0]?.price ?? "0")); // store as number
@@ -85,8 +88,7 @@ const ProductDetails = () => {
     useEffect(() => {
         dispatch(clearProductFirst());
         dispatch(fetchProduct(id));
-
-        // dispatch(fetchProductRecommendations(id));
+        dispatch(fetchRecommendedProducts(id));
     }, [dispatch, id]);
 
     const sliderImages = (product?.images ?? []).map(img => ({ uri: img.src }));
@@ -369,9 +371,52 @@ const ProductDetails = () => {
                     ) : null}
                 </View>
 
-                <View style={[styles.separateLine, {
+                {/* <View style={[styles.separateLine, {
                     backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
-                }]} />
+                }]} /> */}
+            </View>
+        )
+    }
+
+    const renderRecommendedProducts = () => {
+        return (
+            <View style={[styles.contentContainer, {
+                // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
+                // backgroundColor: dark ? COLORS.dark3 : colors.background
+            }]}>
+                {/* <Text style={[styles.mainTitle, {
+                    color: dark ? COLORS.white : COLORS.black
+                }]}>You might also like</Text> */}
+
+                <Text style={[styles.contentTitle, {
+                    color: dark ? COLORS.white : COLORS.black
+                }]}>
+                    You might also like
+                </Text>
+                <View style={{ padding: 16, marginBottom: 70 }} >
+                    <FlatList
+                        data={recommendedProducts}
+                        keyExtractor={item => item.id}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        renderItem={({ item }) => {
+                            return (
+                                <View>
+                                    <ProductCard
+                                        merchandiseId={item.id}
+                                        name={item.title}
+                                        image={item?.image}
+                                        price={item.price}
+                                        oldPrice={item.oldPrice}
+                                        onPress={() => navigation.navigate("productdetails", {
+                                            id: item.id,
+                                        })}
+                                    />
+                                </View>
+                            )
+                        }}
+                    />
+                </View>
             </View>
         )
     }
@@ -387,6 +432,7 @@ const ProductDetails = () => {
             {renderHeader()}
             <ScrollView showsVerticalScrollIndicator={false}>
                 {renderContent()}
+                {renderRecommendedProducts()}
             </ScrollView>
             <View style={[styles.cartBottomContainer, {
                 backgroundColor: dark ? COLORS.dark1 : COLORS.white,
@@ -888,7 +934,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 200,
         marginTop: 16,
-        marginBottom: 90
+        // marginBottom: 90
     },
 })
 
