@@ -9,6 +9,7 @@ import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -66,6 +67,7 @@ const UpdateAddress = () => {
     const [selectedLabel, setSelectedLabel] = useState(null);
     const { dark, colors } = useTheme();
     const user = useAppSelector(state => state.user);
+    const { t } = useTranslation();
 
     const handleLabelSelection = (label: any) => {
         setSelectedLabel(label)
@@ -156,7 +158,7 @@ const UpdateAddress = () => {
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
             <StatusBar hidden={true} />
             <View style={{ padding: 16 }}>
-                <Header title="Update Address" />
+                <Header title={t('addNewAddress.title2')} />
             </View>
             <View>
                 <View
@@ -174,14 +176,14 @@ const UpdateAddress = () => {
                                 <Text style={[commonStyles.inputHeader, {
                                     color: dark ? COLORS.white : COLORS.greyscale900
                                 }]}>
-                                    First Name*
+                                    {t('addNewAddress.item1.label')}
                                 </Text>
                                 <Input
                                     id="firstName"
                                     value={formState.inputValues.firstName}
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['firstName']}
-                                    placeholder="Type your name"
+                                    placeholder={t('addNewAddress.item1.placeholder')}
                                     placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                                 />
                             </View>
@@ -193,14 +195,14 @@ const UpdateAddress = () => {
                                 <Text style={[commonStyles.inputHeader, {
                                     color: dark ? COLORS.white : COLORS.greyscale900
                                 }]}>
-                                    Last Name*
+                                    {t('addNewAddress.item2.label')}
                                 </Text>
                                 <Input
                                     id="lastName"
                                     value={formState.inputValues.lastName}
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['lastName']}
-                                    placeholder="Type your name"
+                                    placeholder={t('addNewAddress.item2.placeholder')}
                                     placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                                 />
                             </View>
@@ -212,14 +214,14 @@ const UpdateAddress = () => {
                                 <Text style={[commonStyles.inputHeader, {
                                     color: dark ? COLORS.white : COLORS.greyscale900
                                 }]}>
-                                    Mobile No.*
+                                    {t('addNewAddress.item3.label')}
                                 </Text>
                                 <Input
                                     id="phoneNumber"
                                     value={formState.inputValues.phoneNumber}
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['phoneNumber']}
-                                    placeholder="Type your mobile no."
+                                    placeholder={t('addNewAddress.item3.placeholder')}
                                     placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                                 />
                             </View>
@@ -231,14 +233,14 @@ const UpdateAddress = () => {
                                 <Text style={[commonStyles.inputHeader, {
                                     color: dark ? COLORS.white : COLORS.greyscale900
                                 }]}>
-                                    Address*
+                                    {t('addNewAddress.item4.label')}
                                 </Text>
                                 <Input
                                     id="address"
                                     value={formState.inputValues.address}
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['address']}
-                                    placeholder="Enter Address"
+                                    placeholder={t('addNewAddress.item4.placeholder')}
                                     placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                                 />
                             </View>
@@ -246,14 +248,14 @@ const UpdateAddress = () => {
                                 <Text style={[commonStyles.inputHeader, {
                                     color: dark ? COLORS.white : COLORS.greyscale900
                                 }]}>
-                                    City / District
+                                    {t('addNewAddress.item5.label')}
                                 </Text>
                                 <Input
                                     id="city"
                                     value={formState.inputValues.city}
                                     onInputChanged={inputChangedHandler}
                                     errorText={formState.inputValidities['city']}
-                                    placeholder="Enter city"
+                                    placeholder={t('addNewAddress.item5.placeholder')}
                                     placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                                 />
                             </View>
@@ -262,7 +264,7 @@ const UpdateAddress = () => {
                                 {/* Emirate select */}
                                 <View style={{ width: (SIZES.width - 32) / 2 - 10 }}>
                                     <Text style={[commonStyles.inputHeader, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>
-                                        Emirate*
+                                        {t('addNewAddress.item6.label')}
                                     </Text>
                                     <View
                                         style={{
@@ -276,14 +278,14 @@ const UpdateAddress = () => {
                                             onValueChange={(value) => inputChangedHandler('emirate', value)}
                                             style={{ color: dark ? COLORS.white : COLORS.black }}
                                         >
-                                            <Picker.Item label="Select an Emirate" value="" color={dark ? COLORS.grayTie : COLORS.grayTie} />
-                                            <Picker.Item label="Abu Dhabi" value="Abu Dhabi" />
-                                            <Picker.Item label="Dubai" value="Dubai" />
-                                            <Picker.Item label="Sharjah" value="Sharjah" />
-                                            <Picker.Item label="Ajman" value="Ajman" />
-                                            <Picker.Item label="Ras Al Khaimah" value="Ras Al Khaimah" />
-                                            <Picker.Item label="Fujairah" value="Fujairah" />
-                                            <Picker.Item label="Umm Al Quwain" value="Umm Al Quwain" />
+                                            <Picker.Item label={t('addNewAddress.item6.placeholder')} value="" color={dark ? COLORS.grayTie : COLORS.grayTie} />
+                                            <Picker.Item label={t('addNewAddress.abudhabi')} value="Abu Dhabi" />
+                                            <Picker.Item label={t('addNewAddress.dubai')} value="Dubai" />
+                                            <Picker.Item label={t('addNewAddress.sharjah')} value="Sharjah" />
+                                            <Picker.Item label={t('addNewAddress.ajman')} value="Ajman" />
+                                            <Picker.Item label={t('addNewAddress.rasalkhaimah')} value="Ras Al Khaimah" />
+                                            <Picker.Item label={t('addNewAddress.fujairah')} value="Fujairah" />
+                                            <Picker.Item label={t('addNewAddress.ummalquwain')} value="Umm Al Quwain" />
                                         </Picker>
                                     </View>
                                     {formState.inputValidities['emirate'] && (
@@ -294,14 +296,14 @@ const UpdateAddress = () => {
                                 {/* Pin Code */}
                                 <View style={{ width: (SIZES.width - 32) / 2 - 10 }}>
                                     <Text style={[commonStyles.inputHeader, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>
-                                        Pin Code*
+                                        {t('addNewAddress.item7.label')}
                                     </Text>
                                     <Input
                                         id="pinCode"
                                         value={formState.inputValues.pinCode}
                                         onInputChanged={inputChangedHandler}
                                         errorText={formState.inputValidities['pinCode']}
-                                        placeholder="Enter Pin Code"
+                                        placeholder={t('addNewAddress.item7.placeholder')}
                                         placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                                     />
                                 </View>
@@ -312,7 +314,7 @@ const UpdateAddress = () => {
                         <Text style={[commonStyles.inputHeader, {
                             color: dark ? COLORS.white : COLORS.greyscale900
                         }]}>
-                            Save Address As
+                            {t('addNewAddress.item8.label')}
                         </Text>
                         <View
                             style={{ flexDirection: 'row', marginVertical: 13 }}>
@@ -334,7 +336,7 @@ const UpdateAddress = () => {
                                             color: selectedLabel === 'home' ? COLORS.white : dark ? COLORS.primary : COLORS.greyscale900
                                         }
                                     ]}>
-                                    Home
+                                    {t('addNewAddress.item8.option1')}
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity
@@ -354,12 +356,12 @@ const UpdateAddress = () => {
                                             color: selectedLabel === 'work' ? COLORS.white : dark ? COLORS.primary : COLORS.greyscale900
                                         }
                                     ]}>
-                                    Work
+                                    {t('addNewAddress.item8.option2')}
                                 </Text>
                             </TouchableOpacity>
                         </View>
                         <ButtonFilled
-                            title="DELETE ADDRESS"
+                            title={t('addNewAddress.button1')}
                             onPress={() => {
                                 refRBSheet.current?.open()
                                 // handleUpdateAddress()
@@ -373,7 +375,7 @@ const UpdateAddress = () => {
                             }}
                         />
                         <ButtonFilled
-                            title="UPDATE ADDRESS"
+                            title={t('addNewAddress.title2')}
                             onPress={() => {
                                 handleUpdateAddress()
                                 setTimeout(() => {
@@ -410,7 +412,7 @@ const UpdateAddress = () => {
                     }
                 }}>
                 <Text style={[styles.bottomSubtitle, { color: dark ? COLORS.white : COLORS.black }]}>
-                    Delete this Address?
+                    {t('addNewAddress.deleteSheet.title')}
                 </Text>
                 <View style={styles.separateLine} />
 
@@ -418,12 +420,12 @@ const UpdateAddress = () => {
                     <Text style={[styles.featureText, {
                         color: dark ? COLORS.white : COLORS.greyscale900
                     }]}>
-                        Are you sure you want to delete this address? This action cannot be undone.
+                        {t('addNewAddress.deleteSheet.note')}
                     </Text>
                 </View>
                 <View style={styles.bottomContainer}>
                     <Button
-                        title="Cancel"
+                        title={t('addNewAddress.deleteSheet.button2')}
                         style={{
                             width: (SIZES.width - 32) / 2 - 8,
                             backgroundColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary,
@@ -434,7 +436,7 @@ const UpdateAddress = () => {
                         onPress={() => refRBSheet.current?.close()}
                     />
                     <ButtonFilled
-                        title="Yes, Delete"
+                        title={t('addNewAddress.deleteSheet.button1')}
                         style={styles.removeButton}
                         onPress={handleDeleteAddress}
                     />

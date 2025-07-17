@@ -11,6 +11,7 @@ import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from "react-i18next";
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -66,6 +67,7 @@ const ProductDetails = () => {
     const recommendedProducts = useAppSelector(state => state.recommendedProducts.data)
     // const [totalPrice, setTotalPrice] = useState<string>(parseFloat(product?.variants[0]?.price ?? "0").toFixed(2));
     const cartItems = useAppSelector(state => state.cart.cartItems);
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
     const [totalPrice, setTotalPrice] = useState<number>(parseFloat(product?.variants[0]?.price ?? "0")); // store as number
     const [quantity, setQuantity] = useState(1);
     const insets = useSafeAreaInsets();
@@ -74,6 +76,7 @@ const ProductDetails = () => {
     const [isFavourite, setIsFavourite] = useState(false);
     const { dark } = useTheme();
     const refRBSheet = useRef<any>(null);
+    const { t } = useTranslation();
 
     // Slider images
     // const sliderImages = [
@@ -141,7 +144,11 @@ const ProductDetails = () => {
                     <Image
                         source={icons.back}
                         resizeMode='contain'
-                        style={styles.backIcon}
+                        // style={styles.backIcon}
+                        style={[
+                            styles.backIcon,
+                            appLanguage === 'ar' && { transform: [{ rotate: '180deg' }] },
+                        ]}
                     />
                 </TouchableOpacity>
 
@@ -342,12 +349,12 @@ const ProductDetails = () => {
                     <Text style={[styles.contentTitle, {
                         color: dark ? COLORS.white : COLORS.black
                     }]}>
-                        Product Overview
+                        {t('productPage.productOverview')}
                     </Text>
 
                     <Text style={[styles.descTitle, { marginVertical: 10 }, {
                         color: dark ? COLORS.white : COLORS.greyscale900
-                    }]}>Highlights</Text>
+                    }]}>{t('productPage.highlights')}</Text>
                     <FlatList
                         data={featuresArray}
                         keyExtractor={(item, index) => index.toString()}
@@ -391,7 +398,7 @@ const ProductDetails = () => {
                 <Text style={[styles.contentTitle, {
                     color: dark ? COLORS.white : COLORS.black
                 }]}>
-                    You might also like
+                    {t('productPage.youlike')}
                 </Text>
                 <View style={{ padding: 16, marginBottom: 70 }} >
                     <FlatList
@@ -442,7 +449,7 @@ const ProductDetails = () => {
                 <View>
                     <Text style={[styles.cartTitle, {
                         color: dark ? COLORS.greyscale300 : COLORS.greyscale600
-                    }]}>Total Price</Text>
+                    }]}>{t('productPage.totalPrice')}</Text>
                     {/* <Text style={[styles.cartSubtitle, {
                         color: dark ? COLORS.white : COLORS.black,
                     }]}>{product?.variants && product?.variants.length > 0
@@ -480,7 +487,7 @@ const ProductDetails = () => {
                     >
                         <Text style={[styles.cartBtnText, {
                             color: dark ? COLORS.white : COLORS.black,
-                        }]}>Out of Stock</Text>
+                        }]}>{t('productPage.outOfStock')}</Text>
                     </TouchableOpacity>
                 ) : getCartItem(product.variants[0].id) ? (
                     // Show increment/decrement if in cart
@@ -522,7 +529,7 @@ const ProductDetails = () => {
                         />
                         <Text style={[styles.cartBtnText, {
                             color: dark ? COLORS.black : COLORS.white,
-                        }]}>Add to Cart</Text>
+                        }]}>{t('productPage.addToCart')}</Text>
                     </TouchableOpacity>
                 )}
 

@@ -1,8 +1,9 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { SIZES, COLORS, icons } from '../constants';
-import { useTheme } from '../theme/ThemeProvider';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { useNavigation } from 'expo-router';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { COLORS, icons, SIZES } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
 
 interface HeaderProps {
     title: string;
@@ -11,6 +12,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ title }) => {
     const navigation = useNavigation();
     const { colors, dark } = useTheme();
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
 
     return (
         <View
@@ -26,6 +28,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
                     style={[
                         styles.backIcon,
                         { tintColor: colors.text },
+                        appLanguage === 'ar' && { transform: [{ rotate: '180deg' }] },
                     ]}
                 />
             </TouchableOpacity>

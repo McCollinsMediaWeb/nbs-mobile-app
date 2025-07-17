@@ -10,6 +10,7 @@ import { removeProductFromCart } from '@/utils/actions/cartActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -38,6 +39,8 @@ const Cart: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>(["0"]);
   const cartItems = useAppSelector(state => state.cart.cartItems);
   const user = useAppSelector(state => state.user);
+  const appLanguage = useAppSelector(state => state.generalSettings.language);
+  const { t } = useTranslation();
 
   const handleRemoveBookmark = () => {
     if (selectedBookmarkItem) {
@@ -74,7 +77,7 @@ const Cart: React.FC = () => {
           style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
         />
         <Text style={[styles.headerTitle, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>
-          My Cart
+          {t('cart.title')}
         </Text>
       </View>
       <TouchableOpacity>
@@ -204,7 +207,7 @@ const Cart: React.FC = () => {
         }]}>
           <View>
             <Text style={[styles.cartTitle, { color: dark ? COLORS.greyscale300 : COLORS.greyscale600 }]}>
-              Total Price
+              {t('cart.totalPrice')}
             </Text>
             <Text style={[styles.cartSubtitle, { color: dark ? COLORS.white : COLORS.black }]}>
               AED {totalPrice.toFixed(2)}
@@ -217,11 +220,14 @@ const Cart: React.FC = () => {
               styles.cartBtn,
               resultsCount <= 0 && { opacity: 0.5 },
             ]}>
-            <Text style={styles.cartBtnText}>Continue</Text>
+            <Text style={styles.cartBtnText}> {t('cart.continue')}</Text>
             <Image
               source={icons.rightArrow2}
               resizeMode="contain"
-              style={styles.bagIcon}
+              style={[
+                styles.bagIcon,
+                appLanguage === 'ar' && { transform: [{ rotate: '180deg' }] },
+              ]}
             />
           </TouchableOpacity>
 
@@ -249,7 +255,7 @@ const Cart: React.FC = () => {
           }
         }}>
         <Text style={[styles.bottomSubtitle, { color: dark ? COLORS.white : COLORS.black }]}>
-          Remove from Cart?
+          {t('cart.sheetTitle')}
         </Text>
         <View style={styles.separateLine} />
 
@@ -271,7 +277,7 @@ const Cart: React.FC = () => {
 
         <View style={styles.bottomContainer}>
           <Button
-            title="Cancel"
+            title={t('cart.button2')}
             style={{
               width: (SIZES.width - 32) / 2 - 8,
               backgroundColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary,
@@ -282,7 +288,7 @@ const Cart: React.FC = () => {
             onPress={() => refRBSheet.current?.close()}
           />
           <ButtonFilled
-            title="Yes, Remove"
+            title={t('cart.button1')}
             style={styles.removeButton}
             onPress={handleRemoveBookmark}
           />
@@ -321,7 +327,7 @@ const Cart: React.FC = () => {
             },
           ]}
         >
-          You're not logged in
+          {t('cart.sheetTitle2')}
         </Text>
 
         <View style={styles.separateLine} />
@@ -330,13 +336,13 @@ const Cart: React.FC = () => {
           <Text style={[styles.featureText, {
             color: dark ? COLORS.white : COLORS.greyscale900
           }]}>
-            Please log in to continue shopping and complete your purchase.
+             {t('cart.sheetContent')}
           </Text>
         </View>
 
         <View style={styles.bottomContainer}>
           <Button
-            title="Cancel"
+            title={t('cart.button2')}
             style={{
               width: (SIZES.width - 92) / 2 - 8,
               backgroundColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary,
@@ -347,7 +353,7 @@ const Cart: React.FC = () => {
             onPress={() => refLoginSheet.current?.close()}
           />
           <ButtonFilled
-            title="Login"
+            title={t('cart.login')}
             style={styles.removeButton2}
             onPress={() => {
               refLoginSheet.current?.close();

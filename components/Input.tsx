@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Image, TextInputProps } from 'react-native';
+import { Image, StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
 import { COLORS, SIZES } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 
@@ -60,7 +60,7 @@ const Input: React.FC<InputProps> = (props) => {
                     onChangeText={onChangeText}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
-                    style={[styles.input, { color: dark ? COLORS.white : COLORS.black }]}
+                    style={[styles.input, { color: dark ? COLORS.white : COLORS.black }, props.style]}
                     placeholder={props.placeholder}
                     placeholderTextColor={props.placeholderTextColor}
                     autoCapitalize="none"

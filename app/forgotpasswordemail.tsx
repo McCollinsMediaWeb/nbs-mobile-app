@@ -2,6 +2,7 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { forgotPassword } from '@/utils/actions/userActions';
 import { useNavigation } from 'expo-router';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonFilled from '../components/ButtonFilled';
@@ -36,6 +37,7 @@ const ForgotPasswordEmail = () => {
     const [error, setError] = useState(null);
     const [isChecked, setChecked] = useState(false);
     const { colors, dark } = useTheme();
+    const { t } = useTranslation();
 
     const inputChangedHandler = useCallback(
         (inputId: string, inputValue: string) => {
@@ -71,7 +73,7 @@ const ForgotPasswordEmail = () => {
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
-                <Header title="Forgot Password" />
+                <Header title={t('forgotpassword.title')} />
                 <ScrollView style={{ marginVertical: 54 }} showsVerticalScrollIndicator={false}>
                     <View style={styles.logoContainer}>
                         <Image
@@ -84,12 +86,12 @@ const ForgotPasswordEmail = () => {
                     </View>
                     <Text style={[styles.title, {
                         color: dark ? COLORS.white : COLORS.black
-                    }]}>Enter to Your Email</Text>
+                    }]}>{t('forgotpassword.subTitle')}</Text>
                     <Input
                         id="email"
                         onInputChanged={inputChangedHandler}
                         errorText={formState.inputValidities['email']}
-                        placeholder="Email"
+                        placeholder={t('forgotpassword.email')}
                         placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                         icon={icons.email}
                         keyboardType="email-address"
@@ -108,7 +110,7 @@ const ForgotPasswordEmail = () => {
                         </View>
                     </View> */}
                     <ButtonFilled
-                        title="Reset Password"
+                        title={t('forgotpassword.submit')}
                         // onPress={() => navigate("otpverification")}
                         onPress={handleForgotPassword}
                         style={styles.button}
@@ -118,7 +120,7 @@ const ForgotPasswordEmail = () => {
                         onPress={() => navigate("login")}>
                         <Text style={[styles.forgotPasswordBtnText, {
                             color: dark ? COLORS.white : COLORS.primary
-                        }]}>Remember the password?</Text>
+                        }]}>{t('forgotpassword.rememberPassword')}</Text>
                     </TouchableOpacity>
                     <View>
                     </View>
@@ -126,12 +128,12 @@ const ForgotPasswordEmail = () => {
                 <View style={styles.bottomContainer}>
                     <Text style={[styles.bottomLeft, {
                         color: dark ? COLORS.white : COLORS.black
-                    }]}>Don&apos;t have an account ?</Text>
+                    }]}>{t('forgotpassword.dontHaveAccount')}</Text>
                     <TouchableOpacity
                         onPress={() => navigate("signup")}>
                         <Text style={[styles.bottomRight, {
                             color: dark ? COLORS.white : COLORS.primary
-                        }]}>{"  "}Sign Up</Text>
+                        }]}>{"  "}{t('forgotpassword.signUp')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

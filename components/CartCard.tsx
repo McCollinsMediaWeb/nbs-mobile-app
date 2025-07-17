@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
         padding: 6,
         borderRadius: 16,
         marginBottom: 12,
-        height: 142,
+        height: 162,
         alignItems: 'center',
         // borderColor: COLORS.secondaryWhite,
         borderColor: '#dadcd3',

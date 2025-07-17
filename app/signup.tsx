@@ -7,6 +7,7 @@ import { GoogleSignin, isErrorWithCode } from '@react-native-google-signin/googl
 import Checkbox from 'expo-checkbox';
 import { useNavigation } from 'expo-router';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonFilled from '../components/ButtonFilled';
@@ -43,11 +44,13 @@ const Signup = () => {
     const { navigate } = useNavigation<Nav>();
     const dispatch = useAppDispatch();
     const user = useAppSelector(state => state.user);
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [isChecked, setChecked] = useState(false);
     const { colors, dark } = useTheme();
+    const { t } = useTranslation();
 
     const inputChangedHandler = useCallback(
         (inputId: string, inputValue: string) => {
@@ -147,14 +150,14 @@ const Signup = () => {
                 <Header title="" />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.titleContainer}>
-                        <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Create your</Text>
-                        <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Account</Text>
+                        <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t('signup.title')}</Text>
+                        <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t('signup.title2')}</Text>
                     </View>
                     <Input
                         id="firstName"
                         onInputChanged={inputChangedHandler}
                         errorText={formState.inputValidities['firstName']}
-                        placeholder="First Name"
+                        placeholder={t('signup.firstName')}
                         placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                         icon={icons.user}
                         keyboardType="default"
@@ -163,7 +166,7 @@ const Signup = () => {
                         id="lastName"
                         onInputChanged={inputChangedHandler}
                         errorText={formState.inputValidities['lastName']}
-                        placeholder="Last Name"
+                        placeholder={t('signup.lastName')}
                         placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                         icon={icons.user}
                         keyboardType="default"
@@ -172,7 +175,7 @@ const Signup = () => {
                         id="email"
                         onInputChanged={inputChangedHandler}
                         errorText={formState.inputValidities['email']}
-                        placeholder="Email"
+                        placeholder={t('signup.email')}
                         placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                         icon={icons.email}
                         keyboardType="email-address"
@@ -182,10 +185,14 @@ const Signup = () => {
                         errorText={formState.inputValidities['password']}
                         autoCapitalize="none"
                         id="password"
-                        placeholder="Password"
+                        placeholder={t('signup.password')}
                         placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                         icon={icons.padlock}
                         secureTextEntry={true}
+                        style={{
+                            textAlign: appLanguage === 'ar' ? 'right' : 'left',
+                            writingDirection: appLanguage === 'ar' ? 'rtl' : 'ltr'
+                        }}
                     />
                     <View style={styles.checkBoxContainer}>
                         <View style={{ flexDirection: 'row' }}>
@@ -198,18 +205,18 @@ const Signup = () => {
                             <View style={{ flex: 1 }}>
                                 <Text style={[styles.privacy, {
                                     color: dark ? COLORS.white : COLORS.black
-                                }]}>By continuing you accept our Privacy Policy</Text>
+                                }]}>{t('signup.checkbox')}</Text>
                             </View>
                         </View>
                     </View>
                     <ButtonFilled
-                        title="Sign Up"
+                        title={t('signup.submit')}
                         onPress={handleSignup}
                         style={styles.button}
                         isLoading={user.loading}
                     />
                     <View>
-                        <OrSeparator text="or continue with" />
+                        <OrSeparator text={t('signup.continuewith')} />
                         <View style={styles.socialBtnContainer}>
                             {/* <SocialButton
                                 icon={icons.appleLogo}
@@ -230,12 +237,12 @@ const Signup = () => {
                 <View style={styles.bottomContainer}>
                     <Text style={[styles.bottomLeft, {
                         color: dark ? COLORS.white : COLORS.black
-                    }]}>Already have an account ?</Text>
+                    }]}>{t('signup.alreadyHaveAccount')}</Text>
                     <TouchableOpacity
                         onPress={() => navigate("login")}>
                         <Text style={[styles.bottomRight, {
                             color: dark ? COLORS.white : COLORS.primary
-                        }]}>{" "}Sign In</Text>
+                        }]}>{" "}{t('signup.signIn')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

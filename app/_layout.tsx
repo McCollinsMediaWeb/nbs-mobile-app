@@ -3,14 +3,16 @@ import { ThemeProvider } from '@/theme/ThemeProvider';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { LogBox } from 'react-native';
 import 'react-native-reanimated';
 
+import initI18n from '@/lang/i18n';
 import { persistor, store } from '@/utils/store'; // adjust this path if needed
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -20,14 +22,23 @@ LogBox.ignoreAllLogs();
 
 export default function RootLayout() {
   const [loaded] = useFonts(FONTS);
+  const [i18nLoaded, setI18nLoaded] = useState(false);
 
   useEffect(() => {
-    if (loaded) {
+    const prepareApp = async () => {
+      await initI18n(); // waits for i18n to initialize
+      setI18nLoaded(true);
+    };
+    prepareApp();
+  }, []);
+
+  useEffect(() => {
+    if (loaded && i18nLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [loaded, i18nLoaded]);
 
-  if (!loaded) {
+  if (!loaded || !i18nLoaded) {
     return null;
   }
 

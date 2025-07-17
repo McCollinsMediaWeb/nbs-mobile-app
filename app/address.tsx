@@ -4,6 +4,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -22,13 +23,14 @@ const Address = () => {
     const { navigate } = useNavigation<Nav>();
     const { colors } = useTheme();
     const user = useAppSelector((state) => state.user);
+    const { t } = useTranslation();
 
     const addresses = user?.customer?.addresses?.edges || [];
 
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
-                <Header title="Address" />
+                <Header title={t('selectAddress.title2')} />
                 <ScrollView
                     contentContainerStyle={{ marginVertical: 12 }}
                     showsVerticalScrollIndicator={false}>
@@ -55,7 +57,7 @@ const Address = () => {
             </View>
             <View style={styles.btnContainer}>
                 <ButtonFilled
-                    title="Add New Address"
+                    title={t('selectAddress.addNewAddress')}
                     onPress={() => navigate("addnewaddress")}
                     style={styles.btn}
                 />

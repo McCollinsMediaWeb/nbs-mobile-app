@@ -1,6 +1,9 @@
 import Button from "@/components/Button";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { changeOnboardStatus } from "@/utils/actions/generalSettingsActions";
 import { useNavigation } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SocialButtonV2 from "../components/SocialButtonV2";
@@ -15,25 +18,31 @@ type Nav = {
 const Welcome = () => {
     const { navigate } = useNavigation<Nav>();
     const { colors, dark } = useTheme();
+    const dispatch = useAppDispatch();
+    const { t } = useTranslation();
+
+    useEffect(() => {
+        dispatch(changeOnboardStatus(true))
+    }, [])
 
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
                 <Image source={dark ? illustrations.welcomeDark : illustrations.welcome} resizeMode="contain" style={styles.logo} />
-                <Text style={[styles.title, { color: colors.text }]}>Let’s you in</Text>
+                <Text style={[styles.title, { color: colors.text }]}>{t('welcome.title')}</Text>
                 <View style={{ marginVertical: 22 }}>
                     {/* <SocialButtonV2 title="Continue with Facebook" icon={icons.facebook} onPress={() => navigate("signup")} /> */}
-                    <SocialButtonV2 title="Continue with Google" icon={icons.google} onPress={() => navigate("signup")} />
+                    <SocialButtonV2 title={t('welcome.continueWithGoogle')} icon={icons.google} onPress={() => navigate("login")} />
                     {/* <SocialButtonV2 title="Continue with Apple" icon={icons.appleLogo} onPress={() => navigate("signup")}
                         iconStyles={{ tintColor: dark ? COLORS.white : COLORS.black }} /> */}
                 </View>
                 <View style={styles.lineContainer}>
                     <View style={[styles.line, { backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200 }]} />
-                    <Text style={[styles.text, { color: dark ? COLORS.white : COLORS.grayscale700 }]}>Or</Text>
+                    <Text style={[styles.text, { color: dark ? COLORS.white : COLORS.grayscale700 }]}>{t('welcome.or')}</Text>
                     <View style={[styles.line, { backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200 }]} />
                 </View>
                 <Button
-                    title="Sign in with Email Address"
+                    title={t('welcome.signInWithEmail')}
                     onPress={() => navigate("login")}
                     textColor={dark ? "#101010" : COLORS.white}
                     style={{
@@ -44,7 +53,7 @@ const Welcome = () => {
                     }}
                 />
                 <Button
-                    title="Continue as Guest"
+                    title={t('welcome.continueAsGuest')}
                     onPress={() => navigate("(tabs)")}
                     textColor={dark ? "#101010" : COLORS.white}
                     style={{
@@ -56,12 +65,12 @@ const Welcome = () => {
                 <View style={{ flexDirection: "row", marginTop: 22 }}>
                     <Text style={[styles.loginTitle, {
                         color: dark ? COLORS.white : "black"
-                    }]}>Don’t have an account? </Text>
+                    }]}>{t('welcome.dontHaveAccount')}</Text>
                     <TouchableOpacity
                         onPress={() => navigate("signup")}>
                         <Text style={[styles.loginSubtitle, {
                             color: dark ? COLORS.white : COLORS.primary
-                        }]}>Sign up</Text>
+                        }]}>{"  "}{t('welcome.signUp')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

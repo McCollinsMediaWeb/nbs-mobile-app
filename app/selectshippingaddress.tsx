@@ -6,6 +6,7 @@ import { updateSelectedAddress } from '@/utils/actions/selectedAddressActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -36,6 +37,7 @@ const SelectShippingAddress = () => {
   const user = useAppSelector((state) => state.user);
   const selectedAddress = useAppSelector((state) => state.selectedAddress.selectedAddress); // This is a string id or null
   const [selectedItem, setSelectedItem] = useState<AddressNode | null>(null);
+  const { t } = useTranslation();
 
   // Handle checkbox
   const handleCheckboxPress = (address: AddressNode) => {
@@ -56,7 +58,7 @@ const SelectShippingAddress = () => {
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <Header title="Deliver To" />
+        <Header title={t('selectAddress.deliverTo')} />
         <ScrollView
           contentContainerStyle={{
             marginVertical: 12
@@ -78,7 +80,7 @@ const SelectShippingAddress = () => {
           )}
 
           <Button
-            title="Add New Address"
+            title={t('selectAddress.addNewAddress')}
             style={{
               width: SIZES.width - 32,
               borderRadius: 32,
@@ -90,7 +92,7 @@ const SelectShippingAddress = () => {
           />
         </ScrollView>
         <ButtonFilled
-          title="Apply"
+          title={t('selectAddress.apply')}
           onPress={addresses.length <= 0 ? () => { } : handleApply}
           style={{ opacity: addresses.length <= 0 ? 0.5 : 1 }}
         />

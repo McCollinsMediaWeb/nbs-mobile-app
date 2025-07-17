@@ -1,8 +1,9 @@
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { useNavigation } from 'expo-router';
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, SIZES, icons } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
-import { useNavigation } from 'expo-router';
 
 type HeaderWithSearchProps = {
     title: string; // Title to display in the header
@@ -13,6 +14,7 @@ type HeaderWithSearchProps = {
 const HeaderWithSearch: React.FC<HeaderWithSearchProps> = ({ title, icon, onPress }) => {
     const navigation = useNavigation();
     const { dark } = useTheme();
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
 
     return (
         <View style={styles.headerContainer}>
@@ -21,9 +23,11 @@ const HeaderWithSearch: React.FC<HeaderWithSearchProps> = ({ title, icon, onPres
                     <Image
                         source={icons.back}
                         resizeMode='contain'
-                        style={[styles.backIcon, {
-                            tintColor: dark ? COLORS.white : COLORS.greyscale900
-                        }]}
+                        style={[
+                            styles.backIcon,
+                            { tintColor: dark ? COLORS.white : COLORS.greyscale900 },
+                            appLanguage === 'ar' && { transform: [{ rotate: '180deg' }] },
+                        ]}
                     />
                 </TouchableOpacity>
                 <Text style={[styles.headerTitle, {
@@ -32,7 +36,7 @@ const HeaderWithSearch: React.FC<HeaderWithSearchProps> = ({ title, icon, onPres
                     {title}
                 </Text>
             </View>
-            <TouchableOpacity onPress={onPress}>
+            {/* <TouchableOpacity onPress={onPress}>
                 <Image
                     source={icon}
                     resizeMode='contain'
@@ -40,7 +44,7 @@ const HeaderWithSearch: React.FC<HeaderWithSearchProps> = ({ title, icon, onPres
                         tintColor: dark ? COLORS.white : COLORS.greyscale900
                     }]}
                 />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     );
 };

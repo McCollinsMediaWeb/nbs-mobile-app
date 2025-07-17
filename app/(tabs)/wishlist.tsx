@@ -7,6 +7,7 @@ import { useTheme } from '@/theme/ThemeProvider';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -16,6 +17,7 @@ const Wishlist: React.FC = () => {
     const { dark, colors } = useTheme();
     const dispatch = useAppDispatch();
     const wishlistItems = useAppSelector(state => state.wishlist);
+    const { t } = useTranslation();
 
     const filteredProducts = wishlistItems.wishlistItems;
 
@@ -28,7 +30,7 @@ const Wishlist: React.FC = () => {
                     style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
                 />
                 <Text style={[styles.headerTitle, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>
-                    My Wishlist
+                    {t('wishlist.title')}
                 </Text>
             </View>
             <TouchableOpacity>

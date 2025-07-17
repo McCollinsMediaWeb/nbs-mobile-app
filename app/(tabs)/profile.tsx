@@ -9,6 +9,7 @@ import { logoutCustomer } from '@/utils/actions/userActions';
 import { launchImagePicker } from '@/utils/ImagePickerHelper';
 import { useNavigation } from 'expo-router';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Image, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -25,6 +26,7 @@ const Profile = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.user);
   const appLanguage = useAppSelector(state => state.generalSettings.language);
+  const { t } = useTranslation();
   // const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
 
   // useEffect(() => {
@@ -51,9 +53,9 @@ const Profile = () => {
           />
           <Text style={[styles.headerTitle, {
             color: dark ? COLORS.white : COLORS.greyscale900
-          }]}>Profile</Text>
+          }]}>{t('profile.title')}</Text>
         </View>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Image
             source={icons.moreCircle}
             resizeMode='contain'
@@ -61,7 +63,7 @@ const Profile = () => {
               tintColor: dark ? COLORS.secondaryWhite : COLORS.greyscale900
             }]}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </TouchableOpacity>
     )
   }
@@ -99,13 +101,13 @@ const Profile = () => {
         <Text style={[styles.title, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>
           {user?.accessToken
             ? `${user.customer?.firstName ?? ''} ${user.customer?.lastName ?? ''}`.trim()
-            : "Guest User"}
+            : t('profile.guestUser')}
         </Text>
 
         <Text style={[styles.subtitle, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>
           {user?.accessToken
             ? user.customer?.email ?? "No email provided"
-            : "Please login to make purchases"}
+            : t('profile.note')}
         </Text>
 
       </View>
@@ -126,12 +128,12 @@ const Profile = () => {
       <View style={styles.settingsContainer}>
         <SettingsItem
           icon={icons.cartOutline}
-          name="My Cart"
+          name={t('profile.setting1.title')}
           onPress={() => navigate("cart")}
         />
         <SettingsItem
           icon={icons.heart2Outline}
-          name="My Wishlist"
+          name={t('profile.setting2.title')}
           onPress={() => navigate("mywishlist")}
         />
         {/* <SettingsItem
@@ -147,7 +149,7 @@ const Profile = () => {
         {user?.accessToken && (
           <SettingsItem
             icon={icons.location2Outline}
-            name="Address"
+            name={t('profile.setting3.title')}
             onPress={() => navigate("address")}
           />
         )}
@@ -185,7 +187,7 @@ const Profile = () => {
             />
             <Text style={[styles.settingsName, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}>Language & Region</Text>
+            }]}>{t('profile.setting4.title')}</Text>
           </View>
           <View style={styles.rightContainer}>
             <Text style={[styles.rightLanguage, {
@@ -212,7 +214,7 @@ const Profile = () => {
             />
             <Text style={[styles.settingsName, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}>Dark Mode</Text>
+            }]}>{t('profile.setting5.title')}</Text>
           </View>
           <View style={styles.rightContainer}>
             <Switch
@@ -227,12 +229,12 @@ const Profile = () => {
         </TouchableOpacity>
         <SettingsItem
           icon={icons.lockedComputerOutline}
-          name="Privacy Policy"
+          name={t('profile.setting6.title')}
           onPress={() => navigate("settingsprivacypolicy")}
         />
         <SettingsItem
           icon={icons.infoCircle}
-          name="Help Center"
+          name={t('profile.setting7.title')}
           onPress={() => navigate("settingshelpcenter")}
         />
         {/* <SettingsItem
@@ -254,7 +256,7 @@ const Profile = () => {
               />
               <Text style={[styles.logoutName, {
                 color: "red"
-              }]}>Logout</Text>
+              }]}>{t('profile.setting8.title2')}</Text>
             </View>
           </TouchableOpacity>
         ) : (
@@ -271,7 +273,7 @@ const Profile = () => {
               />
               <Text style={[styles.logoutName, {
                 color: "red"
-              }]}>Login</Text>
+              }]}>{t('profile.setting8.title')}</Text>
             </View>
           </TouchableOpacity>
         )}
@@ -314,16 +316,16 @@ const Profile = () => {
           }
         }}
       >
-        <Text style={styles.bottomTitle}>Logout</Text>
+        <Text style={styles.bottomTitle}>{t('profile.sheet.title')}</Text>
         <View style={[styles.separateLine, {
           backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200,
         }]} />
         <Text style={[styles.bottomSubtitle, {
           color: dark ? COLORS.white : COLORS.black
-        }]}>Are you sure you want to log out?</Text>
+        }]}>{t('profile.sheet.subTitle')}</Text>
         <View style={styles.bottomContainer}>
           <Button
-            title="Cancel"
+            title={t('profile.sheet.button2')}
             style={{
               width: (SIZES.width - 32) / 2 - 8,
               backgroundColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary,
@@ -334,7 +336,7 @@ const Profile = () => {
             onPress={() => refRBSheet.current.close()}
           />
           <ButtonFilled
-            title="Yes, Logout"
+            title={t('profile.sheet.button1')}
             style={styles.logoutButton}
             // onPress={() => refRBSheet.current.close()}
             onPress={handleLogout}

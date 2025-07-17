@@ -4,6 +4,7 @@ import { fetchCollections } from '@/utils/actions/collectionActions';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from 'expo-router';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ImageBackground, StyleSheet, Text } from 'react-native';
 import { COLORS, images } from '../constants';
 
@@ -15,9 +16,11 @@ const Onboarding1 = () => {
     const { navigate } = useNavigation<Nav>();
     const dispatch = useAppDispatch();
     const user = useAppSelector(state => state.user);
+    const onboardingDone = useAppSelector(state => state.generalSettings.onboarding);
     const appLanguage = useAppSelector(state => state.generalSettings.language);
     const collections = useAppSelector((state) => state.collections.data);
     const [hydrated, setHydrated] = React.useState(false);
+    const { t } = useTranslation();
 
     useEffect(() => {
         // Simulate waiting for the store to hydrate
@@ -29,6 +32,8 @@ const Onboarding1 = () => {
 
         if (user?.accessToken) {
             navigate('(tabs)');
+        } else if (onboardingDone) {
+            navigate('welcome');
         } else {
             const timeout = setTimeout(() => navigate('onboarding'), 2000);
             return () => clearTimeout(timeout);

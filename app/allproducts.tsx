@@ -4,6 +4,7 @@ import { fetchGraphQL } from '@/utils/fetchGraphql';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -31,6 +32,7 @@ const AllProducts = () => {
     const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState<Product[]>([]);
     const [hasNextPage, setHasNextPage] = useState(false);
+    const { t } = useTranslation();
     const [endCursor, setEndCursor] = useState<string | null>(null);
     const appLanguage = useAppSelector(state => state.generalSettings.language);
 
@@ -141,7 +143,7 @@ const AllProducts = () => {
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
                 <HeaderWithSearch
-                    title="All Products"
+                    title={t('allProduct.title')}
                     icon={icons.search}
                     onPress={() => navigation.navigate("search")}
                 />

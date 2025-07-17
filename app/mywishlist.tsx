@@ -4,6 +4,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -21,6 +22,7 @@ const MyWishlist: React.FC<MyWishlistProps> = () => {
   const { dark, colors } = useTheme();
   const [selectedCategories, setSelectedCategories] = useState<string[]>(["0"]);
   const wishlistItems = useAppSelector(state => state.wishlist);
+  const { t } = useTranslation();
 
   // Filter products based on selected categories
   // const filteredProducts = myWishlist.filter(product =>
@@ -69,7 +71,7 @@ const MyWishlist: React.FC<MyWishlistProps> = () => {
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <HeaderWithSearch
-          title="My Wishlist"
+          title={t('wishlist.title')}
           icon={icons.search}
           onPress={() => navigation.navigate("search")}
         />

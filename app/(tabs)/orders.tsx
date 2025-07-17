@@ -1,5 +1,5 @@
 import Button from '@/components/Button';
-import { COLORS, icons, images, SIZES } from '@/constants';
+import { COLORS, images, SIZES } from '@/constants';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { CancelledOrders, CompletedOrders, OngoingOrders } from '@/tabs';
@@ -8,6 +8,7 @@ import { addOrderUrl, fetchOrders } from '@/utils/actions/orderActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
@@ -45,13 +46,14 @@ const Orders = () => {
   const webViewRef = useRef<WebView>(null);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const { t } = useTranslation();
 
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'first', title: 'Ongoing' },
-    { key: 'second', title: 'Completed' },
-    { key: 'third', title: 'Cancelled' }
+    { key: 'first', title: t('orders.ongoing') },
+    { key: 'second', title: t('orders.completed') },
+    { key: 'third', title: t('orders.cancelled') }
   ]);
 
   useEffect(() => {
@@ -173,10 +175,10 @@ const Orders = () => {
           <Text style={[styles.headerTitle, {
             color: dark ? COLORS.white : COLORS.greyscale900
           }]}>
-            My Orders
+            {t('orders.title')}
           </Text>
         </View>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Image
             source={icons.moreCircle}
             resizeMode='contain'
@@ -184,7 +186,7 @@ const Orders = () => {
               tintColor: dark ? COLORS.white : COLORS.greyscale900
             }]}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     )
   }
@@ -219,6 +221,7 @@ const Orders = () => {
               setShowWebView(false);
               dispatch(addOrderUrl(""));
             }}
+            color={COLORS.primaryRed}
             style={{ margin: 10 }}
             filled
           />

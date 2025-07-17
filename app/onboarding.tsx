@@ -4,7 +4,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useRef, useState } from 'react';
-import { FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, I18nManager, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface Slide {
@@ -80,7 +80,7 @@ const OnboardingScreen: React.FC<{ onDone?: () => void }> = ({ onDone }) => {
     );
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: colors.background, paddingBottom: insets.bottom }]}>
+        <SafeAreaView style={[styles.container, { backgroundColor: colors.background, paddingBottom: insets.bottom, direction: 'ltr', }]}>
             <StatusBar style="dark" />
             <FlatList
                 data={slides}
@@ -94,6 +94,7 @@ const OnboardingScreen: React.FC<{ onDone?: () => void }> = ({ onDone }) => {
                 viewabilityConfig={viewConfig.current}
                 ref={listRef}
                 getItemLayout={(_, index) => ({ length: SIZES.width, offset: SIZES.width * index, index })}
+                inverted={I18nManager.isRTL}
             />
             <View style={styles.footer}>
                 <View style={styles.pagination}>

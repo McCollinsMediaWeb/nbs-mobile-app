@@ -1,11 +1,12 @@
 import LanguageItem from '@/components/LanguageItem';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { fetchCollections } from '@/utils/actions/collectionActions';
 import { changeAppLanguage } from '@/utils/actions/generalSettingsActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { I18nManager, StyleSheet, Text, View } from 'react-native';
+import RNRestart from 'react-native-restart';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 import Header from '../components/Header';
@@ -17,19 +18,32 @@ const SettingsLanguage = () => {
     const dispatch = useAppDispatch();
     const appLanguage = useAppSelector(state => state.generalSettings.language);
     const { colors, dark } = useTheme();
+    const { t } = useTranslation();
 
     const handleCheckboxPress = async (itemTitle: string) => {
         if (appLanguage !== itemTitle) {
             try {
+
+                const isRTL = itemTitle === 'ar';
+
+                if (I18nManager.isRTL !== isRTL) {
+                    I18nManager.allowRTL(isRTL);
+                    I18nManager.forceRTL(isRTL);
+                }
+
                 await AsyncStorage.setItem('language', itemTitle);
                 dispatch(changeAppLanguage(itemTitle));
 
-                const collectionIds = [
-                    'gid://shopify/Collection/439108698324',
-                    'gid://shopify/Collection/439109091540',
-                    'gid://shopify/Collection/439668539604',
-                ];
-                dispatch(fetchCollections(collectionIds));
+                // i18next.changeLanguage(itemTitle);
+
+                RNRestart.restart();
+
+                // const collectionIds = [
+                //     'gid://shopify/Collection/439108698324',
+                //     'gid://shopify/Collection/439109091540',
+                //     'gid://shopify/Collection/439668539604',
+                // ];
+                // dispatch(fetchCollections(collectionIds));
 
             } catch (error) {
                 console.error("Failed to update language:", error);
@@ -56,9 +70,9 @@ const SettingsLanguage = () => {
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
-                <Header title="Language & Region" />
+                <Header title={t('profile.setting4.title')} />
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.black }]}>Suggested</Text>
+                    <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.black }]}>{t('profile.setting4.subTitle')}</Text>
                     <View style={{ marginTop: 12 }}>
                         <LanguageItem
                             checked={appLanguage === 'en'}

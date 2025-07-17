@@ -1,0 +1,273 @@
+{
+    "translation": {
+        "welcome": {
+            "title": "Let’s you in",
+            "continueWithGoogle": "Continue with Google",
+            "or": "Or",
+            "signInWithEmail": "Sign in with Email Address",
+            "continueAsGuest": "Continue as Guest",
+            "dontHaveAccount": "Don’t have an account?",
+            "signUp": "Sign up"
+        },
+        "login": {
+            "title": "Login to your",
+            "title2": "Account",
+            "email": "Email",
+            "password": "Password",
+            "checkbox": "Remenber me",
+            "submit": "Login",
+            "forgotpassword": "Forgot the password?",
+            "continuewith": "or continue with",
+            "dontHaveAccount": "Don’t have an account?",
+            "signUp": "Sign up"
+        },
+        "signup": {
+            "title": "Create your",
+            "title2": "Account",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email",
+            "password": "Password",
+            "checkbox": "By continuing you accept our Privacy Policy",
+            "submit": "Sign Up",
+            "continuewith": "or continue with",
+            "alreadyHaveAccount": "Already have an account ?",
+            "signIn": "Sign In"
+        },
+        "forgotpassword": {
+            "title": "Forgot Password",
+            "subTitle": "Enter Your Email",
+            "email": "Email",
+            "submit": "Reset Password",
+            "rememberPassword": "Remember the password?",
+            "dontHaveAccount": "Don’t have an account?",
+            "signUp": "Sign up"
+        },
+        "header": {
+            "guestUser": "Guest User",
+            "wishes": {
+                "morning": "Good Morning 👋",
+                "afternoon": "Good Afternoon 👋",
+                "evening": "Good Evening 👋",
+                "night": "Good Night 🌙"
+            }
+        },
+        "menus": {
+            "home": "Home",
+            "cart": "Cart",
+            "orders": "Orders",
+            "wishlist": "Wishlist",
+            "profile": "Profile"
+        },
+        "price": "AED",
+        "banners": {
+            "banner1": {
+                "label": "NBS SOLAR INVERTER",
+                "headline1": "RELIABLE. EFFICIENT.",
+                "headline2": "BUILT FOR PERFORMANCE.",
+                "buttonText": "VIEW PRODUCTS"
+            }
+        },
+        "categories": {
+            "item1": {
+                "title": "Only at NBS"
+            },
+            "item2": {
+                "title": "What's New"
+            },
+            "item3": {
+                "title": "Top Picks"
+            }
+        },
+        "popularProducts": {
+            "subTitle": "Exceptional Choices for Discerning Tastes",
+            "title": "Explore our Range"
+        },
+        "ourBrandPartners": {
+            "subTitle": "Select from a wide range of\ncredible brands",
+            "title": "Our Brand Partners"
+        },
+        "ourGenerators": {
+            "subTitle": "Discover NBS Group’s trusted generator\nsolutions—engineered for excellence.",
+            "title": "Explore our Generators"
+        },
+        "ourProducts": {
+            "subTitle": "Browse our complete\nrange of power and\nrenewable energy\nsolutions by category.",
+            "title": "OUR Products"
+        },
+        "ourInverters": {
+            "subTitle": "Efficient. Reliable. Built for every need.",
+            "title": "OUR Explore our Inverters"
+        },
+        "ourWaterPump": {
+            "subTitle": "Power. Precision. Performance.",
+            "title": "NBS Water Pumps"
+        },
+        "pointCard": {
+            "card1": {
+                "title": "Free Global Shipping",
+                "subTitle": "Returns included. Taxes & duties fully covered."
+            },
+            "card2": {
+                "title": "Customer service",
+                "subTitle": "We are available from monday to friday to answer your questions."
+            },
+            "card3": {
+                "title": "Secure payment",
+                "subTitle": "Your payment information is processed securely."
+            },
+            "card4": {
+                "title": "Contact us",
+                "subTitle": "Need to contact us ? Just send us an e-mail at info@yourstore.com"
+            }
+        },
+        "productPage": {
+            "productOverview": "Product Overview",
+            "highlights": "Highlights",
+            "youlike": "You might also like",
+            "addToCart": "Add to Cart",
+            "outOfStock": "Out of Stock",
+            "totalPrice": "Total Price"
+        },
+        "allProduct": {
+            "title": "All Products"
+        },
+        "cart": {
+            "title": "My Cart",
+            "sheetTitle": "Remove from Cart?",
+            "button1": "Yes, Remove",
+            "button2": "Cancel",
+            "sheetTitle2": "You'are not logged in",
+            "sheetContent": "Please log in to continue shopping and complete your purchase.",
+            "login": "Login",
+            "totalPrice": "Total Price",
+            "continue": "Continue"
+        },
+        "selectAddress": {
+            "title": "Select Address",
+            "title2": "Address",
+            "shippingAddress": "Shipping Address",
+            "orderList": "Order List",
+            "deliverTo": "Deliver To",
+            "addNewAddress": "Add New Address",
+            "apply": "Apply",
+            "total": "Total",
+            "continueToCheckout": "Continue to Checkout",
+            "default": "Default",
+            "noAddressTitle": "No Address Selected",
+            "noAddressNote": "Please select or add a shipping address to continue."
+        },
+        "addNewAddress": {
+            "title": "Add New Address",
+            "title2": "Update Address",
+            "button1": "DELETE ADDRESS",
+            "deleteSheet": {
+                "title": "Delete this Address?",
+                "note": "Are you sure you want to delete this address? This action cannot be undone.",
+                "button1": "Yes, Delete",
+                "button2": "Cancel"
+            },
+            "item1": {
+                "label": "First Name*",
+                "placeholder": "Type your name"
+            },
+            "item2": {
+                "label": "Last Name*",
+                "placeholder": "Type your name"
+            },
+            "item3": {
+                "label": "Mobile No.*",
+                "placeholder": "Type your mobile no"
+            },
+            "item4": {
+                "label": "Address*",
+                "placeholder": "Enter Adress"
+            },
+            "item5": {
+                "label": "City / District",
+                "placeholder": "Enter city"
+            },
+            "item6": {
+                "label": "Emirate*",
+                "placeholder": "Select an Emirate"
+            },
+            "item7": {
+                "label": "Pin Code*",
+                "placeholder": "Enter Pin Code"
+            },
+            "item8": {
+                "label": "Save Address As",
+                "option1": "Home",
+                "option2": "Work"
+            },
+            "abudhabi": "Abu Dhabi",
+            "dubai": "Dubai",
+            "sharjah": "Sharjah",
+            "ajman": "Ajman",
+            "rasalkhaimah": "Ras Al Khaimah",
+            "fujairah": "Fujairah",
+            "ummalquwain": "Umm Al Quwain",
+            "button": "SAVE ADDRESS",
+            "firstName": "First Name",
+            "lastName": "Order List",
+            "mobileNo": "Deliver To",
+            "address": "Add New Address",
+            "apply": "Apply"
+        },
+        "orders": {
+            "title": "My Orders",
+            "ongoing": "Ongoing",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "moreDetails": "More Details",
+            "orderAgain": "Order Again",
+            "sheet": {
+                "title": "Order Again",
+                "subTitle": "Product prices may vary",
+                "note": "Please review the final price in your cart before proceeding to checkout.",
+                "button1": "Yes, Order Again",
+                "button2": "Cancel"
+            }
+        },
+        "wishlist": {
+            "title": "My Wishlist"
+        },
+        "profile": {
+            "title": "Profile",
+            "guestUser": "Guest User",
+            "note": "Please login to make purchases",
+            "setting1": {
+                "title": "My Cart"
+            },
+            "setting2": {
+                "title": "My Wishlist"
+            },
+            "setting3": {
+                "title": "Address"
+            },
+            "setting4": {
+                "title": "Language & Region",
+                "subTitle": "Suggested"
+            },
+            "setting5": {
+                "title": "Dark Mode"
+            },
+            "setting6": {
+                "title": "Privacy Policy"
+            },
+            "setting7": {
+                "title": "Help Center"
+            },
+            "setting8": {
+                "title": "Login",
+                "title2": "Logout"
+            },
+            "sheet": {
+                "title": "Logout",
+                "subTitle": "Are you sure you want to log out?",
+                "button1": "Yes, Logout",
+                "button2": "Cancel"
+            }
+        }
+    }
+}

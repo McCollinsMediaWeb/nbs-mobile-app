@@ -1,5 +1,6 @@
 import { useTheme } from "@/theme/ThemeProvider";
 import { Tabs } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Image, Platform, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { COLORS, FONTS, icons, SIZES } from "../../constants";
@@ -7,6 +8,7 @@ import { COLORS, FONTS, icons, SIZES } from "../../constants";
 const TabLayout = () => {
   const { dark } = useTheme();
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   return (
     <Tabs
@@ -48,7 +50,7 @@ const TabLayout = () => {
                 <Text style={{
                   ...FONTS.body4,
                   color: focused ? dark ? COLORS.white : COLORS.primary : dark ? COLORS.gray3 : COLORS.gray3,
-                }}>Home</Text>
+                }}>{t('menus.home')}</Text>
               </View>
             )
           },
@@ -77,7 +79,7 @@ const TabLayout = () => {
                 <Text style={{
                   ...FONTS.body4,
                   color: focused ? dark ? COLORS.white : COLORS.primary : dark ? COLORS.gray3 : COLORS.gray3,
-                }}>Cart</Text>
+                }}>{t('menus.cart')}</Text>
               </View>
             )
           },
@@ -106,7 +108,7 @@ const TabLayout = () => {
                 <Text style={{
                   ...FONTS.body4,
                   color: focused ? dark ? COLORS.white : COLORS.primary : dark ? COLORS.gray3 : COLORS.gray3,
-                }}>Orders</Text>
+                }}>{t('menus.orders')}</Text>
               </View>
             )
           },
@@ -135,7 +137,7 @@ const TabLayout = () => {
                 <Text style={{
                   ...FONTS.body4,
                   color: focused ? dark ? COLORS.white : COLORS.primary : dark ? COLORS.gray3 : COLORS.gray3,
-                }}>Wishlist</Text>
+                }}>{t('menus.wishlist')}</Text>
               </View>
             )
           },
@@ -193,7 +195,7 @@ const TabLayout = () => {
                 <Text style={{
                   ...FONTS.body4,
                   color: focused ? dark ? COLORS.white : COLORS.primary : dark ? COLORS.gray3 : COLORS.gray3,
-                }}>Profile</Text>
+                }}>{t('menus.profile')}</Text>
               </View>
             )
           },

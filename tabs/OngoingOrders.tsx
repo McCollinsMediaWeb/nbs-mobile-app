@@ -5,6 +5,7 @@ import { addOrderUrl } from '@/utils/actions/orderActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, FlatList, Image, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Button from '../components/Button';
@@ -25,6 +26,7 @@ const OngoingOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps) 
   const navigation = useNavigation<NavigationProp<any>>();
   const [selectedOrder, setSelectedOrder] = useState(null);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const handleOrderAgain = (order: any) => {
 
@@ -149,7 +151,7 @@ const OngoingOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps) 
                   }]}>
                   <Text style={[styles.cancelBtnText, {
                     color: dark ? COLORS.white : COLORS.primary,
-                  }]}>Order Again</Text>
+                  }]}>{t('orders.orderAgain')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
@@ -161,7 +163,7 @@ const OngoingOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps) 
                     backgroundColor: COLORS.primaryRed,
                     borderColor: COLORS.primaryRed,
                   }]}>
-                  <Text style={styles.receiptBtnText}>More Details</Text>
+                  <Text style={styles.receiptBtnText}>{t('orders.moreDetails')}</Text>
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
@@ -191,8 +193,8 @@ const OngoingOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps) 
           }
         }}>
         <Text style={[styles.bottomSubtitle, {
-          color: dark ? COLORS.red : COLORS.red
-        }]}>Order Again</Text>
+          color: COLORS.primaryRed
+        }]}>{t('orders.sheet.title')}</Text>
         <View style={[styles.separateLine, {
           backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200,
         }]} />
@@ -200,15 +202,15 @@ const OngoingOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps) 
         <View style={styles.selectedCancelContainer}>
           <Text style={[styles.cancelTitle, {
             color: dark ? COLORS.secondaryWhite : COLORS.greyscale900
-          }]}>Product prices may vary</Text>
+          }]}>{t('orders.sheet.subTitle')}</Text>
           <Text style={[styles.cancelSubtitle, {
             color: dark ? COLORS.grayscale400 : COLORS.grayscale700
-          }]}>Please review the final price in your cart before proceeding to checkout.</Text>
+          }]}>{t('orders.sheet.note')}</Text>
         </View>
 
         <View style={styles.bottomContainer}>
           <Button
-            title="Cancel"
+            title={t('orders.sheet.button2')}
             style={{
               width: (SIZES.width - 32) / 2 - 8,
               backgroundColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary,
@@ -219,7 +221,7 @@ const OngoingOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps) 
             onPress={() => refRBSheet.current.close()}
           />
           <ButtonFilled
-            title="Yes, Order Again"
+            title={t('orders.sheet.button1')}
             style={styles.removeButton}
             onPress={() => {
               refRBSheet.current.close();

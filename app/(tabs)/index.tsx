@@ -2,15 +2,17 @@ import Category from '@/components/Category';
 import ProductCard from '@/components/ProductCard';
 import SubHeaderItem from '@/components/SubHeaderItem';
 import { COLORS, icons, images, SIZES } from '@/constants';
-import { banners, brands, cardsData, categories, ourProducts } from '@/data';
+import { brands, ourProducts, useBanners, useCardsData, useCategories } from '@/data';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dimensions, FlatList, Image, ImageBackground, ImageSourcePropType, ListRenderItemInfo, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
+import '../../lang/i18n';
 
 interface BannerItem {
   id: number;
@@ -40,6 +42,10 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentSquareIndex, setCurrentSquareIndex] = useState<number>(0);
   const { dark, colors } = useTheme();
+  const { t } = useTranslation();
+  const banners = useBanners();
+  const cardsData = useCardsData();
+  const categories = useCategories();
   /**
   * Render header
   */
@@ -48,13 +54,13 @@ const Home = () => {
     const currentHour = new Date().getHours();
 
     if (currentHour >= 5 && currentHour < 12) {
-      return 'Good Morning 👋';
+      return t('header.wishes.morning');
     } else if (currentHour >= 12 && currentHour < 17) {
-      return 'Good Afternoon 👋';
+      return t('header.wishes.afternoon');
     } else if (currentHour >= 17 && currentHour < 21) {
-      return 'Good Evening 👋';
+      return t('header.wishes.evening');
     } else {
-      return 'Good Night 🌙';
+      return t('header.wishes.night');
     }
   };
 
@@ -75,18 +81,18 @@ const Home = () => {
               color: dark ? COLORS.white : COLORS.greyscale900
             }]}>{user?.accessToken
               ? `${user.customer?.firstName ?? ''} ${user.customer?.lastName ?? ''}`.trim()
-              : "Guest User"}</Text>
+              : t('header.guestUser')}</Text>
           </View>
         </View>
         <View style={styles.viewRight}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => navigation.navigate("notifications")}>
             <Image
               source={icons.notificationBell2}
               resizeMode='contain'
               style={[styles.bellIcon, { tintColor: dark ? COLORS.white : COLORS.greyscale900 }]}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={() => navigation.navigate("mywishlist")}>
             <Image
@@ -324,10 +330,12 @@ const Home = () => {
         /> */}
         <Text style={[styles.subTitle, {
           color: dark ? COLORS.white : COLORS.black
-        }]}>Exceptional Choices for Discerning Tastes</Text>
+        }]}>{t('popularProducts.subTitle')}</Text>
         <Text style={[styles.mainTitle, {
           color: dark ? COLORS.white : COLORS.black
-        }]}>Explore our Range</Text>
+        }]}>
+          {t('popularProducts.title')}
+        </Text>
         <FlatList
           data={categories}
           horizontal
@@ -389,13 +397,14 @@ const Home = () => {
       }]}>
         <Text style={[styles.subTitle, {
           color: dark ? COLORS.white : COLORS.black
-        }]}>Our Brand Partners</Text>
+        }]}> {t('ourBrandPartners.title')}</Text>
         <Text style={[styles.mainTitle, {
           color: dark ? COLORS.white : COLORS.black
-        }]}>Select from a wide range of{'\n'}credible brands</Text>
+        }]}>{t('ourBrandPartners.subTitle')}</Text>
         <FlatList
           data={brands}
           horizontal
+          style={{ direction: 'ltr' }}
           keyExtractor={(item) => item.id}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ paddingHorizontal: 16 }} // padding left & right
@@ -418,10 +427,10 @@ const Home = () => {
       }]}>
         <Text style={[styles.subTitle, {
           color: dark ? COLORS.white : COLORS.black
-        }]}>Discover NBS Group’s trusted generator{'\n'}solutions—engineered for excellence.</Text>
+        }]}>{t('ourGenerators.subTitle')}</Text>
         <Text style={[styles.mainTitle, {
           color: dark ? COLORS.white : COLORS.black
-        }]}>Explore our Generators</Text>
+        }]}>{t('ourGenerators.title')}</Text>
         <View style={{ padding: 16 }} >
           <FlatList
             data={filteredProducts}
@@ -473,10 +482,10 @@ const Home = () => {
       }]}>
         <Text style={[styles.subTitle, {
           color: COLORS.white
-        }]}>OUR Products</Text>
+        }]}>{t('ourProducts.title')}</Text>
         <Text style={[styles.mainTitle, {
           color: COLORS.white
-        }]}>Browse our complete{'\n'}range of power and{'\n'}renewable energy{'\n'}solutions by category.</Text>
+        }]}>{t('ourProducts.subTitle')}</Text>
         <FlatList
           data={ourProducts}
           horizontal
@@ -502,10 +511,10 @@ const Home = () => {
       }]}>
         <Text style={[styles.subTitle, {
           color: dark ? COLORS.white : COLORS.black
-        }]}>Efficient. Reliable. Built for every need.</Text>
+        }]}>{t('ourInverters.subTitle')}</Text>
         <Text style={[styles.mainTitle, {
           color: dark ? COLORS.white : COLORS.black
-        }]}>Explore our Inverters</Text>
+        }]}>{t('ourInverters.title')}</Text>
         <View style={{ padding: 16 }} >
           <FlatList
             data={filteredProducts}
@@ -547,10 +556,10 @@ const Home = () => {
       }]}>
         <Text style={[styles.subTitle, {
           color: dark ? COLORS.white : COLORS.black
-        }]}>Power. Precision. Performance.</Text>
+        }]}>{t('ourWaterPump.subTitle')}</Text>
         <Text style={[styles.mainTitle, {
           color: dark ? COLORS.white : COLORS.black
-        }]}>NBS Water Pumps</Text>
+        }]}>{t('ourWaterPump.subTitle')}</Text>
         <View style={{ padding: 16 }} >
           <FlatList
             data={filteredProducts}
@@ -619,6 +628,7 @@ const Home = () => {
       }]}>
         <FlatList
           data={cardsData}
+          style={{ direction: 'ltr' }}
           horizontal
           keyExtractor={(item) => item.id}
           renderItem={renderCardItem}

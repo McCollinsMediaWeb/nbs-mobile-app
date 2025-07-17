@@ -7,6 +7,7 @@ import { createShopifyCheckoutUrl } from '@/utils/actions/shopifyCartActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -30,6 +31,7 @@ const Checkout = () => {
   const [showWebView, setShowWebView] = useState(false);
   const [isThankYouPage, setIsThankYouPage] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (cartItems && cartItems.length > 0) {
@@ -90,7 +92,7 @@ const Checkout = () => {
         <>
           <View style={[styles.container, { backgroundColor: colors.background }]}>
             <HeaderWithSearch
-              title="Select Address"
+              title={t('selectAddress.title')}
               icon={icons.moreCircle}
               onPress={() => null}
             />
@@ -102,7 +104,7 @@ const Checkout = () => {
               showsVerticalScrollIndicator={false}>
               <Text style={[styles.summaryTitle, {
                 color: dark ? COLORS.white : COLORS.greyscale900
-              }]}>Shipping Address</Text>
+              }]}>{t('selectAddress.shippingAddress')}</Text>
               <View style={[styles.summaryContainer, {
                 backgroundColor: dark ? COLORS.dark2 : COLORS.white,
               }]}>
@@ -134,7 +136,7 @@ const Checkout = () => {
                               <View style={styles.defaultView}>
                                 <Text style={[styles.defaultTitle, {
                                   color: dark ? COLORS.white : COLORS.primary
-                                }]}>Default</Text>
+                                }]}>{t('selectAddress.default')}</Text>
                               </View>
                             )}
 
@@ -149,13 +151,13 @@ const Checkout = () => {
                         <View style={styles.viewView}>
                           <Text style={[styles.homeTitle, {
                             color: dark ? COLORS.white : COLORS.greyscale900
-                          }]}>No Address Selected</Text>
+                          }]}>{t('selectAddress.noAddressTitle')}</Text>
 
                         </View>
                         <Text style={[styles.addressTitle, {
                           color: dark ? COLORS.grayscale200 : COLORS.grayscale700
                         }]}>
-                          Please select or add a shipping address to continue.</Text>
+                          {t('selectAddress.noAddressNote')}</Text>
                       </View>
                     )}
 
@@ -172,7 +174,7 @@ const Checkout = () => {
 
               <Text style={[styles.summaryTitle, {
                 color: dark ? COLORS.white : COLORS.greyscale900
-              }]}>Order List</Text>
+              }]}>{t('selectAddress.orderList')}</Text>
               <FlatList
                 // data={orderList}
                 data={cartItems}
@@ -286,7 +288,7 @@ const Checkout = () => {
                 <View style={styles.view}>
                   <Text style={[styles.totalPrice, {
                     color: dark ? COLORS.grayscale200 : COLORS.grayscale700
-                  }]}>Total</Text>
+                  }]}>{t('selectAddress.total')}</Text>
                   <Text style={[styles.totalPrice, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>AED {totalPrice.toFixed(2)}</Text>
                 </View>
               </View>
@@ -298,7 +300,7 @@ const Checkout = () => {
             opacity: selectedAddress != null ? 1 : 0.5
           }]}>
             <ButtonFilled
-              title="Continue to Checkout"
+              title={t('selectAddress.continueToCheckout')}
               // onPress={() => navigation.navigate("paymentmethods")}
               onPress={selectedAddress != null ? confirmCheckout : () => { }}
               style={styles.placeOrderButton}

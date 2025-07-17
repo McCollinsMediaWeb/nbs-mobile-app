@@ -8,6 +8,7 @@ import {
 import Checkbox from 'expo-checkbox';
 import { useNavigation } from 'expo-router';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonFilled from '../components/ButtonFilled';
@@ -48,11 +49,13 @@ const Login = () => {
     const { navigate } = useNavigation<Nav>();
     const dispatch = useAppDispatch();
     const user = useAppSelector(state => state.user);
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
     const [error, setError] = useState(null);
     const [googleData, setGoogleData] = useState<any>(null);
     const [isChecked, setChecked] = useState(false);
     const { colors, dark } = useTheme();
+    const { t } = useTranslation();
 
     const inputChangedHandler = useCallback(
         (inputId: string, inputValue: string) => {
@@ -152,14 +155,14 @@ const Login = () => {
                 <Header title="" />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.titleContainer}>
-                        <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Login to your</Text>
-                        <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Account</Text>
+                        <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t('login.title')}</Text>
+                        <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t('login.title2')}</Text>
                     </View>
                     <Input
                         id="email"
                         onInputChanged={inputChangedHandler}
                         errorText={formState.inputValidities['email']}
-                        placeholder="Email"
+                        placeholder={t('login.email')}
                         placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                         icon={icons.email}
                         keyboardType="email-address"
@@ -169,10 +172,14 @@ const Login = () => {
                         errorText={formState.inputValidities['password']}
                         autoCapitalize="none"
                         id="password"
-                        placeholder="Password"
+                        placeholder={t('login.password')}
                         placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                         icon={icons.padlock}
                         secureTextEntry={true}
+                        style={{
+                            textAlign: appLanguage === 'ar' ? 'right' : 'left',
+                            writingDirection: appLanguage === 'ar' ? 'rtl' : 'ltr'
+                        }}
                     />
                     <View style={styles.checkBoxContainer}>
                         <Checkbox
@@ -183,10 +190,10 @@ const Login = () => {
                         />
                         <Text style={[styles.privacy, {
                             color: dark ? COLORS.white : COLORS.black
-                        }]}>Remenber me</Text>
+                        }]}>{t('login.checkbox')}</Text>
                     </View>
                     <ButtonFilled
-                        title="Login"
+                        title={t('login.submit')}
                         // onPress={() => navigate("(tabs)")}
                         onPress={handleSignin}
                         style={styles.button}
@@ -196,10 +203,10 @@ const Login = () => {
                         onPress={() => navigate("forgotpasswordemail")}>
                         <Text style={[styles.forgotPasswordBtnText, {
                             color: dark ? COLORS.white : COLORS.primary
-                        }]}>Forgot the password?</Text>
+                        }]}>{t('login.forgotpassword')}</Text>
                     </TouchableOpacity>
                     <View>
-                        <OrSeparator text="or continue with" />
+                        <OrSeparator text={t('login.continuewith')} />
                         <View style={styles.socialBtnContainer}>
                             {/* <SocialButton
                                 icon={icons.appleLogo}
@@ -220,12 +227,12 @@ const Login = () => {
                 <View style={styles.bottomContainer}>
                     <Text style={[styles.bottomLeft, {
                         color: dark ? COLORS.white : COLORS.black
-                    }]}>Don&apos;t have an account ?</Text>
+                    }]}>{t('login.dontHaveAccount')}</Text>
                     <TouchableOpacity
                         onPress={() => navigate("signup")}>
                         <Text style={[styles.bottomRight, {
                             color: dark ? COLORS.white : COLORS.primary
-                        }]}>{"  "}Sign Up</Text>
+                        }]}>{"  "}{t('login.signUp')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

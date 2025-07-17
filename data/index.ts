@@ -1,4 +1,6 @@
+import { useTranslation } from "react-i18next";
 import { icons, images } from "../constants";
+const { t } = useTranslation();
 
 export const userAddresses = [
     {
@@ -422,22 +424,47 @@ export const callData = [
     },
 ];
 
+export const useBanners = () => {
+    const { t } = useTranslation();
+
+    return [
+        {
+            id: 1,
+            label: t('banners.banner1.label'),
+            headline1: t('banners.banner1.headline1'),
+            headline2: t('banners.banner1.headline2'),
+            buttonText: t('banners.banner1.buttonText'),
+            buttonLink: "",
+            image: images.banner1
+        },
+        {
+            id: 2,
+            label: t('banners.banner1.label'),
+            headline1: t('banners.banner1.headline1'),
+            headline2: t('banners.banner1.headline2'),
+            buttonText: t('banners.banner1.buttonText'),
+            buttonLink: "",
+            image: images.banner1
+        }
+    ];
+};
+
 export const banners = [
     {
         id: 1,
-        label: "NBS SOLAR INVERTER",
-        headline1: "RELIABLE. EFFICIENT.",
-        headline2: "BUILT FOR PERFORMANCE.",
-        buttonText: "VIEW PRODUCTS",
+        label: t('banners.banner1.label'),
+        headline1: t('banners.banner1.headline1'),
+        headline2: t('banners.banner1.headline2'),
+        buttonText: t('banners.banner1.buttonText'),
         buttonLink: "",
         image: images.banner1
     },
     {
         id: 2,
-        label: "NBS SOLAR INVERTER",
-        headline1: "RELIABLE. EFFICIENT.",
-        headline2: "BUILT FOR PERFORMANCE.",
-        buttonText: "VIEW PRODUCTS",
+        label: t('banners.banner1.label'),
+        headline1: t('banners.banner1.headline1'),
+        headline2: t('banners.banner1.headline2'),
+        buttonText: t('banners.banner1.buttonText'),
         buttonLink: "",
         image: images.banner1
     },
@@ -476,6 +503,39 @@ export const brands = [
         image: images.brand3
     }
 ];
+
+
+export const useCardsData = () => {
+    const { t } = useTranslation();
+
+    return [
+        {
+            id: "1",
+            title: t('pointCard.card1.title'),
+            subTitle: t('pointCard.card1.subTitle'),
+            icon: icons.cardShipping
+        },
+        {
+            id: "2",
+            title: t('pointCard.card2.title'),
+            subTitle: t('pointCard.card2.subTitle'),
+            icon: icons.cardContact
+        },
+        {
+            id: "3",
+            title: t('pointCard.card3.title'),
+            subTitle: t('pointCard.card3.subTitle'),
+            icon: icons.cardSecurity
+        },
+        {
+            id: "4",
+            title: t('pointCard.card4.title'),
+            subTitle: t('pointCard.card4.subTitle'),
+            icon: icons.cardEmail
+        }
+    ];
+};
+
 
 export const cardsData = [
     {
@@ -617,6 +677,40 @@ export const ourProducts = [
 //         onPress: null
 //     }
 // ];
+
+
+export const useCategories = () => {
+    const { t } = useTranslation();
+
+    return [
+        {
+            id: "1",
+            name: t('categories.item1.title'),
+            icon: icons.sofa1,
+            iconColor: "rgba(51, 94, 247, 1)",
+            backgroundColor: "rgba(51, 94, 247, .12)",
+            onPress: "categorysofa"
+        },
+        {
+            id: "2",
+            name: t('categories.item2.title'),
+            icon: icons.chair1,
+            iconColor: "rgba(255, 152, 31, 1)",
+            backgroundColor: "rgba(255, 152, 31, .12)",
+            onPress: "categorychair"
+        },
+        {
+            id: "3",
+            name: t('categories.item3.title'),
+            icon: icons.table,
+            iconColor: "rgba(26, 150, 240, 1)",
+            backgroundColor: "rgba(26, 150, 240,.12)",
+            onPress: "categorytable"
+        },
+    ];
+};
+
+
 
 export const categories = [
     // {
