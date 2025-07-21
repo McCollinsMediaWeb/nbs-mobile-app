@@ -22,7 +22,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon-nbs.png"
     },
     "plugins": [
       "expo-router",
@@ -45,6 +45,6 @@
         "projectId": "01a2c8fe-b75c-490e-8461-9a026e5c31eb"
       }
     },
-    "owner": "sahadmccollins"
+    "owner": "mccollins_media_2025"
   }
 }

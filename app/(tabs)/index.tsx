@@ -1,4 +1,5 @@
 import Category from '@/components/Category';
+import HamburgerDrawer from '@/components/HamburgerDrawer';
 import ProductCard from '@/components/ProductCard';
 import SubHeaderItem from '@/components/SubHeaderItem';
 import { COLORS, icons, images, SIZES } from '@/constants';
@@ -9,7 +10,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, FlatList, Image, ImageBackground, ImageSourcePropType, ListRenderItemInfo, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Dimensions, FlatList, Image, ImageBackground, ImageSourcePropType, ListRenderItemInfo, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 import '../../lang/i18n';
@@ -43,6 +44,7 @@ const Home = () => {
   const [currentSquareIndex, setCurrentSquareIndex] = useState<number>(0);
   const { dark, colors } = useTheme();
   const { t } = useTranslation();
+  const drawerRef = useRef<any>(null);
   const banners = useBanners();
   const cardsData = useCardsData();
   const categories = useCategories();
@@ -68,14 +70,13 @@ const Home = () => {
   const renderHeader = () => {
     return (
       <View style={styles.headerContainer}>
-        <View style={styles.viewLeft}>
+        {/* <View style={styles.viewLeft}>
           <Image
             source={dark ? images.noUserWhite : images.noUser}
             resizeMode='contain'
             style={styles.userIcon}
           />
           <View style={styles.viewNameContainer}>
-            {/* <Text style={styles.greeeting}>Good Morning👋</Text> */}
             <Text style={styles.greeeting}>{getGreeting()}</Text>
             <Text style={[styles.title, {
               color: dark ? COLORS.white : COLORS.greyscale900
@@ -83,6 +84,38 @@ const Home = () => {
               ? `${user.customer?.firstName ?? ''} ${user.customer?.lastName ?? ''}`.trim()
               : t('header.guestUser')}</Text>
           </View>
+        </View> */}
+        <View style={styles.viewLeft}>
+          <TouchableOpacity onPress={() => drawerRef.current.open()}>
+            <Image
+              source={dark ? images.noUserWhite : images.noUser}
+              resizeMode='contain'
+              style={styles.userIcon}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("search")}>
+            <Image
+              source={icons.search2}
+              resizeMode='contain'
+              style={[styles.bookmarkIcon, { tintColor: dark ? COLORS.white : COLORS.greyscale900 }]}
+            />
+          </TouchableOpacity>
+          {/* <View style={styles.viewNameContainer}>
+            <Text style={styles.greeeting}>{getGreeting()}</Text>
+            <Text style={[styles.title, {
+              color: dark ? COLORS.white : COLORS.greyscale900
+            }]}>{user?.accessToken
+              ? `${user.customer?.firstName ?? ''} ${user.customer?.lastName ?? ''}`.trim()
+              : t('header.guestUser')}</Text>
+          </View> */}
+        </View>
+        <View style={styles.viewLeft}>
+          <Image
+            source={images.nbsLogo}
+            resizeMode='contain'
+            style={styles.userIcon}
+          />
         </View>
         <View style={styles.viewRight}>
           {/* <TouchableOpacity
@@ -108,48 +141,48 @@ const Home = () => {
   /**
   * Render search bar
   */
-  const RenderSearchBar = () => {
+  // const RenderSearchBar = () => {
 
-    const inputRef = useRef<TextInput>(null);
+  //   const inputRef = useRef<TextInput>(null);
 
-    const handleInputFocus = () => {
-      // blur first so it never stays focused when you come back
-      inputRef.current?.blur();
-      navigation.navigate("search");
-    };
+  //   const handleInputFocus = () => {
+  //     // blur first so it never stays focused when you come back
+  //     inputRef.current?.blur();
+  //     navigation.navigate("search");
+  //   };
 
-    return (
-      <TouchableOpacity
-        onPress={() => navigation.navigate("search")}
-        style={[styles.searchBarContainer, {
-          backgroundColor: dark ? COLORS.dark2 : "#F5F5F5"
-        }]}>
-        <TouchableOpacity>
-          <Image
-            source={icons.search2}
-            resizeMode='contain'
-            style={styles.searchIcon}
-          />
-        </TouchableOpacity>
-        <TextInput
-          placeholder='Search'
-          placeholderTextColor={COLORS.gray}
-          style={styles.searchInput}
-          ref={inputRef}
-          onFocus={handleInputFocus}
-        />
-        <TouchableOpacity>
-          <Image
-            source={icons.filter}
-            resizeMode='contain'
-            style={[styles.filterIcon, {
-              tintColor: dark ? COLORS.white : COLORS.primary
-            }]}
-          />
-        </TouchableOpacity>
-      </TouchableOpacity>
-    )
-  }
+  //   return (
+  //     <TouchableOpacity
+  //       onPress={() => navigation.navigate("search")}
+  //       style={[styles.searchBarContainer, {
+  //         backgroundColor: dark ? COLORS.dark2 : "#F5F5F5"
+  //       }]}>
+  //       <TouchableOpacity>
+  //         <Image
+  //           source={icons.search2}
+  //           resizeMode='contain'
+  //           style={styles.searchIcon}
+  //         />
+  //       </TouchableOpacity>
+  //       <TextInput
+  //         placeholder='Search'
+  //         placeholderTextColor={COLORS.gray}
+  //         style={styles.searchInput}
+  //         ref={inputRef}
+  //         onFocus={handleInputFocus}
+  //       />
+  //       <TouchableOpacity>
+  //         <Image
+  //           source={icons.filter}
+  //           resizeMode='contain'
+  //           style={[styles.filterIcon, {
+  //             tintColor: dark ? COLORS.white : COLORS.primary
+  //           }]}
+  //         />
+  //       </TouchableOpacity>
+  //     </TouchableOpacity>
+  //   )
+  // }
 
   const renderBannerItem = ({ item }: ListRenderItemInfo<BannerItem>) => (
     <View style={[styles.bannerContainer, {
@@ -158,7 +191,7 @@ const Home = () => {
       <ImageBackground
         source={item.image} // Ensure item.image is a local or remote image
         style={styles.imageBackground}
-        imageStyle={{ borderRadius: 10 }}
+        // imageStyle={{ borderRadius: 10 }}
         resizeMode="cover"
       >
         <View style={styles.overlay}>
@@ -636,20 +669,7 @@ const Home = () => {
           snapToAlignment="center"
           decelerationRate="fast"
           showsHorizontalScrollIndicator={false}
-        // onEndReached={handleEndReached2}
-        // onMomentumScrollEnd={(event) => {
-        //   const offsetX = event.nativeEvent.contentOffset.x;
-        //   console.log("offsetX", offsetX)
-        //   const viewWidth = event.nativeEvent.layoutMeasurement.width;
-        //   console.log("viewWidth", viewWidth)
-        //   const newIndex = Math.floor(offsetX / viewWidth); // use floor for proper page index
-        //   console.log("newIndex", newIndex)
-        //   setCurrentSquareIndex(newIndex);
-        // }}
         />
-        {/* <View style={styles.squareDotContainer}>
-          {cardsData.map((_, index) => renderSquareDot(index))}
-        </View> */}
       </View>
     )
   }
@@ -658,7 +678,7 @@ const Home = () => {
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         {renderHeader()}
-        {RenderSearchBar()}
+        {/* {RenderSearchBar()} */}
         <ScrollView showsVerticalScrollIndicator={true}>
           {renderBanner()}
           {/* {renderCategories()} */}
@@ -670,6 +690,7 @@ const Home = () => {
           {renderCards()}
           {renderOurWaterPumps()}
         </ScrollView>
+        <HamburgerDrawer ref={drawerRef} />
       </View>
     </SafeAreaView>
   );
@@ -688,11 +709,12 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: "row",
-    width: SIZES.width - 32,
+    // width: SIZES.width - 32,
     justifyContent: "space-between",
     alignItems: "center",
     paddingLeft: 16,
-    paddingTop: 16
+    paddingBottom: 16,
+    paddingRight: 16
   },
   userIcon: {
     width: 48,
@@ -762,13 +784,8 @@ const styles = StyleSheet.create({
   bannerContainer: {
     // width: SIZES.width - 32,
     width: width,
-    // height: 554,
-    // height: 154,
-    paddingHorizontal: 16,
-    // paddingTop: 28,
-    borderRadius: 10,
-    // backgroundColor: COLORS.secondary
-    // padding: 16
+    // paddingHorizontal: 16,
+    // borderRadius: 10,
   },
   bannerTopContainer: {
     flexDirection: "column",
@@ -871,7 +888,7 @@ const styles = StyleSheet.create({
   imageBackground: {
     width: "100%",
     height: 600,
-    borderRadius: 10,
+    // borderRadius: 10,
     overflow: 'hidden',
     // objectFit: 'cover'
   },
