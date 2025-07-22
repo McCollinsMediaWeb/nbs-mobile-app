@@ -56,7 +56,8 @@ const CartCard: React.FC<CartCardProps> = ({
         <TouchableOpacity
             onPress={onPress}
             style={[styles.container, {
-                backgroundColor: dark ? COLORS.dark2 : COLORS.white
+                // backgroundColor: dark ? COLORS.dark2 : COLORS.white
+                backgroundColor: dark ? "#141517" : COLORS.white
             }]}>
             <View
                 style={[styles.imageContainer, {
@@ -181,11 +182,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     name: {
-        fontSize: 17,
-        fontFamily: 'bold',
         color: COLORS.greyscale900,
         marginVertical: 4,
         marginRight: 40,
+        fontSize: 16,
+        fontFamily: "normal",
+        fontWeight: 600,
     },
     location: {
         fontSize: 14,
@@ -222,17 +224,19 @@ const styles = StyleSheet.create({
     },
     price: {
         fontSize: 18,
-        fontFamily: 'bold',
+        fontFamily: 'normal',
         // color: COLORS.black,
         color: "rgb(177, 18, 22)",
         marginRight: 8,
     },
     oldPrice: {
-        fontSize: 16,
+        // fontSize: 16,
         fontFamily: "bold",
-        color: COLORS.gray3,
+        // color: COLORS.gray3,
         alignItems: "baseline",
-        textDecorationLine: "line-through",
+        fontSize: 16,
+        color: COLORS.primary,
+        textDecorationLine: 'line-through'
     },
     color: {
         height: 16,

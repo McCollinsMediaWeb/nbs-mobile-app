@@ -1,5 +1,6 @@
 import Button from '@/components/Button';
 import ButtonFilled from '@/components/ButtonFilled';
+import HamburgerDrawer from '@/components/HamburgerDrawer';
 import SettingsItem from '@/components/SettingsItem';
 import { COLORS, icons, images, SIZES } from '@/constants';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
@@ -27,6 +28,7 @@ const Profile = () => {
   const user = useAppSelector(state => state.user);
   const appLanguage = useAppSelector(state => state.generalSettings.language);
   const { t } = useTranslation();
+  const drawerRef = useRef<any>(null);
   // const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
 
   // useEffect(() => {
@@ -44,13 +46,22 @@ const Profile = () => {
    */
   const renderHeader = () => {
     return (
-      <TouchableOpacity style={styles.headerContainer}>
+      <View style={styles.headerContainer}>
         <View style={styles.headerLeft}>
-          <Image
-            source={images.logo}
-            resizeMode='contain'
-            style={styles.logo}
-          />
+          <TouchableOpacity onPress={() => navigate("index")}>
+            <Image
+              source={icons.back2}
+              resizeMode="contain"
+              style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
+            />
+          </TouchableOpacity>
+          {/* <TouchableOpacity onPress={() => drawerRef.current.open()}>
+            <Image
+              source={images.menu}
+              resizeMode='contain'
+              style={styles.userIcon}
+            />
+          </TouchableOpacity> */}
           <Text style={[styles.headerTitle, {
             color: dark ? COLORS.white : COLORS.greyscale900
           }]}>{t('profile.title')}</Text>
@@ -64,7 +75,7 @@ const Profile = () => {
             }]}
           />
         </TouchableOpacity> */}
-      </TouchableOpacity>
+      </View>
     )
   }
   /**
@@ -343,6 +354,7 @@ const Profile = () => {
           />
         </View>
       </RBSheet>
+      <HamburgerDrawer ref={drawerRef} />
     </SafeAreaView>
   )
 };
@@ -425,7 +437,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginVertical: 12
+    marginVertical: 17
   },
   leftContainer: {
     flexDirection: "row",
@@ -520,7 +532,11 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: COLORS.grayscale200,
     marginTop: 12
-  }
+  },
+  userIcon: {
+    width: 28,
+    height: 38,
+  },
 })
 
 export default Profile

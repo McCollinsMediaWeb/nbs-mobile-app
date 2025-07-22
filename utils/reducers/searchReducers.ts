@@ -6,6 +6,7 @@ type Suggestion = {
 };
 
 type Product = {
+    available: boolean | null | undefined;
     id: string;
     title: string;
     image: string;

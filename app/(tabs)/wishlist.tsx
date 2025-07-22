@@ -1,6 +1,6 @@
 import NotFoundCard from '@/components/NotFoundCard';
 import WishlistCard from '@/components/WishlistCard';
-import { COLORS, icons, images, SIZES } from '@/constants';
+import { COLORS, icons, SIZES } from '@/constants';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -24,11 +24,13 @@ const Wishlist: React.FC = () => {
     const renderHeader = () => (
         <TouchableOpacity style={styles.headerContainer}>
             <View style={styles.headerLeft}>
-                <Image
-                    source={images.logo}
-                    resizeMode="contain"
-                    style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
-                />
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={icons.back2}
+                        resizeMode="contain"
+                        style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
+                    />
+                </TouchableOpacity>
                 <Text style={[styles.headerTitle, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>
                     {t('wishlist.title')}
                 </Text>
@@ -50,7 +52,8 @@ const Wishlist: React.FC = () => {
                 <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                     <View style={{
                         backgroundColor: dark ? COLORS.dark1 : COLORS.white,
-                        marginVertical: 16
+                        marginVertical: 16,
+                        // padding: 16
                     }}>
                         {filteredProducts?.length > 0 ? (
                             <FlatList

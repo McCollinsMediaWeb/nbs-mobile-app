@@ -2,32 +2,31 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { addProductToWishlist, checkWishlistStatus } from '@/utils/actions/wishListActions';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { COLORS, SIZES, icons } from '../constants';
+import { COLORS, icons, SIZES } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 
-// Define the type for the component props
-interface WishlistCardProps {
+interface ProductCardProps {
     merchandiseId: string;
     name: string;
-    image: string | undefined;
-    price: number;
-    oldPrice: number | undefined;
-    productType: string;
+    image: string; // Use 'require' for local images or 'ImageSourcePropType' for more robust typing
+    price: string;
+    oldPrice: string;
+    availableForSale?: boolean | null;
     onPress: () => void;
 }
 
-const WishlistCard: React.FC<WishlistCardProps> = ({
+const BlueProductCard: React.FC<ProductCardProps> = ({
     merchandiseId,
     name,
     image,
     price,
     oldPrice,
-    productType,
+    availableForSale,
     onPress
 }) => {
-    const { dark } = useTheme();
     const dispatch = useAppDispatch();
     const [isFavourite, setIsFavourite] = useState<boolean>(false);
+    const { dark } = useTheme();
 
     useEffect(() => {
         const checkStatus = async () => {
@@ -43,8 +42,9 @@ const WishlistCard: React.FC<WishlistCardProps> = ({
                 onPress={onPress}
                 style={[styles.container, {
                     // backgroundColor: dark ? COLORS.dark2 : COLORS.white
-                    backgroundColor: dark ? "#141517" : COLORS.white
-                }]}>
+                }]}
+                activeOpacity={0.8}
+            >
                 <View style={[styles.imageContainer, {
                     backgroundColor: dark ? COLORS.dark3 : COLORS.silver
                 }]}>
@@ -54,31 +54,18 @@ const WishlistCard: React.FC<WishlistCardProps> = ({
                         style={styles.image}
                     />
                 </View>
-                {/* <View style={styles.favouriteContainer}>
-                    <TouchableOpacity onPress={onPress}>
-                        <Image
-                            source={icons.heart5}
-                            resizeMode='contain'
-                            style={styles.heartIcon}
-                        />
-                    </TouchableOpacity>
-                </View> */}
-                <Text style={[styles.name, {
-                    color: dark ? COLORS.secondaryWhite : COLORS.greyscale900,
-                }]}>{name}</Text>
+
+                <Text style={[styles.name]}>{name}</Text>
+
                 <View style={styles.bottomPriceContainer}>
                     {/* <View style={styles.priceContainer}> */}
-                    <Text style={styles.price}>{"AED " + price.toFixed(2)}</Text>
+                    <Text style={styles.price}>{"AED " + parseFloat(price).toFixed(2)}</Text>
                     {/* </View> */}
-
-                    {oldPrice !== undefined && (
+                    {Number(oldPrice) > 0 && (
                         // <View style={styles.oldPriceContainer}>
-                        <Text style={[styles.oldPrice, { color: dark ? COLORS.white : COLORS.primary }]}>
-                            {"AED " + oldPrice.toFixed(2)}
-                        </Text>
+                        <Text style={styles.oldPrice}>{"AED " + parseFloat(oldPrice).toFixed(2)}</Text>
                         // </View>
                     )}
-
                 </View>
             </TouchableOpacity>
 
@@ -89,8 +76,8 @@ const WishlistCard: React.FC<WishlistCardProps> = ({
                         merchandiseId,
                         title: name,
                         image,
-                        price: price,
-                        oldPrice: oldPrice,
+                        price: parseFloat(price),
+                        oldPrice: parseFloat(oldPrice),
                         productType: ''
                     }));
                     setIsFavourite(prev => !prev);
@@ -105,6 +92,7 @@ const WishlistCard: React.FC<WishlistCardProps> = ({
                 />
             </TouchableOpacity>
         </View>
+
     );
 };
 
@@ -115,34 +103,28 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "column",
         width: (SIZES.width - 32) / 2 - 12,
-        backgroundColor: COLORS.white,
-        padding: 6,
+        // backgroundColor: COLORS.primaryRed,
+        padding: 20,
         borderRadius: 16,
         marginBottom: 12,
         marginRight: 4
     },
     imageContainer: {
         width: "100%",
-        height: 140,
+        height: 150,
         borderRadius: 16,
-        backgroundColor: COLORS.silver
+        // backgroundColor: COLORS.silver
+        backgroundColor: COLORS.white
     },
     image: {
         width: "100%",
-        height: 140,
+        height: 150,
         borderRadius: 16
     },
-    // name: {
-    //     fontSize: 18,
-    //     fontFamily: "bold",
-    //     color: COLORS.greyscale900,
-    //     marginVertical: 4
-    // },
     name: {
         fontSize: 16,
         fontFamily: "normal",
-        fontWeight: 600,
-        color: COLORS.greyscale900,
+        color: COLORS.white,
         marginVertical: 15,
         textAlign: "center"
     },
@@ -155,8 +137,8 @@ const styles = StyleSheet.create({
     bottomPriceContainer: {
         width: "100%",
         flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
+        justifyContent: "center",
+        alignItems: "baseline",
         marginBottom: 4
     },
     priceContainer: {
@@ -167,12 +149,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-start"
     },
-    // price: {
-    //     fontSize: 18,
-    //     fontFamily: "bold",
-    //     color: "rgb(177, 18, 22)",
-    //     marginRight: 8
-    // },
     price: {
         fontSize: 16,
         fontFamily: "normal",
@@ -182,7 +158,10 @@ const styles = StyleSheet.create({
     },
     oldPrice: {
         fontSize: 16,
-        color: COLORS.primary,
+        // fontFamily: "bold",
+        color: COLORS.white,
+        // color: "rgb(177, 18, 22)",
+        // marginRight: 8,
         textDecorationLine: 'line-through'
     },
     heartIcon: {
@@ -225,4 +204,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default WishlistCard;
+export default BlueProductCard;

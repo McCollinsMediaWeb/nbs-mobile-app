@@ -1,4 +1,7 @@
-import { Ionicons } from '@expo/vector-icons';
+import { COLORS, icons, images } from '@/constants';
+import { useTheme } from '@/theme/ThemeProvider';
+import { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from 'expo-router';
 import React, {
     forwardRef,
     useImperativeHandle,
@@ -9,25 +12,16 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
-type Product = {
-    name: string;
-    image: any;
-};
-
 const HamburgerDrawer = forwardRef<any>((_, ref) => {
+    const navigation = useNavigation<NavigationProp<any>>();
     const internalRef = useRef<any>(null);
+    const { dark, colors } = useTheme();
 
     useImperativeHandle(ref, () => internalRef.current);
-
-    const productList: Product[] = [
-        { name: 'NBS SOLAR', image: require('../assets/images/collection-banners/nbs-solar.jpg') },
-        { name: 'SAMSUN SOLAR', image: require('../assets/images/collection-banners/nbs-solar.jpg') },
-        { name: 'SU-MAX', image: require('../assets/images/collection-banners/nbs-solar.jpg') },
-    ];
 
     return (
         <RBSheet
@@ -46,26 +40,65 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
                 },
             }}
         >
-            <View style={styles.container}>
+            <View style={[styles.container, { backgroundColor: dark ? COLORS.dark1 : COLORS.white }]}>
                 <TouchableOpacity
                     onPress={() => internalRef.current?.close()}
-                    style={styles.closeBtn}
+                // style={[styles.closeBtn, { tintColor: dark ? COLORS.white : COLORS.greyscale900 }]}
                 >
-                    <Ionicons name="close" size={24} color="black" />
+                    <Image
+                        source={icons.close}
+                        resizeMode='contain'
+                        style={[styles.closeBtn, { tintColor: dark ? COLORS.white : COLORS.greyscale900 }]}
+                    />
                 </TouchableOpacity>
 
-                <Text style={styles.menuItem}>HOME</Text>
-                <Text style={styles.menuItem}>ABOUT US</Text>
+                <TouchableOpacity onPress={() => {
+                    internalRef.current?.close();
+                    setTimeout(() => navigation.navigate("(tabs)"), 200);
+                }}>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>HOME</Text>
+                </TouchableOpacity>
+                <View style={styles.divider} />
 
-                <Text style={styles.menuSection}>ALL PRODUCTS</Text>
-                <View style={styles.productGrid}>
-                    {productList.map((item, index) => (
-                        <View key={index} style={styles.productItem}>
-                            <Image source={item.image} style={styles.productImage} />
-                            <Text style={styles.productName}>{item.name}</Text>
-                        </View>
-                    ))}
-                </View>
+                <TouchableOpacity onPress={() => {
+                    internalRef.current?.close();
+                    setTimeout(() => navigation.navigate("aboutus"), 200);
+                }}>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>ABOUT US</Text>
+                </TouchableOpacity>
+                <View style={styles.divider} />
+
+                <TouchableOpacity onPress={() => {
+                    internalRef.current?.close();
+                    setTimeout(() => navigation.navigate("allproducts"), 200);
+                }}>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>ALL PRODUCTS</Text>
+                </TouchableOpacity>
+                <View style={styles.divider} />
+
+                <TouchableOpacity onPress={() => {
+                    internalRef.current?.close();
+                    setTimeout(() => navigation.navigate("collectionscreen", { collectionId: "gid://shopify/Collection/439668539604", collectionTitle: "Best Sellers", collectionImage: images.aboutUsBanner3 }), 200);
+                }}>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>BEST SELLERS</Text>
+                </TouchableOpacity>
+                <View style={styles.divider} />
+
+                <TouchableOpacity onPress={() => {
+                    internalRef.current?.close();
+                    setTimeout(() => navigation.navigate("collectionscreen", { collectionId: "gid://shopify/Collection/439668572372", collectionTitle: "New Arrivals", collectionImage: images.aboutUsBanner1 }), 200);
+                }}>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>NEW ARRIVALS</Text>
+                </TouchableOpacity>
+                <View style={styles.divider} />
+
+                <TouchableOpacity onPress={() => {
+                    internalRef.current?.close();
+                    // Optionally add logic to download the catalog here
+                }}>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>DOWNLOAD CATALOG</Text>
+                </TouchableOpacity>
+
             </View>
         </RBSheet>
     );
@@ -80,11 +113,25 @@ const styles = StyleSheet.create({
     },
     closeBtn: {
         marginBottom: 20,
+        width: 28,
+        height: 38
     },
     menuItem: {
-        fontWeight: 'bold',
-        fontSize: 16,
-        marginVertical: 10,
+        // fontWeight: 'bold',
+        // fontSize: 16,
+        // marginVertical: 10,
+        // color: '#fff',
+        fontSize: 18,
+        marginTop: 15,
+        marginBottom: 15,
+        fontWeight: '900',
+        lineHeight: 30,
+        textTransform: 'uppercase',
+    },
+    divider: {
+        width: "100%",
+        backgroundColor: COLORS.grayscale400,
+        height: 1
     },
     menuSection: {
         marginTop: 20,

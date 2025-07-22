@@ -131,6 +131,7 @@ const SearchProducts = () => {
                                                     image={item?.image}
                                                     price={item.price}
                                                     oldPrice={item.oldPrice}
+                                                    availableForSale={item?.available}
                                                     onPress={() => navigation.navigate("productdetails", {
                                                         id: item.id,
                                                     })}

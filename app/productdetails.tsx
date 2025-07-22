@@ -1,4 +1,5 @@
-import ProductCard from "@/components/ProductCard";
+import BlueProductCard from "@/components/BlueProductCard";
+import { useCardsData } from "@/data";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { addProductToCart } from "@/utils/actions/cartActions";
@@ -58,7 +59,6 @@ interface Product {
     }[];
 }
 
-
 const ProductDetails = () => {
     const navigation = useNavigation<NavigationProp<any>>();
     const route = useRoute<ProductDetailsRouteProp>();
@@ -71,6 +71,7 @@ const ProductDetails = () => {
     const [totalPrice, setTotalPrice] = useState<number>(parseFloat(product?.variants[0]?.price ?? "0")); // store as number
     const [quantity, setQuantity] = useState(1);
     const insets = useSafeAreaInsets();
+    const cardsData = useCardsData();
 
     const { id } = route.params; // ✅ Now `id` is available
     const [isFavourite, setIsFavourite] = useState(false);
@@ -303,9 +304,9 @@ const ProductDetails = () => {
                     ))}
                 </View>
 
-                <View style={[styles.separateLine, {
+                {/* <View style={[styles.separateLine, {
                     backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
-                }]} />
+                }]} /> */}
                 {/* <View style={styles.qtyContainer}>
                     <Text style={[styles.descTitle, {
                         color: dark ? COLORS.white : COLORS.greyscale900
@@ -351,7 +352,9 @@ const ProductDetails = () => {
                     }]}>
                         {t('productPage.productOverview')}
                     </Text>
-
+                    <View style={[styles.separateLine, {
+                        backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
+                    }]} />
                     <Text style={[styles.descTitle, { marginVertical: 10 }, {
                         color: dark ? COLORS.white : COLORS.greyscale900
                     }]}>{t('productPage.highlights')}</Text>
@@ -378,6 +381,22 @@ const ProductDetails = () => {
                     ) : null}
                 </View>
 
+                <View style={{ marginVertical: 10 }}>
+                    <Text style={[styles.contentTitle, {
+                        color: dark ? COLORS.white : COLORS.black
+                    }]}>
+                        {t('productPage.productOverview')}
+                    </Text>
+                    <View style={[styles.separateLine, {
+                        backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
+                    }]} />
+
+                    <Text style={[styles.featureText, {
+                        color: dark ? COLORS.white : COLORS.greyscale900
+                    }]}>{product?.descriptionHtml}</Text>
+
+                </View>
+
                 {/* <View style={[styles.separateLine, {
                     backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
                 }]} /> */}
@@ -387,20 +406,14 @@ const ProductDetails = () => {
 
     const renderRecommendedProducts = () => {
         return (
-            <View style={[styles.contentContainer, {
-                // backgroundColor: dark ? COLORS.dark3 : COLORS.secondary
-                // backgroundColor: dark ? COLORS.dark3 : colors.background
-            }]}>
-                {/* <Text style={[styles.mainTitle, {
-                    color: dark ? COLORS.white : COLORS.black
-                }]}>You might also like</Text> */}
-
+            <View style={[styles.productSuggestionContainer]}>
                 <Text style={[styles.contentTitle, {
-                    color: dark ? COLORS.white : COLORS.black
+                    color: COLORS.white,
+                    textAlign: "center"
                 }]}>
                     {t('productPage.youlike')}
                 </Text>
-                <View style={{ padding: 16, marginBottom: 70 }} >
+                <View style={{ padding: 0, marginBottom: 70 }} >
                     <FlatList
                         data={recommendedProducts}
                         keyExtractor={item => item.id}
@@ -409,16 +422,16 @@ const ProductDetails = () => {
                         renderItem={({ item }) => {
                             return (
                                 <View>
-                                    <ProductCard
+                                    <BlueProductCard
                                         merchandiseId={item.id}
                                         name={item.title}
                                         image={item?.image}
                                         price={item.price}
                                         oldPrice={item.oldPrice}
+                                        availableForSale={item?.available}
                                         onPress={() => navigation.navigate("productdetails", {
                                             id: item.id,
-                                        })}
-                                    />
+                                        })} />
                                 </View>
                             )
                         }}
@@ -427,6 +440,7 @@ const ProductDetails = () => {
             </View>
         )
     }
+
     return (
         <View style={[styles.area,
         {
@@ -652,10 +666,17 @@ const styles = StyleSheet.create({
     contentContainer: {
         marginHorizontal: 12
     },
+    productSuggestionContainer: {
+        // marginHorizontal: 12,
+        backgroundColor: "rgb(1,73,133)",
+        textAlign: "center",
+        padding: 16
+    },
     separateLine: {
         width: SIZES.width - 32,
         height: 1,
-        backgroundColor: COLORS.grayscale200
+        backgroundColor: COLORS.grayscale200,
+        marginVertical: 10
     },
     bottomTitle: {
         fontSize: 24,
@@ -680,9 +701,11 @@ const styles = StyleSheet.create({
     },
     contentTitle: {
         fontSize: 30,
-        fontFamily: "bold",
+        // fontFamily: "bold",
+        fontWeight: 900,
         color: COLORS.black,
-        // marginTop: 10
+        textTransform: "uppercase",
+        marginTop: 20
     },
     ratingContainer: {
         flexDirection: "row",
@@ -824,8 +847,8 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white,
         paddingHorizontal: 16,
         paddingVertical: 16,
-        borderTopRightRadius: 32,
-        borderTopLeftRadius: 32,
+        // borderTopRightRadius: 32,
+        // borderTopLeftRadius: 32,
         borderTopColor: COLORS.white,
         borderTopWidth: 1,
     },
@@ -842,12 +865,13 @@ const styles = StyleSheet.create({
     },
     price: {
         fontSize: 24,
-        fontFamily: "bold",
+        // fontFamily: "bold",
+        fontWeight: "bold",
         color: COLORS.black,
     },
     oldPrice: {
         fontSize: 20,
-        fontFamily: "bold",
+        fontWeight: "bold",
         color: COLORS.gray3,
         alignItems: "baseline",
         textDecorationLine: "line-through",
@@ -942,6 +966,23 @@ const styles = StyleSheet.create({
         height: 200,
         marginTop: 16,
         // marginBottom: 90
+    },
+    subTitle: {
+        color: '#fff', // red color like image
+        fontSize: 15,
+        letterSpacing: 1,
+        fontWeight: '800',
+        marginBottom: 8,
+        textTransform: 'uppercase',
+        textAlign: 'center',
+        marginTop: 20
+    },
+    name: {
+        fontSize: 18,
+        color: COLORS.greyscale900,
+        marginVertical: 4,
+        textAlign: "center",
+        maxWidth: 350,
     },
 })
 

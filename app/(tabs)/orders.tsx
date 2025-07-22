@@ -1,5 +1,5 @@
 import Button from '@/components/Button';
-import { COLORS, images, SIZES } from '@/constants';
+import { COLORS, icons, SIZES } from '@/constants';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { CancelledOrders, CompletedOrders, OngoingOrders } from '@/tabs';
@@ -162,14 +162,11 @@ const Orders = () => {
     return (
       <View style={styles.headerContainer}>
         <View style={styles.headerLeft}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
-              source={images.logo}
-              resizeMode='contain'
-              style={[styles.backIcon, {
-                tintColor: dark ? COLORS.white : COLORS.greyscale900
-              }]}
+              source={icons.back2}
+              resizeMode="contain"
+              style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
             />
           </TouchableOpacity>
           <Text style={[styles.headerTitle, {
@@ -301,6 +298,11 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     tintColor: COLORS.black
+  },
+  logo: {
+    height: 32,
+    width: 32,
+    tintColor: COLORS.primary
   },
 })
 

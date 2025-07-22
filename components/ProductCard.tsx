@@ -2,7 +2,7 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { addProductToWishlist, checkWishlistStatus } from '@/utils/actions/wishListActions';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { COLORS, SIZES, icons } from '../constants';
+import { COLORS, icons, SIZES } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 
 interface ProductCardProps {
@@ -11,6 +11,7 @@ interface ProductCardProps {
     image: string; // Use 'require' for local images or 'ImageSourcePropType' for more robust typing
     price: string;
     oldPrice: string;
+    availableForSale?: boolean | null;
     onPress: () => void;
 }
 
@@ -20,6 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     image,
     price,
     oldPrice,
+    availableForSale,
     onPress
 }) => {
     const dispatch = useAppDispatch();
@@ -99,7 +101,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <TouchableOpacity
                 onPress={onPress}
                 style={[styles.container, {
-                    backgroundColor: dark ? COLORS.dark2 : COLORS.white
+                    // backgroundColor: dark ? COLORS.dark2 : COLORS.white
                 }]}
                 activeOpacity={0.8}
             >
@@ -118,13 +120,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 }]}>{name}</Text>
 
                 <View style={styles.bottomPriceContainer}>
-                    <View style={styles.priceContainer}>
-                        <Text style={styles.price}>{"AED " + parseFloat(price).toFixed(2)}</Text>
-                    </View>
+                    {/* <View style={styles.priceContainer}> */}
+                    <Text style={styles.price}>{"AED " + parseFloat(price).toFixed(2)}</Text>
+                    {/* </View> */}
                     {Number(oldPrice) > 0 && (
-                        <View style={styles.oldPriceContainer}>
-                            <Text style={styles.oldPrice}>{"AED " + parseFloat(oldPrice).toFixed(2)}</Text>
-                        </View>
+                        // <View style={styles.oldPriceContainer}>
+                        <Text style={[styles.oldPrice, { color: dark ? COLORS.white : COLORS.primary }]}>{"AED " + parseFloat(oldPrice).toFixed(2)}</Text>
+                        // </View>
                     )}
                 </View>
             </TouchableOpacity>
@@ -163,8 +165,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "column",
         width: (SIZES.width - 32) / 2 - 12,
-        backgroundColor: COLORS.white,
-        padding: 6,
+        // backgroundColor: COLORS.white,
+        padding: 20,
         borderRadius: 16,
         marginBottom: 12,
         marginRight: 4
@@ -181,10 +183,12 @@ const styles = StyleSheet.create({
         borderRadius: 16
     },
     name: {
-        fontSize: 18,
-        fontFamily: "bold",
+        fontSize: 16,
+        fontFamily: "normal",
+        fontWeight: 600,
         color: COLORS.greyscale900,
-        marginVertical: 4
+        marginVertical: 15,
+        textAlign: "center"
     },
     location: {
         fontSize: 12,
@@ -195,7 +199,7 @@ const styles = StyleSheet.create({
     bottomPriceContainer: {
         width: "100%",
         flexDirection: "row",
-        // justifyContent: "space-between",
+        justifyContent: "center",
         alignItems: "baseline",
         marginBottom: 4
     },
@@ -208,18 +212,15 @@ const styles = StyleSheet.create({
         alignItems: "flex-start"
     },
     price: {
-        fontSize: 18,
-        fontFamily: "bold",
+        fontSize: 16,
+        fontFamily: "normal",
         // color: COLORS.primary,
         color: "rgb(177, 18, 22)",
         marginRight: 8
     },
     oldPrice: {
-        fontSize: 14,
-        // fontFamily: "bold",
+        fontSize: 16,
         color: COLORS.primary,
-        // color: "rgb(177, 18, 22)",
-        marginRight: 8,
         textDecorationLine: 'line-through'
     },
     heartIcon: {

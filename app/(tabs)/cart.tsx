@@ -2,7 +2,7 @@ import Button from '@/components/Button';
 import ButtonFilled from '@/components/ButtonFilled';
 import CartCard from '@/components/CartCard';
 import NotFoundCard from '@/components/NotFoundCard';
-import { COLORS, icons, images, SIZES } from '@/constants';
+import { COLORS, icons, SIZES } from '@/constants';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -69,13 +69,15 @@ const Cart: React.FC = () => {
    * Render header
    */
   const renderHeader = () => (
-    <TouchableOpacity style={styles.headerContainer}>
+    <View style={styles.headerContainer}>
       <View style={styles.headerLeft}>
-        <Image
-          source={images.logo}
-          resizeMode="contain"
-          style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
-        />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image
+            source={icons.back2}
+            resizeMode="contain"
+            style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
+          />
+        </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>
           {t('cart.title')}
         </Text>
@@ -87,7 +89,7 @@ const Cart: React.FC = () => {
           style={[styles.headerIcon, { tintColor: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}
         />
       </TouchableOpacity>
-    </TouchableOpacity>
+    </View>
   );
   /**
    * Render my content
@@ -336,7 +338,7 @@ const Cart: React.FC = () => {
           <Text style={[styles.featureText, {
             color: dark ? COLORS.white : COLORS.greyscale900
           }]}>
-             {t('cart.sheetContent')}
+            {t('cart.sheetContent')}
           </Text>
         </View>
 

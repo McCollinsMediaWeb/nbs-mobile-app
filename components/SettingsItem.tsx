@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ImageSourcePropType } from 'react-native';
-import { SIZES, COLORS, icons } from '../constants';
+import { Image, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { COLORS, icons, SIZES } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 
 type SettingsItemProps = {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginVertical: 12,
+        marginVertical: 17,
     },
     leftContainer: {
         flexDirection: 'row',
