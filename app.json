@@ -4,7 +4,7 @@
     "slug": "NBS",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/nbs-icon.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "nbs",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/nbs-icon.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
@@ -22,7 +22,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon-nbs.png"
+      "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       "expo-router",
