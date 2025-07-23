@@ -1,8 +1,8 @@
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { forgotPassword } from '@/utils/actions/userActions';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonFilled from '../components/ButtonFilled';
@@ -37,7 +37,8 @@ const ForgotPasswordEmail = () => {
     const [error, setError] = useState(null);
     const [isChecked, setChecked] = useState(false);
     const { colors, dark } = useTheme();
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
 
     const inputChangedHandler = useCallback(
         (inputId: string, inputValue: string) => {

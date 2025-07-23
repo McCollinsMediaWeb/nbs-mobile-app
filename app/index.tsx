@@ -3,8 +3,8 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { fetchCollections } from '@/utils/actions/collectionActions';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ImageBackground, StyleSheet, Text } from 'react-native';
 import { COLORS, images } from '../constants';
 
@@ -20,7 +20,8 @@ const Onboarding1 = () => {
     const appLanguage = useAppSelector(state => state.generalSettings.language);
     const collections = useAppSelector((state) => state.collections.data);
     const [hydrated, setHydrated] = React.useState(false);
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
 
     useEffect(() => {
         // Simulate waiting for the store to hydrate

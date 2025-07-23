@@ -6,8 +6,8 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -17,7 +17,8 @@ const Wishlist: React.FC = () => {
     const { dark, colors } = useTheme();
     const dispatch = useAppDispatch();
     const wishlistItems = useAppSelector(state => state.wishlist);
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
 
     const filteredProducts = wishlistItems.wishlistItems;
 

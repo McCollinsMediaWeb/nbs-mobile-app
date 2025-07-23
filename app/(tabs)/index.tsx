@@ -43,7 +43,8 @@
 //   const [currentIndex, setCurrentIndex] = useState<number>(0);
 //   const [currentSquareIndex, setCurrentSquareIndex] = useState<number>(0);
 //   const { dark, colors } = useTheme();
-//   const { t } = useTranslation();
+//   // const { t } = useTranslation();
+// const { t } = i18next();
 //   const drawerRef = useRef<any>(null);
 //   const banners = useBanners();
 //   const cardsData = useCardsData();
@@ -1059,6 +1060,8 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
+
 import React, {
   memo,
   useCallback,
@@ -1067,7 +1070,6 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   Dimensions,
   FlatList,
@@ -1083,7 +1085,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
-import '../../lang/i18n';
+// import '../../lang/i18n';
 
 const { width } = Dimensions.get('window');
 
@@ -1107,7 +1109,8 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentSquareIndex, setCurrentSquareIndex] = useState(0);
   const { dark, colors } = useTheme();
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+  const { t } = i18next;
   const drawerRef = useRef<any>(null);
   const banners = useBanners();
   const cardsData = useCardsData();
@@ -1336,7 +1339,7 @@ const Home = () => {
     const products = ourGenerators;
 
     return (
-      <View style={[styles.bannerItemContainer, {backgroundColor: dark ? COLORS.dark1: COLORS.white}]}>
+      <View style={[styles.bannerItemContainer, { backgroundColor: dark ? COLORS.dark1 : COLORS.white }]}>
         <Text style={[styles.subTitle, { color: dark ? COLORS.white : COLORS.black }]}>
           {t('ourGenerators.subTitle')}
         </Text>

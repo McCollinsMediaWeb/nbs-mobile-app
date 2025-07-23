@@ -9,8 +9,8 @@ import { useTheme } from '@/theme/ThemeProvider';
 import { logoutCustomer } from '@/utils/actions/userActions';
 import { launchImagePicker } from '@/utils/ImagePickerHelper';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
 import React, { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Image, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -27,7 +27,8 @@ const Profile = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.user);
   const appLanguage = useAppSelector(state => state.generalSettings.language);
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+  const { t } = i18next;
   const drawerRef = useRef<any>(null);
   // const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
 

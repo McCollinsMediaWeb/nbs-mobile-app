@@ -4,8 +4,8 @@ import { addProductToCart } from '@/utils/actions/cartActions';
 import { addOrderUrl } from '@/utils/actions/orderActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
 import React, { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Alert, FlatList, Image, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Button from '../components/Button';
@@ -26,7 +26,8 @@ const OngoingOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps) 
   const navigation = useNavigation<NavigationProp<any>>();
   const [selectedOrder, setSelectedOrder] = useState(null);
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+  const { t } = i18next;
 
   const handleOrderAgain = (order: any) => {
 

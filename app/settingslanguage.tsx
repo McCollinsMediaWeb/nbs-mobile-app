@@ -3,8 +3,8 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { changeAppLanguage } from '@/utils/actions/generalSettingsActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18next from 'i18next';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { I18nManager, StyleSheet, Text, View } from 'react-native';
 import RNRestart from 'react-native-restart';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -18,7 +18,8 @@ const SettingsLanguage = () => {
     const dispatch = useAppDispatch();
     const appLanguage = useAppSelector(state => state.generalSettings.language);
     const { colors, dark } = useTheme();
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
 
     const handleCheckboxPress = async (itemTitle: string) => {
         if (appLanguage !== itemTitle) {

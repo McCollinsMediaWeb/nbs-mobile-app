@@ -5,8 +5,8 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { updateSelectedAddress } from '@/utils/actions/selectedAddressActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -37,7 +37,8 @@ const SelectShippingAddress = () => {
   const user = useAppSelector((state) => state.user);
   const selectedAddress = useAppSelector((state) => state.selectedAddress.selectedAddress); // This is a string id or null
   const [selectedItem, setSelectedItem] = useState<AddressNode | null>(null);
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+  const { t } = i18next;
 
   // Handle checkbox
   const handleCheckboxPress = (address: AddressNode) => {

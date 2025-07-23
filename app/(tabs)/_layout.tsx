@@ -1,6 +1,6 @@
 import { useTheme } from "@/theme/ThemeProvider";
 import { Tabs } from "expo-router";
-import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 import { Image, Platform, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { COLORS, FONTS, icons, SIZES } from "../../constants";
@@ -8,7 +8,8 @@ import { COLORS, FONTS, icons, SIZES } from "../../constants";
 const TabLayout = () => {
   const { dark } = useTheme();
   const insets = useSafeAreaInsets();
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+const { t } = i18next;
 
   return (
     <Tabs

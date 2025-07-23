@@ -11,8 +11,8 @@ import { Feather, FontAwesome } from "@expo/vector-icons";
 import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import i18next from "i18next";
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from "react-i18next";
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -77,7 +77,8 @@ const ProductDetails = () => {
     const [isFavourite, setIsFavourite] = useState(false);
     const { dark } = useTheme();
     const refRBSheet = useRef<any>(null);
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
 
     // Slider images
     // const sliderImages = [

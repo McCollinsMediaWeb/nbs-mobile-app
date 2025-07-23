@@ -7,8 +7,8 @@ import { useTheme } from '@/theme/ThemeProvider';
 import { addOrderUrl, fetchOrders } from '@/utils/actions/orderActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
@@ -46,7 +46,8 @@ const Orders = () => {
   const webViewRef = useRef<WebView>(null);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+  const { t } = i18next;
 
 
   const [index, setIndex] = React.useState(0);

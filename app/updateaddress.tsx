@@ -8,8 +8,8 @@ import { Picker } from '@react-native-picker/picker';
 import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import i18next from 'i18next';
 import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -67,7 +67,8 @@ const UpdateAddress = () => {
     const [selectedLabel, setSelectedLabel] = useState(null);
     const { dark, colors } = useTheme();
     const user = useAppSelector(state => state.user);
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
 
     const handleLabelSelection = (label: any) => {
         setSelectedLabel(label)

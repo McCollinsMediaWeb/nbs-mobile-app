@@ -1,6 +1,7 @@
-import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 import { icons, images } from "../constants";
-const { t } = useTranslation();
+// const { t } = useTranslation();
+const { t } = i18next;
 
 export const faqKeywords = [
     {
@@ -74,7 +75,8 @@ export const faqs = [
 ];
 
 export const useBanners = () => {
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
 
     return [
         {
@@ -155,7 +157,8 @@ export const brands = [
 
 
 export const useCardsData = () => {
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
 
     return [
         {
@@ -253,7 +256,8 @@ export const ourProducts = [
 ];
 
 export const useCategories = () => {
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
 
     return [
         {

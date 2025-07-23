@@ -9,8 +9,8 @@ import { useTheme } from '@/theme/ThemeProvider';
 import { removeProductFromCart } from '@/utils/actions/cartActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -40,7 +40,8 @@ const Cart: React.FC = () => {
   const cartItems = useAppSelector(state => state.cart.cartItems);
   const user = useAppSelector(state => state.user);
   const appLanguage = useAppSelector(state => state.generalSettings.language);
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+  const { t } = i18next;
 
   const handleRemoveBookmark = () => {
     if (selectedBookmarkItem) {

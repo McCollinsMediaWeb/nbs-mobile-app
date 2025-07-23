@@ -7,8 +7,8 @@ import { Picker } from '@react-native-picker/picker';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import i18next from 'i18next';
 import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Input from '../components/Input';
@@ -53,7 +53,8 @@ const AddNewAddress = () => {
     const [selectedLabel, setSelectedLabel] = useState(null);
     const { dark, colors } = useTheme();
     const user = useAppSelector(state => state.user);
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
 
     const handleLabelSelection = (label: any) => {
         setSelectedLabel(label)

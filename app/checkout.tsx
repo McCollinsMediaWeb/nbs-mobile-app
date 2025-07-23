@@ -6,8 +6,8 @@ import { updateSelectedAddress } from '@/utils/actions/selectedAddressActions';
 import { createShopifyCheckoutUrl } from '@/utils/actions/shopifyCartActions';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -31,7 +31,8 @@ const Checkout = () => {
   const [showWebView, setShowWebView] = useState(false);
   const [isThankYouPage, setIsThankYouPage] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+  const { t } = i18next;
 
   useEffect(() => {
     if (cartItems && cartItems.length > 0) {

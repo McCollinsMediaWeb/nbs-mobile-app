@@ -4,8 +4,8 @@ import { useCardsData } from '@/data';
 import { useTheme } from '@/theme/ThemeProvider';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
 import React, { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Dimensions, FlatList, Image, ImageBackground, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -15,7 +15,8 @@ const { width } = Dimensions.get('window');
 const AboutUs = () => {
     const navigation = useNavigation<NavigationProp<any>>();
     const { dark, colors } = useTheme();
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
     const drawerRef = useRef<any>(null);
     const cardsData = useCardsData();
     /**

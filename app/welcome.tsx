@@ -2,8 +2,8 @@ import Button from "@/components/Button";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { changeOnboardStatus } from "@/utils/actions/generalSettingsActions";
 import { useNavigation } from "expo-router";
+import i18next from "i18next";
 import React, { useEffect } from "react";
-import { useTranslation } from "react-i18next";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SocialButtonV2 from "../components/SocialButtonV2";
@@ -19,7 +19,8 @@ const Welcome = () => {
     const { navigate } = useNavigation<Nav>();
     const { colors, dark } = useTheme();
     const dispatch = useAppDispatch();
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t } = i18next;
 
     useEffect(() => {
         dispatch(changeOnboardStatus(true))
