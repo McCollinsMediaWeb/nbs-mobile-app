@@ -1147,7 +1147,7 @@ const Home = () => {
     <>
       <View style={{ backgroundColor: "rgb(177, 18, 22)", alignItems: "center", paddingTop: 5, paddingBottom: 5 }}>
         <Text style={{ textAlign: "center", color: "white", fontSize: 14, maxWidth: 350 }}>
-          A global leader in power and renewable energy distribution across three continents
+          {t('header.announcement')}
         </Text>
       </View>
       <View style={styles.headerContainer}>
@@ -1237,7 +1237,7 @@ const Home = () => {
         renderItem={renderBrandItem}
       />
     </View>
-  ), [brands, dark, navigation, t]);
+  ), [brands, dark, t]);
 
   const renderCards = useCallback(() => (
     <View style={[styles.bannerItemContainer, { backgroundColor: 'rgb(177, 18, 22)', paddingBottom: 20 }]}>
@@ -1374,7 +1374,7 @@ const Home = () => {
         </View>
       </View>
     );
-  }, [collections, dark, navigation, t]);
+  }, [collections, dark, t]);
 
   /* ------------------------------------------------------------------ */
   const OurProductItem = memo(
@@ -1458,7 +1458,7 @@ const Home = () => {
         </View>
       </View>
     );
-  }, [collections, dark, navigation, t]);
+  }, [collections, dark, t]);
 
   /* ------------------------------------------------------------------ */
   const renderOurWaterPumps = useCallback(() => {
@@ -1503,7 +1503,7 @@ const Home = () => {
         </View>
       </View>
     );
-  }, [collections, dark, navigation, t]);
+  }, [collections, dark, t]);
 
 
 

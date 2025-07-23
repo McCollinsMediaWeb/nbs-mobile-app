@@ -50,7 +50,8 @@
                 "afternoon": "Good Afternoon 👋",
                 "evening": "Good Evening 👋",
                 "night": "Good Night 🌙"
-            }
+            },
+            "announcement": "A global leader in power and renewable energy distribution across three continents."
         },
         "menus": {
             "home": "Home",
@@ -59,7 +60,39 @@
             "wishlist": "Wishlist",
             "profile": "Profile"
         },
+        "hamburgerMenu": {
+            "home": "Home",
+            "aboutUs": "About Us",
+            "allProducts": "All Products",
+            "bestSellers": "Best Sellers",
+            "newArrivals": "New Arrivals",
+            "downloadCatalogue": "Download Catalogue"
+        },
         "price": "AED",
+        "aboutUs": {
+            "announcement": "A global leader in power and renewable energy distribution across three continents.",
+            "section1": {
+                "subTitle": "ABOUT US",
+                "title": "POWERING PROGRESS.\nGLOBALLY. SUSTAINABLY."
+            },
+            "section2": {
+                "title": "POWERING PROGRESS.\nGLOBALLY. SUSTAINABLY.",
+                "content": "Assisted by next-generation B2B distribution, NBS Group is revolutionizing global access to power and renewable energy. A force spread across three continents, we deliver seamless, technology-driven solutions that connect businesses to critical energy products—efficiently, reliably, and at scale."
+            },
+            "section3": {
+                "title": "EMPOWERING ACCESS. \nENABLING GROWTH.",
+                "content": "Redefining the distribution of solar energy, backup power, and power quality solutions in the developing world, NBS is at the forefront of the energy transition. Small and medium distribution businesses are the target market for our strong e‑commerce platform, which offers end‑to‑end customer support, logistics assistance, and quick, easy transactions with complete transparency."
+            },
+            "section4": {
+                "subTitle": "Driving the Renewable Revolution",
+                "title": "Discover reliable and cost-effective solar power systems with NBS Solar.",
+                "btn": "VIEW OUR CATALOGUE"
+            },
+            "section5": {
+                "title": "Our Mission: Powering a Sustainable Future through Global B2B Innovation",
+                "content": "By revolutionising the delivery and accessibility of energy products, we are dedicated to creating a more environmentally friendly future. Through the use of creative distribution techniques, regional alliances, and online platforms, we are not only advancing goods but also the world."
+            }
+        },
         "banners": {
             "banner1": {
                 "label": "NBS SOLAR INVERTER",

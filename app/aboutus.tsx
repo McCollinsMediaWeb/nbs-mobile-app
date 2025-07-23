@@ -40,7 +40,7 @@ const AboutUs = () => {
                             maxWidth: 350,
                         }}
                     >
-                        A global leader in power and renewable energy distribution across three continents
+                        {t('aboutUs.announcement')}
                     </Text>
                 </View>
                 <View style={styles.headerContainer}>
@@ -151,8 +151,8 @@ const AboutUs = () => {
                                 <View style={styles.bannerTextContainer}>
                                     <View style={styles.bannerTopContainer}>
                                         <View>
-                                            <Text style={styles.inverterLabel}>ABOUT US</Text>
-                                            <Text style={styles.headline}>POWERING PROGRESS.{"\n"}GLOBALLY. SUSTAINABLY.</Text>
+                                            <Text style={styles.inverterLabel}>{t('aboutUs.section1.subTitle')}</Text>
+                                            <Text style={styles.headline}>{t('aboutUs.section1.title')}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -160,9 +160,9 @@ const AboutUs = () => {
                         </ImageBackground>
                     </View>
                     <View style={{ marginVertical: 40 }}>
-                        <Text style={[styles.headline2, { color: dark ? COLORS.white : "" }]}>POWERING PROGRESS.{"\n"}GLOBALLY. SUSTAINABLY</Text>
+                        <Text style={[styles.headline2, { color: dark ? COLORS.white : "" }]}>{t('aboutUs.section2.title')}</Text>
                         <View style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 20 }}>
-                            <Text style={[styles.featureText, { color: dark ? COLORS.white : "#333" }]} >Assisted by next-generation B2B distribution, NBS Group is revolutionizing global access to power and renewable energy. A force spread across three continents, we deliver seamless, technology-driven solutions that connect businesses to critical energy products—efficiently, reliably, and at scale.</Text>
+                            <Text style={[styles.featureText, { color: dark ? COLORS.white : "#333" }]} >{t('aboutUs.section2.content')}</Text>
                         </View>
                     </View>
                     <View style={styles.banner}>
@@ -174,15 +174,10 @@ const AboutUs = () => {
                     </View>
                     <View style={styles.content}>
                         <Text style={[styles.headline2, { color: dark ? COLORS.white : "" }]}>
-                            EMPOWERING ACCESS.{'\n'}ENABLING GROWTH.
+                           {t('aboutUs.section3.title')}
                         </Text>
                         <Text style={[styles.featureText, { color: dark ? COLORS.white : "#333" }]}>
-                            Redefining the distribution of solar energy, backup power, and power
-                            quality solutions in the developing world, NBS is at the forefront
-                            of the energy transition. Small and medium distribution businesses
-                            are the target market for our strong e‑commerce platform, which
-                            offers end‑to‑end customer support, logistics assistance, and quick,
-                            easy transactions with complete transparency.
+                          {t('aboutUs.section3.content')}
                         </Text>
                     </View>
 
@@ -196,10 +191,10 @@ const AboutUs = () => {
                                 <View style={styles.bannerTextContainer}>
                                     <View style={styles.bannerTopContainer}>
                                         <View>
-                                            <Text style={styles.inverterLabel2}>Driving the Renewable Revolution</Text>
-                                            <Text style={styles.headline3}>Discover reliable and cost-effective solar power systems with NBS Solar.</Text>
+                                            <Text style={styles.inverterLabel2}>{t('aboutUs.section4.subTitle')}</Text>
+                                            <Text style={styles.headline3}>{t('aboutUs.section4.title')}</Text>
                                             <TouchableOpacity style={styles.ctaButton} onPress={() => navigation.navigate("allproducts")}>
-                                                <Text style={styles.ctaButtonText}>VIEW OUR CATALOGUE</Text>
+                                                <Text style={styles.ctaButtonText}>{t('aboutUs.section4.btn')}</Text>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -209,9 +204,9 @@ const AboutUs = () => {
                     </View>
 
                     <View style={{ marginVertical: 40 }}>
-                        <Text style={[styles.headline2, { color: dark ? COLORS.white : "" }]}>Our Mission: Powering a Sustainable Future through Global B2B Innovation</Text>
+                        <Text style={[styles.headline2, { color: dark ? COLORS.white : "" }]}>{t('aboutUs.section5.title')}</Text>
                         <View style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 20 }}>
-                            <Text style={[styles.featureText, { color: dark ? COLORS.white : "#333" }]} >By revolutionising the delivery and accessibility of energy products, we are dedicated to creating a more environmentally friendly future. Through the use of creative distribution techniques, regional alliances, and online platforms, we are not only advancing goods but also the world.</Text>
+                            <Text style={[styles.featureText, { color: dark ? COLORS.white : "#333" }]} >{t('aboutUs.section5.content')}</Text>
                         </View>
                     </View>
                     {renderCards()}

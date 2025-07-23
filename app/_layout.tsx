@@ -134,11 +134,14 @@ export default function RootLayout() {
               <Stack screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="index" />
                 <Stack.Screen name="addnewaddress" />
+                <Stack.Screen name="aboutus" />
                 <Stack.Screen name="address" />
+                <Stack.Screen name="allproducts" />
                 <Stack.Screen name="productdetails" />
                 {/* <Stack.Screen name="changeemail" /> */}
                 {/* <Stack.Screen name="changepassword" /> */}
                 <Stack.Screen name="checkout" />
+                <Stack.Screen name="collectionscreen" />
                 <Stack.Screen name="fillyourprofile" />
                 <Stack.Screen name="forgotpasswordemail" />
                 <Stack.Screen name="forgotpasswordmethods" />

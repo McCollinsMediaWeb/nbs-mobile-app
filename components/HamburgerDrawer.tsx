@@ -2,6 +2,7 @@ import { COLORS, icons, images } from '@/constants';
 import { useTheme } from '@/theme/ThemeProvider';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import i18next from 'i18next';
 import React, {
     forwardRef,
     useImperativeHandle,
@@ -20,6 +21,7 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
     const navigation = useNavigation<NavigationProp<any>>();
     const internalRef = useRef<any>(null);
     const { dark, colors } = useTheme();
+    const { t } = i18next;
 
     useImperativeHandle(ref, () => internalRef.current);
 
@@ -54,9 +56,10 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
 
                 <TouchableOpacity onPress={() => {
                     internalRef.current?.close();
-                    setTimeout(() => navigation.navigate("(tabs)"), 200);
+                    // setTimeout(() => navigation.navigate("(tabs)"), 200);
+                    setTimeout(() => navigation.goBack(), 200);
                 }}>
-                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>HOME</Text>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>{t('hamburgerMenu.home')}</Text>
                 </TouchableOpacity>
                 <View style={styles.divider} />
 
@@ -64,7 +67,7 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
                     internalRef.current?.close();
                     setTimeout(() => navigation.navigate("aboutus"), 200);
                 }}>
-                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>ABOUT US</Text>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>{t('hamburgerMenu.aboutUs')}</Text>
                 </TouchableOpacity>
                 <View style={styles.divider} />
 
@@ -72,7 +75,7 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
                     internalRef.current?.close();
                     setTimeout(() => navigation.navigate("allproducts"), 200);
                 }}>
-                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>ALL PRODUCTS</Text>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>{t('hamburgerMenu.allProducts')}</Text>
                 </TouchableOpacity>
                 <View style={styles.divider} />
 
@@ -80,7 +83,7 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
                     internalRef.current?.close();
                     setTimeout(() => navigation.navigate("collectionscreen", { collectionId: "gid://shopify/Collection/439668539604", collectionTitle: "Best Sellers", collectionImage: images.aboutUsBanner3 }), 200);
                 }}>
-                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>BEST SELLERS</Text>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>{t('hamburgerMenu.bestSellers')}</Text>
                 </TouchableOpacity>
                 <View style={styles.divider} />
 
@@ -88,7 +91,7 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
                     internalRef.current?.close();
                     setTimeout(() => navigation.navigate("collectionscreen", { collectionId: "gid://shopify/Collection/439668572372", collectionTitle: "New Arrivals", collectionImage: images.aboutUsBanner1 }), 200);
                 }}>
-                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>NEW ARRIVALS</Text>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>{t('hamburgerMenu.newArrivals')}</Text>
                 </TouchableOpacity>
                 <View style={styles.divider} />
 
@@ -96,7 +99,7 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
                     internalRef.current?.close();
                     // Optionally add logic to download the catalog here
                 }}>
-                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>DOWNLOAD CATALOG</Text>
+                    <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>{t('hamburgerMenu.downloadCatalogue')}</Text>
                 </TouchableOpacity>
 
             </View>
