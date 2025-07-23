@@ -67,7 +67,6 @@ const Onboarding1 = () => {
 
     return (
         <ImageBackground
-            // source={images.backgroundAvatar3}
             source={images.ourProduct2}
             style={styles.area}>
             <LinearGradient

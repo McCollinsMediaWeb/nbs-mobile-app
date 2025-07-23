@@ -12,7 +12,7 @@ import { ScrollView } from 'react-native-virtualized-view';
 import Button from '../components/Button';
 import NotFoundCard from '../components/NotFoundCard';
 import { COLORS, SIZES, icons } from '../constants';
-import { categories, ratings, sorts } from '../data';
+import { categories, sorts } from '../data';
 import { useTheme } from '../theme/ThemeProvider';
 
 interface SliderHandleProps {
@@ -330,13 +330,13 @@ const SearchProducts = () => {
                         <Text style={[styles.sheetTitle, {
                             color: dark ? COLORS.white : COLORS.greyscale900
                         }]}>Rating</Text>
-                        <FlatList
+                        {/* <FlatList
                             data={ratings}
                             keyExtractor={item => item.id}
                             showsHorizontalScrollIndicator={false}
                             horizontal
                             renderItem={renderRatingItem}
-                        />
+                        /> */}
                     </View>
 
                     <View style={styles.separateLine} />

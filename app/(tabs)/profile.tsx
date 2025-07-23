@@ -82,7 +82,7 @@ const Profile = () => {
    * Render User Profile
    */
   const renderProfile = () => {
-    const [image, setImage] = useState(images.user1)
+    const [image, setImage] = useState(null)
 
     const pickImage = async () => {
       try {
@@ -91,7 +91,7 @@ const Profile = () => {
         if (!tempUri) return
 
         // Set the image
-        setImage({ uri: tempUri })
+        // setImage({ uri: tempUri })
       } catch (error) { }
     };
 
@@ -131,7 +131,7 @@ const Profile = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     const toggleDarkMode = () => {
-      setIsDarkMode((prev) => !prev);
+      // setIsDarkMode((prev) => !prev);
       dark ? setScheme('light') : setScheme('dark')
     };
 
@@ -228,10 +228,18 @@ const Profile = () => {
             }]}>{t('profile.setting5.title')}</Text>
           </View>
           <View style={styles.rightContainer}>
-            <Switch
+            {/* <Switch
               value={isDarkMode}
               onValueChange={toggleDarkMode}
               thumbColor={isDarkMode ? '#fff' : COLORS.white}
+              trackColor={{ false: '#EEEEEE', true: COLORS.primary }}
+              ios_backgroundColor={COLORS.white}
+              style={styles.switch}
+            /> */}
+            <Switch
+              value={dark}
+              onValueChange={toggleDarkMode}
+              thumbColor={dark ? '#fff' : COLORS.white}
               trackColor={{ false: '#EEEEEE', true: COLORS.primary }}
               ios_backgroundColor={COLORS.white}
               style={styles.switch}
