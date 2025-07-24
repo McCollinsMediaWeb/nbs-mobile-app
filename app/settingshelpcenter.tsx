@@ -1,4 +1,5 @@
 import HelpCenterItem from '@/components/HelpCenterItem';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useState } from 'react';
@@ -334,7 +335,7 @@ const styles = StyleSheet.create({
         marginRight: 16
     },
     headerTitle: {
-        fontSize: 24,
+        fontSize: normalizeFont(24),
         fontFamily: "bold",
         color: COLORS.black
     },

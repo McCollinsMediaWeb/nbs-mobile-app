@@ -4,6 +4,7 @@ import { COLORS, icons, SIZES } from '@/constants';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
@@ -113,11 +114,12 @@ const styles = StyleSheet.create({
     },
     logo: {
         height: 32,
-        width: 32,
+        // width: 32,
+        width: SIZES.width * 0.05,
         tintColor: COLORS.primary
     },
     headerTitle: {
-        fontSize: 22,
+        fontSize: normalizeFont(22),
         fontFamily: "bold",
         color: COLORS.greyscale900,
         marginLeft: 12

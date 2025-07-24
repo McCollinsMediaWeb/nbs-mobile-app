@@ -1,10 +1,9 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, StyleSheet } from 'react-native';
-import { messsagesData } from '../data';
-import { COLORS, SIZES } from '../constants';
 import { NavigationProp } from '@react-navigation/native';
-import { useTheme } from '../theme/ThemeProvider';
 import { useNavigation } from 'expo-router';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { COLORS, SIZES } from '../constants';
+import { useTheme } from '../theme/ThemeProvider';
 
 interface MessageItem {
     id: string;
@@ -90,12 +89,12 @@ const Chats: React.FC = () => {
 
     return (
         <View>
-            <FlatList
+            {/* <FlatList
                 data={messsagesData}
                 showsVerticalScrollIndicator={false}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id.toString()}
-            />
+            /> */}
         </View>
     )
 }

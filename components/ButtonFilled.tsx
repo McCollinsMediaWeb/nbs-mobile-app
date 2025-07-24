@@ -1,3 +1,4 @@
+import { normalizeFont } from '@/utils/normalizeFont';
 import React from 'react';
 import {
     ActivityIndicator,
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.primaryRed,
     } as ViewStyle,
     buttonText: {
-        fontSize: 18,
+        fontSize: normalizeFont(18),
         fontFamily: "semiBold",
     } as TextStyle,
 });

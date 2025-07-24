@@ -1,7 +1,10 @@
+import { normalizeFont } from '@/utils/normalizeFont';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, SIZES } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
+
+const { width } = Dimensions.get('window');
 
 interface OrderListItemProps {
     // name: string;
@@ -106,12 +109,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     image: {
-        width: 100,
+        // width: 100,
+        width: width * 0.2,
         height: 100,
         borderRadius: 16
     },
     imageContainer: {
-        width: 100,
+        // width: 100,
+        width: width * 0.2,
         height: 100,
         borderRadius: 16,
         backgroundColor: COLORS.silver
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     name: {
-        fontSize: 17,
+        fontSize: normalizeFont(17),
         fontFamily: "bold",
         color: COLORS.greyscale900,
         marginVertical: 4,
@@ -187,7 +192,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     price: {
-        fontSize: 16,
+        fontSize: normalizeFont(16),
         fontFamily: "semiBold",
         color: COLORS.primary,
         marginRight: 8
@@ -220,7 +225,7 @@ const styles = StyleSheet.create({
         color: COLORS.primary
     },
     qtyNum: {
-        fontSize: 14,
+        fontSize: normalizeFont(16),
         fontFamily: "semiBold",
         color: COLORS.primary,
         marginHorizontal: 12

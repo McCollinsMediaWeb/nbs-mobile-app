@@ -1,5 +1,6 @@
 import ProductCard from '@/components/ProductCard';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { FontAwesome } from "@expo/vector-icons";
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { NavigationProp } from '@react-navigation/native';
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
         tintColor: COLORS.black
     },
     headerTitle: {
-        fontSize: 20,
+        fontSize: normalizeFont(20),
         fontFamily: 'bold',
         color: COLORS.black,
         marginLeft: 16

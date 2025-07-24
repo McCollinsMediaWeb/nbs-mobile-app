@@ -1,5 +1,6 @@
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { addProductToWishlist, checkWishlistStatus } from '@/utils/actions/wishListActions';
+import { normalizeFont } from '@/utils/normalizeFont';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, SIZES, icons } from '../constants';
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     //     marginVertical: 4
     // },
     name: {
-        fontSize: 16,
+        fontSize: normalizeFont(16),
         fontFamily: "normal",
         fontWeight: 600,
         color: COLORS.greyscale900,
@@ -174,14 +175,14 @@ const styles = StyleSheet.create({
     //     marginRight: 8
     // },
     price: {
-        fontSize: 16,
+        fontSize: normalizeFont(16),
         fontFamily: "normal",
         // color: COLORS.primary,
         color: "rgb(177, 18, 22)",
         marginRight: 8
     },
     oldPrice: {
-        fontSize: 16,
+        fontSize: normalizeFont(16),
         color: COLORS.primary,
         textDecorationLine: 'line-through'
     },

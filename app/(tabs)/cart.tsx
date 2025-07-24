@@ -7,14 +7,17 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { removeProductFromCart } from '@/utils/actions/cartActions';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
+
+const { width } = Dimensions.get('window');
 
 interface Product {
   merchandiseId: string;
@@ -392,11 +395,12 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: 32,
-    width: 32,
+    // width: 32,
+    width: SIZES.width * 0.05,
     tintColor: COLORS.primary
   },
   headerTitle: {
-    fontSize: 22,
+    fontSize: normalizeFont(22),
     fontFamily: "bold",
     color: COLORS.greyscale900,
     marginLeft: 12
@@ -441,13 +445,13 @@ const styles = StyleSheet.create({
     borderRadius: 32
   },
   bottomTitle: {
-    fontSize: 24,
+    fontSize: normalizeFont(24),
     fontFamily: "semiBold",
     color: "red",
     textAlign: "center",
   },
   bottomSubtitle: {
-    fontSize: 22,
+    fontSize: normalizeFont(22),
     fontFamily: "bold",
     color: COLORS.greyscale900,
     textAlign: "center",
@@ -584,13 +588,13 @@ const styles = StyleSheet.create({
     marginBottom: 6
   },
   cartSubtitle: {
-    fontSize: 24,
+    fontSize: normalizeFont(24),
     fontFamily: "bold",
     color: COLORS.black,
   },
   cartBtn: {
     height: 58,
-    width: 230,
+    width: width * 0.47,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 32,

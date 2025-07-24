@@ -2,6 +2,7 @@ import NotFoundCard from '@/components/NotFoundCard';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { fetchSearchSuggestions, searchProducts } from '@/utils/actions/searchActions';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { Feather, FontAwesome } from "@expo/vector-icons";
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { NavigationProp } from '@react-navigation/native';
@@ -13,7 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 import Button from '../components/Button';
 import { COLORS, SIZES, icons } from '../constants';
-import { categories, ratings, sorts } from '../data';
+import { categories, sorts } from '../data';
 import { useTheme } from '../theme/ThemeProvider';
 
 interface SliderHandleProps {
@@ -469,13 +470,13 @@ const Search = () => {
             <Text style={[styles.sheetTitle, {
               color: dark ? COLORS.white : COLORS.greyscale900
             }]}>Rating</Text>
-            <FlatList
+            {/* <FlatList
               data={ratings}
               keyExtractor={item => item.id}
               showsHorizontalScrollIndicator={false}
               horizontal
               renderItem={renderRatingItem}
-            />
+            /> */}
           </View>
 
           <View style={styles.separateLine} />
@@ -531,7 +532,7 @@ const styles = StyleSheet.create({
     tintColor: COLORS.black
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: normalizeFont(20),
     fontFamily: 'bold',
     color: COLORS.black,
     marginLeft: 16

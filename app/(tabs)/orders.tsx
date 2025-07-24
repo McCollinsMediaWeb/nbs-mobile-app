@@ -5,6 +5,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { CancelledOrders, CompletedOrders, OngoingOrders } from '@/tabs';
 import { useTheme } from '@/theme/ThemeProvider';
 import { addOrderUrl, fetchOrders } from '@/utils/actions/orderActions';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
@@ -290,7 +291,7 @@ const styles = StyleSheet.create({
     tintColor: COLORS.black
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: normalizeFont(20),
     fontFamily: 'bold',
     color: COLORS.black,
     marginLeft: 16
@@ -302,7 +303,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: 32,
-    width: 32,
+    // width: 32,
+    width: SIZES.width * 0.05,
     tintColor: COLORS.primary
   },
 })

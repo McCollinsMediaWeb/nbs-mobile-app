@@ -2,6 +2,7 @@ import HamburgerDrawer from '@/components/HamburgerDrawer';
 import { COLORS, icons, images, SIZES } from '@/constants';
 import { useCardsData } from '@/data';
 import { useTheme } from '@/theme/ThemeProvider';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
@@ -36,7 +37,7 @@ const AboutUs = () => {
                         style={{
                             textAlign: "center",
                             color: "white",
-                            fontSize: 14,
+                            fontSize: normalizeFont(14),
                             maxWidth: 350,
                         }}
                     >
@@ -106,7 +107,7 @@ const AboutUs = () => {
                 />
                 <Text style={[styles.subTitle, {
                     color: COLORS.white,
-                    fontSize: 16
+                    fontSize: normalizeFont(16)
                 }]}>{item.title}</Text>
                 <Text style={[styles.name, {
                     color: COLORS.white
@@ -174,10 +175,10 @@ const AboutUs = () => {
                     </View>
                     <View style={styles.content}>
                         <Text style={[styles.headline2, { color: dark ? COLORS.white : "" }]}>
-                           {t('aboutUs.section3.title')}
+                            {t('aboutUs.section3.title')}
                         </Text>
                         <Text style={[styles.featureText, { color: dark ? COLORS.white : "#333" }]}>
-                          {t('aboutUs.section3.content')}
+                            {t('aboutUs.section3.content')}
                         </Text>
                     </View>
 
@@ -236,11 +237,15 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.4
     },
     userIcon: {
-        width: 28,
+        // width: 28,
+        // height: 38,
+        width: width * 0.06,
         height: 38,
     },
     nbsLogo: {
-        width: 128,
+        // width: 128,
+        // height: 68,
+        width: width * 0.25,
         height: 68,
         borderRadius: 32
     },
@@ -423,7 +428,7 @@ const styles = StyleSheet.create({
     },
     inverterLabel: {
         color: COLORS.white, // red color like image
-        fontSize: 14,
+        fontSize: normalizeFont(18),
         letterSpacing: 1,
         fontWeight: '600',
         marginBottom: 10,
@@ -431,7 +436,7 @@ const styles = StyleSheet.create({
     },
     inverterLabel2: {
         color: COLORS.primaryRed, // red color like image
-        fontSize: 16,
+        fontSize: normalizeFont(16),
         letterSpacing: 1,
         fontWeight: '600',
         marginBottom: 10,
@@ -440,32 +445,34 @@ const styles = StyleSheet.create({
     },
     headline: {
         color: COLORS.white,
-        fontSize: 25,
+        fontSize: normalizeFont(29),
         fontWeight: '900',
-        lineHeight: 30,
+        lineHeight: 40,
         marginBottom: 20,
         textAlign: "center"
     },
     headline2: {
         // color: COLORS.white,
-        fontSize: 25,
+        fontSize: normalizeFont(29),
         fontWeight: '900',
-        lineHeight: 30,
+        lineHeight: 40,
         marginBottom: 20,
         textAlign: "center",
         textTransform: "uppercase",
-        maxWidth: 400,
+        // maxWidth: 400,/
+         maxWidth: width * 0.8,
         alignSelf: "center"
     },
     headline3: {
         color: COLORS.white,
-        fontSize: 29,
+        fontSize: normalizeFont(29),
         fontWeight: '900',
-        lineHeight: 30,
+        lineHeight: 40,
         marginBottom: 20,
         textAlign: "center",
         textTransform: "uppercase",
-        maxWidth: 300
+        // maxWidth: 300
+        maxWidth: width * 0.8,
     },
     ctaButton: {
         backgroundColor: '#A40000',
@@ -477,11 +484,11 @@ const styles = StyleSheet.create({
     ctaButtonText: {
         color: '#fff',
         fontWeight: '700',
-        fontSize: 14,
+        fontSize: normalizeFont(14),
     },
     subTitle: {
         color: '#fff', // red color like image
-        fontSize: 15,
+        fontSize: normalizeFont(15),
         letterSpacing: 1,
         fontWeight: '800',
         marginBottom: 8,
@@ -491,7 +498,7 @@ const styles = StyleSheet.create({
     },
     mainTitle: {
         color: '#fff',
-        fontSize: 28,
+        fontSize: normalizeFont(28),
         marginTop: 15,
         marginBottom: 15,
         fontWeight: '900',
@@ -549,7 +556,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     name: {
-        fontSize: 18,
+        fontSize: normalizeFont(18),
         color: COLORS.greyscale900,
         marginVertical: 4,
         textAlign: "center",
@@ -558,7 +565,7 @@ const styles = StyleSheet.create({
     },
     featureText: {
         // flex: 1,
-        fontSize: 18,
+        fontSize: normalizeFont(18),
         color: "#333",
         textAlign: "center",
         lineHeight: 30
@@ -577,7 +584,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 32,
         paddingBottom: 24,
-        height: 250,
+        // height: 250,
+        height: width * 0.48,
         position: "relative"
     },
     bannerImage: {
@@ -589,8 +597,9 @@ const styles = StyleSheet.create({
 
     /* ---------- Content ---------- */
     content: {
-        paddingHorizontal: 54,
-        paddingVertical: 40,
+        // paddingHorizontal: 54,
+        paddingHorizontal: width * 0.1,
+        paddingVertical: 20,
         marginTop: 70
     },
     heading: {

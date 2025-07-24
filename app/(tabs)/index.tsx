@@ -1058,6 +1058,7 @@ import { COLORS, icons, images, SIZES } from '@/constants';
 import { brands, ourProducts, useBanners, useCardsData, useCategories } from '@/data';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
@@ -1087,7 +1088,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 // import '../../lang/i18n';
 
-const { width } = Dimensions.get('window');
+const { width, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 interface BannerItem {
   id: number;
@@ -1146,7 +1147,7 @@ const Home = () => {
   const renderHeader = useCallback(() => (
     <>
       <View style={{ backgroundColor: "rgb(177, 18, 22)", alignItems: "center", paddingTop: 5, paddingBottom: 5 }}>
-        <Text style={{ textAlign: "center", color: "white", fontSize: 14, maxWidth: 350 }}>
+        <Text style={{ textAlign: "center", color: "white", fontSize: normalizeFont(14), maxWidth: 350 }}>
           {t('header.announcement')}
         </Text>
       </View>
@@ -1251,7 +1252,7 @@ const Home = () => {
         renderItem={({ item }) => (
           <View style={{ width, height: 200, alignItems: 'center', justifyContent: 'center' }}>
             <Image source={item.icon} resizeMode="contain" style={{ width: 30, height: 30 }} />
-            <Text style={[styles.subTitle, { color: COLORS.white, fontSize: 16 }]}>{item.title}</Text>
+            <Text style={[styles.subTitle, { color: COLORS.white, fontSize: normalizeFont(16) }]}>{item.title}</Text>
             <Text style={[styles.name, { color: COLORS.white }]}>{item.subTitle}</Text>
           </View>
         )}
@@ -1283,7 +1284,7 @@ const Home = () => {
         }}
         onPress={() => toggleCategory(item.id)}
       >
-        <Text style={{ color: selectedCategories.includes(item.id) ? COLORS.white : (dark ? COLORS.white : COLORS.primary) }}>
+        <Text style={{fontSize: normalizeFont(14), color: selectedCategories.includes(item.id) ? COLORS.white : (dark ? COLORS.white : COLORS.primary) }}>
           {item.name}
         </Text>
       </TouchableOpacity>
@@ -1389,7 +1390,7 @@ const Home = () => {
             })
           }
         >
-          <Image source={item.image} resizeMode="contain" style={{ width: 400, height: 500 }} />
+          <Image source={item.image} resizeMode="contain" style={{ width: width * 0.8, height: SCREEN_HEIGHT * 0.5 }} />
           <Text style={[styles.ourProductTitle, { color: COLORS.white }]}>{item.title}</Text>
         </TouchableOpacity>
       </View>
@@ -1548,12 +1549,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.4
   },
   userIcon: {
-    width: 28,
+    // width: 28,
+    // height: 38,
+     width: width * 0.06,
     height: 38,
     // borderRadius: 32
   },
   nbsLogo: {
-    width: 128,
+    // width: 128,
+    // height: 68,
+    width: width * 0.25,
     height: 68,
     borderRadius: 32
   },
@@ -1723,7 +1728,7 @@ const styles = StyleSheet.create({
   // },
   imageBackground: {
     width: "100%",
-    height: 900,
+    height: SCREEN_HEIGHT * 0.8,
     // borderRadius: 10,
     overflow: 'hidden',
     // objectFit: 'cover'
@@ -1731,7 +1736,8 @@ const styles = StyleSheet.create({
   overlay: {
     backgroundColor: 'rgba(0,0,0,0.3)', // semi-transparent dark overlay
     padding: 20,
-    height: 900
+    // height: 900
+    height: SCREEN_HEIGHT * 0.8,
   },
   bannerTextContainer: {
     flex: 1,
@@ -1740,14 +1746,16 @@ const styles = StyleSheet.create({
   },
   inverterLabel: {
     color: '#FF3B3F', // red color like image
-    fontSize: 18,
+    // fontSize: 18,
+    fontSize: normalizeFont(18),
     letterSpacing: 1,
     fontWeight: '600',
     marginBottom: 10,
   },
   headline: {
     color: '#fff',
-    fontSize: 29,
+    // fontSize: 29,
+    fontSize: normalizeFont(29),
     fontWeight: '900',
     lineHeight: 30,
     marginBottom: 20,
@@ -1762,11 +1770,11 @@ const styles = StyleSheet.create({
   ctaButtonText: {
     color: '#fff',
     fontWeight: '700',
-    fontSize: 14,
+    fontSize: normalizeFont(14),
   },
   subTitle: {
     color: '#fff', // red color like image
-    fontSize: 15,
+    fontSize: normalizeFont(15),
     letterSpacing: 1,
     fontWeight: '800',
     marginBottom: 8,
@@ -1776,11 +1784,11 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     color: '#fff',
-    fontSize: 28,
+    fontSize: normalizeFont(28),
     marginTop: 15,
     marginBottom: 15,
     fontWeight: '900',
-    lineHeight: 30,
+    lineHeight: 40,
     textTransform: 'uppercase',
     textAlign: 'center'
   },
@@ -1834,7 +1842,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   name: {
-    fontSize: 18,
+    fontSize: normalizeFont(17),
     color: COLORS.greyscale900,
     marginVertical: 4,
     textAlign: "center",

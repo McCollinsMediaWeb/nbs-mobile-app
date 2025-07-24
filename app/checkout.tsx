@@ -4,6 +4,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { emptyCartThunk } from '@/utils/actions/cartActions';
 import { updateSelectedAddress } from '@/utils/actions/selectedAddressActions';
 import { createShopifyCheckoutUrl } from '@/utils/actions/shopifyCartActions';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
@@ -401,7 +402,7 @@ const styles = StyleSheet.create({
     marginVertical: 12
   },
   summaryTitle: {
-    fontSize: 20,
+    fontSize: normalizeFont(20),
     fontFamily: "bold",
     color: COLORS.greyscale900
   },
@@ -440,7 +441,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   homeTitle: {
-    fontSize: 18,
+    fontSize: normalizeFont(18),
     fontFamily: "bold",
     color: COLORS.greyscale900
   },
@@ -454,12 +455,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 12
   },
   defaultTitle: {
-    fontSize: 12,
+    fontSize: normalizeFont(12),
     fontFamily: "medium",
     color: COLORS.primary,
   },
   addressTitle: {
-    fontSize: 14,
+    fontSize: normalizeFont(14),
     fontFamily: "medium",
     color: COLORS.grayscale700,
     marginVertical: 4
@@ -556,7 +557,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 32,
   },
   totalPrice: {
-    fontSize: 24,
+    fontSize: normalizeFont(24),
     fontFamily: "bold",
     color: COLORS.black,
   },

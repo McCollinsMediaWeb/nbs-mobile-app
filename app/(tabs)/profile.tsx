@@ -8,6 +8,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { logoutCustomer } from '@/utils/actions/userActions';
 import { launchImagePicker } from '@/utils/ImagePickerHelper';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
 import React, { useRef, useState } from 'react';
@@ -100,8 +101,9 @@ const Profile = () => {
       <View style={styles.profileContainer}>
         <View>
           <Image
-            source={dark ? images.noUserWhite : images.noUser}
-            resizeMode='cover'
+            // source={dark ? images.noUserWhite : images.noUser}
+            source={images.nbsLogo2}
+            // resizeMode='cover'
             style={styles.avatar}
           />
           {/* <TouchableOpacity
@@ -390,11 +392,12 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: 32,
-    width: 32,
+    // width: 32,
+    width: SIZES.width * 0.05,
     tintColor: COLORS.primary
   },
   headerTitle: {
-    fontSize: 22,
+    fontSize: normalizeFont(22),
     fontFamily: "bold",
     color: COLORS.greyscale900,
     marginLeft: 12
@@ -412,8 +415,9 @@ const styles = StyleSheet.create({
   },
   avatar: {
     width: 120,
-    height: 120,
-    borderRadius: 999
+    height: SIZES.height * 0.1,
+    borderRadius: 999,
+    objectFit: "contain"
   },
   picContainer: {
     width: 20,
@@ -458,7 +462,7 @@ const styles = StyleSheet.create({
     tintColor: COLORS.greyscale900
   },
   settingsName: {
-    fontSize: 18,
+    fontSize: normalizeFont(18),
     fontFamily: "semiBold",
     color: COLORS.greyscale900,
     marginLeft: 12
@@ -473,7 +477,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   rightLanguage: {
-    fontSize: 18,
+    fontSize: normalizeFont(18),
     fontFamily: "semiBold",
     color: COLORS.greyscale900,
     marginRight: 8
@@ -499,7 +503,7 @@ const styles = StyleSheet.create({
     tintColor: COLORS.greyscale900
   },
   logoutName: {
-    fontSize: 18,
+    fontSize: normalizeFont(18),
     fontFamily: "semiBold",
     color: COLORS.greyscale900,
     marginLeft: 12

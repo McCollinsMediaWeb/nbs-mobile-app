@@ -1,3 +1,4 @@
+import { normalizeFont } from '@/utils/normalizeFont';
 import React from 'react';
 import {
     ActivityIndicator,
@@ -38,7 +39,7 @@ const Button: React.FC<ButtonProps> = (props) => {
             {isLoading ? (
                 <ActivityIndicator size="small" color={COLORS.white} />
             ) : (
-                <Text style={{ fontSize: 18, fontFamily: "semiBold", color: textColor }}>
+                <Text style={{ fontSize: normalizeFont(18), fontFamily: "semiBold", color: textColor }}>
                     {props.title}
                 </Text>
             )}

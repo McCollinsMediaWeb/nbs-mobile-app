@@ -1,10 +1,13 @@
 import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { decrementProduct, incrementProduct } from '@/utils/reducers/cartReducers';
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, SIZES, icons } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
+
+const { width } = Dimensions.get('window');
 
 type CartCardProps = {
     merchandiseId: string;
@@ -166,12 +169,13 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     image: {
-        width: 100,
+        width: width * 0.2,
         height: 100,
         borderRadius: 16,
     },
     imageContainer: {
-        width: 100,
+        // width: 100,
+        width: width * 0.2,
         height: 100,
         borderRadius: 16,
         backgroundColor: COLORS.silver,
@@ -185,7 +189,7 @@ const styles = StyleSheet.create({
         color: COLORS.greyscale900,
         marginVertical: 4,
         marginRight: 40,
-        fontSize: 16,
+        fontSize: normalizeFont(16),
         fontFamily: "normal",
         fontWeight: 600,
     },
@@ -223,7 +227,7 @@ const styles = StyleSheet.create({
         marginVertical: 4,
     },
     price: {
-        fontSize: 18,
+        fontSize: normalizeFont(18),
         fontFamily: 'normal',
         // color: COLORS.black,
         color: "rgb(177, 18, 22)",
@@ -234,7 +238,7 @@ const styles = StyleSheet.create({
         fontFamily: "bold",
         // color: COLORS.gray3,
         alignItems: "baseline",
-        fontSize: 16,
+        fontSize: normalizeFont(16),
         color: COLORS.primary,
         textDecorationLine: 'line-through'
     },
@@ -245,7 +249,8 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     qtyContainer: {
-        width: 130,
+        // width: 130,
+        width: width * 0.32,
         height: 46,
         borderRadius: 24,
         alignItems: 'center',
@@ -254,12 +259,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     qtyText: {
-        fontSize: 18,
+        fontSize: normalizeFont(18),
         fontFamily: 'regular',
         color: COLORS.primary,
     },
     qtyNum: {
-        fontSize: 18,
+        fontSize: normalizeFont(18),
         fontFamily: 'semiBold',
         color: COLORS.primary,
         marginHorizontal: 12,

@@ -1,4 +1,5 @@
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { normalizeFont } from '@/utils/normalizeFont';
 import { useNavigation } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         width: 24,
     },
     headerTitle: {
-        fontSize: 20,
+        fontSize: normalizeFont(20),
         fontFamily: 'bold',
         color: COLORS.black,
         marginLeft: 16,

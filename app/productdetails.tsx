@@ -6,6 +6,7 @@ import { addProductToCart } from "@/utils/actions/cartActions";
 import { clearProductFirst, fetchProduct } from "@/utils/actions/productActions";
 import { fetchRecommendedProducts } from "@/utils/actions/recommendedProductsActions";
 import { addProductToWishlist, checkWishlistStatus } from "@/utils/actions/wishListActions";
+import { normalizeFont } from "@/utils/normalizeFont";
 import { decrementProduct, incrementProduct } from "@/utils/reducers/cartReducers";
 import { Feather, FontAwesome } from "@expo/vector-icons";
 import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
@@ -701,7 +702,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     contentTitle: {
-        fontSize: 30,
+        fontSize: normalizeFont(30),
         // fontFamily: "bold",
         fontWeight: 900,
         color: COLORS.black,
@@ -860,18 +861,18 @@ const styles = StyleSheet.create({
         marginBottom: 6
     },
     cartSubtitle: {
-        fontSize: 24,
+        fontSize: normalizeFont(24),
         fontFamily: "bold",
         color: COLORS.black,
     },
     price: {
-        fontSize: 24,
+        fontSize: normalizeFont(24),
         // fontFamily: "bold",
         fontWeight: "bold",
         color: COLORS.black,
     },
     oldPrice: {
-        fontSize: 20,
+        fontSize:  normalizeFont(20),
         fontWeight: "bold",
         color: COLORS.gray3,
         alignItems: "baseline",
@@ -879,7 +880,7 @@ const styles = StyleSheet.create({
     },
     cartBtn: {
         height: 58,
-        width: 250,
+        width: SIZES.width * 0.5,
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 32,
@@ -887,7 +888,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     cartBtnText: {
-        fontSize: 16,
+        fontSize: normalizeFont(16),
         fontFamily: "bold",
         color: COLORS.white,
         textAlign: "center"
@@ -959,7 +960,7 @@ const styles = StyleSheet.create({
     },
     featureText: {
         flex: 1,
-        fontSize: 16,
+        fontSize: normalizeFont(16),
         color: "#333",
     },
     featuredImage: {

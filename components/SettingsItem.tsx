@@ -1,3 +1,4 @@
+import { normalizeFont } from '@/utils/normalizeFont';
 import React from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, icons, SIZES } from '../constants';
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         tintColor: COLORS.greyscale900,
     },
     name: {
-        fontSize: 18,
+        fontSize: normalizeFont(18),
         fontFamily: 'semiBold',
         color: COLORS.greyscale900,
         marginLeft: 12,

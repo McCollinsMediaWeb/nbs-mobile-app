@@ -11,6 +11,7 @@ import i18next from 'i18next';
 import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-virtualized-view';
 import Input from '../components/Input';
 import { COLORS, SIZES } from '../constants';
 import { commonStyles } from '../styles/CommonStyles';
@@ -110,7 +111,7 @@ const AddNewAddress = () => {
             <View style={{ padding: 16 }}>
                 <Header title={t('addNewAddress.title')} />
             </View>
-            <View>
+            <ScrollView>
                 <View
                     style={{
                         width: SIZES.width - 32,
@@ -318,7 +319,7 @@ const AddNewAddress = () => {
                         />
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }
