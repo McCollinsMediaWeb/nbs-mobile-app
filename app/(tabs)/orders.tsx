@@ -10,7 +10,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { ActivityIndicator, Image, Platform, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import { WebView } from 'react-native-webview';
@@ -41,6 +41,7 @@ const Orders = () => {
   const { dark, colors } = useTheme();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.user);
+  const appLanguage = useAppSelector(state => state.generalSettings.language);
   const orders = useAppSelector(state => state.orders.orderItems);
   const orderUrl = useAppSelector((state) => state.orders.orderUrl);
   const [showWebView, setShowWebView] = useState(false);
@@ -166,7 +167,8 @@ const Orders = () => {
         <View style={styles.headerLeft}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
-              source={icons.back2}
+              // source={icons.back2}
+              source={appLanguage === "ar" ? icons.rightArrow : icons.back2}
               resizeMode="contain"
               style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
             />
@@ -279,7 +281,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: SIZES.width - 32,
     justifyContent: "space-between",
-    marginBottom: 16
+    marginBottom: Platform.OS === 'android' ? 16 : 0,
   },
   headerLeft: {
     flexDirection: "row",

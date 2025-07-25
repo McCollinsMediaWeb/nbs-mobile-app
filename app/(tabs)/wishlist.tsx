@@ -9,7 +9,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
 import React from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 
@@ -18,6 +18,7 @@ const Wishlist: React.FC = () => {
     const { dark, colors } = useTheme();
     const dispatch = useAppDispatch();
     const wishlistItems = useAppSelector(state => state.wishlist);
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
     // const { t } = useTranslation();
     const { t } = i18next;
 
@@ -28,7 +29,7 @@ const Wishlist: React.FC = () => {
             <View style={styles.headerLeft}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
-                        source={icons.back2}
+                        source={appLanguage === "ar" ? icons.rightArrow : icons.back2}
                         resizeMode="contain"
                         style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
                     />
@@ -54,7 +55,7 @@ const Wishlist: React.FC = () => {
                 <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                     <View style={{
                         backgroundColor: dark ? COLORS.dark1 : COLORS.white,
-                        marginVertical: 16,
+                        marginVertical: Platform.OS === 'android' ? 16 : 0,
                         // padding: 16
                     }}>
                         {filteredProducts?.length > 0 ? (

@@ -3,7 +3,7 @@ import { normalizeFont } from '@/utils/normalizeFont';
 import { decrementProduct, incrementProduct } from '@/utils/reducers/cartReducers';
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, SIZES, icons } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         padding: 6,
         borderRadius: 16,
         marginBottom: 12,
-        height: 162,
+        height: Platform.OS === 'android' ? 162 : SIZES.height * 0.16,
         alignItems: 'center',
         // borderColor: COLORS.secondaryWhite,
         borderColor: '#dadcd3',

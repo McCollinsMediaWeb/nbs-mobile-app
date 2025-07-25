@@ -23,7 +23,7 @@ const { t } = i18next;
           right: 0,
           left: 0,
           elevation: 0,
-          height: Platform.OS === 'ios' ? 90 : 60,
+          height: Platform.OS === 'ios' ? 60 : 60,
           backgroundColor: dark ? COLORS.dark1 : COLORS.white,
         },
       }}

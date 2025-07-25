@@ -52,7 +52,8 @@ const Profile = () => {
         <View style={styles.headerLeft}>
           <TouchableOpacity onPress={() => navigate("index")}>
             <Image
-              source={icons.back2}
+              // source={icons.back2}
+              source={appLanguage === "ar" ? icons.rightArrow : icons.back2}
               resizeMode="contain"
               style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
             />
@@ -208,7 +209,8 @@ const Profile = () => {
               color: dark ? COLORS.white : COLORS.greyscale900
             }]}>{appLanguage === "ar" ? "Arabic" : "English (US)"}</Text>
             <Image
-              source={icons.arrowRight}
+              // source={icons.arrowRight}
+               source={appLanguage === "ar" ? icons.arrowLeft2 : icons.arrowRight}
               resizeMode='contain'
               style={[styles.settingsArrowRight, {
                 tintColor: dark ? COLORS.white : COLORS.greyscale900

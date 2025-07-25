@@ -12,7 +12,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, FlatList, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -77,7 +77,8 @@ const Cart: React.FC = () => {
       <View style={styles.headerLeft}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
-            source={icons.back2}
+            // source={icons.back2}
+            source={appLanguage === "ar" ? icons.rightArrow : icons.back2}
             resizeMode="contain"
             style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
           />
@@ -167,7 +168,7 @@ const Cart: React.FC = () => {
           {/* result list */}
           <View style={{
             // backgroundColor: dark ? COLORS.dark1 : COLORS.secondaryWhite,
-            marginVertical: 20,
+            marginVertical: Platform.OS === 'android' ? 20 : 0,
             // padding: 16,
           }}>
             {resultsCount > 0 ? (

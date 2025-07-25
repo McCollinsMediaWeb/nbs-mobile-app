@@ -37,7 +37,14 @@ const SettingsLanguage = () => {
 
                 // i18next.changeLanguage(itemTitle);
 
-                RNRestart.restart();
+                // const changedLang = await AsyncStorage.getItem('language');
+
+                // console.log("new language", changedLang);
+
+                // RNRestart.restart();
+                setTimeout(() => {
+                    RNRestart.restart();
+                }, 300);
 
                 // const collectionIds = [
                 //     'gid://shopify/Collection/439108698324',

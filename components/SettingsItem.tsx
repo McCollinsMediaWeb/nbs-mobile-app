@@ -1,3 +1,4 @@
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { normalizeFont } from '@/utils/normalizeFont';
 import React from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -13,6 +14,7 @@ type SettingsItemProps = {
 
 const SettingsItem: React.FC<SettingsItemProps> = ({ icon, name, onPress, hasArrowRight = true }) => {
     const { dark } = useTheme();
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
@@ -36,7 +38,8 @@ const SettingsItem: React.FC<SettingsItemProps> = ({ icon, name, onPress, hasArr
             </View>
             {hasArrowRight && (
                 <Image
-                    source={icons.arrowRight}
+                    // source={icons.arrowRight}
+                    source={appLanguage === "ar" ? icons.arrowLeft2 : icons.arrowRight}
                     resizeMode="contain"
                     style={[
                         styles.arrowRight,

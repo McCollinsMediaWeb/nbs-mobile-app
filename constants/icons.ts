@@ -3,6 +3,7 @@ const addFile = require("../assets/icons/add-file.png");
 const arrowBack = require("../assets/icons/arrow-back.png");
 const arrowDown = require("../assets/icons/arrow-down.png");
 const arrowRight = require("../assets/icons/arrow-right.png");
+const arrowLeft2 = require("../assets/icons/arrow-left2.png");
 const arrowUp = require("../assets/icons/arrow-up.png");
 const bag = require("../assets/icons/bag.png");
 const bellOutline = require("../assets/icons/bell-outline.png");
@@ -351,6 +352,7 @@ export default {
     arrowBack,
     arrowDown,
     arrowRight,
+    arrowLeft2,
     arrowUp,
     bag,
     bellOutline,

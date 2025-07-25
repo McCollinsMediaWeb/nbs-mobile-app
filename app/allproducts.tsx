@@ -304,6 +304,7 @@ import { ourProducts } from '@/data';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fetchGraphQL } from '@/utils/fetchGraphql';
+import { normalizeFont } from '@/utils/normalizeFont';
 import i18next from 'i18next';
 
 /** ------------------------------------------------------------------
@@ -545,7 +546,7 @@ const styles = StyleSheet.create({
     },
     headline: {
         color: '#333',
-        fontSize: 35,
+        fontSize: normalizeFont(35),
         fontWeight: '900',
         lineHeight: 30,
     },

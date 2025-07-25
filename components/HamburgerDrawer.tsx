@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     closeBtn: {
+        marginTop: 20,
         marginBottom: 20,
         width: 28,
         height: 38

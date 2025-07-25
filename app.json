@@ -9,7 +9,16 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mccollinsmedia.NBS",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.718209129465-kl54tsra6p0glvmi6ofg3u6dq53ptpsg"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
