@@ -85,6 +85,7 @@ import { FONTS } from '@/constants/fonts';
 import initI18n, { i18n } from '@/lang/i18n';
 import { ThemeProvider } from '@/theme/ThemeProvider';
 import { persistor, store } from '@/utils/store'; // adjust this path if needed
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -116,6 +117,14 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: "718209129465-7msnbbuimc59gsntph4o9drd9n7ikikm.apps.googleusercontent.com",
+      iosClientId: "718209129465-kl54tsra6p0glvmi6ofg3u6dq53ptpsg.apps.googleusercontent.com",
+      scopes: ["profile", "email"],
+    });
+  }, [])
+
+  useEffect(() => {
     if (loaded && i18nLoaded) {
       SplashScreen.hideAsync();
     }
@@ -136,10 +145,11 @@ export default function RootLayout() {
                 <Stack.Screen name="addnewaddress" />
                 <Stack.Screen name="aboutus" />
                 <Stack.Screen name="address" />
-                <Stack.Screen name="allproducts" />
+                {/* <Stack.Screen name="allproducts" /> */}
                 <Stack.Screen name="productdetails" />
                 {/* <Stack.Screen name="changeemail" /> */}
                 {/* <Stack.Screen name="changepassword" /> */}
+                <Stack.Screen name="cart" />
                 <Stack.Screen name="checkout" />
                 <Stack.Screen name="collectionscreen" />
                 <Stack.Screen name="fillyourprofile" />

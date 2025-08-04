@@ -58,7 +58,8 @@
             "cart": "Cart",
             "orders": "Orders",
             "wishlist": "Wishlist",
-            "profile": "Profile"
+            "profile": "Profile",
+            "category": "Category"
         },
         "hamburgerMenu": {
             "home": "Home",
@@ -178,6 +179,7 @@
         },
         "selectAddress": {
             "title": "Select Address",
+            "alternateTitle": "Confirm Details",
             "title2": "Address",
             "shippingAddress": "Shipping Address",
             "orderList": "Order List",

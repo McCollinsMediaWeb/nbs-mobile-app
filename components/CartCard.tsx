@@ -2,7 +2,7 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { normalizeFont } from '@/utils/normalizeFont';
 import { decrementProduct, incrementProduct } from '@/utils/reducers/cartReducers';
 import { Feather } from '@expo/vector-icons';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, SIZES, icons } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
@@ -35,6 +35,7 @@ const CartCard: React.FC<CartCardProps> = ({
     const { dark } = useTheme();
     // const [quantity, setQuantity] = useState<number>(quantity);
     const dispatch = useAppDispatch();
+    const deleteIcon = useMemo(() => icons.delete3, []);
 
     // const increase = () => {
     //     setQuantity(prevQuantity => prevQuantity + 1);
@@ -56,12 +57,11 @@ const CartCard: React.FC<CartCardProps> = ({
 
 
     return (
-        <TouchableOpacity
-            onPress={onPress}
-            style={[styles.container, {
-                // backgroundColor: dark ? COLORS.dark2 : COLORS.white
-                backgroundColor: dark ? "#141517" : COLORS.white
-            }]}>
+        // <TouchableOpacity
+        //     onPress={onPress}
+        //     style={[styles.container, { backgroundColor: dark ? "#141517" : COLORS.white }]}>
+        <View style={[styles.container, { backgroundColor: dark ? "#141517" : COLORS.white }]}>
+
             <View
                 style={[styles.imageContainer, {
                     backgroundColor: dark ? COLORS.dark3 : COLORS.silver
@@ -78,11 +78,12 @@ const CartCard: React.FC<CartCardProps> = ({
                         color: dark ? COLORS.secondaryWhite : COLORS.greyscale900
                     }]}>{title}</Text>
                     <TouchableOpacity onPress={onPress}>
-                        <Image
-                            source={icons.delete3}
+                        {/* <Image
+                            source={deleteIcon}
                             resizeMode='contain'
                             style={styles.heartIcon}
-                        />
+                        /> */}
+                        <Feather style={styles.heartIcon} size={19} name='trash-2' color="red" />
                     </TouchableOpacity>
                 </View>
                 {/* <View style={styles.viewContainer}>
@@ -149,7 +150,8 @@ const CartCard: React.FC<CartCardProps> = ({
                     </View>
                 </View>
             </View>
-        </TouchableOpacity >
+            {/* </TouchableOpacity > */}
+        </View>
     );
 };
 
@@ -271,4 +273,5 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CartCard;
+// export default CartCard;
+export default React.memo(CartCard);

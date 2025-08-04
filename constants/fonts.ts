@@ -17,4 +17,8 @@ export const FONTS = {
     semiBoldItalic: require("../assets/fonts/Urbanist-SemiBoldItalic.ttf"),
     thin: require("../assets/fonts/Urbanist-Thin.ttf"),
     thinItalic: require("../assets/fonts/Urbanist-ThinItalic.ttf"),
+    TomorrowMedium: require("../assets/fonts/Tomorrow-Medium.ttf"),
+    TomorrowBold: require("../assets/fonts/Tomorrow-Bold.ttf"),
+    RubikLight: require("../assets/fonts/Rubik-Light.ttf"),
+    RubikRegular: require("../assets/fonts/Rubik-Regular.ttf"),
 }

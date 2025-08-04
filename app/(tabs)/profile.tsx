@@ -1,6 +1,5 @@
 import Button from '@/components/Button';
 import ButtonFilled from '@/components/ButtonFilled';
-import HamburgerDrawer from '@/components/HamburgerDrawer';
 import SettingsItem from '@/components/SettingsItem';
 import { COLORS, icons, images, SIZES } from '@/constants';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
@@ -13,7 +12,7 @@ import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
 import React, { useRef, useState } from 'react';
 import { Image, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
-import RBSheet from "react-native-raw-bottom-sheet";
+import RBSheet from 'react-native-raw-bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 
@@ -30,7 +29,6 @@ const Profile = () => {
   const appLanguage = useAppSelector(state => state.generalSettings.language);
   // const { t } = useTranslation();
   const { t } = i18next;
-  const drawerRef = useRef<any>(null);
   // const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
 
   // useEffect(() => {
@@ -58,13 +56,6 @@ const Profile = () => {
               style={[styles.logo, { tintColor: dark ? COLORS.white : COLORS.primary }]}
             />
           </TouchableOpacity>
-          {/* <TouchableOpacity onPress={() => drawerRef.current.open()}>
-            <Image
-              source={images.menu}
-              resizeMode='contain'
-              style={styles.userIcon}
-            />
-          </TouchableOpacity> */}
           <Text style={[styles.headerTitle, {
             color: dark ? COLORS.white : COLORS.greyscale900
           }]}>{t('profile.title')}</Text>
@@ -210,7 +201,7 @@ const Profile = () => {
             }]}>{appLanguage === "ar" ? "Arabic" : "English (US)"}</Text>
             <Image
               // source={icons.arrowRight}
-               source={appLanguage === "ar" ? icons.arrowLeft2 : icons.arrowRight}
+              source={appLanguage === "ar" ? icons.arrowLeft2 : icons.arrowRight}
               resizeMode='contain'
               style={[styles.settingsArrowRight, {
                 tintColor: dark ? COLORS.white : COLORS.greyscale900
@@ -367,7 +358,6 @@ const Profile = () => {
           />
         </View>
       </RBSheet>
-      <HamburgerDrawer ref={drawerRef} />
     </SafeAreaView>
   )
 };
@@ -381,7 +371,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.white,
     padding: 16,
-    marginBottom: 32
+    // marginBottom: 32
   },
   headerContainer: {
     flexDirection: "row",

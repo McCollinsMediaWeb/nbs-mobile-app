@@ -58,7 +58,8 @@
             "cart": "عربة التسوق",
             "orders": "الطلبات",
             "wishlist": "المفضلة",
-            "profile": "الملف الشخصي"
+            "profile": "الملف الشخصي",
+            "category": "الفئة"
         },
         "hamburgerMenu": {
             "home": "الرئيسية",
@@ -178,6 +179,7 @@
         },
         "selectAddress": {
             "title": "اختر العنوان",
+           "alternateTitle": "تأكيد التفاصيل",
             "title2": "عنوان",
             "shippingAddress": "عنوان الشحن",
             "orderList": "قائمة الطلبات",

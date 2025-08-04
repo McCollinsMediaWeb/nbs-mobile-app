@@ -32,11 +32,11 @@ type Product = {
     title: string;
     description?: string;
     tags?: string[];
-    productType?: string;
+    productType: string;
     price: string;
     oldPrice: string;
     image: string;
-    merchandiseId?: string;
+    merchandiseId: string;
     cursor?: string | null;
     available?: boolean | null;
 };
@@ -56,11 +56,11 @@ const fetchProductsFromShopify = async (
           edges {
             cursor
             node {
-              id title description tags productType
+              id title description tags productType availableForSale
               priceRange { minVariantPrice { amount } }
               compareAtPriceRange { maxVariantPrice { amount } }
               images(first: 1) { edges { node { transformedSrc } } }
-              variants(first: 1) { edges { node { id } } }
+              variants(first: 1) { edges { node { id availableForSale } } }
             }
           }
         }
@@ -84,6 +84,7 @@ const fetchProductsFromShopify = async (
             image: edge.node.images.edges[0]?.node.transformedSrc,
             merchandiseId: edge.node.variants.edges[0]?.node.id,
             cursor: edge.cursor,
+            available: edge.node.availableForSale
         }));
 
         return { products, hasNextPage, endCursor: edges.at(-1)?.cursor ?? null };
@@ -198,13 +199,16 @@ const CollectionScreen: React.FC = () => {
                 data={products}
                 keyExtractor={item => item.id}
                 numColumns={2}
-                columnWrapperStyle={{ gap: 16 }}
+                // columnWrapperStyle={{ gap: 16 }}
+                columnWrapperStyle={{ justifyContent: 'space-between', paddingHorizontal: 6, }}
                 showsVerticalScrollIndicator={false}
                 onEndReached={loadMoreProducts}
                 onEndReachedThreshold={0.5}
                 renderItem={({ item }) => (
                     <ProductCard
-                        merchandiseId={item.id}
+                        productId={item.id}
+                        merchandiseId={item.merchandiseId}
+                        productType={item.productType}
                         name={item.title}
                         image={item.image}
                         price={item.price}
@@ -250,11 +254,12 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: 'rgba(0,0,0,0.3)',
-        borderRadius: 12,
+        // borderRadius: 12,
     },
     bannerTitle: {
         color: '#fff',
         fontSize: 28,
+        fontFamily: 'TomorrowBold',
         fontWeight: '900',
         lineHeight: 30,
         textTransform: 'uppercase',
@@ -272,6 +277,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 13,
         marginRight: 16,
+        fontFamily: 'RubikRegular',
     },
     quickLink: {
         fontSize: 17,
@@ -296,6 +302,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginTop: 20,
         color: '#fff',
+        fontFamily: 'RubikRegular',
     },
     footerLoaderWrapper: {
         paddingVertical: 24,

@@ -21,11 +21,11 @@ import { useTheme } from '../theme/ThemeProvider';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducers';
 
-GoogleSignin.configure({
-    webClientId: "718209129465-7msnbbuimc59gsntph4o9drd9n7ikikm.apps.googleusercontent.com",
-    iosClientId: "718209129465-kl54tsra6p0glvmi6ofg3u6dq53ptpsg.apps.googleusercontent.com",
-    scopes: ["profile", "email"],
-});
+// GoogleSignin.configure({
+//     webClientId: "718209129465-7msnbbuimc59gsntph4o9drd9n7ikikm.apps.googleusercontent.com",
+//     iosClientId: "718209129465-kl54tsra6p0glvmi6ofg3u6dq53ptpsg.apps.googleusercontent.com",
+//     scopes: ["profile", "email"],
+// });
 
 const isTestMode = false;
 

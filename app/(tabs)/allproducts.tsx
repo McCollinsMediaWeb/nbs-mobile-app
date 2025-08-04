@@ -315,11 +315,11 @@ export type Product = {
     title: string;
     description?: string;
     tags?: string[];
-    productType?: string;
+    productType: string;
     price: string;
     oldPrice: string;
     image: string;
-    merchandiseId?: string;
+    merchandiseId: string;
     cursor?: string | null;
     available?: boolean | null;
 };
@@ -342,10 +342,14 @@ const fetchProductsFromShopify = async (
           description
           tags
           productType
+          availableForSale
           priceRange { minVariantPrice { amount } }
           compareAtPriceRange { maxVariantPrice { amount } }
           images(first: 1) { edges { node { transformedSrc } } }
-          variants(first: 1) { edges { node { id } } }
+          variants(first: 1) { edges { node { 
+                                        id
+                                        availableForSale
+                                    } } }
         }
       }
     }
@@ -367,6 +371,7 @@ const fetchProductsFromShopify = async (
             image: edge.node.images.edges[0]?.node.transformedSrc,
             merchandiseId: edge.node.variants.edges[0]?.node.id,
             cursor: edge.cursor,
+            available: edge.node.availableForSale
         }));
 
         return { products, hasNextPage, endCursor: edges.at(-1)?.cursor ?? null };
@@ -434,10 +439,10 @@ const AllProducts: React.FC = () => {
     const listHeader = useMemo(
         () => (
             <View>
-                {/* Top Search Header */}
+                {/* Top Search Header
                 <View style={styles.headerContainer}>
                     <HeaderWithSearch title={t('allProduct.title')} icon={icons.search} onPress={onSearchPress} />
-                </View>
+                </View> */}
 
                 {/* Headline */}
                 <View style={styles.headlineContainer}>
@@ -487,11 +492,17 @@ const AllProducts: React.FC = () => {
     /** ------------------ render ------------------*/
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+            {/* Top Search Header */}
+            <View style={styles.headerContainer}>
+                <HeaderWithSearch title={t('allProduct.title')} icon={icons.search} onPress={onSearchPress} />
+            </View>
+
             <FlatList
                 data={products}
                 keyExtractor={item => item.id}
                 numColumns={2}
-                columnWrapperStyle={styles.columnWrapper}
+                // columnWrapperStyle={styles.columnWrapper}
+                columnWrapperStyle={{ justifyContent: 'space-between', paddingHorizontal: 6, }}
                 contentContainerStyle={styles.contentContainer}
                 initialNumToRender={6}
                 maxToRenderPerBatch={10}
@@ -501,7 +512,9 @@ const AllProducts: React.FC = () => {
                 ListHeaderComponent={listHeader}
                 renderItem={({ item }) => (
                     <ProductCard
-                        merchandiseId={item.id}
+                        productId={item.id}
+                        merchandiseId={item.merchandiseId}
+                        productType={item.productType}
                         name={item.title}
                         image={item.image}
                         price={item.price}
@@ -540,7 +553,7 @@ const styles = StyleSheet.create({
         padding: 16,
     },
     headlineContainer: {
-        height: 100,
+        height: 70,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -549,6 +562,7 @@ const styles = StyleSheet.create({
         fontSize: normalizeFont(35),
         fontWeight: '900',
         lineHeight: 30,
+        fontFamily: 'TomorrowBold'
     },
     divider: {
         width: '100%',
@@ -566,6 +580,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 13,
         marginRight: 13,
+        fontFamily: 'RubikRegular'
     },
     quickLinkText: {
         fontSize: 17,
@@ -587,12 +602,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginTop: 20,
         color: '#fff',
+        fontFamily: 'RubicRegular'
     },
     columnWrapper: {
-        gap: 16,
+        // gap: SIZES.width * 0.07,
     },
     contentContainer: {
-        paddingBottom: 24,
+        paddingBottom: 20,
     },
     horizontalSpacer: {
         width: 20,

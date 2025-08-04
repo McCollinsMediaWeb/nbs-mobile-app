@@ -94,7 +94,7 @@ const Checkout = () => {
         <>
           <View style={[styles.container, { backgroundColor: colors.background }]}>
             <HeaderWithSearch
-              title={t('selectAddress.title')}
+              title={user?.accessToken ? t('selectAddress.title') : t('selectAddress.alternateTitle')}
               icon={icons.moreCircle}
               onPress={() => null}
             />
@@ -104,75 +104,76 @@ const Checkout = () => {
                 marginTop: 12
               }}
               showsVerticalScrollIndicator={false}>
-              <Text style={[styles.summaryTitle, {
-                color: dark ? COLORS.white : COLORS.greyscale900
-              }]}>{t('selectAddress.shippingAddress')}</Text>
-              <View style={[styles.summaryContainer, {
-                backgroundColor: dark ? COLORS.dark2 : COLORS.white,
-              }]}>
-                {/* <View style={[styles.separateLine, {
-              backgroundColor: dark ? COLORS.grayscale700 : COLORS.grayscale200
-            }]} /> */}
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("selectshippingaddress")}
-                  style={styles.addressContainer}>
-                  <View style={styles.addressLeftContainer}>
-                    <View style={styles.view1}>
-                      <View style={styles.view2}>
-                        <Image
-                          source={icons.location2}
-                          resizeMode='contain'
-                          style={styles.locationIcon}
-                        />
-                      </View>
-                    </View>
-                    {selectedAddress ? (
-                      <View style={styles.viewAddress}>
-                        <View style={styles.viewView}>
-                          <Text style={[styles.homeTitle, {
-                            color: dark ? COLORS.white : COLORS.greyscale900
-                          }]}>{selectedAddress?.firstName + " " + selectedAddress?.lastName}</Text>
-
-                          {user?.customer?.addresses?.edges[0]?.node?.id === selectedAddress?.id &&
-                            (
-                              <View style={styles.defaultView}>
-                                <Text style={[styles.defaultTitle, {
-                                  color: dark ? COLORS.white : COLORS.primary
-                                }]}>{t('selectAddress.default')}</Text>
-                              </View>
-                            )}
-
+              {user?.accessToken && (
+                <>
+                  <Text style={[styles.summaryTitle, {
+                    color: dark ? COLORS.white : COLORS.greyscale900
+                  }]}>{t('selectAddress.shippingAddress')}</Text>
+                  <View style={[styles.summaryContainer, {
+                    backgroundColor: dark ? COLORS.dark2 : COLORS.white,
+                  }]}>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("selectshippingaddress")}
+                      style={styles.addressContainer}>
+                      <View style={styles.addressLeftContainer}>
+                        <View style={styles.view1}>
+                          <View style={styles.view2}>
+                            <Image
+                              source={icons.location2}
+                              resizeMode='contain'
+                              style={styles.locationIcon}
+                            />
+                          </View>
                         </View>
-                        <Text style={[styles.addressTitle, {
-                          color: dark ? COLORS.grayscale200 : COLORS.grayscale700
-                        }]}>
-                          {selectedAddress?.city + ", " + selectedAddress?.province}</Text>
-                      </View>
-                    ) : (
-                      <View style={styles.viewAddress}>
-                        <View style={styles.viewView}>
-                          <Text style={[styles.homeTitle, {
-                            color: dark ? COLORS.white : COLORS.greyscale900
-                          }]}>{t('selectAddress.noAddressTitle')}</Text>
+                        {selectedAddress ? (
+                          <View style={styles.viewAddress}>
+                            <View style={styles.viewView}>
+                              <Text style={[styles.homeTitle, {
+                                color: dark ? COLORS.white : COLORS.greyscale900
+                              }]}>{selectedAddress?.firstName + " " + selectedAddress?.lastName}</Text>
 
-                        </View>
-                        <Text style={[styles.addressTitle, {
-                          color: dark ? COLORS.grayscale200 : COLORS.grayscale700
-                        }]}>
-                          {t('selectAddress.noAddressNote')}</Text>
-                      </View>
-                    )}
+                              {user?.customer?.addresses?.edges[0]?.node?.id === selectedAddress?.id &&
+                                (
+                                  <View style={styles.defaultView}>
+                                    <Text style={[styles.defaultTitle, {
+                                      color: dark ? COLORS.white : COLORS.primary
+                                    }]}>{t('selectAddress.default')}</Text>
+                                  </View>
+                                )}
 
+                            </View>
+                            <Text style={[styles.addressTitle, {
+                              color: dark ? COLORS.grayscale200 : COLORS.grayscale700
+                            }]}>
+                              {selectedAddress?.city + ", " + selectedAddress?.province}</Text>
+                          </View>
+                        ) : (
+                          <View style={styles.viewAddress}>
+                            <View style={styles.viewView}>
+                              <Text style={[styles.homeTitle, {
+                                color: dark ? COLORS.white : COLORS.greyscale900
+                              }]}>{t('selectAddress.noAddressTitle')}</Text>
+
+                            </View>
+                            <Text style={[styles.addressTitle, {
+                              color: dark ? COLORS.grayscale200 : COLORS.grayscale700
+                            }]}>
+                              {t('selectAddress.noAddressNote')}</Text>
+                          </View>
+                        )}
+
+                      </View>
+                      <Image
+                        source={icons.arrowRight}
+                        resizeMode='contain'
+                        style={[styles.arrowRightIcon, {
+                          tintColor: dark ? COLORS.white : COLORS.greyscale900
+                        }]}
+                      />
+                    </TouchableOpacity>
                   </View>
-                  <Image
-                    source={icons.arrowRight}
-                    resizeMode='contain'
-                    style={[styles.arrowRightIcon, {
-                      tintColor: dark ? COLORS.white : COLORS.greyscale900
-                    }]}
-                  />
-                </TouchableOpacity>
-              </View>
+                </>
+              )}
 
               <Text style={[styles.summaryTitle, {
                 color: dark ? COLORS.white : COLORS.greyscale900
@@ -192,7 +193,6 @@ const Checkout = () => {
                     merchandiseId={item.merchandiseId}
                     productType={item.productType}
                     quantity={item.quantity}
-                    onPress={() => { }}
                   />
                 )}
               />
@@ -299,12 +299,12 @@ const Checkout = () => {
           <View style={[styles.buttonContainer, {
             backgroundColor: dark ? COLORS.dark2 : COLORS.white,
             bottom: insets.bottom,
-            opacity: selectedAddress != null ? 1 : 0.5
+            // opacity: selectedAddress != null ? 1 : 0.5
           }]}>
             <ButtonFilled
               title={t('selectAddress.continueToCheckout')}
-              // onPress={() => navigation.navigate("paymentmethods")}
-              onPress={selectedAddress != null ? confirmCheckout : () => { }}
+              // onPress={selectedAddress != null ? confirmCheckout : () => { }}
+              onPress={confirmCheckout}
               style={styles.placeOrderButton}
             />
           </View>
@@ -365,15 +365,15 @@ const styles = StyleSheet.create({
   },
   summaryContainer: {
     width: SIZES.width - 32,
-    borderRadius: 16,
+    // borderRadius: 16,
     padding: 16,
     backgroundColor: COLORS.white,
     shadowColor: COLORS.black,
-    shadowOffset: {
-      width: 0,
-      height: 0
-    },
-    shadowOpacity: 0.2,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 0
+    // },
+    // shadowOpacity: 0.2,
     shadowRadius: 0,
     elevation: 0,
     marginBottom: 12,

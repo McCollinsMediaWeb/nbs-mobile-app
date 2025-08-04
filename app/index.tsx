@@ -108,7 +108,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: COLORS.white,
         marginVertical: 12,
-        fontFamily: "semiBold",
+        // fontFamily: "semiBold",
+        fontFamily: 'Urbanist-SemiBold'
     }
 })
 

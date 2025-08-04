@@ -1,6 +1,6 @@
 import { normalizeFont } from '@/utils/normalizeFont';
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { COLORS, SIZES } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 
@@ -25,7 +25,6 @@ interface OrderListItemProps {
     quantity: number;
     image?: string;
     productType: string;
-    onPress?: () => void;
 }
 
 const OrderListItem: React.FC<OrderListItemProps> = ({
@@ -37,13 +36,11 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
     image,
     productType,
     price,
-    onPress
 }) => {
     const { dark } = useTheme();
 
     return (
-        <TouchableOpacity
-            onPress={onPress}
+        <View
             style={[styles.container, {
                 backgroundColor: dark ? COLORS.dark2 : COLORS.white
             }]}>
@@ -93,7 +90,7 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
                     </View>
                 </View>
             </View>
-        </TouchableOpacity>
+        </View>
     )
 };
 

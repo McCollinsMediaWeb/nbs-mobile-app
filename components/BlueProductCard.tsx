@@ -1,5 +1,6 @@
 import { useAppDispatch } from '@/hooks/useAppDispatch';
-import { addProductToWishlist, checkWishlistStatus } from '@/utils/actions/wishListActions';
+import { addProductToCart } from '@/utils/actions/cartActions';
+import { checkWishlistStatus } from '@/utils/actions/wishListActions';
 import { normalizeFont } from '@/utils/normalizeFont';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -8,21 +9,25 @@ import { useTheme } from '../theme/ThemeProvider';
 
 interface ProductCardProps {
     merchandiseId: string;
+    productId: string;
     name: string;
     image: string; // Use 'require' for local images or 'ImageSourcePropType' for more robust typing
     price: string;
     oldPrice: string;
     availableForSale?: boolean | null;
+    productType: string;
     onPress: () => void;
 }
 
 const BlueProductCard: React.FC<ProductCardProps> = ({
     merchandiseId,
+    productId,
     name,
     image,
     price,
     oldPrice,
     availableForSale,
+    productType,
     onPress
 }) => {
     const dispatch = useAppDispatch();
@@ -36,6 +41,20 @@ const BlueProductCard: React.FC<ProductCardProps> = ({
         };
         checkStatus();
     }, [dispatch, merchandiseId]);
+
+    const handleAddToCart = () => {
+        const cartProduct = {
+            merchandiseId: merchandiseId,
+            id: productId,
+            quantity: 1,
+            title: name,
+            price: parseFloat(price),
+            oldPrice: parseFloat(oldPrice ?? "0"), // ✅ fixed
+            image: image,
+            productType: productType,
+        };
+        dispatch(addProductToCart(cartProduct));
+    };
 
     return (
         <View style={styles.cardWrapper}>
@@ -54,24 +73,30 @@ const BlueProductCard: React.FC<ProductCardProps> = ({
                         resizeMode='cover'
                         style={styles.image}
                     />
+
+                    {availableForSale && (
+                        <TouchableOpacity style={styles.bottomLeftHeart} onPress={handleAddToCart}>
+                            <Image
+                                source={dark ? icons.addToCartWhite : icons.addToCart}
+                                resizeMode='contain'
+                                style={styles.smallHeartIcon}
+                            />
+                        </TouchableOpacity>
+                    )}
                 </View>
 
                 <Text style={[styles.name]}>{name}</Text>
 
                 <View style={styles.bottomPriceContainer}>
-                    {/* <View style={styles.priceContainer}> */}
                     <Text style={styles.price}>{"AED " + parseFloat(price).toFixed(2)}</Text>
-                    {/* </View> */}
                     {Number(oldPrice) > 0 && (
-                        // <View style={styles.oldPriceContainer}>
                         <Text style={styles.oldPrice}>{"AED " + parseFloat(oldPrice).toFixed(2)}</Text>
-                        // </View>
                     )}
                 </View>
             </TouchableOpacity>
 
             {/* ❤️ Floating heart on top-right */}
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 onPress={() => {
                     dispatch(addProductToWishlist({
                         merchandiseId,
@@ -91,6 +116,31 @@ const BlueProductCard: React.FC<ProductCardProps> = ({
                     resizeMode='contain'
                     style={styles.heartIcon}
                 />
+            </TouchableOpacity> */}
+
+            <TouchableOpacity
+                style={styles.topLeftContainer}
+                activeOpacity={0.7}
+            >
+                {!availableForSale ? (
+                    <View style={[
+                        styles.soldContainer,
+                        { backgroundColor: "rgb(111, 113, 155)" }
+                    ]}>
+                        <Text style={[styles.soldText, { color: "#fff" }]}>sold out</Text>
+                    </View>
+                ) : (
+                    Number(oldPrice) > 0 && Number(price) > 0 && Number(oldPrice) > Number(price) ? (
+                        <View style={[
+                            styles.soldContainer,
+                            { backgroundColor: "rgb(177, 18, 22)" }
+                        ]}>
+                            <Text style={[styles.soldText, { color: "#fff" }]}>
+                                save {Math.round(((Number(oldPrice) - Number(price)) / Number(oldPrice)) * 100)}%
+                            </Text>
+                        </View>
+                    ) : null
+                )}
             </TouchableOpacity>
         </View>
 
@@ -103,28 +153,31 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: "column",
-        width: (SIZES.width - 32) / 2 - 12,
+        // width: (SIZES.width - 32) / 2 - 12,
+        width: (SIZES.width - 12) / 2 - 12,
         // backgroundColor: COLORS.primaryRed,
         padding: 20,
         borderRadius: 16,
         marginBottom: 12,
-        marginRight: 4
+        marginRight: 4,
+        fontFamily: 'RubikLight'
     },
     imageContainer: {
         width: "100%",
         height: 150,
-        borderRadius: 16,
+        // borderRadius: 16,
         // backgroundColor: COLORS.silver
         backgroundColor: COLORS.white
     },
     image: {
         width: "100%",
         height: 150,
-        borderRadius: 16
+        // borderRadius: 16
     },
     name: {
-        fontSize: normalizeFont(16),
-        fontFamily: "normal",
+        fontSize: normalizeFont(17),
+        // fontFamily: "normal",
+        fontFamily: 'RubikRegular',
         color: COLORS.white,
         marginVertical: 15,
         textAlign: "center"
@@ -152,15 +205,19 @@ const styles = StyleSheet.create({
     },
     price: {
         fontSize: normalizeFont(15),
-        fontFamily: "normal",
+        fontFamily: 'RubikRegular',
+        // fontFamily: "normal",
         // color: COLORS.primary,
-        color: "rgb(177, 18, 22)",
+        // color: "rgb(177, 18, 22)",
+        color: COLORS.white,
         marginRight: 8
     },
     oldPrice: {
         fontSize: normalizeFont(15),
+        fontFamily: 'RubikRegular',
         // fontFamily: "bold",
         color: COLORS.white,
+        opacity: 0.6,
         // color: "rgb(177, 18, 22)",
         // marginRight: 8,
         textDecorationLine: 'line-through'
@@ -190,19 +247,49 @@ const styles = StyleSheet.create({
         marginBottom: 6
     },
     soldContainer: {
-        width: 66,
-        height: 24,
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: 4,
+        // borderRadius: 4,
         backgroundColor: COLORS.silver
     },
     soldText: {
         fontSize: normalizeFont(12),
-        fontFamily: "medium",
-        color: COLORS.grayscale700,
-        marginVertical: 4
-    }
+        paddingHorizontal: 5,
+        paddingVertical: 3,
+        fontFamily: "RubikaRegular",
+        fontWeight: 800,
+        // marginVertical: 4,
+        textTransform: "uppercase"
+    },
+    topLeftContainer: {
+        position: "absolute",
+        top: 18,
+        left: 16,
+        // width: 18,
+        // height: 12,
+        zIndex: 999,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    bottomLeftHeart: {
+        position: 'absolute',
+        right: 8,
+        bottom: 8,
+        width: 30,
+        height: 30,
+        backgroundColor: "#fff",
+        borderColor: "grey",
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 10,
+    },
+    smallHeartIcon: {
+        width: 20,
+        height: 20,
+        tintColor: 'black'
+    },
 });
 
 export default BlueProductCard;

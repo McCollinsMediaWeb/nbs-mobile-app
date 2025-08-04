@@ -31,9 +31,11 @@ export default function Root({ children }: PropsWithChildren) {
 const responsiveBackground = `
 body {
   background-color: #fff;
+  font-family: 'Urbanist-SemiBold';
 }
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #000;
+    font-family: 'Urbanist-SemiBold';
   }
 }`;

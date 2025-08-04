@@ -10,6 +10,7 @@ export const fetchRecommendedProducts = (id: string) => async (dispatch: any) =>
                         productRecommendations(productId: "${id}") {
                                         id
                                         title
+                                        availableForSale
                                         images(first: 1) {
                                             nodes {
                                                 transformedSrc(maxWidth: 195, maxHeight: 195)
@@ -25,6 +26,15 @@ export const fetchRecommendedProducts = (id: string) => async (dispatch: any) =>
                                                 amount
                                             }
                                         }
+                                        variants(first: 1) 
+                                            { edges 
+                                                { node
+                                                     {
+                                                        id
+                                                        availableForSale
+                                                    }
+                                                }                
+                                            }
                                     }
                                 }
                             `;
@@ -37,9 +47,11 @@ export const fetchRecommendedProducts = (id: string) => async (dispatch: any) =>
             (recommendation: any) => ({
                 id: recommendation.id,
                 title: recommendation.title,
+                available: recommendation.availableForSale,
                 image: recommendation.images.nodes[0].transformedSrc,
                 price: recommendation.priceRange.minVariantPrice.amount,
                 oldPrice: recommendation.compareAtPriceRange.maxVariantPrice.amount,
+                merchandiseId: recommendation.variants.edges[0]?.node.id,
             })
         );
 

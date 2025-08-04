@@ -1,5 +1,9 @@
 const addFileOutline = require("../assets/icons/add-file-outline.png");
 const addFile = require("../assets/icons/add-file.png");
+const addToCart = require("../assets/icons/add-to-cart-black.png");
+const addToCartWhite = require("../assets/icons/add-to-cart-white.png");
+const addedToCartWhite = require("../assets/icons/added-to-cart.png");
+const addedToCart = require("../assets/icons/added-to-cart-black.png");
 const arrowBack = require("../assets/icons/arrow-back.png");
 const arrowDown = require("../assets/icons/arrow-down.png");
 const arrowRight = require("../assets/icons/arrow-right.png");
@@ -74,6 +78,7 @@ const squareInfo = require("../assets/icons/square-info.png");
 const starOutline = require("../assets/icons/star-outline.png");
 const star = require("../assets/icons/star.png");
 const ticketOutline = require("../assets/icons/ticket-outline.png");
+const tickCircle = require("../assets/icons/tick-circle.png");
 const ticket = require("../assets/icons/ticket.png");
 const timeCircle = require("../assets/icons/time-circle.png");
 const trash = require("../assets/icons/trash.png");
@@ -349,6 +354,10 @@ const cardSecurity = require("../assets/icons/cards-icon/security.png");
 export default {
     addFileOutline,
     addFile,
+    addToCart,
+    addToCartWhite,
+    addedToCart,
+    addedToCartWhite,
     arrowBack,
     arrowDown,
     arrowRight,
@@ -423,6 +432,7 @@ export default {
     starOutline,
     star,
     ticketOutline,
+    tickCircle,
     ticket,
     timeCircle,
     trash,

@@ -71,7 +71,7 @@ const CompletedOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps
 
   return (
     <View style={[styles.container, {
-      backgroundColor: dark ? COLORS.dark1 : COLORS.tertiaryWhite
+      backgroundColor: dark ? COLORS.dark1 : COLORS.white
     }]}>
       {orders.length > 0 ? (
         <FlatList

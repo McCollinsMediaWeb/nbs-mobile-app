@@ -37,7 +37,8 @@ const { t } = i18next;
               <View style={{
                 alignItems: "center",
                 paddingTop: 16,
-                width: SIZES.width / 5
+                // width: SIZES.width / 5
+                width: SIZES.width / 4
               }}>
                 <Image
                   source={focused ? icons.home : icons.home2Outline}
@@ -58,6 +59,35 @@ const { t } = i18next;
         }}
       />
       <Tabs.Screen
+        name="allproducts"
+        options={{
+          title: "",
+          tabBarIcon: ({ focused }: { focused: boolean }) => {
+            return (
+              <View style={{
+                alignItems: "center",
+                paddingTop: 16,
+                width: SIZES.width / 5
+              }}>
+                <Image
+                  source={focused ? icons.category : icons.categoryOutline}
+                  resizeMode="contain"
+                  style={{
+                    width: 24,
+                    height: 24,
+                    tintColor: focused ? dark ? COLORS.white : COLORS.primary : dark ? COLORS.gray3 : COLORS.gray3,
+                  }}
+                />
+                <Text style={{
+                  ...FONTS.body4,
+                  color: focused ? dark ? COLORS.white : COLORS.primary : dark ? COLORS.gray3 : COLORS.gray3,
+                }}>{t('menus.category')}</Text>
+              </View>
+            )
+          },
+        }}
+      />
+      {/* <Tabs.Screen
         name="cart"
         options={{
           title: "",
@@ -85,7 +115,7 @@ const { t } = i18next;
             )
           },
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="orders"
         options={{
@@ -95,7 +125,8 @@ const { t } = i18next;
               <View style={{
                 alignItems: "center",
                 paddingTop: 16,
-                width: SIZES.width / 5
+                // width: SIZES.width / 5
+                width: SIZES.width / 4
               }}>
                 <Image
                   source={focused ? icons.cart : icons.cartOutline}
@@ -115,7 +146,7 @@ const { t } = i18next;
           },
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="wishlist"
         options={{
           title: "",
@@ -143,7 +174,7 @@ const { t } = i18next;
             )
           },
         }}
-      />
+      /> */}
       {/* <Tabs.Screen
         name="wallet"
         options={{
@@ -182,7 +213,8 @@ const { t } = i18next;
               <View style={{
                 alignItems: "center",
                 paddingTop: 16,
-                width: SIZES.width / 5
+                // width: SIZES.width / 5
+                width: SIZES.width / 4
               }}>
                 <Image
                   source={focused ? icons.user : icons.userOutline}

@@ -1,10 +1,11 @@
 import HamburgerDrawer from '@/components/HamburgerDrawer';
 import { COLORS, icons, images, SIZES } from '@/constants';
 import { useCardsData } from '@/data';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { normalizeFont } from '@/utils/normalizeFont';
 import { NavigationProp } from '@react-navigation/native';
-import { useNavigation } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import i18next from 'i18next';
 import React, { useRef } from 'react';
 import { Dimensions, FlatList, Image, ImageBackground, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -20,6 +21,10 @@ const AboutUs = () => {
     const { t } = i18next;
     const drawerRef = useRef<any>(null);
     const cardsData = useCardsData();
+    const cartItems = useAppSelector(state => state.cart.cartItems);
+    const wishlistItems = useAppSelector(state => state.wishlist.wishlistItems);
+
+    const totalCartItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
     /**
     * Render header
     */
@@ -39,6 +44,7 @@ const AboutUs = () => {
                             color: "white",
                             fontSize: normalizeFont(14),
                             maxWidth: 350,
+                            fontFamily: 'RubikRegular',
                         }}
                     >
                         {t('aboutUs.announcement')}
@@ -77,14 +83,55 @@ const AboutUs = () => {
                                 resizeMode='contain'
                                 style={[styles.userIcon, { tintColor: dark ? COLORS.white : COLORS.greyscale900 }]}
                             />
+
+                            <View
+                                style={{
+                                    position: 'absolute',
+                                    top: -4,
+                                    right: -4,
+                                    backgroundColor: 'rgb(177, 18, 22)',
+                                    borderRadius: 10,
+                                    minWidth: 18,
+                                    height: 18,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    paddingHorizontal: 4,
+                                    zIndex: 1,
+                                }}
+                            >
+                                <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
+                                    {wishlistItems?.length}
+                                </Text>
+                            </View>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => navigation.navigate("cart")}>
+                            onPress={() => router.push("/(tabs)/cart")}>
                             <Image
                                 source={icons.bag3Outline}
                                 resizeMode='contain'
                                 style={[styles.userIcon, { tintColor: dark ? COLORS.white : COLORS.greyscale900 }]}
                             />
+                            {/* {totalCartItems > 0 && ( */}
+                            <View
+                                style={{
+                                    position: 'absolute',
+                                    top: -4,
+                                    right: -4,
+                                    backgroundColor: 'rgb(177, 18, 22)',
+                                    borderRadius: 10,
+                                    minWidth: 18,
+                                    height: 18,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    paddingHorizontal: 4,
+                                    zIndex: 1,
+                                }}
+                            >
+                                <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
+                                    {totalCartItems}
+                                </Text>
+                            </View>
+                            {/* )} */}
                         </TouchableOpacity>
                     </View>
 
@@ -432,7 +479,8 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
         fontWeight: '600',
         marginBottom: 10,
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily: 'RubikRegular',
     },
     inverterLabel2: {
         color: COLORS.primaryRed, // red color like image
@@ -441,11 +489,13 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         marginBottom: 10,
         textAlign: "center",
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        fontFamily: 'RubikRegular',
     },
     headline: {
         color: COLORS.white,
         fontSize: normalizeFont(29),
+        fontFamily: 'TomorrowBold',
         fontWeight: '900',
         lineHeight: 40,
         marginBottom: 20,
@@ -454,18 +504,20 @@ const styles = StyleSheet.create({
     headline2: {
         // color: COLORS.white,
         fontSize: normalizeFont(29),
+        fontFamily: 'TomorrowBold',
         fontWeight: '900',
         lineHeight: 40,
         marginBottom: 20,
         textAlign: "center",
         textTransform: "uppercase",
         // maxWidth: 400,/
-         maxWidth: width * 0.8,
+        maxWidth: width * 0.8,
         alignSelf: "center"
     },
     headline3: {
         color: COLORS.white,
         fontSize: normalizeFont(29),
+        fontFamily: 'TomorrowBold',
         fontWeight: '900',
         lineHeight: 40,
         marginBottom: 20,
@@ -499,6 +551,7 @@ const styles = StyleSheet.create({
     mainTitle: {
         color: '#fff',
         fontSize: normalizeFont(28),
+        fontFamily: 'TomorrowBold',
         marginTop: 15,
         marginBottom: 15,
         fontWeight: '900',
@@ -568,7 +621,8 @@ const styles = StyleSheet.create({
         fontSize: normalizeFont(18),
         color: "#333",
         textAlign: "center",
-        lineHeight: 30
+        lineHeight: 30,
+        fontFamily: 'RubikRegular',
     },
 
 

@@ -11,7 +11,7 @@ import { normalizeFont } from '@/utils/normalizeFont';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions, FlatList, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -49,13 +49,16 @@ const Cart: React.FC = () => {
   const handleRemoveBookmark = () => {
     if (selectedBookmarkItem) {
       dispatch(removeProductFromCart(selectedBookmarkItem.merchandiseId));
-      // const updatedCartProduct = myCartProducts.filter(
-      //   (product: any) => product.id !== selectedBookmarkItem.id
-      // );
-      // setMyCartProducts(updatedCartProduct);
       refRBSheet.current?.close();
     }
   };
+
+  const liveCartItem = useAppSelector(state =>
+    selectedBookmarkItem
+      ? state.cart.cartItems.find(item => item.merchandiseId === selectedBookmarkItem.merchandiseId)
+      : null
+  );
+
 
   useEffect(() => {
     if (cartItems && cartItems.length > 0) {
@@ -67,6 +70,11 @@ const Cart: React.FC = () => {
       setTotalPrice(0); // empty cart
     }
   }, [cartItems]);
+
+  const handleCardPress = useCallback((item: any) => {
+    setSelectedBookmarkItem(item);
+    refRBSheet.current?.open();
+  }, []);
 
   // console.log('cart', cartItems)
   /**
@@ -185,10 +193,11 @@ const Cart: React.FC = () => {
                     merchandiseId={item.merchandiseId}
                     productType={item.productType}
                     quantity={item.quantity}
-                    onPress={() => {
-                      setSelectedBookmarkItem(item);
-                      refRBSheet.current?.open();
-                    }}
+                    // onPress={() => {
+                    //   setSelectedBookmarkItem(item);
+                    //   refRBSheet.current?.open();
+                    // }}
+                    onPress={() => handleCardPress(item)}
                   />
                 )}
               />
@@ -222,7 +231,8 @@ const Cart: React.FC = () => {
           </View>
           <TouchableOpacity
             disabled={resultsCount <= 0}
-            onPress={() => user.accessToken ? navigation.navigate("checkout") : refLoginSheet.current?.open()}
+            // onPress={() => user.accessToken ? navigation.navigate("checkout") : refLoginSheet.current?.open()}
+            onPress={() => navigation.navigate("checkout") }
             style={[
               styles.cartBtn,
               resultsCount <= 0 && { opacity: 0.5 },
@@ -269,7 +279,8 @@ const Cart: React.FC = () => {
         <View style={[styles.selectedBookmarkContainer,
           //  { backgroundColor: dark ? COLORS.dark2 : COLORS.tertiaryWhite }
         ]}>
-          <CartCard
+          {/* <CartCard
+            key={selectedBookmarkItem?.merchandiseId || ""}
             title={selectedBookmarkItem?.title || ""}
             image={selectedBookmarkItem?.image}
             price={selectedBookmarkItem?.price || 0}
@@ -279,6 +290,17 @@ const Cart: React.FC = () => {
             quantity={selectedBookmarkItem?.quantity || 0}
             oldPrice={selectedBookmarkItem?.oldPrice || 0}
             onPress={() => console.log(selectedBookmarkItem)}
+          /> */}
+          <CartCard
+            title={liveCartItem?.title || ""}
+            image={liveCartItem?.image}
+            price={liveCartItem?.price || 0}
+            id={liveCartItem?.id || ""}
+            merchandiseId={liveCartItem?.merchandiseId || ""}
+            productType={liveCartItem?.productType || ""}
+            quantity={liveCartItem?.quantity || 0}
+            oldPrice={liveCartItem?.oldPrice || 0}
+            onPress={handleRemoveBookmark}
           />
         </View>
 
@@ -383,7 +405,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.white,
     padding: 16,
-    marginBottom: 32
+    // marginBottom: 32
   },
   headerContainer: {
     flexDirection: "row",
@@ -566,7 +588,7 @@ const styles = StyleSheet.create({
   },
   cartBottomContainer: {
     position: "absolute",
-    bottom: 12,
+    bottom: 1,
     left: 0,
     right: 0,
     width: SIZES.width,
