@@ -211,7 +211,7 @@ export const cardsData = [
     {
         id: "4",
         title: "Contact us",
-        subTitle: "Need to contact us ? Just send us an e-mail at info@yourstore.com",
+        subTitle: "Need to contact us ? Just send us an e-mail at info@nbsgroups.com",
         icon: icons.cardEmail
     }
 ];

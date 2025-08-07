@@ -2,7 +2,7 @@
   "expo": {
     "name": "NBS",
     "slug": "NBS",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "nbs",
@@ -11,6 +11,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mccollinsmedia.NBS",
+      "buildNumber": "2",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       },
@@ -38,8 +39,8 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/icon.png",
-          "imageWidth": 100,
+          "image": "./assets/images/nbs-icon-2.png",
+          "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
@@ -52,7 +53,12 @@
           }
         }
       ],
-      "@react-native-google-signin/google-signin"
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.718209129465-kl54tsra6p0glvmi6ofg3u6dq53ptpsg"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

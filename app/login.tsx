@@ -1,3 +1,4 @@
+import LanguageModal from '@/components/LanguageModal';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { loginCustomer } from '@/utils/actions/userActions';
@@ -9,7 +10,7 @@ import Checkbox from 'expo-checkbox';
 import { useNavigation } from 'expo-router';
 import i18next from 'i18next';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonFilled from '../components/ButtonFilled';
 import Header from '../components/Header';
@@ -51,6 +52,7 @@ const Login = () => {
     const user = useAppSelector(state => state.user);
     const appLanguage = useAppSelector(state => state.generalSettings.language);
     const [formState, dispatchFormState] = useReducer(reducer, initialState);
+    const [languageModalVisible, setLanguageModalVisible] = useState(false);
     const [error, setError] = useState(null);
     const [googleData, setGoogleData] = useState<any>(null);
     const [isChecked, setChecked] = useState(false);
@@ -153,7 +155,19 @@ const Login = () => {
             <View style={[styles.container, {
                 backgroundColor: colors.background
             }]}>
-                <Header title="" />
+                <View style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    width: '100%'
+                }}>
+                    <Header title="" />
+                    <TouchableOpacity onPress={() => setLanguageModalVisible(true)}>
+                        <Image
+                            source={icons.world2} // make sure you have a `language` icon in your `icons`
+                            style={{ width: 20, height: 20, tintColor: dark ? COLORS.white : COLORS.greyscale900 }}
+                        />
+                    </TouchableOpacity>
+                </View>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.titleContainer}>
                         <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t('login.title')}</Text>
@@ -237,6 +251,7 @@ const Login = () => {
                     </TouchableOpacity>
                 </View>
             </View>
+            <LanguageModal languageModalVisible={languageModalVisible} setLanguageModalVisible={setLanguageModalVisible} />
         </SafeAreaView>
     )
 };

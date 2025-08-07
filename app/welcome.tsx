@@ -1,10 +1,13 @@
 import Button from "@/components/Button";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { changeOnboardStatus } from "@/utils/actions/generalSettingsActions";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { changeAppLanguage, changeOnboardStatus } from "@/utils/actions/generalSettingsActions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "expo-router";
 import i18next from "i18next";
-import React, { useEffect } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { I18nManager, Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import RNRestart from 'react-native-restart';
 import { SafeAreaView } from "react-native-safe-area-context";
 import SocialButtonV2 from "../components/SocialButtonV2";
 import { COLORS, SIZES, icons, illustrations } from "../constants";
@@ -21,14 +24,44 @@ const Welcome = () => {
     const dispatch = useAppDispatch();
     // const { t } = useTranslation();
     const { t } = i18next;
+    const [languageModalVisible, setLanguageModalVisible] = useState(false);
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
 
     useEffect(() => {
         dispatch(changeOnboardStatus(true))
-    }, [])
+    }, []);
+
+    const handleChangeLanguage = async (itemTitle: string) => {
+        if (appLanguage !== itemTitle) {
+            try {
+                const isRTL = itemTitle === 'ar';
+                if (I18nManager.isRTL !== isRTL) {
+                    I18nManager.allowRTL(isRTL);
+                    I18nManager.forceRTL(isRTL);
+                }
+                await AsyncStorage.setItem('language', itemTitle);
+                dispatch(changeAppLanguage(itemTitle));
+                setTimeout(() => {
+                    RNRestart.restart();
+                }, 300);
+            } catch (error) {
+                console.error("Failed to update language:", error);
+            }
+        }
+    };
 
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
+
+                <View style={{ position: 'absolute', top: 20, right: 30 }}>
+                    <TouchableOpacity onPress={() => setLanguageModalVisible(true)}>
+                        <Image
+                            source={icons.world2} // make sure you have a `language` icon in your `icons`
+                            style={{ width: 20, height: 20, tintColor: dark ? COLORS.white : COLORS.greyscale900 }}
+                        />
+                    </TouchableOpacity>
+                </View>
                 <Image source={dark ? illustrations.welcomeDark : illustrations.welcome} resizeMode="contain" style={styles.logo} />
                 <Text style={[styles.title, { color: colors.text }]}>{t('welcome.title')}</Text>
                 <View style={{ marginVertical: 22 }}>
@@ -75,6 +108,70 @@ const Welcome = () => {
                     </TouchableOpacity>
                 </View>
             </View>
+
+            <Modal
+                transparent
+                animationType="fade"
+                visible={languageModalVisible}
+                onRequestClose={() => setLanguageModalVisible(false)}
+            >
+                <TouchableOpacity
+                    style={{
+                        flex: 1,
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                    activeOpacity={1}
+                    onPressOut={() => setLanguageModalVisible(false)}
+                >
+                    <View
+                        style={{
+                            width: 220,
+                            backgroundColor: colors.background,
+                            borderRadius: 10,
+                            padding: 20,
+                            alignItems: 'center',
+                        }}
+                    >
+                        <TouchableOpacity
+                            onPress={() => handleChangeLanguage('en')}
+                            style={{
+                                paddingVertical: 10,
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                width: '100%'
+                            }}
+                        >
+                            <Text style={{ color: colors.text, fontSize: 16 }}>English</Text>
+                            {appLanguage === "en" && (
+                                <Image
+                                    source={icons.done} // make sure you have a `language` icon in your `icons`
+                                    style={{ width: 20, height: 20, tintColor: "green" }}
+                                />
+                            )}
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => handleChangeLanguage('ar')}
+                            style={{
+                                paddingVertical: 10,
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                width: '100%'
+                            }}
+                        >
+                            <Text style={{ color: colors.text, fontSize: 16 }}>العربية</Text>
+                            {appLanguage === "ar" && (
+                                <Image
+                                    source={icons.done} // make sure you have a `language` icon in your `icons`
+                                    style={{ width: 20, height: 20, tintColor: "green" }}
+                                />
+                            )}
+                        </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>
+            </Modal>
+
         </SafeAreaView>
     );
 };

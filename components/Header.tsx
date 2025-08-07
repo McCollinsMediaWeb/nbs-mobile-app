@@ -2,7 +2,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { useNavigation } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { COLORS, icons, SIZES } from '../constants';
+import { COLORS, icons } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 
 interface HeaderProps {
@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: COLORS.white,
-        width: SIZES.width - 32,
+        // width: SIZES.width - 52,
         flexDirection: 'row',
         alignItems: 'center',
     },

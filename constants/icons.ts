@@ -30,6 +30,7 @@ const discountOutline = require("../assets/icons/discount-outline.png");
 const discount = require("../assets/icons/discount.png");
 const document = require("../assets/icons/document.png");
 const documentOutline = require("../assets/icons/document-outline.png");
+const done = require("../assets/icons/done.png");
 const downloadFile = require("../assets/icons/download-file.png");
 const email = require("../assets/icons/email.png");
 const emailOutline = require("../assets/icons/email-outline.png");
@@ -384,6 +385,7 @@ export default {
     discount,
     document,
     documentOutline,
+    done,
     downloadFile,
     email,
     emailOutline,

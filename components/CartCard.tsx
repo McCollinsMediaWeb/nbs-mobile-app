@@ -78,45 +78,28 @@ const CartCard: React.FC<CartCardProps> = ({
                         color: dark ? COLORS.secondaryWhite : COLORS.greyscale900
                     }]}>{title}</Text>
                     <TouchableOpacity onPress={onPress}>
-                        {/* <Image
-                            source={deleteIcon}
-                            resizeMode='contain'
-                            style={styles.heartIcon}
-                        /> */}
                         <Feather style={styles.heartIcon} size={19} name='trash-2' color="red" />
                     </TouchableOpacity>
                 </View>
-                {/* <View style={styles.viewContainer}>
-                    <View style={[styles.color, { backgroundColor: color }]}></View>
-                    <FontAwesome name="star" size={14} color="rgb(250, 159, 28)" />
-                    <Text style={[styles.location, {
-                        color: dark ? COLORS.greyscale300 : COLORS.grayscale700,
-                    }]}>{" "}{rating}  ({numReviews})</Text>
-                    {size && (
-                        <Text style={[styles.location, {
-                            color: dark ? COLORS.greyscale300 : COLORS.grayscale700,
-                        }]}>   | {" "} Size= {size}  </Text>
-                    )}
-                </View> */}
                 <View style={styles.viewContainer}>
                     <Text style={[styles.oldPrice, {
                         color: dark ? COLORS.greyscale300 : COLORS.grayscale700,
                     }]}>AED {oldPrice?.toFixed(3)}</Text>
                 </View>
+                <View style={styles.viewContainer}>
+                    <Text style={[styles.price, {
+                        color: "rgb(177, 18, 22)",
+                    }]}>AED {price.toFixed(2)}</Text>
+                </View>
                 <View style={styles.bottomViewContainer}>
                     <View style={styles.priceContainer}>
-                        <Text style={[styles.price, {
-                            color: "rgb(177, 18, 22)",
-                        }]}>AED {price.toFixed(2)}</Text>
+                        <Text style={[styles.subtotalPrice, {
+                            color: dark ? COLORS.greyscale300 : COLORS.grayscale700,
+                        }]}>Total: AED {(price * quantity).toFixed(2)}</Text>
                     </View>
                     <View style={[styles.qtyContainer, {
                         backgroundColor: dark ? COLORS.dark3 : COLORS.silver
                     }]}>
-                        {/* <TouchableOpacity onPress={() => decrease(merchandiseId)}>
-                            <Text style={[styles.qtyText, {
-                                color: dark ? COLORS.white : COLORS.primary
-                            }]}>-</Text>
-                        </TouchableOpacity> */}
                         <TouchableOpacity
                             onPress={() => decrease(merchandiseId)}
                             style={{
@@ -131,11 +114,6 @@ const CartCard: React.FC<CartCardProps> = ({
                         <Text style={[styles.qtyNum, {
                             color: dark ? COLORS.white : COLORS.primary,
                         }]}>{quantity}</Text>
-                        {/* <TouchableOpacity onPress={() => increase(merchandiseId)}>
-                            <Text style={[styles.qtyText, {
-                                color: dark ? COLORS.white : COLORS.primary
-                            }]}>+</Text>
-                        </TouchableOpacity> */}
                         <TouchableOpacity
                             onPress={() => increase(merchandiseId)}
                             style={{
@@ -203,7 +181,7 @@ const styles = StyleSheet.create({
     },
     priceContainer: {
         flexDirection: 'column',
-        marginVertical: 4,
+        marginVertical: 2,
     },
     heartIcon: {
         width: 20,
@@ -244,6 +222,12 @@ const styles = StyleSheet.create({
         color: COLORS.primary,
         textDecorationLine: 'line-through'
     },
+    subtotalPrice: {
+        fontFamily: "bold",
+        alignItems: "baseline",
+        fontSize: normalizeFont(18),
+        color: COLORS.primary,
+    },
     color: {
         height: 16,
         width: 16,
@@ -253,7 +237,8 @@ const styles = StyleSheet.create({
     qtyContainer: {
         // width: 130,
         width: width * 0.32,
-        height: 46,
+        // height: 46,
+        height: SIZES.height * 0.045,
         borderRadius: 24,
         alignItems: 'center',
         justifyContent: 'center',

@@ -185,7 +185,7 @@ const Profile = () => {
           style={styles.settingsItemContainer}>
           <View style={styles.leftContainer}>
             <Image
-              source={icons.more}
+              source={icons.world2}
               resizeMode='contain'
               style={[styles.settingsIcon, {
                 tintColor: dark ? COLORS.white : COLORS.greyscale900

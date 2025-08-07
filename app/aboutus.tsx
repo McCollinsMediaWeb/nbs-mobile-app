@@ -1,3 +1,4 @@
+import CardSlider from '@/components/CardSlider';
 import HamburgerDrawer from '@/components/HamburgerDrawer';
 import { COLORS, icons, images, SIZES } from '@/constants';
 import { useCardsData } from '@/data';
@@ -8,7 +9,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { router, useNavigation } from 'expo-router';
 import i18next from 'i18next';
 import React, { useRef } from 'react';
-import { Dimensions, FlatList, Image, ImageBackground, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 
@@ -105,7 +106,7 @@ const AboutUs = () => {
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => router.push("/(tabs)/cart")}>
+                            onPress={() => router.push("/cart")}>
                             <Image
                                 source={icons.bag3Outline}
                                 resizeMode='contain'
@@ -137,50 +138,6 @@ const AboutUs = () => {
 
                 </View>
             </>
-        )
-    }
-
-    const renderCardItem = ({ item }: { item: { id: string; title: string; subTitle: string; icon: ImageSourcePropType } }) => (
-        <View style={{ width, height: 200 }}>
-            <View style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                flex: 1
-            }} >
-                <Image
-                    source={item.icon}
-                    resizeMode="contain"
-                    style={{ width: 30, height: 30, alignSelf: 'center' }}
-                />
-                <Text style={[styles.subTitle, {
-                    color: COLORS.white,
-                    fontSize: normalizeFont(16)
-                }]}>{item.title}</Text>
-                <Text style={[styles.name, {
-                    color: COLORS.white
-                }]}>{item.subTitle}</Text>
-            </View>
-        </View >
-    );
-
-    const renderCards = () => {
-        return (
-            <View style={[styles.bannerItemContainer, {
-                backgroundColor: 'rgb(177, 18, 22)',
-                paddingBottom: 20
-            }]}>
-                <FlatList
-                    data={cardsData}
-                    style={{ direction: 'ltr' }}
-                    horizontal
-                    keyExtractor={(item) => item.id}
-                    renderItem={renderCardItem}
-                    pagingEnabled      // ✅ snap to one full screen
-                    snapToAlignment="center"
-                    decelerationRate="fast"
-                    showsHorizontalScrollIndicator={false}
-                />
-            </View>
         )
     }
 
@@ -257,7 +214,7 @@ const AboutUs = () => {
                             <Text style={[styles.featureText, { color: dark ? COLORS.white : "#333" }]} >{t('aboutUs.section5.content')}</Text>
                         </View>
                     </View>
-                    {renderCards()}
+                    <CardSlider cards={cardsData} />
                 </ScrollView>
                 <HamburgerDrawer ref={drawerRef} />
             </View>
