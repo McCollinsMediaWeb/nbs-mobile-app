@@ -16,6 +16,7 @@ import i18next from "i18next";
 import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
+import RenderHtml from 'react-native-render-html';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-virtualized-view";
 import AutoSlider from '../components/AutoSlider';
@@ -427,9 +428,15 @@ const ProductDetails = () => {
                         backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
                     }]} />
 
-                    <Text style={[styles.featureText, {
+                    {/* <Text style={[styles.featureText, {
                         color: dark ? COLORS.white : COLORS.greyscale900
-                    }]}>{product?.descriptionHtml}</Text>
+                    }]}>{product?.descriptionHtml}</Text> */}
+
+                    <RenderHtml
+                        contentWidth={SIZES.width}
+                        source={{ html: product?.descriptionHtml || '' }}
+                        baseStyle={{ color: dark ? COLORS.white : COLORS.greyscale900, fontSize: normalizeFont(16), flex: 1 }}
+                    />
 
                 </View>
 
