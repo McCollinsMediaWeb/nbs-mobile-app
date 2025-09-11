@@ -61,10 +61,142 @@
             "profile": "Profile",
             "category": "Category"
         },
+        "hamburgerMenu2": {
+            "home": "Home",
+            "aboutUs": "About Us",
+            "allProducts": "All Products",
+            "bestSellers": "Best Sellers",
+            "newArrivals": "New Arrivals",
+            "downloadCatalogue": "Download Catalogue"
+        },
         "hamburgerMenu": {
             "home": "Home",
             "aboutUs": "About Us",
             "allProducts": "All Products",
+            "nbsSolar": "NBS Solar",
+            "nbsSolarOptions": {
+                "option1": "Pure Shine Wave UPS/Inverter",
+                "option2": "Batteries",
+                "option2Options": {
+                    "option1": "SMF Battery",
+                    "option2": "Tall Tubular Battery",
+                    "option3": "Gel Battery",
+                    "option4": "Lithium Battery"
+                },
+                "option3": "Wall Mounted Pure Shine Wave High Frequency",
+                "option4": "Solar Hybrid Inverter",
+                "option5": "Energy Store All-in-One"
+            },
+            "sumakSolar": "Sumak Solar",
+            "sumakSolarOptions": {
+                "option1": "Pure Shine Wave UPS/Inverter",
+                "option2": "Solar Hybrid Inverter",
+                "option3": "Wall Mounted Pure Shine Wave High Frequency",
+                "option4": "Energy Store All-in-One",
+                "option5": "Batteries",
+                "option5Options": {
+                    "option1": "SMF Battery",
+                    "option2": "Tall Tubular Battery",
+                    "option3": "Gel Battery",
+                    "option4": "Lithium Battery",
+                    "option5": "LifePO4 Battery"
+                },
+                "option6": "AVR",
+                "option7": "Solar Charge Controller",
+                "option8": "Su-Mak photovoltaic (PV)",
+                "option9": "Battery Management System (BMS)"
+            },
+            "samsunSolar": "Samsun Solar",
+            "samsunSolarOptions": {
+                "option1": "Pure Shine Wave UPS/Inverter",
+                "option2": "Solar Hybrid Inverter",
+                "option3": "Wall Mounted Pure Shine Wave",
+                "option4": "MPPT Charge Controller",
+                "option5": "Batteries",
+                "option5Options": {
+                    "option1": "SMF Battery",
+                    "option2": "Tall Tubular Battery",
+                    "option3": "Gel Battery",
+                    "option4": "Lithium Battery",
+                    "option5": "LifePO4 Battery"
+                }
+            },
+            "sunrideSolar": "Sunride Solar",
+            "sunrideSolarOptions": {
+                "option1": "Pure Shine Wave UPS/Inverter",
+                "option2": "Solar Hybrid Inverter",
+                "option3": "Wall Mounted Pure Shine Wave",
+                "option4": "On grid Inverter",
+                "option5": "Batteries",
+                "option5Options": {
+                    "option1": "SMF Battery",
+                    "option2": "Tall Tubular Battery",
+                    "option3": "Gel Battery",
+                    "option4": "Lithium Battery",
+                    "option5": "LifePO4 Battery"
+                }
+            },
+            "generators": "Generators",
+            "generatorsOptions": {
+                "option1": "Dewalt",
+                "option2": "Daewoo",
+                "option3": "Elemax",
+                "option4": "Honda",
+                "option5": "Kama",
+                "option6": "Kubota",
+                "option7": "Perkins",
+                "option8": "Yamaha",
+                "option9": "Yanmar"
+            },
+            "powerStation": "Power Station",
+            "powerStationOptions": {
+                "option1": "Bluetti Portable Power Station"
+            },
+            "carWasher": "Car Washer",
+            "carWasherOptions": {
+                "option1": "Daewoo"
+            },
+            "waterPump": "Water Pump",
+            "waterPumpOptions": {
+                "option1": "Petrol",
+                "option1Options": {
+                    "option1": "Honda",
+                    "option2": "Koshin"
+                },
+                "option2": "Diesel",
+                "option2Options": {
+                    "option1": "Kama",
+                    "option2": "Koshin",
+                    "option3": "Semilux",
+                    "option4": "Yanmar"
+                },
+                "option3": "Electric",
+                "option3Options": {
+                    "option1": "Prakash",
+                    "option2": "Panasonic",
+                    "option3": "Pedrollo",
+                    "option4": "Reyon",
+                    "option5": "Saer",
+                    "option6": "Silver",
+                    "option7": "Spino",
+                    "option8": "Vespa"
+                }
+            },
+            "accessories": "Accessories",
+            "accessoriesOptions": {
+                "option1": "PWM Charge Controller",
+                "option2": "MPPT Solar Charge Controller",
+                "option3": "Clamp",
+                "option4": "Combiner Box",
+                "option5": "DC Fuse",
+                "option6": "DC Circuit Breaker",
+                "option7": "Automatic Transfer Switch",
+                "option8": "DC Surge Protector",
+                "option9": "MC4 Connector",
+                "option10": "Panel Tester",
+                "option11": "Solar installation Kit",
+                "option12": "Solar Cable"
+            },
             "bestSellers": "Best Sellers",
             "newArrivals": "New Arrivals",
             "downloadCatalogue": "Download Catalogue"
@@ -135,7 +267,11 @@
         },
         "ourWaterPump": {
             "subTitle": "Power. Precision. Performance.",
-            "title": "NBS Water Pumps"
+            "title": "Explore our Water Pumps"
+        },
+        "ourBatteries": {
+            "subTitle": "Power. Precision. Performance.",
+            "title": "Explore our Batteries"
         },
         "pointCard": {
             "card1": {
@@ -152,11 +288,13 @@
             },
             "card4": {
                 "title": "Contact us",
-                "subTitle": "Need to contact us ? Just send us an e-mail at info@nbsgroups.com"
+                "subTitle": "Need to contact us ? Just send us an e-mail at sales@nbsgroups.com"
             }
         },
         "productPage": {
             "productOverview": "Product Overview",
+            "productDescription": "Product Description",
+            "viewCatalogue": "View Product Catalogue",
             "highlights": "Highlights",
             "youlike": "You might also like",
             "addToCart": "Add to Cart",

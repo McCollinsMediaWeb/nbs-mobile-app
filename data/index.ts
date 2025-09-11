@@ -74,6 +74,758 @@ export const faqs = [
     },
 ];
 
+
+// export const useMenuData = () => {
+//     const { t } = i18next;
+
+//     return [
+//         { title: t('hamburgerMenu.home'), route: "/" },
+//         { title: t('hamburgerMenu.aboutUs'), route: "aboutus" },
+//         {
+//             title: t('hamburgerMenu.allProducts'),
+//             children: [
+//                 {
+//                     title: t('hamburgerMenu.allProducts.nbsSolar'),
+//                     children: [
+//                         {
+//                             title: t('hamburgerMenu.allProducts.nbsSolar.option1'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.nbsSolar.option2'),
+//                             children: [
+//                                 { title: t('hamburgerMenu.allProducts.nbsSolar.option2.option1'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.nbsSolar.option2.option2'), route: "deepItem2" },
+//                                 { title: t('hamburgerMenu.allProducts.nbsSolar.option2.option3'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.nbsSolar.option2.option4'), route: "deepItem2" },
+//                             ],
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.nbsSolar.option3'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.nbsSolar.option4'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.nbsSolar.option5'), route: "collectionscreen",
+//                         },
+//                     ],
+//                 },
+//                 {
+//                     title: t('hamburgerMenu.allProducts.sumakSolar'),
+//                     children: [
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sumakSolar.option1'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sumakSolar.option2'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sumakSolar.option3'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sumakSolar.option4'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sumakSolar.option5'),
+//                             children: [
+//                                 { title: t('hamburgerMenu.allProducts.sumakSolar.option5.option1'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.sumakSolar.option5.option2'), route: "deepItem2" },
+//                                 { title: t('hamburgerMenu.allProducts.sumakSolar.option5.option3'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.sumakSolar.option5.option4'), route: "deepItem2" },
+//                                 { title: t('hamburgerMenu.allProducts.sumakSolar.option5.option5'), route: "deepItem2" },
+//                             ],
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sumakSolar.option6'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sumakSolar.option7'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sumakSolar.option8'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sumakSolar.option9'), route: "collectionscreen",
+//                         },
+//                     ],
+//                 }, {
+//                     title: t('hamburgerMenu.allProducts.samsunSolar'),
+//                     children: [
+//                         {
+//                             title: t('hamburgerMenu.allProducts.samsunSolar.option1'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.samsunSolar.option2'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.samsunSolar.option3'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.samsunSolar.option4'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.samsunSolar.option5'),
+//                             children: [
+//                                 { title: t('hamburgerMenu.allProducts.samsunSolar.option5.option1'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.samsunSolar.option5.option2'), route: "deepItem2" },
+//                                 { title: t('hamburgerMenu.allProducts.samsunSolar.option5.option3'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.samsunSolar.option5.option4'), route: "deepItem2" },
+//                                 { title: t('hamburgerMenu.allProducts.samsunSolar.option5.option5'), route: "deepItem2" },
+//                             ],
+//                         },
+//                     ],
+//                 }, {
+//                     title: t('hamburgerMenu.allProducts.sunrideSolar'),
+//                     children: [
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sunrideSolar.option1'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sunrideSolar.option2'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sunrideSolar.option3'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sunrideSolar.option4'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.sunrideSolar.option5'),
+//                             children: [
+//                                 { title: t('hamburgerMenu.allProducts.sunrideSolar.option5.option1'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.sunrideSolar.option5.option2'), route: "deepItem2" },
+//                                 { title: t('hamburgerMenu.allProducts.sunrideSolar.option5.option3'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.sunrideSolar.option5.option4'), route: "deepItem2" },
+//                                 { title: t('hamburgerMenu.allProducts.sunrideSolar.option5.option5'), route: "deepItem2" },
+//                             ],
+//                         },
+//                     ],
+//                 }, {
+//                     title: t('hamburgerMenu.allProducts.generators'),
+//                     children: [
+//                         {
+//                             title: t('hamburgerMenu.allProducts.generators.option1'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.generators.option2'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.generators.option3'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.generators.option4'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.generators.option5'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.generators.option6'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.generators.option7'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.generators.option8'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.generators.option9'), route: "collectionscreen",
+//                         },
+//                     ],
+//                 }, {
+//                     title: t('hamburgerMenu.allProducts.powerStation'),
+//                     children: [
+//                         {
+//                             title: t('hamburgerMenu.allProducts.powerStation.option1'), route: "collectionscreen",
+//                         },
+//                     ],
+//                 }, {
+//                     title: t('hamburgerMenu.allProducts.carWasher'),
+//                     children: [
+//                         {
+//                             title: t('hamburgerMenu.allProducts.carWasher.option1'), route: "collectionscreen",
+//                         },
+//                     ],
+//                 }, {
+//                     title: t('hamburgerMenu.allProducts.waterPump'),
+//                     children: [
+//                         {
+//                             title: t('hamburgerMenu.allProducts.waterPump.option1'),
+//                             children: [
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option1.option1'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option1.option2'), route: "deepItem2" },
+//                             ],
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.waterPump.option2'),
+//                             children: [
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option2.option1'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option2.option2'), route: "deepItem2" },
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option2.option3'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option2.option4'), route: "deepItem1" },
+//                             ],
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.waterPump.option3'),
+//                             children: [
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option1'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option2'), route: "deepItem2" },
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option3'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option4'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option5'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option6'), route: "deepItem2" },
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option7'), route: "deepItem1" },
+//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option8'), route: "deepItem1" },
+//                             ],
+//                         },
+//                     ],
+//                 }, {
+//                     title: t('hamburgerMenu.allProducts.accessories'),
+//                     children: [
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option1'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option2'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option3'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option4'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option5'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option6'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option7'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option8'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option9'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option10'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option11'), route: "collectionscreen",
+//                         },
+//                         {
+//                             title: t('hamburgerMenu.allProducts.accessories.option12'), route: "collectionscreen",
+//                         },
+//                     ],
+//                 },
+//             ],
+//         },
+//         {
+//             title: t('hamburgerMenu.bestSellers'),
+//             route: "collectionscreen",
+//             params: {
+//                 collectionId: "gid://shopify/Collection/439668539604",
+//                 collectionTitle: "Best Sellers",
+//                 collectionImage: images.aboutUsBanner3,
+//             },
+//         },
+//         {
+//             title: t('hamburgerMenu.newArrivals'),
+//             route: "collectionscreen",
+//             params: {
+//                 collectionId: "gid://shopify/Collection/439668572372",
+//                 collectionTitle: "New Arrivals",
+//                 collectionImage: images.aboutUsBanner1,
+//             },
+//         },
+//         { title: t('hamburgerMenu.downloadCatalogue'), route: "catalogue" },
+//     ];
+// };
+
+export const useMenuData = () => {
+    const { t } = i18next;
+
+    return [
+        { title: t("hamburgerMenu.home"), route: "/" },
+        { title: t("hamburgerMenu.aboutUs"), route: "aboutus" },
+        {
+            title: t("hamburgerMenu.allProducts"),
+            children: [
+                {
+                    title: t("hamburgerMenu.nbsSolar"),
+                    children: [
+                        {
+                            title: t("hamburgerMenu.nbsSolarOptions.option1"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.nbsSolarOptions.option2"),
+                            children: [
+                                {
+                                    title: t(
+                                        "hamburgerMenu.nbsSolarOptions.option2Options.option1"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.nbsSolarOptions.option2Options.option2"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.nbsSolarOptions.option2Options.option3"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.nbsSolarOptions.option2Options.option4"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                            ],
+                        },
+                        {
+                            title: t("hamburgerMenu.nbsSolarOptions.option3"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.nbsSolarOptions.option4"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.nbsSolarOptions.option5"),
+                            route: "collectionscreen",
+                        },
+                    ],
+                },
+                {
+                    title: t("hamburgerMenu.sumakSolar"),
+                    children: [
+                        {
+                            title: t("hamburgerMenu.sumakSolarOptions.option1"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.sumakSolarOptions.option2"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.sumakSolarOptions.option3"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.sumakSolarOptions.option4"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.sumakSolarOptions.option5"),
+                            children: [
+                                {
+                                    title: t(
+                                        "hamburgerMenu.sumakSolarOptions.option5Options.option1"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.sumakSolarOptions.option5Options.option2"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.sumakSolarOptions.option5Options.option3"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.sumakSolarOptions.option5Options.option4"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.sumakSolarOptions.option5Options.option5"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                            ],
+                        },
+                        {
+                            title: t("hamburgerMenu.sumakSolarOptions.option6"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.sumakSolarOptions.option7"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.sumakSolarOptions.option8"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.sumakSolarOptions.option9"),
+                            route: "collectionscreen",
+                        },
+                    ],
+                },
+                {
+                    title: t("hamburgerMenu.samsunSolar"),
+                    children: [
+                        {
+                            title: t("hamburgerMenu.samsunSolarOptions.option1"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.samsunSolarOptions.option2"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.samsunSolarOptions.option3"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.samsunSolarOptions.option4"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.samsunSolarOptions.option5"),
+                            children: [
+                                {
+                                    title: t(
+                                        "hamburgerMenu.samsunSolarOptions.option5Options.option1"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.samsunSolarOptions.option5Options.option2"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.samsunSolarOptions.option5Options.option3"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.samsunSolarOptions.option5Options.option4"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.samsunSolarOptions.option5Options.option5"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    title: t("hamburgerMenu.sunrideSolar"),
+                    children: [
+                        {
+                            title: t("hamburgerMenu.sunrideSolarOptions.option1"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.sunrideSolarOptions.option2"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.sunrideSolarOptions.option3"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.sunrideSolarOptions.option4"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.sunrideSolarOptions.option5"),
+                            children: [
+                                {
+                                    title: t(
+                                        "hamburgerMenu.sunrideSolarOptions.option5Options.option1"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.sunrideSolarOptions.option5Options.option2"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.sunrideSolarOptions.option5Options.option3"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.sunrideSolarOptions.option5Options.option4"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.sunrideSolarOptions.option5Options.option5"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    title: t("hamburgerMenu.generators"),
+                    children: [
+                        {
+                            title: t("hamburgerMenu.generatorsOptions.option1"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.generatorsOptions.option2"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.generatorsOptions.option3"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.generatorsOptions.option4"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.generatorsOptions.option5"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.generatorsOptions.option6"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.generatorsOptions.option7"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.generatorsOptions.option8"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.generatorsOptions.option9"),
+                            route: "collectionscreen",
+                        },
+                    ],
+                },
+                {
+                    title: t("hamburgerMenu.powerStation"),
+                    children: [
+                        {
+                            title: t("hamburgerMenu.powerStationOptions.option1"),
+                            route: "collectionscreen",
+                        },
+                    ],
+                },
+                {
+                    title: t("hamburgerMenu.carWasher"),
+                    children: [
+                        {
+                            title: t("hamburgerMenu.carWasherOptions.option1"),
+                            route: "collectionscreen",
+                        },
+                    ],
+                },
+                {
+                    title: t("hamburgerMenu.waterPump"),
+                    children: [
+                        {
+                            title: t("hamburgerMenu.waterPumpOptions.option1"),
+                            children: [
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option1Options.option1"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option1Options.option2"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                            ],
+                        },
+                        {
+                            title: t("hamburgerMenu.waterPumpOptions.option2"),
+                            children: [
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option2Options.option1"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option2Options.option2"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option2Options.option3"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option2Options.option4"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                            ],
+                        },
+                        {
+                            title: t("hamburgerMenu.waterPumpOptions.option3"),
+                            children: [
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option3Options.option1"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option3Options.option2"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option3Options.option3"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option3Options.option4"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option3Options.option5"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option3Options.option6"
+                                    ),
+                                    route: "deepItem2",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option3Options.option7"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option3Options.option8"
+                                    ),
+                                    route: "deepItem1",
+                                },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    title: t("hamburgerMenu.accessories"),
+                    children: [
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option1"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option2"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option3"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option4"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option5"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option6"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option7"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option8"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option9"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option10"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option11"),
+                            route: "collectionscreen",
+                        },
+                        {
+                            title: t("hamburgerMenu.accessoriesOptions.option12"),
+                            route: "collectionscreen",
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            title: t("hamburgerMenu.bestSellers"),
+            route: "collectionscreen",
+            params: {
+                collectionId: "gid://shopify/Collection/439668539604",
+                collectionTitle: "Best Sellers",
+                collectionImage: images.aboutUsBanner3,
+            },
+        },
+        {
+            title: t("hamburgerMenu.newArrivals"),
+            route: "collectionscreen",
+            params: {
+                collectionId: "gid://shopify/Collection/439668572372",
+                collectionTitle: "New Arrivals",
+                collectionImage: images.aboutUsBanner1,
+            },
+        },
+        { title: t("hamburgerMenu.downloadCatalogue"), route: "catalogue" },
+    ];
+};
+
 export const useBanners = () => {
     // const { t } = useTranslation();
     const { t } = i18next;
@@ -95,12 +847,49 @@ export const useBanners = () => {
             headline2: t('banners.banner1.headline2'),
             buttonText: t('banners.banner1.buttonText'),
             buttonLink: "",
-            image: images.banner1
+            image: images.banner2
+        },
+        {
+            id: 3,
+            label: t('banners.banner1.label'),
+            headline1: t('banners.banner1.headline1'),
+            headline2: t('banners.banner1.headline2'),
+            buttonText: t('banners.banner1.buttonText'),
+            buttonLink: "",
+            image: images.banner3
+        },
+        {
+            id: 4,
+            label: t('banners.banner1.label'),
+            headline1: t('banners.banner1.headline1'),
+            headline2: t('banners.banner1.headline2'),
+            buttonText: t('banners.banner1.buttonText'),
+            buttonLink: "",
+            image: images.banner4
         }
     ];
 };
 
-export const banners = [
+export const bannersNew = [
+    {
+        id: 1,
+        image: images.banner1
+    },
+    {
+        id: 2,
+        image: images.banner2
+    },
+    {
+        id: 3,
+        image: images.banner3
+    },
+    {
+        id: 4,
+        image: images.banner4
+    },
+];
+
+export const banners1 = [
     {
         id: 1,
         label: t('banners.banner1.label'),
@@ -143,15 +932,23 @@ export const brands = [
     },
     {
         id: "4",
-        image: images.brand1
+        image: images.brand4
     },
     {
         id: "5",
-        image: images.brand2
+        image: images.brand5
     },
     {
         id: "6",
-        image: images.brand3
+        image: images.brand6
+    },
+    {
+        id: "7",
+        image: images.brand7
+    },
+    {
+        id: "8",
+        image: images.brand8
     }
 ];
 
@@ -161,26 +958,26 @@ export const useCardsData = () => {
     const { t } = i18next;
 
     return [
+        // {
+        //     id: "1",
+        //     title: t('pointCard.card1.title'),
+        //     subTitle: t('pointCard.card1.subTitle'),
+        //     icon: icons.cardShipping
+        // },
         {
             id: "1",
-            title: t('pointCard.card1.title'),
-            subTitle: t('pointCard.card1.subTitle'),
-            icon: icons.cardShipping
-        },
-        {
-            id: "2",
             title: t('pointCard.card2.title'),
             subTitle: t('pointCard.card2.subTitle'),
             icon: icons.cardContact
         },
         {
-            id: "3",
+            id: "2",
             title: t('pointCard.card3.title'),
             subTitle: t('pointCard.card3.subTitle'),
             icon: icons.cardSecurity
         },
         {
-            id: "4",
+            id: "3",
             title: t('pointCard.card4.title'),
             subTitle: t('pointCard.card4.subTitle'),
             icon: icons.cardEmail
@@ -211,7 +1008,7 @@ export const cardsData = [
     {
         id: "4",
         title: "Contact us",
-        subTitle: "Need to contact us ? Just send us an e-mail at info@nbsgroups.com",
+        subTitle: "Need to contact us ? Just send us an e-mail at sales@nbsgroups.com",
         icon: icons.cardEmail
     }
 ];

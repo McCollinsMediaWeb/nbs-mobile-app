@@ -4,7 +4,6 @@ import { RootState } from '../store';
 
 export const fetchCollections = (collectionIds: string[]) => async (dispatch: any, getState: () => RootState) => {
   dispatch(fetchCollectionStart());
-  console.log("fetching")
   try {
     const query = `
       query {

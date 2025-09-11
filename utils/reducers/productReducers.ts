@@ -21,6 +21,7 @@ interface Product {
     }[];
     specificationValues?: string | null; // new
     features?: string | null;
+    supportingFile?: string | null;
 }
 
 interface ProductState {

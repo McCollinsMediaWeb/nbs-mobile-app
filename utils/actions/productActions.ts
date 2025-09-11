@@ -136,6 +136,17 @@ export const fetchProduct = (id: string) => async (dispatch: any, getState: () =
                         value
                         type
                       }
+                      supportingFile: metafield(
+                        namespace: "custom"
+                        key: "supporting_file"
+                      ) {
+                        value
+                        reference {
+                          ... on GenericFile {
+                            url
+                          }
+                        }
+                      }
                     }
                   }`;
 
@@ -165,6 +176,7 @@ export const fetchProduct = (id: string) => async (dispatch: any, getState: () =
       }),
       specificationValues: data.data.product.specificationValues?.value || null,
       features: data.data.product.features?.value || null,
+      supportingFile: data.data.product.supportingFile?.reference?.url || null,
     };
 
     dispatch(fetchProductSuccess({ product: product }));

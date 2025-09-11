@@ -1,9 +1,10 @@
+import BannerSlider from '@/components/BannerSlider';
 import CardSlider from '@/components/CardSlider';
 import Category from '@/components/Category';
 import HamburgerDrawer from '@/components/HamburgerDrawer';
 import ProductCard from '@/components/ProductCard';
 import { COLORS, icons, images, SIZES } from '@/constants';
-import { brands, ourProducts, useBanners, useCardsData, useCategories } from '@/data';
+import { bannersNew, brands, ourProducts, useBanners, useCardsData, useCategories } from '@/data';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { normalizeFont } from '@/utils/normalizeFont';
@@ -23,7 +24,6 @@ import {
   Dimensions,
   FlatList,
   Image,
-  ImageBackground,
   ImageSourcePropType,
   InteractionManager,
   ListRenderItemInfo,
@@ -92,10 +92,11 @@ const Home = () => {
     }, [collections?.data, gid]);
 
   // ✅ Move all hook calls to top level
-  const popularProducts = useCollectionProducts(collections, 'gid://shopify/Collection/439108698324');
-  const ourGenerators = useCollectionProducts(collections, 'gid://shopify/Collection/439108698324');
-  const ourInverters = useCollectionProducts(collections, 'gid://shopify/Collection/439108698324');
-  const ourWaterPumps = useCollectionProducts(collections, 'gid://shopify/Collection/439108698324');
+  const popularProducts = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
+  const ourGenerators = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
+  const ourInverters = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
+  const ourWaterPumps = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
+  const ourBatteries = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
 
   const renderHeader = useCallback(() => (
     <>
@@ -181,21 +182,37 @@ const Home = () => {
   ), [dark, totalCartItems, wishlistItems, showNotification]);
 
   const renderBannerItem = useCallback(({ item }: ListRenderItemInfo<BannerItem>) => (
-    <View style={styles.bannerContainer}>
-      <ImageBackground source={item.image} style={styles.imageBackground} resizeMode="cover">
-        <View style={styles.overlay}>
-          <View style={styles.bannerTextContainer}>
-            <View style={styles.bannerTopContainer}>
-              <Text style={styles.inverterLabel}>{item.label}</Text>
-              <Text style={styles.headline}>{item.headline1}{"\n"}{item.headline2}</Text>
-              <TouchableOpacity style={styles.ctaButton} onPress={() => navigation.navigate("allproducts")}>
-                <Text style={styles.ctaButtonText}>{item.buttonText}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </ImageBackground>
-    </View>
+    // <View style={styles.bannerContainer}>
+    //   <ImageBackground source={item.image} style={styles.imageBackground} resizeMode="cover">
+    //     <View style={styles.overlay}>
+    //       <View style={styles.bannerTextContainer}>
+    //         <View style={styles.bannerTopContainer}>
+    //           <Text style={styles.inverterLabel}>{item.label}</Text>
+    //           <Text style={styles.headline}>{item.headline1}{"\n"}{item.headline2}</Text>
+    //           <TouchableOpacity style={styles.ctaButton} onPress={() => navigation.navigate("allproducts")}>
+    //             <Text style={styles.ctaButtonText}>{item.buttonText}</Text>
+    //           </TouchableOpacity>
+    //         </View>
+    //       </View>
+    //     </View>
+    //   </ImageBackground>
+
+    //   <Image
+    //     source={item.image}
+    //     style={{
+    //       width: width,
+    //     }}
+    //     resizeMode="contain"
+    //   />
+    // </View>
+
+    <Image
+      source={item.image}
+      style={{
+        width: width,
+      }}
+      resizeMode="contain"
+    />
   ), []);
 
   const renderBanner = useCallback(() => (
@@ -414,7 +431,7 @@ const Home = () => {
     const products = ourInverters;
 
     return (
-      <View style={[styles.bannerItemContainer]}>
+      <View style={[styles.bannerItemContainer, { backgroundColor: dark ? COLORS.dark1 : 'rgb(244, 244, 244)' },]}>
         <Text style={[styles.subTitle, { color: dark ? COLORS.white : COLORS.black }]}>
           {t('ourInverters.subTitle')}
         </Text>
@@ -459,14 +476,59 @@ const Home = () => {
 
     return (
       <View style={[
-        styles.bannerItemContainer,
-        { backgroundColor: dark ? COLORS.dark1 : 'rgb(244, 244, 244)' },
-      ]}>
+        styles.bannerItemContainer]}>
         <Text style={[styles.subTitle, { color: dark ? COLORS.white : COLORS.black }]}>
           {t('ourWaterPump.subTitle')}
         </Text>
         <Text style={[styles.mainTitle, { color: dark ? COLORS.white : COLORS.black }]}>
           {t('ourWaterPump.title')}
+        </Text>
+
+        <View style={{ padding: 16 }}>
+          <FlatList
+            data={products}
+            keyExtractor={(item) => item.id}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            initialNumToRender={4}
+            maxToRenderPerBatch={4}
+            windowSize={7}
+            removeClippedSubviews
+            renderItem={({ item }) => (
+              <MemoProductCard
+                merchandiseId={item.merchandiseId}
+                productId={item.id}
+                productType={item.productType}
+                name={item.title}
+                image={item.image}
+                price={item.price}
+                oldPrice={item.oldPrice}
+                availableForSale={item.available}
+                onPress={() =>
+                  navigation.navigate('productdetails', { id: item.id })
+                }
+              />
+            )}
+          />
+        </View>
+      </View>
+    );
+  }, [collections, dark, t]);
+
+  /* ------------------------------------------------------------------ */
+  const renderOurBatteries = useCallback(() => {
+    const products = ourBatteries;
+
+    return (
+      <View style={[
+        styles.bannerItemContainer,
+        { backgroundColor: dark ? COLORS.dark1 : 'rgb(244, 244, 244)' },
+      ]}>
+        <Text style={[styles.subTitle, { color: dark ? COLORS.white : COLORS.black }]}>
+          {t('ourBatteries.subTitle')}
+        </Text>
+        <Text style={[styles.mainTitle, { color: dark ? COLORS.white : COLORS.black }]}>
+          {t('ourBatteries.title')}
         </Text>
 
         <View style={{ padding: 16 }}>
@@ -507,13 +569,15 @@ const Home = () => {
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         {renderHeader()}
         <ScrollView showsVerticalScrollIndicator style={{ marginBottom: 40 }}>
-          {renderBanner()}
+          {/* {renderBanner()} */}
+          <BannerSlider banners={bannersNew} />
           {renderPopularProducts()}
           {ready && renderOurBrands()}
           {ready && renderOurGenerators()}
           {ready && renderOurProducts()}
           {ready && renderOurInverters()}
           {ready && renderOurWaterPumps()}
+          {ready && renderOurBatteries()}
           {ready && <CardSlider cards={cardsData} />}
         </ScrollView>
         <HamburgerDrawer ref={drawerRef} />
@@ -718,9 +782,7 @@ const styles = StyleSheet.create({
   imageBackground: {
     width: "100%",
     height: SCREEN_HEIGHT * 0.8,
-    // borderRadius: 10,
     overflow: 'hidden',
-    // objectFit: 'cover'
   },
   overlay: {
     backgroundColor: 'rgba(0,0,0,0.3)', // semi-transparent dark overlay

@@ -14,7 +14,7 @@ import { useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import i18next from "i18next";
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
 import RenderHtml from 'react-native-render-html';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -314,11 +314,19 @@ const ProductDetails = () => {
                         ? "AED " + parseFloat(product?.variants[0]?.price).toFixed(2)
                         : ""}</Text>
 
-                    <Text style={[styles.oldPrice, {
-                        color: dark ? COLORS.white : COLORS.gray, marginLeft: 12
-                    }]}>{product?.variants && product?.variants.length > 0
-                        ? "AED " + parseFloat(product?.variants[0]?.oldPrice).toFixed(2)
-                        : ""}</Text>
+                    {product?.variants &&
+                        product?.variants.length > 0 &&
+                        parseFloat(product?.variants[0]?.oldPrice) > 0 &&
+                        parseFloat(product?.variants[0]?.oldPrice) > parseFloat(product?.variants[0]?.price) && (
+                            <Text
+                                style={[
+                                    styles.oldPrice,
+                                    { color: dark ? COLORS.white : COLORS.gray, marginLeft: 12 },
+                                ]}
+                            >
+                                {"AED " + parseFloat(product?.variants[0]?.oldPrice).toFixed(2)}
+                            </Text>
+                        )}
                 </View>
                 <View style={[styles.separateLine, {
                     backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
@@ -383,6 +391,16 @@ const ProductDetails = () => {
                         </View>
                     ))}
                 </View> */}
+                <TouchableOpacity
+                    onPress={() => {
+                        if (product?.supportingFile) {
+                            Linking.openURL(product.supportingFile);
+                        }
+                    }}
+                >
+                    <Text style={styles.viewCatalogueText}>{t('productPage.viewCatalogue')}</Text>
+                </TouchableOpacity>
+
                 <View style={{ marginVertical: 10 }}>
                     <Text style={[styles.contentTitle, {
                         color: dark ? COLORS.white : COLORS.black
@@ -422,20 +440,43 @@ const ProductDetails = () => {
                     <Text style={[styles.contentTitle, {
                         color: dark ? COLORS.white : COLORS.black
                     }]}>
-                        {t('productPage.productOverview')}
+                        {t('productPage.productDescription')}
                     </Text>
                     <View style={[styles.separateLine, {
                         backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
                     }]} />
 
-                    {/* <Text style={[styles.featureText, {
-                        color: dark ? COLORS.white : COLORS.greyscale900
-                    }]}>{product?.descriptionHtml}</Text> */}
-
                     <RenderHtml
                         contentWidth={SIZES.width}
                         source={{ html: product?.descriptionHtml || '' }}
-                        baseStyle={{ color: dark ? COLORS.white : COLORS.greyscale900, fontSize: normalizeFont(16), flex: 1 }}
+                        // baseStyle={{ color: dark ? COLORS.white : COLORS.greyscale900, fontSize: normalizeFont(16), flex: 1 }}
+                        baseStyle={{
+                            color: dark ? COLORS.white : COLORS.greyscale900,
+                            fontSize: normalizeFont(16),
+                            lineHeight: 33,
+                        }}
+                        tagsStyles={{
+                            h3: {
+                                fontSize: normalizeFont(23),
+                                fontWeight: 900,
+                                marginVertical: 10,
+                                color: dark ? COLORS.white : COLORS.greyscale900,
+                            },
+                            strong: {
+                                fontWeight: '700',
+                            },
+                            ul: {
+                                paddingLeft: 20,
+                                marginVertical: 3,
+                            },
+                            li: {
+                                marginBottom: 4,
+                                lineHeight: 33,
+                            },
+                            p: {
+                                marginBottom: 5,
+                            },
+                        }}
                     />
 
                 </View>
@@ -462,6 +503,10 @@ const ProductDetails = () => {
                         keyExtractor={item => item.id}
                         horizontal
                         showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{
+                            flexGrow: 1,
+                            justifyContent: recommendedProducts.length === 1 ? "center" : "flex-start"
+                        }}
                         renderItem={({ item }) => {
                             return (
                                 <View>
@@ -968,7 +1013,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: 12,
         paddingHorizontal: 16,
-        // justifyContent: 'space-between',
+        justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 3,
     },
@@ -987,7 +1032,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     valueText: {
-        flex: 0.2,
+        flex: 0.4,
         fontSize: 14,
         color: '#333',
         textAlign: 'left',
@@ -1039,6 +1084,13 @@ const styles = StyleSheet.create({
         textAlign: "center",
         maxWidth: 350,
     },
+    viewCatalogueText: {
+        color: "rgb(177, 18, 22)",
+        textDecorationLine: "underline",
+        fontSize: 18,
+        fontWeight: "600",
+        marginTop: 10,
+    }
 })
 
 export default ProductDetails

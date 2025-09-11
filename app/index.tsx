@@ -52,8 +52,6 @@ const Onboarding1 = () => {
 
     useEffect(() => {
         const collectionIds = [
-            'gid://shopify/Collection/439108698324',
-            'gid://shopify/Collection/439109091540',
             'gid://shopify/Collection/439668539604',
         ];
         dispatch(fetchCollections(collectionIds));

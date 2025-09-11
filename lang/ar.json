@@ -135,7 +135,11 @@
         },
         "ourWaterPump": {
             "subTitle": "قوة. دقة. أداء.",
-            "title": "مضخات المياه NBS"
+            "title": "استكشف مضخات المياه لدينا"
+        },
+        "ourBatteries": {
+            "subTitle": "قوة. دقة. أداء.",
+            "title": "استكشف بطارياتنا"
         },
         "pointCard": {
             "card1": {
@@ -152,11 +156,13 @@
             },
             "card4": {
                 "title": "اتصل بنا",
-                "subTitle": "هل تحتاج إلى الاتصال بنا؟ فقط أرسل لنا بريداً إلكترونياً على info@nbsgroups.com"
+                "subTitle": "هل تحتاج إلى الاتصال بنا؟ فقط أرسل لنا بريداً إلكترونياً على sales@nbsgroups.com"
             }
         },
         "productPage": {
             "productOverview": "نظرة عامة على المنتج",
+            "productDescription": "وصف المنتج",
+            "viewCatalogue": "عرض كتالوج المنتج",
             "highlights": "أبرز الميزات",
             "youlike": "قد يعجبك أيضًا",
             "addToCart": "أضف إلى السلة",
@@ -179,7 +185,7 @@
         },
         "selectAddress": {
             "title": "اختر العنوان",
-           "alternateTitle": "تأكيد التفاصيل",
+            "alternateTitle": "تأكيد التفاصيل",
             "title2": "عنوان",
             "shippingAddress": "عنوان الشحن",
             "orderList": "قائمة الطلبات",
