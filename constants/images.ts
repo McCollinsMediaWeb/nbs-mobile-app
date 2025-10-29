@@ -20,12 +20,12 @@ const brand6 = require("../assets/images/brands/saer.jpg");
 const brand7 = require("../assets/images/brands/perkins.jpg");
 const brand8 = require("../assets/images/brands/honda.jpg");
 
-const ourProduct1 = require('../assets/images/collection-banners/Samsun-Solar.jpg');
-const ourProduct2 = require('../assets/images/collection-banners/NBS-Solar.jpg');
-const ourProduct3 = require('../assets/images/collection-banners/New-Arrival.png');
-const ourProduct4 = require('../assets/images/collection-banners/Generators.jpg');
-const ourProduct5 = require('../assets/images/collection-banners/Sumak-Solar.jpg');
-const ourProduct6 = require('../assets/images/collection-banners/Perkins.jpg');
+const ourProduct1 = require('../assets/images/collection-banners/samsun-solar.jpg');
+const ourProduct2 = require('../assets/images/collection-banners/nbs-solar.jpg');
+const ourProduct3 = require('../assets/images/collection-banners/new-arrival.png');
+const ourProduct4 = require('../assets/images/collection-banners/generators.jpg');
+const ourProduct5 = require('../assets/images/collection-banners/sumak-solar.jpg');
+const ourProduct6 = require('../assets/images/collection-banners/perkins.jpg');
 
 const aboutUsBanner1 = require("../assets/images/about-us-banner1.jpg");
 const aboutUsBanner2 = require("../assets/images/about-us-banner2.jpg");
