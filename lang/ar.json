@@ -67,7 +67,8 @@
             "allProducts": "جميع المنتجات",
             "bestSellers": "الأكثر مبيعًا",
             "newArrivals": "المنتجات الجديدة",
-            "downloadCatalogue": "تحميل الكتالوج"
+            "bulkOrder": "طلب بالجملة",
+            "ourGallery": "معرضنا"
         },
         "price": "درهم",
         "aboutUs": {

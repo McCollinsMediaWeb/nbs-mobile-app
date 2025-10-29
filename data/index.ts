@@ -822,7 +822,8 @@ export const useMenuData = () => {
                 collectionImage: images.aboutUsBanner1,
             },
         },
-        { title: t("hamburgerMenu.downloadCatalogue"), route: "catalogue" },
+        { title: t("hamburgerMenu.bulkOrder"), route: "bulkorderform" },
+        { title: t("hamburgerMenu.ourGallery"), route: "ourgallery" },
     ];
 };
 
@@ -920,35 +921,59 @@ export const banners1 = [
 export const brands = [
     {
         id: "1",
-        image: images.brand1
+        image: images.brand1,
+        collectionId: "gid://shopify/Collection/444978364628",
+        collectionTitle: "Kubota",
+        collectionImage: ""
     },
     {
         id: "2",
-        image: images.brand2
+        image: images.brand2,
+        collectionId: "gid://shopify/Collection/444937601236",
+        collectionTitle: "Yanmar",
+        collectionImage: ""
     },
     {
         id: "3",
-        image: images.brand3
+        image: images.brand3,
+        collectionId: "gid://shopify/Collection/443622785236",
+        collectionTitle: "Bluetti Portable Power Station",
+        collectionImage: ""
     },
     {
         id: "4",
-        image: images.brand4
+        image: images.brand4,
+        collectionId: "gid://shopify/Collection/444978331860",
+        collectionTitle: "DeWalt",
+        collectionImage: ""
     },
     {
         id: "5",
-        image: images.brand5
+        image: images.brand5,
+        collectionId: "gid://shopify/Collection/444978266324",
+        collectionTitle: "Jinko",
+        collectionImage: ""
     },
     {
         id: "6",
-        image: images.brand6
+        image: images.brand6,
+        collectionId: "gid://shopify/Collection/444937666772",
+        collectionTitle: "SAER Electropompe",
+        collectionImage: ""
     },
     {
         id: "7",
-        image: images.brand7
+        image: images.brand7,
+        collectionId: "gid://shopify/Collection/444937568468",
+        collectionTitle: "Perkins Generator",
+        collectionImage: ""
     },
     {
         id: "8",
-        image: images.brand8
+        image: images.brand8,
+        collectionId: "gid://shopify/Collection/444937502932",
+        collectionTitle: "Honda",
+        collectionImage: ""
     }
 ];
 
@@ -1016,39 +1041,39 @@ export const cardsData = [
 export const ourProducts = [
     {
         id: "1",
-        title: "NBS solar",
+        title: "Samsun Solar",
         image: images.ourProduct1,
-        collectionId: "gid://shopify/Collection/439108534484"
+        collectionId: "gid://shopify/Collection/443227111636"
     },
     {
         id: "2",
-        title: "Generator",
+        title: "New Arrivals",
         image: images.ourProduct2,
-        collectionId: "gid://shopify/Collection/439108534484"
+        collectionId: "gid://shopify/Collection/439668572372"
     },
     {
         id: "3",
-        title: "Battery",
+        title: "NBS Solar",
         image: images.ourProduct3,
         collectionId: "gid://shopify/Collection/439108534484"
     },
     {
         id: "4",
-        title: "Sunride Solar",
+        title: "NBS Solar",
         image: images.ourProduct4,
         collectionId: "gid://shopify/Collection/439108534484"
     },
     {
         id: "5",
-        title: "Generators",
+        title: "Su-Mak Solar",
         image: images.ourProduct5,
-        collectionId: "gid://shopify/Collection/439108534484"
+        collectionId: "gid://shopify/Collection/443234484436"
     },
     {
         id: "6",
-        title: "Water Pump",
+        title: "Perkins Generator",
         image: images.ourProduct6,
-        collectionId: "gid://shopify/Collection/439108534484"
+        collectionId: "gid://shopify/Collection/444937568468"
     }
 ];
 

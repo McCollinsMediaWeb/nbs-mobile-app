@@ -136,7 +136,9 @@ const SearchProducts = () => {
                                                     onPress={() => navigation.navigate("productdetails", {
                                                         id: item.id,
                                                     })}
-                                                />
+                                                    productTags={item.tags}
+                                                    productId={''}
+                                                    productType={''} />
                                             )
                                         }}
                                     />

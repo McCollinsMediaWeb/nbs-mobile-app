@@ -2,7 +2,7 @@ import { COLORS } from '@/constants';
 import { useTheme } from '@/theme/ThemeProvider';
 import { Feather } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
-import { useNavigation } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import i18next from 'i18next';
 import React, {
     forwardRef,
@@ -133,7 +133,17 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
                 setExpanded(!expanded);
             } else if (item.route) {
                 handleClose();
-                setTimeout(() => navigation.navigate(item.route, item.params || {}), 200);
+                if (item.route === "/") {
+                    // setTimeout(() => navigation.goBack(), 200)
+                    // setTimeout(() => navigation.navigate('index'), 200)
+                    setTimeout(() => {
+                        router.replace("/(tabs)");
+                    }, 200);
+                    // setTimeout(() => navigation.navigate("allproducts", item.params || {}), 200)
+                } else {
+                    setTimeout(() => navigation.navigate(item.route, item.params || {}), 200)
+                }
+
             }
         };
 

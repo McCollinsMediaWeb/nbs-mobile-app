@@ -352,7 +352,21 @@ const cardContact = require("../assets/icons/cards-icon/contact.png");
 const cardEmail = require("../assets/icons/cards-icon/email.png");
 const cardSecurity = require("../assets/icons/cards-icon/security.png");
 
+const ticked = require("../assets/icons/ticked.png");
+const unticked = require("../assets/icons/unticked.png");
+
+const checkMark = require("../assets/icons/check-mark.png");
+
+const videoPlay = require("../assets/icons/video-play.png");
+const videoPause = require("../assets/icons/video-pause.png");
+const videoMute = require("../assets/icons/video-mute.png");
+const videoUnmute = require("../assets/icons/video-unmute.png");
+const videoNext = require("../assets/icons/video-right.png");
+const videoPrev = require("../assets/icons/video-left.png");
+
 export default {
+    ticked,
+    unticked,
     addFileOutline,
     addFile,
     addToCart,
@@ -377,6 +391,7 @@ export default {
     category,
     chatOutline,
     chat,
+    checkMark,
     circleDown,
     circleLeft,
     circleRight,
@@ -442,6 +457,12 @@ export default {
     upAndDownArrow,
     userOutline,
     user,
+    videoMute,
+    videoUnmute,
+    videoPlay,
+    videoPause,
+    videoNext,
+    videoPrev,
     videoCameraOutline,
     videoCamera,
     voiceCommandOutline,

@@ -9,7 +9,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { router, useNavigation } from 'expo-router';
 import i18next from 'i18next';
 import React, { useRef } from 'react';
-import { Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ImageBackground, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 
@@ -156,8 +156,9 @@ const AboutUs = () => {
                                 <View style={styles.bannerTextContainer}>
                                     <View style={styles.bannerTopContainer}>
                                         <View>
-                                            <Text style={styles.inverterLabel}>{t('aboutUs.section1.subTitle')}</Text>
-                                            <Text style={styles.headline}>{t('aboutUs.section1.title')}</Text>
+                                            {/* <Text style={styles.inverterLabel}>{t('aboutUs.section1.subTitle')}</Text> */}
+                                            <Text style={styles.headline}>{t('aboutUs.section1.subTitle')}</Text>
+                                            {/* <Text style={styles.headline}>{t('aboutUs.section1.title')}</Text> */}
                                         </View>
                                     </View>
                                 </View>
@@ -198,7 +199,7 @@ const AboutUs = () => {
                                         <View>
                                             <Text style={styles.inverterLabel2}>{t('aboutUs.section4.subTitle')}</Text>
                                             <Text style={styles.headline3}>{t('aboutUs.section4.title')}</Text>
-                                            <TouchableOpacity style={styles.ctaButton} onPress={() => navigation.navigate("allproducts")}>
+                                            <TouchableOpacity style={styles.ctaButton} onPress={() => { Linking.openURL("https://cdn.shopify.com/s/files/1/0760/7743/3044/files/A5_MASTER_CATALOG_SU-MAK_PRODUCTS_SINGLE_PAGE_1ST-3_11zon.pdf?v=1760526347") }}>
                                                 <Text style={styles.ctaButtonText}>{t('aboutUs.section4.btn')}</Text>
                                             </TouchableOpacity>
                                         </View>

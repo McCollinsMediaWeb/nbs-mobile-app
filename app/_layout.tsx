@@ -147,8 +147,8 @@ export default function RootLayout() {
                 <Stack.Screen name="address" />
                 {/* <Stack.Screen name="allproducts" /> */}
                 <Stack.Screen name="productdetails" />
-                {/* <Stack.Screen name="changeemail" /> */}
-                {/* <Stack.Screen name="changepassword" /> */}
+                <Stack.Screen name="bulkorderform" />
+                <Stack.Screen name="ourgallery" />
                 <Stack.Screen name="cart" />
                 <Stack.Screen name="checkout" />
                 <Stack.Screen name="collectionscreen" />

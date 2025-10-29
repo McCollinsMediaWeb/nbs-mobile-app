@@ -180,7 +180,7 @@
 //                         styles.soldContainer,
 //                         { backgroundColor: "rgb(111, 113, 155)" }
 //                     ]}>
-//                         <Text style={[styles.soldText, { color: "#fff" }]}>sold out</Text>
+//                         <Text style={[styles.soldText, { color: "#fff" }]}>Out of Stock</Text>
 //                     </View>
 //                 ) : (
 //                     Number(oldPrice) > 0 && Number(price) > 0 && Number(oldPrice) > Number(price) ? (
@@ -371,6 +371,7 @@ interface ProductCardProps {
     oldPrice: string;
     availableForSale?: boolean | null;
     productType: string;
+    productTags?: string[] | null;
     onPress: () => void;
 }
 
@@ -383,6 +384,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     oldPrice,
     availableForSale,
     productType,
+    productTags,
     onPress,
 }) => {
     const dispatch = useAppDispatch();
@@ -463,37 +465,38 @@ const ProductCard: React.FC<ProductCardProps> = ({
             >
                 <View style={[
                     styles.imageContainer,
-                    { backgroundColor: dark ? COLORS.dark3 : COLORS.silver }
+                    { backgroundColor: dark ? '#000' : COLORS.white }
                 ]}>
                     <Image
                         source={imageSource}
-                        resizeMode='cover'
+                        resizeMode='contain'
                         style={styles.image}
                         accessibilityLabel={name}
                     />
-                    {availableForSale && (
-                        <TouchableOpacity
-                            style={styles.bottomLeftHeart}
-                            onPress={() => handleCartAction(cartItem ? 'remove' : 'add')}
-                            disabled={!!loading[merchandiseId]}
-                            accessibilityLabel={cartItem ? "Remove from cart" : "Add to cart"}
-                        >
-                            {loading[merchandiseId] ? (
-                                <ActivityIndicator
-                                    size="small"
-                                    color={dark ? '#FFFFFF' : '#000000'}
-                                />
-                            ) : (
-                                <Image
-                                    source={cartItem
-                                        ? (dark ? icons.addedToCartWhite : icons.addedToCart)
-                                        : (dark ? icons.addToCartWhite : icons.addToCart)}
-                                    resizeMode="contain"
-                                    style={styles.smallHeartIcon}
-                                />
-                            )}
-                        </TouchableOpacity>
-                    )}
+                    {(availableForSale &&
+                        !(productTags?.includes("request-a-qoute") || productTags?.includes("request-a-quote"))) && (
+                            <TouchableOpacity
+                                style={styles.bottomLeftHeart}
+                                onPress={() => handleCartAction(cartItem ? 'remove' : 'add')}
+                                disabled={!!loading[merchandiseId]}
+                                accessibilityLabel={cartItem ? "Remove from cart" : "Add to cart"}
+                            >
+                                {loading[merchandiseId] ? (
+                                    <ActivityIndicator
+                                        size="small"
+                                        color={dark ? '#FFFFFF' : '#000000'}
+                                    />
+                                ) : (
+                                    <Image
+                                        source={cartItem
+                                            ? (dark ? icons.addedToCartWhite : icons.addedToCart)
+                                            : (dark ? icons.addToCartWhite : icons.addToCart)}
+                                        resizeMode="contain"
+                                        style={styles.smallHeartIcon}
+                                    />
+                                )}
+                            </TouchableOpacity>
+                        )}
                 </View>
 
                 <Text
@@ -507,33 +510,44 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 </Text>
 
                 <View style={styles.bottomPriceContainer}>
-                    <Text style={styles.price}>{"AED " + parseFloat(price).toFixed(2)}</Text>
-                    {Number(oldPrice) > 0 && (
-                        <Text style={[
-                            styles.oldPrice,
-                            { color: dark ? COLORS.white : COLORS.primary }
-                        ]}>
-                            {"AED " + parseFloat(oldPrice).toFixed(2)}
-                        </Text>
+                    {(productTags?.includes("request-a-qoute") || productTags?.includes("request-a-quote")) ? (
+                        <TouchableOpacity style={styles.priceButton} onPress={onPress}>
+                            <Text style={styles.price}>Price on Request</Text>
+                        </TouchableOpacity>
+
+                    ) : (
+                        <>
+                            <Text style={styles.price}>{"AED " + parseFloat(price).toFixed(2)}</Text>
+                            {Number(oldPrice) > 0 && (
+                                <Text style={[
+                                    styles.oldPrice,
+                                    { color: dark ? COLORS.white : COLORS.primary }
+                                ]}>
+                                    {"AED " + parseFloat(oldPrice).toFixed(2)}
+                                </Text>
+                            )}
+                        </>
                     )}
+
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity >
 
             {/* Badge (discount or sold out) */}
-            <View style={styles.topLeftContainer}>
-                {!availableForSale ? (
+            < View style={styles.topLeftContainer} >
+                {!availableForSale &&
+                    !(productTags?.includes("request-a-qoute") || productTags?.includes("request-a-quote")) ? (
                     <View style={[styles.soldContainer, { backgroundColor: "rgb(111, 113, 155)" }]}>
-                        <Text style={[styles.soldText, { color: "#fff" }]}>sold out</Text>
+                        <Text style={[styles.soldText, { color: "#fff" }]}>Out of Stock</Text>
                     </View>
                 ) : discount ? (
                     <View style={[styles.soldContainer, { backgroundColor: "rgb(177, 18, 22)" }]}>
-                        <Text style={[styles.soldText, { color: "#fff" }]}>
-                            save {discount}%
-                        </Text>
+                        <Text style={[styles.soldText, { color: "#fff" }]}>save {discount}%</Text>
                     </View>
                 ) : null}
-            </View>
-        </View>
+            </View >
+
+
+        </View >
     );
 };
 
@@ -544,13 +558,13 @@ const styles = StyleSheet.create({
         width: (SIZES.width - 12) / 2 - 12,
         padding: 20,
         borderRadius: 16,
-        marginBottom: 12,
+        // marginBottom: 12,
         marginRight: 4,
         fontFamily: 'RubikLight'
     },
     imageContainer: {
         width: "100%",
-        height: 150,
+        // height: 130,
         backgroundColor: COLORS.silver
     },
     image: {
@@ -562,7 +576,7 @@ const styles = StyleSheet.create({
         lineHeight: 25,
         fontFamily: 'RubikRegular',
         fontWeight: '600',
-        marginVertical: 15,
+        marginVertical: 13,
         textAlign: "center"
     },
     bottomPriceContainer: {
@@ -571,6 +585,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "baseline",
         marginBottom: 4
+    },
+    priceButton: {
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        // borderRadius: 6,
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: 'rgb(223, 223, 223)',
     },
     price: {
         fontSize: normalizeFont(15),

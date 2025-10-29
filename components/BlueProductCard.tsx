@@ -127,7 +127,7 @@ const BlueProductCard: React.FC<ProductCardProps> = ({
                         styles.soldContainer,
                         { backgroundColor: "rgb(111, 113, 155)" }
                     ]}>
-                        <Text style={[styles.soldText, { color: "#fff" }]}>sold out</Text>
+                        <Text style={[styles.soldText, { color: "#fff" }]}>Out of Stock</Text>
                     </View>
                 ) : (
                     Number(oldPrice) > 0 && Number(price) > 0 && Number(oldPrice) > Number(price) ? (

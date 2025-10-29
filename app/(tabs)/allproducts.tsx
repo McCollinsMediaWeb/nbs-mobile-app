@@ -1,302 +1,9 @@
-// import ProductCard from '@/components/ProductCard';
-// import { ourProducts } from '@/data';
-// import { useAppSelector } from '@/hooks/useAppSelector';
-// import { fetchGraphQL } from '@/utils/fetchGraphql';
-// import { NavigationProp } from '@react-navigation/native';
-// import { useNavigation } from 'expo-router';
-// import React, { useEffect, useState } from 'react';
-// import { useTranslation } from 'react-i18next';
-// import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-// import { SafeAreaView } from 'react-native-safe-area-context';
-// import { ScrollView } from 'react-native-virtualized-view';
-// import HeaderWithSearch from '../components/HeaderWithSearch';
-// import { COLORS, icons } from '../constants';
-// import { useTheme } from '../theme/ThemeProvider';
-
-// type Product = {
-//     id: string;
-//     title: string;
-//     description?: string;
-//     tags?: string[];
-//     productType?: string;
-//     price: string;
-//     oldPrice: string;
-//     image: string;
-//     merchandiseId?: string;
-//     cursor?: string | null;
-//     available?: boolean | null;
-// };
-
-
-// const AllProducts = () => {
-//     const navigation = useNavigation<NavigationProp<any>>();
-//     const { dark, colors } = useTheme();
-//     const [loading, setLoading] = useState(false);
-//     const [products, setProducts] = useState<Product[]>([]);
-//     const [hasNextPage, setHasNextPage] = useState(false);
-//     // const { t } = useTranslation();
-// const { t } = i18next();
-//     const [endCursor, setEndCursor] = useState<string | null>(null);
-//     const appLanguage = useAppSelector(state => state.generalSettings.language);
-
-
-//     useEffect(() => {
-//         const loadProducts = async () => {
-//             setLoading(true);
-//             const res = await fetchProductsFromShopify()
-//             setProducts(res.products);
-//             setHasNextPage(res.hasNextPage);
-//             setEndCursor(res.endCursor);
-//             setLoading(false);
-//         };
-//         loadProducts();
-//     }, []);
-
-//     const loadMoreProducts = async () => {
-//         setLoading(true);
-//         const res = await fetchProductsFromShopify();
-//         setProducts((prev) => [...prev, ...res.products]);
-//         setHasNextPage(res.hasNextPage);
-//         setEndCursor(res.endCursor);
-//         setLoading(false);
-//     };
-
-
-
-//     const fetchProductsFromShopify = async (
-//         cursor?: string
-//     ): Promise<{ products: Product[]; hasNextPage: boolean; endCursor: string | null }> => {
-//         const query = `
-// {
-//   products(first: 30${cursor ? `, after: "${cursor}"` : ""}) {
-//     pageInfo {
-//       hasNextPage
-//     }
-//     edges {
-//       cursor
-//       node {
-//         id
-//         title
-//         description
-//         tags
-//         productType
-//         priceRange {
-//           minVariantPrice {
-//             amount
-//           }
-//         }
-//         compareAtPriceRange {
-//           maxVariantPrice {
-//             amount
-//           }
-//         }
-//         images(first: 1) {
-//           edges {
-//             node {
-//               transformedSrc
-//             }
-//           }
-//         }
-//         variants(first: 1) {
-//           edges {
-//             node {
-//               id
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-// `;
-
-
-//         try {
-//             const res = await fetchGraphQL(query);
-//             const edges = res.data.products.edges;
-//             const hasNextPage = res.data.products.pageInfo.hasNextPage;
-
-
-//             const products: Product[] = edges.map((edge: any) => ({
-//                 id: edge.node.id,
-//                 title: edge.node.title,
-//                 description: edge.node.description,
-//                 tags: edge.node.tags,
-//                 productType: edge.node.productType,
-//                 price: edge.node.priceRange.minVariantPrice.amount,
-//                 oldPrice: edge.node.compareAtPriceRange.maxVariantPrice.amount,
-//                 image: edge.node.images.edges[0]?.node.transformedSrc,
-//                 merchandiseId: edge.node.variants.edges[0]?.node.id,
-//                 cursor: edge.cursor,
-//             }));
-
-//             return {
-//                 products,
-//                 hasNextPage,
-//                 endCursor: edges.at(-1)?.cursor ?? null,
-//             };
-//         } catch (err) {
-//             console.error("Failed to fetch products:", err);
-//             return { products: [], hasNextPage: false, endCursor: null };
-//         }
-//     };
-
-
-//     return (
-//         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
-//             <View style={[styles.container, { backgroundColor: colors.background }]}>
-//                 <View style={{ padding: 16 }}>
-//                     <HeaderWithSearch
-//                         title={t('allProduct.title')}
-//                         icon={icons.search}
-//                         onPress={() => navigation.navigate("search")}
-//                     />
-//                 </View>
-//                 <ScrollView
-//                     style={styles.scrollView}
-//                     showsVerticalScrollIndicator={false}>
-//                     <View style={{
-//                         height: 100,
-//                         justifyContent: 'center',
-//                         alignItems: 'center'
-//                     }}>
-//                         <Text style={styles.headline} >PRODUCTS</Text>
-//                     </View>
-//                     <View style={{ width: "100%", height: 1, backgroundColor: COLORS.greyscale600 }} />
-//                     <View style={{ padding: 16, flexDirection: 'row', alignItems: 'center', }} >
-//                         <View style={{ padding: 10 }}>
-//                             <Text style={{ color: "rgb(44,44,44)", fontWeight: "bold", fontSize: 13 }}>QUICK LINKS</Text>
-//                         </View>
-//                         <FlatList
-//                             data={ourProducts}
-//                             horizontal
-//                             style={{ direction: 'ltr' }}
-//                             keyExtractor={(item) => item.id}
-//                             showsHorizontalScrollIndicator={false}
-//                             contentContainerStyle={{ paddingHorizontal: 16 }} // padding left & right
-//                             ItemSeparatorComponent={() => <View style={{ width: 20 }} />} // gap between images
-//                             renderItem={({ item }) => {
-//                                 return (
-//                                     <TouchableOpacity
-//                                         onPress={() => navigation.navigate("collectionscreen", { collectionId: item.collectionId, collectionTitle: item.title, collectionImage: item.image })}>
-//                                         <View style={{ alignItems: 'center' }}>
-//                                             <Text style={{ fontSize: 17, paddingBottom: 4 }}>{item.title}</Text>
-//                                         </View>
-//                                     </TouchableOpacity>
-//                                 );
-//                             }}
-//                         />
-//                     </View>
-//                     <View style={{ backgroundColor: "rgb(1,73,133)", paddingHorizontal: 16, paddingVertical: 24 }}>
-//                         <FlatList
-//                             data={ourProducts}
-//                             horizontal
-//                             keyExtractor={(item) => item.id}
-//                             showsHorizontalScrollIndicator={false}
-//                             contentContainerStyle={{ paddingHorizontal: 16 }} // padding left & right
-//                             ItemSeparatorComponent={() => <View style={{ width: 20 }} />} // gap between images
-//                             renderItem={({ item }) => {
-//                                 return (
-//                                     <View>
-//                                         <TouchableOpacity
-//                                             onPress={() => navigation.navigate("collectionscreen", { collectionId: item.collectionId, collectionTitle: item.title, collectionImage: item.image })}>
-//                                             <Image
-//                                                 source={item.image}
-//                                                 resizeMode="contain"
-//                                                 style={{ width: 200, height: 200 }} // fixed width/height so they don’t stretch
-//                                             />
-//                                             <Text style={{ textAlign: "center", fontSize: 20, marginTop: 20, color: '#fff' }}>{item.title}</Text>
-//                                         </TouchableOpacity>
-//                                     </View>
-//                                 );
-//                             }}
-//                         />
-//                     </View>
-//                     <View style={{
-//                         backgroundColor: dark ? COLORS.dark1 : COLORS.white,
-//                         marginVertical: 16
-//                     }}>
-//                         <FlatList
-//                             data={products}
-//                             keyExtractor={(item) => item.id}
-//                             numColumns={2}
-//                             columnWrapperStyle={{ gap: 16 }}
-//                             showsVerticalScrollIndicator={false}
-//                             renderItem={({ item }) => (
-//                                 <ProductCard
-//                                     merchandiseId={item.id}
-//                                     name={item.title}
-//                                     image={item?.image}
-//                                     price={item.price}
-//                                     oldPrice={item.oldPrice}
-//                                     availableForSale={item?.available}
-//                                     onPress={() => navigation.navigate("productdetails", {
-//                                         id: item.id,
-//                                     })}
-//                                 />
-//                             )}
-
-//                             onEndReached={() => {
-//                                 if (hasNextPage && !loading) {
-//                                     // loadMoreProducts();
-//                                 }
-//                             }}
-//                             onEndReachedThreshold={0.5}
-
-//                         />
-//                     </View>
-//                 </ScrollView>
-//                 {loading && (
-//                     <ActivityIndicator
-//                         style={{
-//                             position: "absolute",
-//                             top: "50%",
-//                             left: "50%",
-//                             right: "50%",
-//                             bottom: "50%",
-//                             justifyContent: "center",
-//                             alignItems: "center",
-//                             zIndex: 999,
-//                             width: 0,
-//                             height: 0,
-//                             backgroundColor: "black", // Ensure the background is transparent
-//                         }}
-//                         size="large"
-//                         color={COLORS.black}
-//                     />
-//                 )}
-//             </View>
-//         </SafeAreaView>
-//     )
-// };
-
-// const styles = StyleSheet.create({
-//     area: {
-//         flex: 1,
-//         backgroundColor: COLORS.white
-//     },
-//     container: {
-//         flex: 1,
-//         backgroundColor: COLORS.white,
-//     },
-//     scrollView: {
-//         marginVertical: 2
-//     },
-//     headline: {
-//         color: '#333',
-//         fontSize: 35,
-//         fontWeight: '900',
-//         lineHeight: 30,
-//     },
-// })
-
-// export default AllProducts
-
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import FilterComponent from '@/components/FilterComponent';
 import HeaderWithSearch from '@/components/HeaderWithSearch';
 import ProductCard from '@/components/ProductCard';
 import { COLORS, icons } from '@/constants';
@@ -322,17 +29,37 @@ export type Product = {
     merchandiseId: string;
     cursor?: string | null;
     available?: boolean | null;
+    productTags?: string[] | null;
 };
+
+type SortKey = 'RELEVANCE' | 'TITLE' | 'PRICE' | 'CREATED_AT' | 'BEST_SELLING';
 
 /** ------------------------------------------------------------------
  * NETWORK – GraphQL helper
  * ------------------------------------------------------------------*/
 const fetchProductsFromShopify = async (
     cursor?: string,
+    sortKey: SortKey = 'RELEVANCE',
+    reverse: boolean = false,
+    selectedTypes?: string[],
+    selectedBrands?: string[],
 ): Promise<{ products: Product[]; hasNextPage: boolean; endCursor: string | null }> => {
+    const sortParam = reverse ? `, sortKey: ${sortKey}, reverse: true` : `, sortKey: ${sortKey}`;
+    let filterQuery = '';
+    if (selectedTypes && selectedTypes.length > 0) {
+        const types = selectedTypes.map(t => `product_type:'${t}'`).join(' OR ');
+        filterQuery += `${types}`;
+    }
+    if (selectedBrands && selectedBrands.length > 0) {
+        const brands = selectedBrands.map(v => `vendor:'${v}'`).join(' OR ');
+        filterQuery += ` ${brands}`;
+    }
+    
+    const queryParam = filterQuery ? `, query: "${filterQuery}"` : '';
+
     const query = `
   {
-    products(first: 30${cursor ? `, after: \"${cursor}\"` : ''}) {
+    products(first: 30${cursor ? `, after: \"${cursor}\"` : ''}${sortParam}${queryParam}) {
       pageInfo { hasNextPage }
       edges {
         cursor
@@ -342,6 +69,7 @@ const fetchProductsFromShopify = async (
           description
           tags
           productType
+          tags
           availableForSale
           priceRange { minVariantPrice { amount } }
           compareAtPriceRange { maxVariantPrice { amount } }
@@ -371,7 +99,8 @@ const fetchProductsFromShopify = async (
             image: edge.node.images.edges[0]?.node.transformedSrc,
             merchandiseId: edge.node.variants.edges[0]?.node.id,
             cursor: edge.cursor,
-            available: edge.node.availableForSale
+            available: edge.node.availableForSale,
+            productTags: edge.node.tags,
         }));
 
         return { products, hasNextPage, endCursor: edges.at(-1)?.cursor ?? null };
@@ -387,7 +116,6 @@ const fetchProductsFromShopify = async (
 const AllProducts: React.FC = () => {
     const navigation = useNavigation<NavigationProp<any>>();
     const { dark, colors } = useTheme();
-    // const { t } = useTranslation();
     const { t } = i18next;
 
     const appLanguage = useAppSelector(state => state.generalSettings.language);
@@ -397,12 +125,25 @@ const AllProducts: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [hasNextPage, setHasNextPage] = useState<boolean>(false);
     const [endCursor, setEndCursor] = useState<string | null>(null);
+    const filterSheetRef = useRef<any>(null);
+    const sortSheetRef = useRef<any>(null);
+    const [expanded, setExpanded] = useState<string | null>(null);
+
+    const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+    const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+    const [sort, setSort] = useState<{ sortKey: SortKey; reverse: boolean }>({
+        sortKey: 'TITLE',
+        reverse: false,
+    });
+
+    const [appliedTypes, setAppliedTypes] = useState<string[]>([]);
+    const [appliedBrands, setAppliedBrands] = useState<string[]>([]);
 
     /** ------------------ data fetch ------------------*/
     useEffect(() => {
         const loadProducts = async () => {
             setLoading(true);
-            const res = await fetchProductsFromShopify();
+            const res = await fetchProductsFromShopify(undefined, sort.sortKey, sort.reverse, appliedTypes, appliedBrands);
             setProducts(res.products);
             setHasNextPage(res.hasNextPage);
             setEndCursor(res.endCursor);
@@ -410,17 +151,17 @@ const AllProducts: React.FC = () => {
         };
 
         loadProducts();
-    }, []);
+    }, [sort, appliedTypes, appliedBrands]);
 
     const loadMoreProducts = useCallback(async () => {
         if (!hasNextPage || loading) return;
         setLoading(true);
-        const res = await fetchProductsFromShopify(endCursor ?? undefined);
+        const res = await fetchProductsFromShopify(endCursor ?? undefined, sort.sortKey, sort.reverse, appliedTypes, appliedBrands);
         setProducts(prev => [...prev, ...res.products]);
         setHasNextPage(res.hasNextPage);
         setEndCursor(res.endCursor);
         setLoading(false);
-    }, [hasNextPage, loading, endCursor]);
+    }, [hasNextPage, loading, endCursor, sort.sortKey, sort.reverse]);
 
     /** ------------------ memoized callbacks ------------------*/
     const onSearchPress = useCallback(() => navigation.navigate('search'), [navigation]);
@@ -439,55 +180,45 @@ const AllProducts: React.FC = () => {
     const listHeader = useMemo(
         () => (
             <View>
-                {/* Top Search Header
-                <View style={styles.headerContainer}>
-                    <HeaderWithSearch title={t('allProduct.title')} icon={icons.search} onPress={onSearchPress} />
-                </View> */}
-
                 {/* Headline */}
                 <View style={styles.headlineContainer}>
-                    <Text style={[styles.headline, { color: dark ? COLORS.white : "" }]}>PRODUCTS</Text>
-                </View>
-                <View style={styles.divider} />
-
-                {/* Quick Links */}
-                <View style={styles.quickLinksWrapper}>
-                    <Text style={[styles.quickLinksLabel, { color: dark ? COLORS.white : 'rgb(44,44,44)' }]}>QUICK LINKS</Text>
-                    <FlatList
-                        data={ourProducts}
-                        horizontal
-                        keyExtractor={item => item.id}
-                        showsHorizontalScrollIndicator={false}
-                        ItemSeparatorComponent={() => <View style={styles.horizontalSpacer} />}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => onCollectionPress(item)}>
-                                <Text style={[styles.quickLinkText, { color: dark ? COLORS.white : "" }]}>{item.title}</Text>
-                            </TouchableOpacity>
-                        )}
-                    />
-                </View>
-                <View style={styles.divider} />
-
-                {/* Banner with images */}
-                <View style={styles.bannerSection}>
-                    <FlatList
-                        data={ourProducts}
-                        horizontal
-                        keyExtractor={item => item.id}
-                        showsHorizontalScrollIndicator={false}
-                        ItemSeparatorComponent={() => <View style={styles.horizontalSpacer} />}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => onCollectionPress(item)} style={styles.bannerItem}>
-                                <Image source={item.image} resizeMode="contain" style={styles.bannerImage} />
-                                <Text style={styles.bannerText}>{item.title}</Text>
-                            </TouchableOpacity>
-                        )}
-                    />
+                    <Text style={[styles.headline, { color: COLORS.white }]}>PRODUCTS</Text>
                 </View>
             </View>
         ),
         [dark, onSearchPress, t, onCollectionPress],
     );
+
+    const onFilterPress = () => filterSheetRef?.current?.open();
+    const onSortPress = () => sortSheetRef?.current?.open();
+
+    const toggleExpand = (section: string) => {
+        setExpanded(expanded === section ? null : section);
+    };
+
+    // Handle "Show Results" button click
+    const handleShowResults = async () => {
+        setAppliedTypes(selectedTypes);
+        setAppliedBrands(selectedBrands);
+        filterSheetRef?.current?.close();
+    };
+
+    const toggleCheckbox = (item: string, type: string) => {
+        if (type === "product") {
+            setSelectedTypes((prev) =>
+                prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+            );
+        } else {
+            setSelectedBrands((prev) =>
+                prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+            );
+        }
+    };
+
+    const toggleSortKey = (value: string, type: boolean) => {
+        setSort({ sortKey: value as SortKey, reverse: type });
+        sortSheetRef?.current?.close();
+    };
 
     /** ------------------ render ------------------*/
     return (
@@ -497,12 +228,23 @@ const AllProducts: React.FC = () => {
                 <HeaderWithSearch title={t('allProduct.title')} icon={icons.search} onPress={onSearchPress} />
             </View>
 
+            <View style={styles.filterSortContainer}>
+                <TouchableOpacity style={styles.halfBox} onPress={onFilterPress}>
+                    <Image source={icons.filter} style={[styles.icon, { tintColor: dark ? COLORS.white : COLORS.primary }]} />
+                    <Text style={[styles.label, { color: dark ? COLORS.white : COLORS.primary }]}>Filters</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={[styles.halfBox, styles.noBorder]} onPress={onSortPress}>
+                    <Text style={[styles.label, { color: dark ? COLORS.white : COLORS.primary }]}>Sort By</Text>
+                    <Image source={icons.arrowDown} style={[styles.icon, { tintColor: dark ? COLORS.white : COLORS.primary }]} />
+                </TouchableOpacity>
+            </View>
+
             <FlatList
                 data={products}
                 keyExtractor={item => item.id}
                 numColumns={2}
-                // columnWrapperStyle={styles.columnWrapper}
-                columnWrapperStyle={{ justifyContent: 'space-between', paddingHorizontal: 6, }}
+                columnWrapperStyle={{ justifyContent: 'space-between', paddingHorizontal: 6, marginBottom: 20 }}
                 contentContainerStyle={styles.contentContainer}
                 initialNumToRender={6}
                 maxToRenderPerBatch={10}
@@ -520,6 +262,7 @@ const AllProducts: React.FC = () => {
                         price={item.price}
                         oldPrice={item.oldPrice}
                         availableForSale={item.available}
+                        productTags={item.productTags}
                         onPress={() =>
                             navigation.navigate('productdetails', {
                                 id: item.id,
@@ -535,6 +278,19 @@ const AllProducts: React.FC = () => {
                     ) : null
                 }
                 removeClippedSubviews
+            />
+
+            <FilterComponent
+                filterSheetRef={filterSheetRef}
+                sortSheetRef={sortSheetRef}
+                expanded={expanded}
+                toggleExpand={toggleExpand}
+                toggleCheckbox={toggleCheckbox}
+                toggleSortKey={toggleSortKey}
+                selectedTypes={selectedTypes}
+                selectedBrands={selectedBrands}
+                currentSort={sort}
+                handleShowResults={handleShowResults}
             />
         </SafeAreaView>
     );
@@ -552,13 +308,68 @@ const styles = StyleSheet.create({
     headerContainer: {
         padding: 16,
     },
+    filterSortContainer: {
+        flexDirection: 'row',
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: '#ddd',
+    },
+    halfBox: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        borderRightWidth: 1,
+        borderColor: '#ddd',
+    },
+    noBorder: {
+        borderRightWidth: 0,
+    },
+    icon: {
+        width: 20,
+        height: 20,
+        marginRight: 8,
+        marginLeft: 8,
+        resizeMode: 'contain',
+    },
+    label: {
+        fontSize: 17,
+        fontWeight: '500',
+    },
+    sheetHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    sheetTitle: {
+        fontSize: normalizeFont(22),
+        fontWeight: '900',
+        textAlign: 'center',
+        textTransform: 'uppercase',
+    },
+    closeIcon: {
+        width: 20,
+        height: 20,
+        tintColor: '#333',
+    },
+    option: {
+        paddingVertical: 14,
+        borderBottomWidth: 1,
+        borderColor: '#eee',
+    },
+    optionText: {
+        fontSize: normalizeFont(15),
+    },
     headlineContainer: {
-        height: 70,
+        height: 140,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'rgb(177, 18, 22)',
     },
     headline: {
-        color: '#333',
+        color: '#ffffff',
         fontSize: normalizeFont(35),
         fontWeight: '900',
         lineHeight: 30,

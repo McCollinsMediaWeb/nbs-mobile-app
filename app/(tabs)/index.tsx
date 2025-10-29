@@ -93,10 +93,12 @@ const Home = () => {
 
   // ✅ Move all hook calls to top level
   const popularProducts = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
-  const ourGenerators = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
-  const ourInverters = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
-  const ourWaterPumps = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
-  const ourBatteries = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
+  const ourGenerators = useCollectionProducts(collections, 'gid://shopify/Collection/443266466004');
+  // const ourInverters = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
+  const ourPowerstations = useCollectionProducts(collections, 'gid://shopify/Collection/443234615508');
+  const ourWaterPumps = useCollectionProducts(collections, 'gid://shopify/Collection/443234746580');
+  // const ourBatteries = useCollectionProducts(collections, 'gid://shopify/Collection/439668539604');
+  const ourNewArrivals = useCollectionProducts(collections, 'gid://shopify/Collection/439668572372');
 
   const renderHeader = useCallback(() => (
     <>
@@ -241,10 +243,19 @@ const Home = () => {
     </View>
   ), [banners, currentIndex]);
 
-  const renderBrandItem = useCallback(({ item }: { item: { id: string; image: ImageSourcePropType } }) => (
-    <View>
+  const renderBrandItem = useCallback(({ item }: { item: { id: string; image: ImageSourcePropType; collectionId: string; collectionTitle: string; collectionImage: string } }) => (
+    // <View>
+    <TouchableOpacity onPress={() =>
+      navigation.navigate('collectionscreen', {
+        collectionId: item.collectionId,
+        collectionTitle: item.collectionTitle,
+        collectionImage: item.collectionImage,
+      })
+    }
+    >
       <Image source={item.image} resizeMode="contain" style={{ width: 200, height: 200 }} />
-    </View>
+    </TouchableOpacity>
+    // </View>
   ), []);
 
   const renderOurBrands = useCallback(() => (
@@ -301,7 +312,7 @@ const Home = () => {
         <Text style={[styles.mainTitle, { color: dark ? COLORS.white : COLORS.black }]}>
           {t('popularProducts.title')}
         </Text>
-        <FlatList
+        {/* <FlatList
           data={categories}
           horizontal
           keyExtractor={item => item.id}
@@ -312,7 +323,7 @@ const Home = () => {
             alignItems: 'center',
           }}
           showsHorizontalScrollIndicator={false}
-        />
+        /> */}
         <FlatList
           data={filteredProducts}
           horizontal
@@ -332,6 +343,7 @@ const Home = () => {
               price={item.price}
               oldPrice={item.oldPrice}
               availableForSale={item.available}
+              productTags={item.productTags}
               onPress={() => navigation.navigate("productdetails", { id: item.id })}
             />
           )}
@@ -373,6 +385,7 @@ const Home = () => {
                 price={item.price}
                 oldPrice={item.oldPrice}
                 availableForSale={item.available}
+                productTags={item.productTags}
                 onPress={() =>
                   navigation.navigate('productdetails', { id: item.id })
                 }
@@ -398,7 +411,7 @@ const Home = () => {
           }
         >
           <Image source={item.image} resizeMode="contain" style={{ width: width * 0.8, height: SCREEN_HEIGHT * 0.5 }} />
-          <Text style={[styles.ourProductTitle, { color: COLORS.white }]}>{item.title}</Text>
+          {/* <Text style={[styles.ourProductTitle, { color: COLORS.white }]}>{item.title}</Text> */}
         </TouchableOpacity>
       </View>
     ),
@@ -407,8 +420,8 @@ const Home = () => {
   /* ------------------------------------------------------------------ */
   const renderOurProducts = useCallback(() => (
     <View style={[styles.bannerItemContainer, { backgroundColor: 'rgb(1, 73, 133)' }]}>
-      <Text style={[styles.subTitle, { color: COLORS.white }]}>{t('ourProducts.title')}</Text>
-      <Text style={[styles.mainTitle, { color: COLORS.white }]}>{t('ourProducts.subTitle')}</Text>
+      <Text style={[styles.mainTitle, { color: COLORS.white, marginTop: 20 }]} >{t('ourProducts.title')}</Text>
+      <Text style={[styles.subTitle, { color: COLORS.white }]} >{t('ourProducts.subTitle')}</Text>
 
       <FlatList
         data={ourProducts}
@@ -427,16 +440,59 @@ const Home = () => {
   ), [t]);
 
   /* ------------------------------------------------------------------ */
-  const renderOurInverters = useCallback(() => {
-    const products = ourInverters;
+  // const renderOurInverters = useCallback(() => {
+  //   const products = ourInverters;
+
+  //   return (
+  //     <View style={[styles.bannerItemContainer, { backgroundColor: dark ? COLORS.dark1 : 'rgb(244, 244, 244)' },]}>
+  //       <Text style={[styles.subTitle, { color: dark ? COLORS.white : COLORS.black }]}>
+  //         {t('ourInverters.subTitle')}
+  //       </Text>
+  //       <Text style={[styles.mainTitle, { color: dark ? COLORS.white : COLORS.black }]}>
+  //         {t('ourInverters.title')}
+  //       </Text>
+
+  //       <View style={{ padding: 16 }}>
+  //         <FlatList
+  //           data={products}
+  //           keyExtractor={(item) => item.id}
+  //           horizontal
+  //           showsHorizontalScrollIndicator={false}
+  //           initialNumToRender={4}
+  //           maxToRenderPerBatch={4}
+  //           windowSize={7}
+  //           removeClippedSubviews
+  //           renderItem={({ item }) => (
+  //             <MemoProductCard
+  //               merchandiseId={item.merchandiseId}
+  //               productId={item.id}
+  //               productType={item.productType}
+  //               name={item.title}
+  //               image={item.image}
+  //               price={item.price}
+  //               oldPrice={item.oldPrice}
+  //               availableForSale={item.available}
+  //               onPress={() =>
+  //                 navigation.navigate('productdetails', { id: item.id })
+  //               }
+  //             />
+  //           )}
+  //         />
+  //       </View>
+  //     </View>
+  //   );
+  // }, [collections, dark, t]);
+
+  const renderOurPowerstations = useCallback(() => {
+    const products = ourPowerstations;
 
     return (
       <View style={[styles.bannerItemContainer, { backgroundColor: dark ? COLORS.dark1 : 'rgb(244, 244, 244)' },]}>
         <Text style={[styles.subTitle, { color: dark ? COLORS.white : COLORS.black }]}>
-          {t('ourInverters.subTitle')}
+          {t('ourPowerstations.subTitle')}
         </Text>
         <Text style={[styles.mainTitle, { color: dark ? COLORS.white : COLORS.black }]}>
-          {t('ourInverters.title')}
+          {t('ourPowerstations.title')}
         </Text>
 
         <View style={{ padding: 16 }}>
@@ -459,6 +515,7 @@ const Home = () => {
                 price={item.price}
                 oldPrice={item.oldPrice}
                 availableForSale={item.available}
+                productTags={item.productTags}
                 onPress={() =>
                   navigation.navigate('productdetails', { id: item.id })
                 }
@@ -504,6 +561,7 @@ const Home = () => {
                 price={item.price}
                 oldPrice={item.oldPrice}
                 availableForSale={item.available}
+                productTags={item.productTags}
                 onPress={() =>
                   navigation.navigate('productdetails', { id: item.id })
                 }
@@ -516,8 +574,54 @@ const Home = () => {
   }, [collections, dark, t]);
 
   /* ------------------------------------------------------------------ */
-  const renderOurBatteries = useCallback(() => {
-    const products = ourBatteries;
+  // const renderOurBatteries = useCallback(() => {
+  //   const products = ourBatteries;
+
+  //   return (
+  //     <View style={[
+  //       styles.bannerItemContainer,
+  //       { backgroundColor: dark ? COLORS.dark1 : 'rgb(244, 244, 244)' },
+  //     ]}>
+  //       <Text style={[styles.subTitle, { color: dark ? COLORS.white : COLORS.black }]}>
+  //         {t('ourBatteries.subTitle')}
+  //       </Text>
+  //       <Text style={[styles.mainTitle, { color: dark ? COLORS.white : COLORS.black }]}>
+  //         {t('ourBatteries.title')}
+  //       </Text>
+
+  //       <View style={{ padding: 16 }}>
+  //         <FlatList
+  //           data={products}
+  //           keyExtractor={(item) => item.id}
+  //           horizontal
+  //           showsHorizontalScrollIndicator={false}
+  //           initialNumToRender={4}
+  //           maxToRenderPerBatch={4}
+  //           windowSize={7}
+  //           removeClippedSubviews
+  //           renderItem={({ item }) => (
+  //             <MemoProductCard
+  //               merchandiseId={item.merchandiseId}
+  //               productId={item.id}
+  //               productType={item.productType}
+  //               name={item.title}
+  //               image={item.image}
+  //               price={item.price}
+  //               oldPrice={item.oldPrice}
+  //               availableForSale={item.available}
+  //               onPress={() =>
+  //                 navigation.navigate('productdetails', { id: item.id })
+  //               }
+  //             />
+  //           )}
+  //         />
+  //       </View>
+  //     </View>
+  //   );
+  // }, [collections, dark, t]);
+
+  const renderOurNewArrivals = useCallback(() => {
+    const products = ourNewArrivals;
 
     return (
       <View style={[
@@ -525,10 +629,10 @@ const Home = () => {
         { backgroundColor: dark ? COLORS.dark1 : 'rgb(244, 244, 244)' },
       ]}>
         <Text style={[styles.subTitle, { color: dark ? COLORS.white : COLORS.black }]}>
-          {t('ourBatteries.subTitle')}
+          {t('ourNewArrivals.subTitle')}
         </Text>
         <Text style={[styles.mainTitle, { color: dark ? COLORS.white : COLORS.black }]}>
-          {t('ourBatteries.title')}
+          {t('ourNewArrivals.title')}
         </Text>
 
         <View style={{ padding: 16 }}>
@@ -551,6 +655,7 @@ const Home = () => {
                 price={item.price}
                 oldPrice={item.oldPrice}
                 availableForSale={item.available}
+                productTags={item.productTags}
                 onPress={() =>
                   navigation.navigate('productdetails', { id: item.id })
                 }
@@ -575,9 +680,11 @@ const Home = () => {
           {ready && renderOurBrands()}
           {ready && renderOurGenerators()}
           {ready && renderOurProducts()}
-          {ready && renderOurInverters()}
+          {/* {ready && renderOurInverters()} */}
+          {ready && renderOurPowerstations()}
           {ready && renderOurWaterPumps()}
-          {ready && renderOurBatteries()}
+          {/* {ready && renderOurBatteries()} */}
+          {ready && renderOurNewArrivals()}
           {ready && <CardSlider cards={cardsData} />}
         </ScrollView>
         <HamburgerDrawer ref={drawerRef} />
@@ -829,7 +936,7 @@ const styles = StyleSheet.create({
     fontSize: normalizeFont(15),
     letterSpacing: 1,
     fontWeight: '800',
-    marginBottom: 8,
+    // marginBottom: 4,
     textTransform: 'uppercase',
     textAlign: 'center',
     marginTop: 20

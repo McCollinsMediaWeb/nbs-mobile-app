@@ -7,6 +7,7 @@ interface Product {
     descriptionHtml: string;
     productType: string;
     vendor: string;
+    tags?: string[] | null;
     images: {
         src: string;
     }[];

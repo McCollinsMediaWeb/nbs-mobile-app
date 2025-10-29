@@ -12,6 +12,7 @@ type Product = {
     image: string;
     price: string;
     oldPrice: string;
+    tags?: string[] | null;
     // add other fields as needed
 };
 

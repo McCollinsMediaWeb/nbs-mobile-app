@@ -51,7 +51,7 @@
                 "evening": "Good Evening 👋",
                 "night": "Good Night 🌙"
             },
-            "announcement": "A global leader in power and renewable energy distribution across three continents."
+            "announcement": "A global leader in power and renewable energy distribution across the globe."
         },
         "menus": {
             "home": "Home",
@@ -67,7 +67,8 @@
             "allProducts": "All Products",
             "bestSellers": "Best Sellers",
             "newArrivals": "New Arrivals",
-            "downloadCatalogue": "Download Catalogue"
+            "bulkOrder": "Bulk Order",
+            "ourGallery": "Our Gallery"
         },
         "hamburgerMenu": {
             "home": "Home",
@@ -75,7 +76,7 @@
             "allProducts": "All Products",
             "nbsSolar": "NBS Solar",
             "nbsSolarOptions": {
-                "option1": "Pure Shine Wave UPS/Inverter",
+                "option1": "Pure Sine Wave UPS/Inverter",
                 "option2": "Batteries",
                 "option2Options": {
                     "option1": "SMF Battery",
@@ -83,15 +84,15 @@
                     "option3": "Gel Battery",
                     "option4": "Lithium Battery"
                 },
-                "option3": "Wall Mounted Pure Shine Wave High Frequency",
+                "option3": "Wall Mounted Pure Sine Wave High Frequency",
                 "option4": "Solar Hybrid Inverter",
                 "option5": "Energy Store All-in-One"
             },
             "sumakSolar": "Sumak Solar",
             "sumakSolarOptions": {
-                "option1": "Pure Shine Wave UPS/Inverter",
+                "option1": "Pure Sine Wave UPS/Inverter",
                 "option2": "Solar Hybrid Inverter",
-                "option3": "Wall Mounted Pure Shine Wave High Frequency",
+                "option3": "Wall Mounted Pure Sine Wave High Frequency",
                 "option4": "Energy Store All-in-One",
                 "option5": "Batteries",
                 "option5Options": {
@@ -108,9 +109,9 @@
             },
             "samsunSolar": "Samsun Solar",
             "samsunSolarOptions": {
-                "option1": "Pure Shine Wave UPS/Inverter",
+                "option1": "Pure Sine Wave UPS/Inverter",
                 "option2": "Solar Hybrid Inverter",
-                "option3": "Wall Mounted Pure Shine Wave",
+                "option3": "Wall Mounted Pure Sine Wave",
                 "option4": "MPPT Charge Controller",
                 "option5": "Batteries",
                 "option5Options": {
@@ -123,9 +124,9 @@
             },
             "sunrideSolar": "Sunride Solar",
             "sunrideSolarOptions": {
-                "option1": "Pure Shine Wave UPS/Inverter",
+                "option1": "Pure Sine Wave UPS/Inverter",
                 "option2": "Solar Hybrid Inverter",
-                "option3": "Wall Mounted Pure Shine Wave",
+                "option3": "Wall Mounted Pure Sine Wave",
                 "option4": "On grid Inverter",
                 "option5": "Batteries",
                 "option5Options": {
@@ -199,22 +200,24 @@
             },
             "bestSellers": "Best Sellers",
             "newArrivals": "New Arrivals",
-            "downloadCatalogue": "Download Catalogue"
+            "downloadCatalogue": "Download Catalogue",
+            "bulkOrder": "Bulk Order",
+            "ourGallery": "Our Gallery"
         },
         "price": "AED",
         "aboutUs": {
-            "announcement": "A global leader in power and renewable energy distribution across three continents.",
+            "announcement": "A global leader in power and renewable energy distribution across the globe.",
             "section1": {
                 "subTitle": "ABOUT US",
                 "title": "POWERING PROGRESS.\nGLOBALLY. SUSTAINABLY."
             },
             "section2": {
                 "title": "POWERING PROGRESS.\nGLOBALLY. SUSTAINABLY.",
-                "content": "Assisted by next-generation B2B distribution, NBS Group is revolutionizing global access to power and renewable energy. A force spread across three continents, we deliver seamless, technology-driven solutions that connect businesses to critical energy products—efficiently, reliably, and at scale."
+                "content": "Nazeer Basha Syed Mech. & Eng. Equip. Trdg. Co. L.L.C., headquartered in Dubai, isa leading domestic and international force in the field of renewable and cleanenergy solutions. Established in 2013, the company has steadily grown with a firmfoundation in mechanical and engineering technologies, focusing on thedevelopment and distribution of high-performance, future-ready energy systems.From its early beginnings, the company has specialized in critical and backup powersolutions, earning the trust of clients across various regions. Its core offeringsinclude diesel and solar generators, advanced water pump systems, and agriculturalmachinery, designed to meet the unique requirements of irrigation, domestic, andindustrial operations. By combining technical innovation with practical engineering,the company delivers systems that are efficient, durable, and aligned with modernsustainability standards."
             },
             "section3": {
                 "title": "EMPOWERING ACCESS. \nENABLING GROWTH.",
-                "content": "Redefining the distribution of solar energy, backup power, and power quality solutions in the developing world, NBS is at the forefront of the energy transition. Small and medium distribution businesses are the target market for our strong e‑commerce platform, which offers end‑to‑end customer support, logistics assistance, and quick, easy transactions with complete transparency."
+                "content": "As part of a global energy movement, the company is committed to innovation,reliability, and environmental responsibility. With growing demand in the developing world, Nazeer Basha Syed Mech. & Eng. Equip. Trdg. Co. L.L.C., aims to bridge the energy access gap by empowering underserved communities and businesses with cutting-edge, accessible technologies."
             },
             "section4": {
                 "subTitle": "Driving the Renewable Revolution",
@@ -223,7 +226,7 @@
             },
             "section5": {
                 "title": "Our Mission: Powering a Sustainable Future through Global B2B Innovation",
-                "content": "By revolutionising the delivery and accessibility of energy products, we are dedicated to creating a more environmentally friendly future. Through the use of creative distribution techniques, regional alliances, and online platforms, we are not only advancing goods but also the world."
+                "content": "Its mission goes beyond product delivery it's about making a measurable difference. Whether through improved agricultural output, enhanced power security, or water management, every solution is designed to support long-term economic growth and energy resilience.With a customer-first approach, a strong presence in the Middle East, Asia, and Africa, and an expanding dealer and service network, Nazeer Basha Syed Mech. & Eng. Equip. Trdg. Co. L.L.C. continues to redefine how essential energy and mechanical resources are delivered in the 21st century"
             }
         },
         "banners": {
@@ -258,12 +261,16 @@
             "title": "Explore our Generators"
         },
         "ourProducts": {
-            "subTitle": "Browse our complete\nrange of power and\nrenewable energy\nsolutions by category.",
+            "subTitle": "Browse our complete range of power and\nrenewable energy solutions by category.",
             "title": "OUR Products"
         },
         "ourInverters": {
             "subTitle": "Efficient. Reliable. Built for every need.",
             "title": "Explore our Inverters"
+        },
+        "ourPowerstations": {
+            "subTitle": "Efficient. Reliable. Built for every need.",
+            "title": "Explore our Power Stations"
         },
         "ourWaterPump": {
             "subTitle": "Power. Precision. Performance.",
@@ -272,6 +279,10 @@
         "ourBatteries": {
             "subTitle": "Power. Precision. Performance.",
             "title": "Explore our Batteries"
+        },
+        "ourNewArrivals": {
+            "subTitle": "Power. Precision. Performance.",
+            "title": "Explore our New Arrivals"
         },
         "pointCard": {
             "card1": {

@@ -23,6 +23,7 @@ export const fetchCollections = (collectionIds: string[]) => async (dispatch: an
                   handle
                   productType
                   publishedAt
+                  tags
                   images(first: 1) {
                     edges { node { transformedSrc(maxWidth: 195, maxHeight: 195) } }
                   }
@@ -52,6 +53,7 @@ export const fetchCollections = (collectionIds: string[]) => async (dispatch: an
         handle: edge.node.handle,
         productType: edge.node.productType,
         publishedAt: edge.node.publishedAt,
+        productTags: edge.node.tags,
         image: edge.node.images.edges[0]?.node.transformedSrc,
         price: edge.node.priceRange.minVariantPrice.amount,
         oldPrice: edge.node.compareAtPriceRange.maxVariantPrice.amount,

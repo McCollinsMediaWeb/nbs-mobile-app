@@ -51,8 +51,13 @@ const Onboarding1 = () => {
     // }, []); // run only once after component mounts
 
     useEffect(() => {
+        console.log("is this working anyway");
         const collectionIds = [
             'gid://shopify/Collection/439668539604',
+            'gid://shopify/Collection/443266466004',
+            'gid://shopify/Collection/443234615508',
+            'gid://shopify/Collection/443234746580',
+            'gid://shopify/Collection/439668572372'
         ];
         dispatch(fetchCollections(collectionIds));
     }, [dispatch]);

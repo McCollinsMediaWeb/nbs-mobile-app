@@ -74,6 +74,7 @@ export const fetchProduct = (id: string) => async (dispatch: any, getState: () =
                       descriptionHtml
                       productType
                       vendor
+                      tags
                       options {
                         name
                         values
@@ -159,6 +160,7 @@ export const fetchProduct = (id: string) => async (dispatch: any, getState: () =
       descriptionHtml: data.data.product.descriptionHtml,
       productType: data.data.product.productType,
       vendor: data.data.product.vendor,
+      tags: data.data.product.tags,
       images: data.data.product.images.edges.map((img: { node: { originalSrc: any; }; }) => ({
         src: img.node.originalSrc,
       })),

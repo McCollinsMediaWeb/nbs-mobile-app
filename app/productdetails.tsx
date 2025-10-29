@@ -1,4 +1,5 @@
 import BlueProductCard from "@/components/BlueProductCard";
+import QuoteRequestModal from "@/components/QuoteRequestModal";
 import { useCardsData } from "@/data";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
@@ -14,7 +15,7 @@ import { useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import i18next from "i18next";
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
 import RenderHtml from 'react-native-render-html';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -66,6 +67,7 @@ const ProductDetails = () => {
     const route = useRoute<ProductDetailsRouteProp>();
     const dispatch = useAppDispatch();
     const product = useAppSelector(state => state.product.data);
+    const isLoading = useAppSelector(state => state.product.status === 'loading');
     const recommendedProducts = useAppSelector(state => state.recommendedProducts.data)
     // const [totalPrice, setTotalPrice] = useState<string>(parseFloat(product?.variants[0]?.price ?? "0").toFixed(2));
     const cartItems = useAppSelector(state => state.cart.cartItems);
@@ -75,6 +77,8 @@ const ProductDetails = () => {
     const wishlistItems = useAppSelector(state => state.wishlist.wishlistItems);
     const insets = useSafeAreaInsets();
     const cardsData = useCardsData();
+    const [selectedColor, setSelectedColor] = useState(null);
+    const [quoteModalVisible, setQuoteModalVisible] = useState(false);
 
     const { id } = route.params; // ✅ Now `id` is available
     const [isFavourite, setIsFavourite] = useState(false);
@@ -148,25 +152,6 @@ const ProductDetails = () => {
                 </TouchableOpacity>
 
                 <View style={styles.iconContainer}>
-                    {/* <TouchableOpacity
-                        onPress={() => {
-                            dispatch(addProductToWishlist({
-                                merchandiseId: product?.id ?? '',
-                                title: product?.title ?? 'Untitled',
-                                image: product?.variants[0]?.image,
-                                price: parseFloat(product?.variants[0]?.price ?? '0'),
-                                oldPrice: product?.variants[0]?.oldPrice ? parseFloat(product.variants[0].oldPrice) : undefined,
-                                productType: product?.productType ?? ''
-                            }));
-                            setIsFavourite(prev => !prev);
-                        }}
-                    >
-                        <Image
-                            source={isFavourite ? icons.heart2 : icons.heart2Outline}
-                            resizeMode='contain'
-                            style={styles.bookmarkIcon}
-                        />
-                    </TouchableOpacity> */}
                     <TouchableOpacity onPress={() => navigation.navigate("mywishlist")}>
                         <Image source={icons.heartOutline} resizeMode='contain' style={[styles.bookmarkIcon, { tintColor: dark ? COLORS.white : COLORS.greyscale900 }]} />
                         <View
@@ -250,7 +235,7 @@ const ProductDetails = () => {
      * render content
      */
     const renderContent = () => {
-        const [selectedColor, setSelectedColor] = useState(null);
+
 
         const handleColorSelect = (color: any) => {
             setSelectedColor(color);
@@ -305,29 +290,30 @@ const ProductDetails = () => {
                         />
                     </TouchableOpacity>
                 </View>
-                <View style={styles.ratingContainer}>
+                {product?.tags && !product.tags.includes("request-a-qoute") && (
+                    <View style={styles.ratingContainer}>
+                        <Text style={[styles.price, {
+                            // color: dark ? COLORS.white : COLORS.black,
+                            color: "rgb(177, 18, 22)",
+                        }]}>{product?.variants && product?.variants.length > 0
+                            ? "AED " + parseFloat(product?.variants[0]?.price).toFixed(2)
+                            : ""}</Text>
 
-                    <Text style={[styles.price, {
-                        // color: dark ? COLORS.white : COLORS.black,
-                        color: "rgb(177, 18, 22)",
-                    }]}>{product?.variants && product?.variants.length > 0
-                        ? "AED " + parseFloat(product?.variants[0]?.price).toFixed(2)
-                        : ""}</Text>
-
-                    {product?.variants &&
-                        product?.variants.length > 0 &&
-                        parseFloat(product?.variants[0]?.oldPrice) > 0 &&
-                        parseFloat(product?.variants[0]?.oldPrice) > parseFloat(product?.variants[0]?.price) && (
-                            <Text
-                                style={[
-                                    styles.oldPrice,
-                                    { color: dark ? COLORS.white : COLORS.gray, marginLeft: 12 },
-                                ]}
-                            >
-                                {"AED " + parseFloat(product?.variants[0]?.oldPrice).toFixed(2)}
-                            </Text>
-                        )}
-                </View>
+                        {product?.variants &&
+                            product?.variants.length > 0 &&
+                            parseFloat(product?.variants[0]?.oldPrice) > 0 &&
+                            parseFloat(product?.variants[0]?.oldPrice) > parseFloat(product?.variants[0]?.price) && (
+                                <Text
+                                    style={[
+                                        styles.oldPrice,
+                                        { color: dark ? COLORS.white : COLORS.gray, marginLeft: 12 },
+                                    ]}
+                                >
+                                    {"AED " + parseFloat(product?.variants[0]?.oldPrice).toFixed(2)}
+                                </Text>
+                            )}
+                    </View>
+                )}
                 <View style={[styles.separateLine, {
                     backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
                 }]} />
@@ -349,48 +335,6 @@ const ProductDetails = () => {
                     ))}
                 </View>
 
-                {/* <View style={[styles.separateLine, {
-                    backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
-                }]} /> */}
-                {/* <View style={styles.qtyContainer}>
-                    <Text style={[styles.descTitle, {
-                        color: dark ? COLORS.white : COLORS.greyscale900
-                    }]}>Quantity</Text>
-                    <View style={[styles.qtyViewContainer, {
-                        backgroundColor: dark ? COLORS.dark3 : COLORS.silver
-                    }]}>
-                        <TouchableOpacity
-                            onPress={decreaseQty}>
-                            <Feather name="minus" size={20} color={dark ? COLORS.white : "black"} />
-                        </TouchableOpacity>
-                        <Text style={[styles.qtyMidText, {
-                            color: dark ? COLORS.white : COLORS.black
-                        }]}>{quantity}</Text>
-                        <TouchableOpacity
-                            onPress={increaseQty}>
-                            <Feather name="plus" size={20} color={dark ? COLORS.white : "black"} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                <View style={[styles.separateLine, {
-                    backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
-                }]} /> */}
-
-                {/* <View style={{ marginVertical: 10 }}>
-                    {specifications.map((spec, index) => (
-                        <View
-                            key={index}
-                            style={[
-                                styles.row,
-                                index % 2 === 0 ? styles.evenRow : styles.oddRow
-                            ]}
-                        >
-                            <Text style={styles.keyText}>{spec.key}</Text>
-                            <Text style={styles.valueText}>: {spec.value}</Text>
-                        </View>
-                    ))}
-                </View> */}
                 <TouchableOpacity
                     onPress={() => {
                         if (product?.supportingFile) {
@@ -480,13 +424,25 @@ const ProductDetails = () => {
                     />
 
                 </View>
-
-                {/* <View style={[styles.separateLine, {
-                    backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
-                }]} /> */}
             </View>
         )
     }
+
+    const renderLoadingScreen = () => {
+        return (
+            <View style={[styles.loadingContainer, {
+                backgroundColor: dark ? COLORS.dark1 : COLORS.white
+            }]}>
+                <ActivityIndicator size="large" color={COLORS.primaryRed} />
+                <Text style={[styles.loadingText, {
+                    color: dark ? COLORS.white : COLORS.black,
+                    marginTop: 12
+                }]}>
+                    Loading...
+                </Text>
+            </View>
+        );
+    };
 
     const renderRecommendedProducts = () => {
         return (
@@ -531,6 +487,7 @@ const ProductDetails = () => {
         )
     }
 
+
     return (
         <View style={[styles.area,
         {
@@ -538,114 +495,141 @@ const ProductDetails = () => {
             paddingBottom: insets.bottom
         }]}>
             <StatusBar hidden />
-            {/* <ScrollView showsVerticalScrollIndicator={true}> */}
-            <AutoSlider images={sliderImages} />
-            {renderHeader()}
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {renderContent()}
-                {renderRecommendedProducts()}
-            </ScrollView>
-            <View style={[styles.cartBottomContainer, {
-                backgroundColor: dark ? COLORS.dark1 : COLORS.white,
-                borderTopColor: dark ? COLORS.dark1 : COLORS.white,
-                bottom: insets.bottom
-            }]}>
-                <View>
-                    <Text style={[styles.cartTitle, {
-                        color: dark ? COLORS.greyscale300 : COLORS.greyscale600
-                    }]}>{t('productPage.totalPrice')}</Text>
-                    {/* <Text style={[styles.cartSubtitle, {
-                        color: dark ? COLORS.white : COLORS.black,
-                    }]}>{product?.variants && product?.variants.length > 0
-                        ? "AED " + parseFloat(product?.variants[0]?.price).toFixed(2)
-                        : ""}</Text> */}
-                    <Text style={[styles.cartSubtitle, {
-                        color: dark ? COLORS.white : COLORS.black,
-                    }]}>AED {totalPrice.toFixed(2)}</Text>
-                </View>
 
-                <View style={{ flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                    {!product?.variants || !product.variants[0]?.available ? (
-                        // Out of stock button
-                        <TouchableOpacity
-                            style={[styles.cartBtn, {
-                                backgroundColor: dark ? COLORS.dark3 : COLORS.silver
-                            }]}
-                            disabled={true}
-                        >
-                            <Text style={[styles.cartBtnText, {
-                                color: dark ? COLORS.white : COLORS.black,
-                            }]}>{t('productPage.outOfStock')}</Text>
-                        </TouchableOpacity>
-                    ) : getCartItem(product.variants[0].id) ? (
-                        // Show increment/decrement if in cart
-                        <View style={[styles.qtyViewContainer, {
-                            backgroundColor: dark ? COLORS.dark3 : COLORS.silver
-                        }]}>
-                            <TouchableOpacity
-                                onPress={() => decrease(product.variants[0].id)}
-                            >
-                                <Feather name="minus" size={20} color={dark ? COLORS.white : "black"} />
-                            </TouchableOpacity>
-                            <Text style={[styles.qtyMidText, {
-                                color: dark ? COLORS.white : COLORS.black
-                            }]}>
-                                {getCartItem(product.variants[0].id)?.quantity ?? 1}
-                            </Text>
+            {isLoading || !product ? (
+                renderLoadingScreen()
+            ) : (
+                <>
+                    {/* <ScrollView showsVerticalScrollIndicator={true}> */}
+                    < AutoSlider images={sliderImages} />
+                    {renderHeader()}
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        {renderContent()}
+                        {renderRecommendedProducts()}
+                    </ScrollView>
+                    <View style={[styles.cartBottomContainer, {
+                        backgroundColor: dark ? COLORS.dark1 : COLORS.white,
+                        borderTopColor: dark ? COLORS.dark1 : COLORS.white,
+                        bottom: insets.bottom
+                    }]}>
+                        {product?.tags && !product.tags.includes("request-a-qoute") ? (
+                            <>
+                                <View>
+                                    <Text style={[styles.cartTitle, {
+                                        color: dark ? COLORS.greyscale300 : COLORS.greyscale600
+                                    }]}>{t('productPage.totalPrice')}</Text>
 
-                            <TouchableOpacity
-                                onPress={() => increase(product.variants[0].id)}
-                            >
-                                <Feather name="plus" size={20} color={dark ? COLORS.white : "black"} />
-                            </TouchableOpacity>
-                        </View>
-                    ) : (
-                        // Show Add to Cart
-                        <TouchableOpacity
-                            onPress={() => handleAddToCart(product)}
-                            style={[styles.cartBtn, {
-                                // backgroundColor: dark ? COLORS.white : COLORS.black
-                                backgroundColor: COLORS.primaryRed
-                            }]}
-                        >
-                            <Image
-                                source={icons.bags}
-                                resizeMode='contain'
-                                style={[styles.bagIcon, {
-                                    tintColor: dark ? COLORS.black : COLORS.white
-                                }]}
-                            />
-                            <Text style={[styles.cartBtnText, {
-                                color: dark ? COLORS.black : COLORS.white,
-                            }]}>{t('productPage.addToCart')}</Text>
-                        </TouchableOpacity>
-                    )}
+                                    <Text style={[styles.cartSubtitle, {
+                                        color: dark ? COLORS.white : COLORS.black,
+                                    }]}>AED {totalPrice.toFixed(2)}</Text>
+                                </View>
 
-                    <Text
-                        onPress={() => navigation.navigate('cart')}
-                        style={{
-                            color: 'rgb(177, 18, 22)',
-                            textAlign: 'right',
-                            textDecorationLine: 'underline'
-                        }}
-                    >
-                        View Cart
-                    </Text>
-                </View>
-            </View>
+                                <View style={{ flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                                    {!product?.variants || !product.variants[0]?.available ? (
+                                        // Out of stock button
+                                        <TouchableOpacity
+                                            style={[styles.cartBtn, {
+                                                backgroundColor: dark ? COLORS.dark3 : COLORS.silver
+                                            }]}
+                                            disabled={true}
+                                        >
+                                            <Text style={[styles.cartBtnText, {
+                                                color: dark ? COLORS.white : COLORS.black,
+                                            }]}>{t('productPage.outOfStock')}</Text>
+                                        </TouchableOpacity>
+                                    ) : getCartItem(product.variants[0].id) ? (
+                                        // Show increment/decrement if in cart
+                                        <View style={[styles.qtyViewContainer, {
+                                            backgroundColor: dark ? COLORS.dark3 : COLORS.silver
+                                        }]}>
+                                            <TouchableOpacity
+                                                onPress={() => decrease(product.variants[0].id)}
+                                            >
+                                                <Feather name="minus" size={20} color={dark ? COLORS.white : "black"} />
+                                            </TouchableOpacity>
+                                            <Text style={[styles.qtyMidText, {
+                                                color: dark ? COLORS.white : COLORS.black
+                                            }]}>
+                                                {getCartItem(product.variants[0].id)?.quantity ?? 1}
+                                            </Text>
 
-            {/* <View style={{ marginRight: 20 }}>
-                <Text
-                    onPress={() => navigation.navigate('cart')}
-                    style={{
-                        color: 'rgb(177, 18, 22)',
-                        textAlign: 'right',
-                        textDecorationLine: 'underline'
-                    }}
-                >
-                    View Cart
-                </Text>
-            </View> */}
+                                            <TouchableOpacity
+                                                onPress={() => increase(product.variants[0].id)}
+                                            >
+                                                <Feather name="plus" size={20} color={dark ? COLORS.white : "black"} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    ) : (
+                                        // Show Add to Cart
+                                        <TouchableOpacity
+                                            onPress={() => handleAddToCart(product)}
+                                            style={[styles.cartBtn, {
+                                                // backgroundColor: dark ? COLORS.white : COLORS.black
+                                                backgroundColor: COLORS.primaryRed
+                                            }]}
+                                        >
+                                            <Image
+                                                source={icons.bags}
+                                                resizeMode='contain'
+                                                style={[styles.bagIcon, {
+                                                    tintColor: dark ? COLORS.black : COLORS.white
+                                                }]}
+                                            />
+                                            <Text style={[styles.cartBtnText, {
+                                                color: dark ? COLORS.black : COLORS.white,
+                                            }]}>{t('productPage.addToCart')}</Text>
+                                        </TouchableOpacity>
+                                    )}
+
+                                    <Text
+                                        onPress={() => navigation.navigate('cart')}
+                                        style={{
+                                            color: 'rgb(177, 18, 22)',
+                                            textAlign: 'right',
+                                            textDecorationLine: 'underline'
+                                        }}
+                                    >
+                                        View Cart
+                                    </Text>
+                                </View>
+                            </>
+                        ) : (
+                            <>
+                                <View>
+                                    <Text style={[styles.cartTitle, {
+                                        color: dark ? COLORS.greyscale300 : COLORS.greyscale600
+                                    }]}>{t('productPage.totalPrice')}</Text>
+
+                                    <Text style={{
+                                        color: dark ? COLORS.white : COLORS.black, fontSize: normalizeFont(17), fontWeight: '700'
+                                    }}>Price on Request</Text>
+                                </View>
+
+                                <View style={{ flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                                    <TouchableOpacity
+                                        onPress={() => setQuoteModalVisible(true)}
+                                        style={[styles.cartBtn, {
+                                            backgroundColor: COLORS.primaryRed
+                                        }]}
+                                    >
+                                        <Image
+                                            source={icons.bags}
+                                            resizeMode='contain'
+                                            style={[styles.bagIcon, {
+                                                tintColor: dark ? COLORS.black : COLORS.white
+                                            }]}
+                                        />
+                                        <Text style={[styles.cartBtnText, {
+                                            color: dark ? COLORS.black : COLORS.white,
+                                        }]}>Submit Quote Request</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </>
+                        )}
+                    </View>
+                </>
+            )}
+
             {/* </ScrollView> */}
             <RBSheet
                 ref={refRBSheet}
@@ -719,6 +703,12 @@ const ProductDetails = () => {
                     />
                 </View>
             </RBSheet>
+            <QuoteRequestModal
+                visible={quoteModalVisible}
+                onClose={() => setQuoteModalVisible(false)}
+                product={product}
+                dark={dark}
+            />
         </View>
     )
 }
@@ -1090,7 +1080,21 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "600",
         marginTop: 10,
-    }
+    },
+
+
+
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 16,
+    },
+
+    loadingText: {
+        fontSize: normalizeFont(16),
+        fontWeight: '600',
+    },
 })
 
 export default ProductDetails
