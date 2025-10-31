@@ -127,7 +127,7 @@ const Welcome = () => {
                 >
                     <View
                         style={{
-                            width: 220,
+                            width: 250,
                             backgroundColor: colors.background,
                             borderRadius: 10,
                             padding: 20,
@@ -162,6 +162,23 @@ const Welcome = () => {
                         >
                             <Text style={{ color: colors.text, fontSize: 16 }}>العربية</Text>
                             {appLanguage === "ar" && (
+                                <Image
+                                    source={icons.done} // make sure you have a `language` icon in your `icons`
+                                    style={{ width: 20, height: 20, tintColor: "green" }}
+                                />
+                            )}
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => handleChangeLanguage('fr')}
+                            style={{
+                                paddingVertical: 10,
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                width: '100%'
+                            }}
+                        >
+                            <Text style={{ color: colors.text, fontSize: 16 }}>Français</Text>
+                            {appLanguage === "fr" && (
                                 <Image
                                     source={icons.done} // make sure you have a `language` icon in your `icons`
                                     style={{ width: 20, height: 20, tintColor: "green" }}

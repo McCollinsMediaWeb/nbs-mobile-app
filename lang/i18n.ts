@@ -35,8 +35,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18n from 'i18next';
 import ar from './ar.json';
 import en from './en.json';
+import fr from './fr.json';
 
-const resources = { en, ar };
+const resources = { en, ar, fr };
 
 const initI18n = async () => {
   const language = (await AsyncStorage.getItem('language')) || 'en';

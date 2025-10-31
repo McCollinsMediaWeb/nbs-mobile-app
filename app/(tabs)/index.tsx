@@ -4,7 +4,7 @@ import Category from '@/components/Category';
 import HamburgerDrawer from '@/components/HamburgerDrawer';
 import ProductCard from '@/components/ProductCard';
 import { COLORS, icons, images, SIZES } from '@/constants';
-import { bannersNew, brands, ourProducts, useBanners, useCardsData, useCategories } from '@/data';
+import { bannersNew, brands, useBanners, useCardsData, useCategories, useOurProducts } from '@/data';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { normalizeFont } from '@/utils/normalizeFont';
@@ -62,6 +62,7 @@ const Home = () => {
   const { t } = i18next;
   const drawerRef = useRef<any>(null);
   const banners = useBanners();
+  const ourProducts = useOurProducts();
   const cardsData = useCardsData();
   const categories = useCategories();
   const [ready, setReady] = useState(false);

@@ -198,7 +198,7 @@ const Profile = () => {
           <View style={styles.rightContainer}>
             <Text style={[styles.rightLanguage, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}>{appLanguage === "ar" ? "Arabic" : "English (US)"}</Text>
+            }]}>{appLanguage === "ar" ? "العربية" : appLanguage === "fr" ? "Français" : "English (US)"}</Text>
             <Image
               // source={icons.arrowRight}
               source={appLanguage === "ar" ? icons.arrowLeft2 : icons.arrowRight}

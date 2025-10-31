@@ -2,6 +2,7 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { addProductToCart } from '@/utils/actions/cartActions';
 import { checkWishlistStatus } from '@/utils/actions/wishListActions';
 import { normalizeFont } from '@/utils/normalizeFont';
+import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, icons, SIZES } from '../constants';
@@ -16,6 +17,7 @@ interface ProductCardProps {
     oldPrice: string;
     availableForSale?: boolean | null;
     productType: string;
+    productTags?: string[] | null;
     onPress: () => void;
 }
 
@@ -28,6 +30,7 @@ const BlueProductCard: React.FC<ProductCardProps> = ({
     oldPrice,
     availableForSale,
     productType,
+    productTags,
     onPress
 }) => {
     const dispatch = useAppDispatch();
@@ -74,7 +77,18 @@ const BlueProductCard: React.FC<ProductCardProps> = ({
                         style={styles.image}
                     />
 
-                    {availableForSale && (
+                    {(availableForSale &&
+                        !(productTags?.includes("request-a-qoute") || productTags?.includes("request-a-quote"))) && (
+                            <TouchableOpacity style={styles.bottomLeftHeart} onPress={handleAddToCart}>
+                                <Image
+                                    source={dark ? icons.addToCartWhite : icons.addToCart}
+                                    resizeMode='contain'
+                                    style={styles.smallHeartIcon}
+                                />
+                            </TouchableOpacity>
+                        )}
+
+                    {/* {availableForSale && (
                         <TouchableOpacity style={styles.bottomLeftHeart} onPress={handleAddToCart}>
                             <Image
                                 source={dark ? icons.addToCartWhite : icons.addToCart}
@@ -82,15 +96,23 @@ const BlueProductCard: React.FC<ProductCardProps> = ({
                                 style={styles.smallHeartIcon}
                             />
                         </TouchableOpacity>
-                    )}
+                    )} */}
                 </View>
 
                 <Text style={[styles.name]}>{name}</Text>
 
                 <View style={styles.bottomPriceContainer}>
-                    <Text style={styles.price}>{"AED " + parseFloat(price).toFixed(2)}</Text>
-                    {Number(oldPrice) > 0 && (
-                        <Text style={styles.oldPrice}>{"AED " + parseFloat(oldPrice).toFixed(2)}</Text>
+                    {(productTags?.includes("request-a-qoute") || productTags?.includes("request-a-quote")) ? (
+                        <TouchableOpacity style={styles.priceButton} onPress={onPress}>
+                            <Text style={styles.price}>{t('productCard.priceOnRequest')}</Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <>
+                            <Text style={styles.price}>{"AED " + parseFloat(price).toFixed(2)}</Text>
+                            {Number(oldPrice) > 0 && (
+                                <Text style={styles.oldPrice}>{"AED " + parseFloat(oldPrice).toFixed(2)}</Text>
+                            )}
+                        </>
                     )}
                 </View>
             </TouchableOpacity>
@@ -122,12 +144,13 @@ const BlueProductCard: React.FC<ProductCardProps> = ({
                 style={styles.topLeftContainer}
                 activeOpacity={0.7}
             >
-                {!availableForSale ? (
+                {!availableForSale &&
+                    !(productTags?.includes("request-a-qoute") || productTags?.includes("request-a-quote")) ? (
                     <View style={[
                         styles.soldContainer,
                         { backgroundColor: "rgb(111, 113, 155)" }
                     ]}>
-                        <Text style={[styles.soldText, { color: "#fff" }]}>Out of Stock</Text>
+                        <Text style={[styles.soldText, { color: "#fff" }]}>{t('productCard.outOfStock')}</Text>
                     </View>
                 ) : (
                     Number(oldPrice) > 0 && Number(price) > 0 && Number(oldPrice) > Number(price) ? (
@@ -164,7 +187,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: "100%",
-        height: 150,
+        // height: 150,
         // borderRadius: 16,
         // backgroundColor: COLORS.silver
         backgroundColor: COLORS.white
@@ -177,10 +200,19 @@ const styles = StyleSheet.create({
     name: {
         fontSize: normalizeFont(17),
         // fontFamily: "normal",
+        lineHeight: 25,
         fontFamily: 'RubikRegular',
         color: COLORS.white,
         marginVertical: 15,
         textAlign: "center"
+    },
+    priceButton: {
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        // borderRadius: 6,
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: 'rgb(223, 223, 223)',
     },
     location: {
         fontSize: 12,

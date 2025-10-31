@@ -160,7 +160,10 @@ const CompletedOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps
           )}
         />
       ) : (
-        <NotFoundCard />
+        <NotFoundCard
+          title={t("noCompletedOrders.title")}
+          subtitle={t("noCompletedOrders.subtitle")}
+        />
       )}
 
       <RBSheet

@@ -11,14 +11,15 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import FilterComponent from '@/components/FilterComponent';
+import FilterComponentCollection from '@/components/FilterComponentCollection';
 import HeaderWithSearch from '@/components/HeaderWithSearch';
 import ProductCard from '@/components/ProductCard';
 import { COLORS, icons } from '@/constants';
-import { ourProducts } from '@/data';
+import { useOurProducts } from '@/data';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fetchGraphQL } from '@/utils/fetchGraphql';
 import { normalizeFont } from '@/utils/normalizeFont';
+import i18next from 'i18next';
 
 /** ------------------------------------------------------------------
  * TYPES
@@ -27,6 +28,10 @@ type CollectionScreenParams = {
     collectionId: string;
     collectionTitle: string;
     collectionImage: any;
+    collectionSort?: {
+        sortKey: SortKey;
+        reverse: boolean;
+    };
 };
 
 type Product = {
@@ -43,32 +48,67 @@ type Product = {
     available?: boolean | null;
 };
 
+type SortKey = 'RELEVANCE' | 'TITLE' | 'PRICE' | 'CREATED' | 'BEST_SELLING';
+
 /** ------------------------------------------------------------------
  * NETWORK – GraphQL Fetch
  * ------------------------------------------------------------------*/
 const fetchProductsFromShopify = async (
     collectionId: string,
-    cursor?: string
+    cursor?: string,
+    sortKey: SortKey = 'RELEVANCE',
+    reverse: boolean = false,
+    selectedTypes?: string[],
+    selectedBrands?: string[],
 ): Promise<{ products: Product[]; hasNextPage: boolean; endCursor: string | null }> => {
+
+    const sortParam = reverse
+        ? `, sortKey: ${sortKey}, reverse: true`
+        : `, sortKey: ${sortKey}`;
+
+    // ✅ Build ProductFilter array
+    let filters: string[] = [];
+
+    if (selectedTypes && selectedTypes.length > 0) {
+        selectedTypes.forEach(type => {
+            filters.push(`{ productType: "${type}" }`);
+        });
+    }
+
+    if (selectedBrands && selectedBrands.length > 0) {
+        selectedBrands.forEach(brand => {
+            filters.push(`{ productVendor: "${brand}" }`);
+        });
+    }
+
+    const filterParam = filters.length > 0
+        ? `, filters: [${filters.join(', ')}]`
+        : '';
+
     const query = `{
-    node(id: "${collectionId}") {
-      ... on Collection {
-        products(first: 30${cursor ? `, after: \"${cursor}\"` : ''}) {
-          pageInfo { hasNextPage }
-          edges {
-            cursor
-            node {
-              id title description tags productType availableForSale
-              priceRange { minVariantPrice { amount } }
-              compareAtPriceRange { maxVariantPrice { amount } }
-              images(first: 1) { edges { node { transformedSrc } } }
-              variants(first: 1) { edges { node { id availableForSale } } }
+        node(id: "${collectionId}") {
+          ... on Collection {
+            products(first: 30${cursor ? `, after: \"${cursor}\"` : ''}${sortParam}${filterParam}) {
+              pageInfo { hasNextPage }
+              edges {
+                cursor
+                node {
+                  id
+                  title
+                  description
+                  tags
+                  productType
+                  availableForSale
+                  priceRange { minVariantPrice { amount } }
+                  compareAtPriceRange { maxVariantPrice { amount } }
+                  images(first: 1) { edges { node { transformedSrc } } }
+                  variants(first: 1) { edges { node { id availableForSale } } }
+                }
+              }
             }
           }
         }
-      }
-    }
-  }`;
+      }`;
 
     try {
         const res = await fetchGraphQL(query);
@@ -86,15 +126,22 @@ const fetchProductsFromShopify = async (
             image: edge.node.images.edges[0]?.node.transformedSrc,
             merchandiseId: edge.node.variants.edges[0]?.node.id,
             cursor: edge.cursor,
-            available: edge.node.availableForSale
+            available: edge.node.availableForSale,
+            productTags: edge.node.tags,
         }));
 
-        return { products, hasNextPage, endCursor: edges.at(-1)?.cursor ?? null };
+        return {
+            products,
+            hasNextPage,
+            endCursor: edges.at(-1)?.cursor ?? null
+        };
+
     } catch (err) {
         console.error('Failed to fetch products:', err);
         return { products: [], hasNextPage: false, endCursor: null };
     }
 };
+
 
 /** ------------------------------------------------------------------
  * COMPONENT
@@ -103,12 +150,13 @@ const CollectionScreen: React.FC = () => {
     const navigation = useNavigation<NavigationProp<any>>();
     const route = useRoute<RouteProp<{ collectionscreen: CollectionScreenParams }, 'collectionscreen'>>();
     const { dark, colors } = useTheme();
-    const { collectionId, collectionTitle, collectionImage } = route.params;
-
+    const { collectionId, collectionTitle, collectionImage, collectionSort } = route.params;
+    const ourProducts = useOurProducts();
     const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState<Product[]>([]);
     const [hasNextPage, setHasNextPage] = useState(false);
     const [endCursor, setEndCursor] = useState<string | null>(null);
+    const { t } = i18next;
 
     const filterSheetRef = useRef<any>(null);
     const sortSheetRef = useRef<any>(null);
@@ -116,9 +164,13 @@ const CollectionScreen: React.FC = () => {
 
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-    const [sort, setSort] = useState<{ sortKey: string; reverse: boolean }>({
-        sortKey: "",
-        reverse: false,
+    // const [sort, setSort] = useState<{ sortKey: SortKey; reverse: boolean }>({
+    //     sortKey: 'BEST_SELLING',
+    //     reverse: false,
+    // });
+    const [sort, setSort] = useState<{ sortKey: SortKey; reverse: boolean }>({
+        sortKey: collectionSort?.sortKey ?? 'BEST_SELLING',
+        reverse: collectionSort?.reverse ?? false,
     });
     const [appliedTypes, setAppliedTypes] = useState<string[]>([]);
     const [appliedBrands, setAppliedBrands] = useState<string[]>([]);
@@ -127,25 +179,27 @@ const CollectionScreen: React.FC = () => {
     useEffect(() => {
         const loadProducts = async () => {
             setLoading(true);
-            const res = await fetchProductsFromShopify(collectionId);
-            
+            const res = await fetchProductsFromShopify(collectionId, undefined, sort.sortKey, sort.reverse, appliedTypes, appliedBrands);
+
             setProducts(res.products);
             setHasNextPage(res.hasNextPage);
             setEndCursor(res.endCursor);
             setLoading(false);
         };
         if (collectionId) loadProducts();
-    }, [collectionId]);
+        // }, [collectionId]);
+    }, [collectionId, sort, appliedTypes, appliedBrands]);
 
     const loadMoreProducts = useCallback(async () => {
         if (!hasNextPage || loading) return;
         setLoading(true);
-        const res = await fetchProductsFromShopify(collectionId, endCursor ?? undefined);
+        const res = await fetchProductsFromShopify(collectionId, endCursor ?? undefined, sort.sortKey, sort.reverse, appliedTypes, appliedBrands);
         setProducts(prev => [...prev, ...res.products]);
         setHasNextPage(res.hasNextPage);
         setEndCursor(res.endCursor);
         setLoading(false);
-    }, [collectionId, endCursor, hasNextPage, loading]);
+        // }, [collectionId, endCursor, hasNextPage, loading]);
+    }, [hasNextPage, loading, endCursor, sort.sortKey, sort.reverse]);
 
     const onCollectionPress = useCallback(
         (item: (typeof ourProducts)[number]) =>
@@ -168,6 +222,7 @@ const CollectionScreen: React.FC = () => {
     const handleShowResults = async () => {
         setAppliedTypes(selectedTypes);
         setAppliedBrands(selectedBrands);
+        filterSheetRef?.current?.close();
     };
 
     const toggleCheckbox = (item: string, type: string) => {
@@ -182,8 +237,9 @@ const CollectionScreen: React.FC = () => {
         }
     };
 
-    const toggleSortKey = (key: string, reverse: boolean) => {
-        setSort({ sortKey: key, reverse });
+    const toggleSortKey = (value: string, type: boolean) => {
+        setSort({ sortKey: value as SortKey, reverse: type });
+        sortSheetRef?.current?.close();
     };
 
 
@@ -191,7 +247,7 @@ const CollectionScreen: React.FC = () => {
     const ListHeaderComponent = useMemo(() => (
         <View>
             <View style={styles.headerWrapper}>
-                <HeaderWithSearch title={collectionTitle ?? 'Products'} icon={icons.search} onPress={() => navigation.navigate('search')} />
+                <HeaderWithSearch title={collectionTitle ?? 'roducts'} icon={icons.search} onPress={() => navigation.navigate('search')} />
             </View>
 
             {/* <View style={styles.filterSortContainer}>
@@ -209,11 +265,11 @@ const CollectionScreen: React.FC = () => {
             <View style={styles.filterSortContainer}>
                 <TouchableOpacity style={styles.halfBox} onPress={onFilterPress}>
                     <Image source={icons.filter} style={[styles.icon, { tintColor: dark ? COLORS.white : COLORS.primary }]} />
-                    <Text style={[styles.label, { color: dark ? COLORS.white : COLORS.primary }]}>Filters</Text>
+                    <Text style={[styles.label, { color: dark ? COLORS.white : COLORS.primary }]}>{t("filters.title")}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.halfBox, styles.noBorder]} onPress={onSortPress}>
-                    <Text style={[styles.label, { color: dark ? COLORS.white : COLORS.primary }]}>Sort By</Text>
+                    <Text style={[styles.label, { color: dark ? COLORS.white : COLORS.primary }]}>{t("sortBy.title")}</Text>
                     <Image source={icons.arrowDown} style={[styles.icon, { tintColor: dark ? COLORS.white : COLORS.primary }]} />
                 </TouchableOpacity>
             </View>
@@ -363,7 +419,19 @@ const CollectionScreen: React.FC = () => {
                 }
                 removeClippedSubviews
             />
-            <FilterComponent filterSheetRef={filterSheetRef} sortSheetRef={sortSheetRef} expanded={expanded} toggleExpand={toggleExpand} toggleCheckbox={toggleCheckbox} toggleSortKey={toggleSortKey} selectedTypes={selectedTypes} selectedBrands={selectedBrands} handleShowResults={handleShowResults} />
+            {/* <FilterComponent filterSheetRef={filterSheetRef} sortSheetRef={sortSheetRef} expanded={expanded} toggleExpand={toggleExpand} toggleCheckbox={toggleCheckbox} toggleSortKey={toggleSortKey} selectedTypes={selectedTypes} selectedBrands={selectedBrands} handleShowResults={handleShowResults} /> */}
+            <FilterComponentCollection
+                filterSheetRef={filterSheetRef}
+                sortSheetRef={sortSheetRef}
+                expanded={expanded}
+                toggleExpand={toggleExpand}
+                toggleCheckbox={toggleCheckbox}
+                toggleSortKey={toggleSortKey}
+                selectedTypes={selectedTypes}
+                selectedBrands={selectedBrands}
+                currentSort={sort}
+                handleShowResults={handleShowResults}
+            />
         </SafeAreaView>
     );
 };

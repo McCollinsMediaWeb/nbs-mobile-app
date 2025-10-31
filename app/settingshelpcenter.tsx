@@ -1,14 +1,16 @@
 import HelpCenterItem from '@/components/HelpCenterItem';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { normalizeFont } from '@/utils/normalizeFont';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import i18next, { t } from 'i18next';
 import React, { useState } from 'react';
-import { FlatList, Image, LayoutAnimation, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { Image, LayoutAnimation, Linking, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import { ScrollView } from 'react-native-virtualized-view';
 import { COLORS, SIZES, icons } from '../constants';
-import { faqKeywords, faqs } from '../data';
+import { faqKeywords, useFaqs } from '../data';
 import { useTheme } from '../theme/ThemeProvider';
 
 interface KeywordItemProps {
@@ -35,7 +37,7 @@ const faqsRoute = () => {
     const [selectedKeywords, setSelectedKeywords] = useState<any>([]);
     const [expanded, setExpanded] = useState(-1);
     const [searchText, setSearchText] = useState('');
-
+    const faqs = useFaqs();
     const { dark } = useTheme();
 
     const handleKeywordPress = (id: any) => {
@@ -83,7 +85,7 @@ const faqsRoute = () => {
 
     return (
         <View>
-            <View style={{ marginVertical: 16 }}>
+            {/* <View style={{ marginVertical: 16 }}>
                 <FlatList
                     data={faqKeywords}
                     horizontal
@@ -97,8 +99,8 @@ const faqsRoute = () => {
                         />
                     )}
                 />
-            </View>
-            <View
+            </View> */}
+            {/* <View
                 style={[
                     styles.searchBar,
                     {
@@ -135,7 +137,7 @@ const faqsRoute = () => {
                     value={searchText}
                     onChangeText={(text) => setSearchText(text)}
                 />
-            </View>
+            </View> */}
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={{ marginVertical: 22 }}>
@@ -188,37 +190,46 @@ const contactUsRoute = () => {
 
     return (
         <View style={[styles.routeContainer, {
-            backgroundColor: dark ? COLORS.dark1 : COLORS.tertiaryWhite
+            backgroundColor: dark ? COLORS.dark1 : COLORS.white
         }]}>
             <HelpCenterItem
                 icon={icons.headset}
-                title="Customer Service"
-                onPress={() => navigation.navigate("customerservice")}
+                title={t("helpCenter.contactUs.callUs")}
+                onPress={() => {
+                    Linking.openURL("tel:+97142243543");
+                }}
+            />
+            <HelpCenterItem
+                icon={icons.emailOutline}
+                title={t("helpCenter.contactUs.emailUs")}
+                onPress={() => {
+                    Linking.openURL("mailto:sales@nbsgroups.com");
+                }}
             />
             <HelpCenterItem
                 icon={icons.whatsapp}
-                title="Whatsapp"
-                onPress={() => console.log('Whatsapp')}
+                title={t("helpCenter.contactUs.whatsapp")}
+                onPress={() => { Linking.openURL("https://api.whatsapp.com/send/?phone=971522346669&text=Hi%2C+I+would+like+to+know+more+about+your+products&type=phone_number&app_absent=0") }}
             />
             <HelpCenterItem
                 icon={icons.world}
-                title="Website"
-                onPress={() => console.log('Website')}
+                title={t("helpCenter.contactUs.website")}
+                onPress={() => { Linking.openURL("https://nbsgroups.com/") }}
             />
             <HelpCenterItem
                 icon={icons.facebook2}
-                title="Facebook"
-                onPress={() => console.log('Facebook')}
+                title={t("helpCenter.contactUs.facebook")}
+                onPress={() => { Linking.openURL("https://www.facebook.com/profile.php?id=61580402905873") }}
             />
-            <HelpCenterItem
+            {/* <HelpCenterItem
                 icon={icons.twitter}
                 title="Twitter"
                 onPress={() => console.log("Twitter")}
-            />
+            /> */}
             <HelpCenterItem
                 icon={icons.instagram}
-                title="Instagram"
-                onPress={() => console.log("Instagram")}
+                title={t("helpCenter.contactUs.instagram")}
+                onPress={() => { Linking.openURL("https://www.instagram.com/nbs__global/?igsh=MWN2c3IwZGR0aGY0ZA%3D%3D&utm_source") }}
             />
         </View>
     )
@@ -232,11 +243,13 @@ const HelpCenter = () => {
     const navigation = useNavigation<NavigationProp<any>>();
     const layout = useWindowDimensions();
     const { dark, colors } = useTheme();
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
+    const { t } = i18next;
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: 'first', title: 'FAQ' },
-        { key: 'second', title: 'Contact Us' },
+        { key: 'first', title: t("helpCenter.contactUs.title") },
+        { key: 'second', title: t("helpCenter.faqs.title") },
     ]);
 
     const renderTabBar = (props: any) => (
@@ -273,15 +286,16 @@ const HelpCenter = () => {
                         <Image
                             source={icons.back}
                             resizeMode='contain'
-                            style={[styles.backIcon, {
+                            style={[styles.backIcon,
+                            appLanguage === 'ar' && { transform: [{ rotate: '180deg' }] }, {
                                 tintColor: dark ? COLORS.white : COLORS.greyscale900
                             }]} />
                     </TouchableOpacity>
                     <Text style={[styles.headerTitle, {
                         color: dark ? COLORS.white : COLORS.greyscale900
-                    }]}>Help Center</Text>
+                    }]}>{t("helpCenter.title")}</Text>
                 </View>
-                <TouchableOpacity>
+                {/* <TouchableOpacity>
                     <Image
                         source={icons.moreCircle}
                         resizeMode='contain'
@@ -289,7 +303,7 @@ const HelpCenter = () => {
                             tintColor: dark ? COLORS.secondaryWhite : COLORS.greyscale900
                         }]}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         )
     }
@@ -347,6 +361,7 @@ const styles = StyleSheet.create({
     routeContainer: {
         flex: 1,
         backgroundColor: COLORS.white,
+        marginHorizontal: 10,
         paddingVertical: 22
     },
     searchBar: {
@@ -370,6 +385,7 @@ const styles = StyleSheet.create({
     },
     faqContainer: {
         marginBottom: 20,
+        marginHorizontal: 10,
         backgroundColor: '#fff',
         borderRadius: 8,
         shadowColor: '#000',
@@ -387,7 +403,7 @@ const styles = StyleSheet.create({
     },
     question: {
         flex: 1,
-        fontSize: 16,
+        fontSize: normalizeFont(16),
         fontFamily: "semiBold",
         color: '#333',
     },
@@ -396,7 +412,8 @@ const styles = StyleSheet.create({
         color: COLORS.gray2,
     },
     answer: {
-        fontSize: 14,
+        fontSize: normalizeFont(15),
+        lineHeight: 20,
         marginTop: 10,
         paddingHorizontal: 16,
         paddingBottom: 10,

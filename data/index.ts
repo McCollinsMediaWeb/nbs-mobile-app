@@ -26,6 +26,55 @@ export const faqKeywords = [
     }
 ];
 
+export const useFaqs = () => {
+    // const { t } = useTranslation();
+    const { t } = i18next;
+
+    return [
+        {
+            question: t("helpCenter.faqs.question1"),
+            answer: t("helpCenter.faqs.question1Answer"),
+            type: "General"
+        },
+        {
+            question: t("helpCenter.faqs.question2"),
+            answer: t("helpCenter.faqs.question2Answer"),
+            type: "General"
+        },
+        {
+            question: t("helpCenter.faqs.question3"),
+            answer: t("helpCenter.faqs.question3Answer"),
+            type: "Account"
+        },
+        {
+            question: t("helpCenter.faqs.question4"),
+            answer: t("helpCenter.faqs.question4Answer"),
+            type: "Ordering"
+        },
+        {
+            question: t("helpCenter.faqs.question5"),
+            answer: t("helpCenter.faqs.question5Answer"),
+            type: "Payment"
+        },
+        {
+            question: t("helpCenter.faqs.question6"),
+            answer: t("helpCenter.faqs.question6Answer"),
+            type: "Security"
+        },
+        {
+            question: t("helpCenter.faqs.question7"),
+            answer: t("helpCenter.faqs.question7Answer"),
+            type: "General"
+        },
+        {
+            question: t("helpCenter.faqs.question8"),
+            answer: t("helpCenter.faqs.question8Answer"),
+            type: "General"
+        },
+    ];
+};
+
+
 export const faqs = [
     {
         question: 'How do I place an order on the app?',
@@ -62,286 +111,17 @@ export const faqs = [
         answer: "Yes, you can request assistance with special product requirements or preferences during the ordering process. Simply specify your preferences, and we'll do our best to accommodate them.",
         type: "General"
     },
-    {
-        question: 'How can I provide feedback or review my shopping experience?',
-        answer: 'After receiving your order, you can provide feedback and review your shopping experience through the app’s rating and review system. Your feedback helps us improve our services for future orders.',
-        type: "General"
-    },
+    // {
+    //     question: 'How can I provide feedback or review my shopping experience?',
+    //     answer: 'After receiving your order, you can provide feedback and review your shopping experience through the app’s rating and review system. Your feedback helps us improve our services for future orders.',
+    //     type: "General"
+    // },
     {
         question: 'Is customer support available through this app?',
         answer: 'While we facilitate online shopping, our app is not for customer support. For assistance, please contact our support team through the designated channels provided in the app.',
         type: "General"
     },
 ];
-
-
-// export const useMenuData = () => {
-//     const { t } = i18next;
-
-//     return [
-//         { title: t('hamburgerMenu.home'), route: "/" },
-//         { title: t('hamburgerMenu.aboutUs'), route: "aboutus" },
-//         {
-//             title: t('hamburgerMenu.allProducts'),
-//             children: [
-//                 {
-//                     title: t('hamburgerMenu.allProducts.nbsSolar'),
-//                     children: [
-//                         {
-//                             title: t('hamburgerMenu.allProducts.nbsSolar.option1'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.nbsSolar.option2'),
-//                             children: [
-//                                 { title: t('hamburgerMenu.allProducts.nbsSolar.option2.option1'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.nbsSolar.option2.option2'), route: "deepItem2" },
-//                                 { title: t('hamburgerMenu.allProducts.nbsSolar.option2.option3'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.nbsSolar.option2.option4'), route: "deepItem2" },
-//                             ],
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.nbsSolar.option3'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.nbsSolar.option4'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.nbsSolar.option5'), route: "collectionscreen",
-//                         },
-//                     ],
-//                 },
-//                 {
-//                     title: t('hamburgerMenu.allProducts.sumakSolar'),
-//                     children: [
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sumakSolar.option1'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sumakSolar.option2'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sumakSolar.option3'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sumakSolar.option4'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sumakSolar.option5'),
-//                             children: [
-//                                 { title: t('hamburgerMenu.allProducts.sumakSolar.option5.option1'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.sumakSolar.option5.option2'), route: "deepItem2" },
-//                                 { title: t('hamburgerMenu.allProducts.sumakSolar.option5.option3'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.sumakSolar.option5.option4'), route: "deepItem2" },
-//                                 { title: t('hamburgerMenu.allProducts.sumakSolar.option5.option5'), route: "deepItem2" },
-//                             ],
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sumakSolar.option6'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sumakSolar.option7'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sumakSolar.option8'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sumakSolar.option9'), route: "collectionscreen",
-//                         },
-//                     ],
-//                 }, {
-//                     title: t('hamburgerMenu.allProducts.samsunSolar'),
-//                     children: [
-//                         {
-//                             title: t('hamburgerMenu.allProducts.samsunSolar.option1'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.samsunSolar.option2'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.samsunSolar.option3'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.samsunSolar.option4'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.samsunSolar.option5'),
-//                             children: [
-//                                 { title: t('hamburgerMenu.allProducts.samsunSolar.option5.option1'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.samsunSolar.option5.option2'), route: "deepItem2" },
-//                                 { title: t('hamburgerMenu.allProducts.samsunSolar.option5.option3'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.samsunSolar.option5.option4'), route: "deepItem2" },
-//                                 { title: t('hamburgerMenu.allProducts.samsunSolar.option5.option5'), route: "deepItem2" },
-//                             ],
-//                         },
-//                     ],
-//                 }, {
-//                     title: t('hamburgerMenu.allProducts.sunrideSolar'),
-//                     children: [
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sunrideSolar.option1'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sunrideSolar.option2'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sunrideSolar.option3'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sunrideSolar.option4'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.sunrideSolar.option5'),
-//                             children: [
-//                                 { title: t('hamburgerMenu.allProducts.sunrideSolar.option5.option1'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.sunrideSolar.option5.option2'), route: "deepItem2" },
-//                                 { title: t('hamburgerMenu.allProducts.sunrideSolar.option5.option3'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.sunrideSolar.option5.option4'), route: "deepItem2" },
-//                                 { title: t('hamburgerMenu.allProducts.sunrideSolar.option5.option5'), route: "deepItem2" },
-//                             ],
-//                         },
-//                     ],
-//                 }, {
-//                     title: t('hamburgerMenu.allProducts.generators'),
-//                     children: [
-//                         {
-//                             title: t('hamburgerMenu.allProducts.generators.option1'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.generators.option2'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.generators.option3'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.generators.option4'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.generators.option5'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.generators.option6'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.generators.option7'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.generators.option8'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.generators.option9'), route: "collectionscreen",
-//                         },
-//                     ],
-//                 }, {
-//                     title: t('hamburgerMenu.allProducts.powerStation'),
-//                     children: [
-//                         {
-//                             title: t('hamburgerMenu.allProducts.powerStation.option1'), route: "collectionscreen",
-//                         },
-//                     ],
-//                 }, {
-//                     title: t('hamburgerMenu.allProducts.carWasher'),
-//                     children: [
-//                         {
-//                             title: t('hamburgerMenu.allProducts.carWasher.option1'), route: "collectionscreen",
-//                         },
-//                     ],
-//                 }, {
-//                     title: t('hamburgerMenu.allProducts.waterPump'),
-//                     children: [
-//                         {
-//                             title: t('hamburgerMenu.allProducts.waterPump.option1'),
-//                             children: [
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option1.option1'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option1.option2'), route: "deepItem2" },
-//                             ],
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.waterPump.option2'),
-//                             children: [
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option2.option1'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option2.option2'), route: "deepItem2" },
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option2.option3'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option2.option4'), route: "deepItem1" },
-//                             ],
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.waterPump.option3'),
-//                             children: [
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option1'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option2'), route: "deepItem2" },
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option3'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option4'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option5'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option6'), route: "deepItem2" },
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option7'), route: "deepItem1" },
-//                                 { title: t('hamburgerMenu.allProducts.waterPump.option3.option8'), route: "deepItem1" },
-//                             ],
-//                         },
-//                     ],
-//                 }, {
-//                     title: t('hamburgerMenu.allProducts.accessories'),
-//                     children: [
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option1'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option2'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option3'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option4'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option5'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option6'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option7'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option8'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option9'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option10'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option11'), route: "collectionscreen",
-//                         },
-//                         {
-//                             title: t('hamburgerMenu.allProducts.accessories.option12'), route: "collectionscreen",
-//                         },
-//                     ],
-//                 },
-//             ],
-//         },
-//         {
-//             title: t('hamburgerMenu.bestSellers'),
-//             route: "collectionscreen",
-//             params: {
-//                 collectionId: "gid://shopify/Collection/439668539604",
-//                 collectionTitle: "Best Sellers",
-//                 collectionImage: images.aboutUsBanner3,
-//             },
-//         },
-//         {
-//             title: t('hamburgerMenu.newArrivals'),
-//             route: "collectionscreen",
-//             params: {
-//                 collectionId: "gid://shopify/Collection/439668572372",
-//                 collectionTitle: "New Arrivals",
-//                 collectionImage: images.aboutUsBanner1,
-//             },
-//         },
-//         { title: t('hamburgerMenu.downloadCatalogue'), route: "catalogue" },
-//     ];
-// };
 
 export const useMenuData = () => {
     const { t } = i18next;
@@ -351,180 +131,358 @@ export const useMenuData = () => {
         { title: t("hamburgerMenu.aboutUs"), route: "aboutus" },
         {
             title: t("hamburgerMenu.allProducts"),
+            route: "(tabs)/allproducts",
             children: [
                 {
                     title: t("hamburgerMenu.nbsSolar"),
+                    route: "collectionscreen",
+                    params: {
+                        collectionId: "gid://shopify/Collection/439108534484",
+                        collectionTitle: t("hamburgerMenu.nbsSolar"),
+                        collectionImage: "",
+                    },
                     children: [
                         {
                             title: t("hamburgerMenu.nbsSolarOptions.option1"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443629338836",
+                                collectionTitle: t("hamburgerMenu.nbsSolarOptions.option1"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.nbsSolarOptions.option2"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443629371604",
+                                collectionTitle: t("hamburgerMenu.nbsSolarOptions.option2"),
+                                collectionImage: "",
+                            },
                             children: [
                                 {
                                     title: t(
                                         "hamburgerMenu.nbsSolarOptions.option2Options.option1"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443629732052",
+                                        collectionTitle: t("hamburgerMenu.nbsSolarOptions.option2Options.option1"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.nbsSolarOptions.option2Options.option2"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443629797588",
+                                        collectionTitle: t("hamburgerMenu.nbsSolarOptions.option2Options.option2"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.nbsSolarOptions.option2Options.option3"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443629830356",
+                                        collectionTitle: t("hamburgerMenu.nbsSolarOptions.option2Options.option3"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.nbsSolarOptions.option2Options.option4"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443629863124",
+                                        collectionTitle: t("hamburgerMenu.nbsSolarOptions.option2Options.option4"),
+                                        collectionImage: "",
+                                    },
                                 },
                             ],
                         },
                         {
                             title: t("hamburgerMenu.nbsSolarOptions.option3"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443629469908",
+                                collectionTitle: t("hamburgerMenu.nbsSolarOptions.option3"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.nbsSolarOptions.option4"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443629535444",
+                                collectionTitle: t("hamburgerMenu.nbsSolarOptions.option4"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.nbsSolarOptions.option5"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443629568212",
+                                collectionTitle: t("hamburgerMenu.nbsSolarOptions.option5"),
+                                collectionImage: "",
+                            },
                         },
                     ],
                 },
                 {
                     title: t("hamburgerMenu.sumakSolar"),
+                    route: "collectionscreen",
+                    params: {
+                        collectionId: "gid://shopify/Collection/443234484436",
+                        collectionTitle: t("hamburgerMenu.sumakSolar"),
+                        collectionImage: "",
+                    },
                     children: [
                         {
                             title: t("hamburgerMenu.sumakSolarOptions.option1"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443628355796",
+                                collectionTitle: t("hamburgerMenu.sumakSolarOptions.option1"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.sumakSolarOptions.option2"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443628454100",
+                                collectionTitle: t("hamburgerMenu.sumakSolarOptions.option2"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.sumakSolarOptions.option3"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443628519636",
+                                collectionTitle: t("hamburgerMenu.sumakSolarOptions.option3"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.sumakSolarOptions.option4"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443628552404",
+                                collectionTitle: t("hamburgerMenu.sumakSolarOptions.option4"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.sumakSolarOptions.option5"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443628585172",
+                                collectionTitle: t("hamburgerMenu.sumakSolarOptions.option5"),
+                                collectionImage: "",
+                            },
                             children: [
                                 {
                                     title: t(
                                         "hamburgerMenu.sumakSolarOptions.option5Options.option1"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443628781780",
+                                        collectionTitle: t("hamburgerMenu.sumakSolarOptions.option5Options.option1"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.sumakSolarOptions.option5Options.option2"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443628814548",
+                                        collectionTitle: t("hamburgerMenu.sumakSolarOptions.option5Options.option2"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.sumakSolarOptions.option5Options.option3"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443628912852",
+                                        collectionTitle: t("hamburgerMenu.sumakSolarOptions.option5Options.option3"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.sumakSolarOptions.option5Options.option4"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443628945620",
+                                        collectionTitle: t("hamburgerMenu.sumakSolarOptions.option5Options.option4"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.sumakSolarOptions.option5Options.option5"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443629011156",
+                                        collectionTitle: t("hamburgerMenu.sumakSolarOptions.option5Options.option5"),
+                                        collectionImage: "",
+                                    },
                                 },
                             ],
                         },
                         {
                             title: t("hamburgerMenu.sumakSolarOptions.option6"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443628617940",
+                                collectionTitle: t("hamburgerMenu.sumakSolarOptions.option6"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.sumakSolarOptions.option7"),
-                            route: "collectionscreen",
+                            rroute: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443628650708",
+                                collectionTitle: t("hamburgerMenu.sumakSolarOptions.option7"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.sumakSolarOptions.option8"),
                             route: "collectionscreen",
-                        },
-                        {
-                            title: t("hamburgerMenu.sumakSolarOptions.option9"),
-                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443628749012",
+                                collectionTitle: t("hamburgerMenu.sumakSolarOptions.option8"),
+                                collectionImage: "",
+                            },
                         },
                     ],
                 },
                 {
                     title: t("hamburgerMenu.samsunSolar"),
+                    route: "collectionscreen",
+                    params: {
+                        collectionId: "gid://shopify/Collection/443227111636",
+                        collectionTitle: t("hamburgerMenu.samsunSolar"),
+                        collectionImage: "",
+                    },
                     children: [
                         {
                             title: t("hamburgerMenu.samsunSolarOptions.option1"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443627700436",
+                                collectionTitle: t("hamburgerMenu.samsunSolarOptions.option1"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.samsunSolarOptions.option2"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443627798740",
+                                collectionTitle: t("hamburgerMenu.samsunSolarOptions.option2"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.samsunSolarOptions.option3"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443627831508",
+                                collectionTitle: t("hamburgerMenu.samsunSolarOptions.option3"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.samsunSolarOptions.option4"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443627864276",
+                                collectionTitle: t("hamburgerMenu.samsunSolarOptions.option4"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.samsunSolarOptions.option5"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443627929812",
+                                collectionTitle: t("hamburgerMenu.samsunSolarOptions.option5"),
+                                collectionImage: "",
+                            },
                             children: [
                                 {
                                     title: t(
                                         "hamburgerMenu.samsunSolarOptions.option5Options.option1"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443628028116",
+                                        collectionTitle: t("hamburgerMenu.samsunSolarOptions.option5Options.option1"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.samsunSolarOptions.option5Options.option2"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443628093652",
+                                        collectionTitle: t("hamburgerMenu.samsunSolarOptions.option5Options.option2"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.samsunSolarOptions.option5Options.option3"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443628126420",
+                                        collectionTitle: t("hamburgerMenu.samsunSolarOptions.option5Options.option3"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.samsunSolarOptions.option5Options.option4"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443628159188",
+                                        collectionTitle: t("hamburgerMenu.samsunSolarOptions.option5Options.option4"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.samsunSolarOptions.option5Options.option5"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443628191956",
+                                        collectionTitle: t("hamburgerMenu.samsunSolarOptions.option5Options.option5"),
+                                        collectionImage: "",
+                                    },
                                 },
                             ],
                         },
@@ -532,55 +490,112 @@ export const useMenuData = () => {
                 },
                 {
                     title: t("hamburgerMenu.sunrideSolar"),
+                    route: "collectionscreen",
+                    params: {
+                        collectionId: "gid://shopify/Collection/443234549972",
+                        collectionTitle: t("hamburgerMenu.sunrideSolar"),
+                        collectionImage: "",
+                    },
                     children: [
                         {
                             title: t("hamburgerMenu.sunrideSolarOptions.option1"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443625930964",
+                                collectionTitle: t("hamburgerMenu.sunrideSolarOptions.option1"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.sunrideSolarOptions.option2"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443625996500",
+                                collectionTitle: t("hamburgerMenu.sunrideSolarOptions.option2"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.sunrideSolarOptions.option3"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443626160340",
+                                collectionTitle: t("hamburgerMenu.sunrideSolarOptions.option3"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.sunrideSolarOptions.option4"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443626258644",
+                                collectionTitle: t("hamburgerMenu.sunrideSolarOptions.option4"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.sunrideSolarOptions.option5"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443626324180",
+                                collectionTitle: t("hamburgerMenu.sunrideSolarOptions.option5"),
+                                collectionImage: "",
+                            },
                             children: [
                                 {
                                     title: t(
                                         "hamburgerMenu.sunrideSolarOptions.option5Options.option1"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443626455252",
+                                        collectionTitle: t("hamburgerMenu.sunrideSolarOptions.option5Options.option1"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.sunrideSolarOptions.option5Options.option2"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443626520788",
+                                        collectionTitle: t("hamburgerMenu.sunrideSolarOptions.option5Options.option2"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.sunrideSolarOptions.option5Options.option3"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443626586324",
+                                        collectionTitle: t("hamburgerMenu.sunrideSolarOptions.option5Options.option3"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.sunrideSolarOptions.option5Options.option4"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443626619092",
+                                        collectionTitle: t("hamburgerMenu.sunrideSolarOptions.option5Options.option4"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.sunrideSolarOptions.option5Options.option5"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443626782932",
+                                        collectionTitle: t("hamburgerMenu.sunrideSolarOptions.option5Options.option5"),
+                                        collectionImage: "",
+                                    },
                                 },
                             ],
                         },
@@ -588,217 +603,495 @@ export const useMenuData = () => {
                 },
                 {
                     title: t("hamburgerMenu.generators"),
+                    route: "collectionscreen",
+                    params: {
+                        collectionId: "gid://shopify/Collection/443266466004",
+                        collectionTitle: t("hamburgerMenu.generatorsOptions.option8"),
+                        collectionImage: "",
+                    },
                     children: [
                         {
                             title: t("hamburgerMenu.generatorsOptions.option1"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443625144532",
+                                collectionTitle: t("hamburgerMenu.generatorsOptions.option1"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.generatorsOptions.option2"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443625210068",
+                                collectionTitle: t("hamburgerMenu.generatorsOptions.option2"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.generatorsOptions.option3"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443625406676",
+                                collectionTitle: t("hamburgerMenu.generatorsOptions.option3"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.generatorsOptions.option4"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443625439444",
+                                collectionTitle: t("hamburgerMenu.generatorsOptions.option4"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.generatorsOptions.option5"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443625504980",
+                                collectionTitle: t("hamburgerMenu.generatorsOptions.option5"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.generatorsOptions.option6"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443625603284",
+                                collectionTitle: t("hamburgerMenu.generatorsOptions.option6"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.generatorsOptions.option7"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/444937568468",
+                                collectionTitle: t("hamburgerMenu.generatorsOptions.option7"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.generatorsOptions.option8"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/445221241044",
+                                collectionTitle: t("hamburgerMenu.generatorsOptions.option8"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.generatorsOptions.option9"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443625767124",
+                                collectionTitle: t("hamburgerMenu.generatorsOptions.option9"),
+                                collectionImage: "",
+                            },
                         },
                     ],
                 },
                 {
                     title: t("hamburgerMenu.powerStation"),
+                    route: "collectionscreen",
+                    params: {
+                        collectionId: "gid://shopify/Collection/443234615508",
+                        collectionTitle: t("hamburgerMenu.powerStation"),
+                        collectionImage: "",
+                    },
                     children: [
                         {
                             title: t("hamburgerMenu.powerStationOptions.option1"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443622785236",
+                                collectionTitle: t("hamburgerMenu.powerStationOptions.option1"),
+                                collectionImage: "",
+                            },
                         },
                     ],
                 },
                 {
                     title: t("hamburgerMenu.carWasher"),
+                    route: "collectionscreen",
+                    params: {
+                        collectionId: "gid://shopify/Collection/443234713812",
+                        collectionTitle: t("hamburgerMenu.carWasher"),
+                        collectionImage: "",
+                    },
                     children: [
                         {
                             title: t("hamburgerMenu.carWasherOptions.option1"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443622752468",
+                                collectionTitle: t("hamburgerMenu.carWasherOptions.option1"),
+                                collectionImage: "",
+                            },
                         },
                     ],
                 },
                 {
                     title: t("hamburgerMenu.waterPump"),
+                    route: "collectionscreen",
+                    params: {
+                        collectionId: "gid://shopify/Collection/443234746580",
+                        collectionTitle: t("hamburgerMenu.waterPump"),
+                        collectionImage: "",
+                    },
                     children: [
                         {
                             title: t("hamburgerMenu.waterPumpOptions.option1"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443266826452",
+                                collectionTitle: t("hamburgerMenu.waterPumpOptions.option1"),
+                                collectionImage: "",
+                            },
                             children: [
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option1Options.option1"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443621048532",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option1Options.option1"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option1Options.option2"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443621114068",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option1Options.option2"),
+                                        collectionImage: "",
+                                    },
                                 },
                             ],
                         },
                         {
                             title: t("hamburgerMenu.waterPumpOptions.option2"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443266859220",
+                                collectionTitle: t("hamburgerMenu.waterPumpOptions.option2"),
+                                collectionImage: "",
+                            },
                             children: [
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option2Options.option1"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443621146836",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option2Options.option1"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option2Options.option2"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443621277908",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option2Options.option2"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option2Options.option3"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443621474516",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option2Options.option3"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option2Options.option4"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443621638356",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option2Options.option4"),
+                                        collectionImage: "",
+                                    },
                                 },
                             ],
                         },
                         {
                             title: t("hamburgerMenu.waterPumpOptions.option3"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443266891988",
+                                collectionTitle: t("hamburgerMenu.waterPumpOptions.option3"),
+                                collectionImage: "",
+                            },
                             children: [
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option3Options.option1"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443622129876",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option3Options.option1"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option3Options.option2"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443622162644",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option3Options.option2"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option3Options.option3"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443622195412",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option3Options.option3"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option3Options.option4"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443622228180",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option3Options.option4"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option3Options.option5"
                                     ),
-                                    route: "deepItem1",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443622359252",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option3Options.option5"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option3Options.option6"
                                     ),
-                                    route: "deepItem2",
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443622424788",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option3Options.option6"),
+                                        collectionImage: "",
+                                    },
                                 },
                                 {
                                     title: t(
                                         "hamburgerMenu.waterPumpOptions.option3Options.option7"
                                     ),
-                                    route: "deepItem1",
-                                },
-                                {
-                                    title: t(
-                                        "hamburgerMenu.waterPumpOptions.option3Options.option8"
-                                    ),
-                                    route: "deepItem1",
-                                },
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/443622457556",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option3Options.option7"),
+                                        collectionImage: "",
+                                    },
+                                }
                             ],
                         },
                     ],
                 },
                 {
+                    title: t("hamburgerMenu.solarPanel"),
+                    route: "collectionscreen",
+                    params: {
+                        collectionId: "gid://shopify/Collection/444937961684",
+                        collectionTitle: t("hamburgerMenu.solarPanel"),
+                        collectionImage: "",
+                    },
+                    children: [
+                        {
+                            title: t("hamburgerMenu.solarPanelOptions.option1"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/445225140436",
+                                collectionTitle: t("hamburgerMenu.solarPanelOptions.option1"),
+                                collectionImage: "",
+                            },
+                        },
+                        {
+                            title: t("hamburgerMenu.solarPanelOptions.option2"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/445225238740",
+                                collectionTitle: t("hamburgerMenu.solarPanelOptions.option2"),
+                                collectionImage: "",
+                            },
+                        },
+                        {
+                            title: t("hamburgerMenu.solarPanelOptions.option3"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/445225304276",
+                                collectionTitle: t("hamburgerMenu.solarPanelOptions.option3"),
+                                collectionImage: "",
+                            },
+                        },
+                        {
+                            title: t("hamburgerMenu.solarPanelOptions.option4"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/445225337044",
+                                collectionTitle: t("hamburgerMenu.solarPanelOptions.option4"),
+                                collectionImage: "",
+                            },
+                        },
+                        {
+                            title: t("hamburgerMenu.solarPanelOptions.option5"),
+                            route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/445225402580",
+                                collectionTitle: t("hamburgerMenu.solarPanelOptions.option5"),
+                                collectionImage: "",
+                            },
+                        },
+                    ],
+                },
+                {
                     title: t("hamburgerMenu.accessories"),
+                    route: "collectionscreen",
+                    params: {
+                        collectionId: "gid://shopify/Collection/443234779348",
+                        collectionTitle: t("hamburgerMenu.accessories"),
+                        collectionImage: "",
+                    },
                     children: [
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option1"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620196564",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option1"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option2"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620327636",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option2"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option3"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620458708",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option3"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option4"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620524244",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option4"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option5"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620557012",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option5"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option6"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620589780",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option6"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option7"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620688084",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option7"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option8"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620720852",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option8"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option9"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620786388",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option9"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option10"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620851924",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option10"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option11"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620917460",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option11"),
+                                collectionImage: "",
+                            },
                         },
                         {
                             title: t("hamburgerMenu.accessoriesOptions.option12"),
                             route: "collectionscreen",
+                            params: {
+                                collectionId: "gid://shopify/Collection/443620950228",
+                                collectionTitle: t("hamburgerMenu.accessoriesOptions.option12"),
+                                collectionImage: "",
+                            },
                         },
                     ],
                 },
@@ -809,8 +1102,12 @@ export const useMenuData = () => {
             route: "collectionscreen",
             params: {
                 collectionId: "gid://shopify/Collection/439668539604",
-                collectionTitle: "Best Sellers",
+                collectionTitle: t("hamburgerMenu.bestSellers"),
                 collectionImage: images.aboutUsBanner3,
+                collectionSort: {
+                    sortKey: 'BEST_SELLING',
+                    reverse: false,
+                }
             },
         },
         {
@@ -818,8 +1115,12 @@ export const useMenuData = () => {
             route: "collectionscreen",
             params: {
                 collectionId: "gid://shopify/Collection/439668572372",
-                collectionTitle: "New Arrivals",
+                collectionTitle: t("hamburgerMenu.bestSellers"),
                 collectionImage: images.aboutUsBanner1,
+                collectionSort: {
+                    sortKey: 'CREATED',
+                    reverse: true,
+                }
             },
         },
         { title: t("hamburgerMenu.bulkOrder"), route: "bulkorderform" },
@@ -1038,44 +1339,88 @@ export const cardsData = [
     }
 ];
 
-export const ourProducts = [
-    {
-        id: "1",
-        title: "Samsun Solar",
-        image: images.ourProduct1,
-        collectionId: "gid://shopify/Collection/443227111636"
-    },
-    {
-        id: "2",
-        title: "New Arrivals",
-        image: images.ourProduct2,
-        collectionId: "gid://shopify/Collection/439668572372"
-    },
-    {
-        id: "3",
-        title: "NBS Solar",
-        image: images.ourProduct3,
-        collectionId: "gid://shopify/Collection/439108534484"
-    },
-    {
-        id: "4",
-        title: "NBS Solar",
-        image: images.ourProduct4,
-        collectionId: "gid://shopify/Collection/439108534484"
-    },
-    {
-        id: "5",
-        title: "Su-Mak Solar",
-        image: images.ourProduct5,
-        collectionId: "gid://shopify/Collection/443234484436"
-    },
-    {
-        id: "6",
-        title: "Perkins Generator",
-        image: images.ourProduct6,
-        collectionId: "gid://shopify/Collection/444937568468"
-    }
-];
+export const useOurProducts = () => {
+    // const { t } = useTranslation();
+    const { t } = i18next;
+
+    return [
+        {
+            id: "1",
+            title: t('collectionBanner.banner1'),
+            image: images.ourProduct1,
+            collectionId: "gid://shopify/Collection/443227111636"
+        },
+        {
+            id: "2",
+            title: t('collectionBanner.banner2'),
+            image: images.ourProduct2,
+            collectionId: "gid://shopify/Collection/439108534484"
+        },
+        {
+            id: "3",
+            title: t('collectionBanner.banner3'),
+            image: images.ourProduct3,
+            collectionId: "gid://shopify/Collection/439668572372"
+        },
+        {
+            id: "4",
+            title: t('collectionBanner.banner4'),
+            image: images.ourProduct4,
+            collectionId: "gid://shopify/Collection/439108534484"
+        },
+        {
+            id: "5",
+            title: t('collectionBanner.banner5'),
+            image: images.ourProduct5,
+            collectionId: "gid://shopify/Collection/443234484436"
+        },
+        {
+            id: "6",
+            title: t('collectionBanner.banner6'),
+            image: images.ourProduct6,
+            collectionId: "gid://shopify/Collection/444937568468"
+        }
+    ];
+};
+
+// export const ourProducts = [
+//     {
+//         id: "1",
+//         title: "Samsun Solar",
+//         image: images.ourProduct1,
+//         collectionId: "gid://shopify/Collection/443227111636"
+//     },
+//     {
+//         id: "2",
+//         title: "NBS Solar",
+//         image: images.ourProduct2,
+//         collectionId: "gid://shopify/Collection/439108534484"
+//     },
+//     {
+//         id: "3",
+//         title: "New Arrivals",
+//         image: images.ourProduct3,
+//         collectionId: "gid://shopify/Collection/439668572372"
+//     },
+//     {
+//         id: "4",
+//         title: "NBS Solar",
+//         image: images.ourProduct4,
+//         collectionId: "gid://shopify/Collection/439108534484"
+//     },
+//     {
+//         id: "5",
+//         title: "Su-Mak Solar",
+//         image: images.ourProduct5,
+//         collectionId: "gid://shopify/Collection/443234484436"
+//     },
+//     {
+//         id: "6",
+//         title: "Perkins Generator",
+//         image: images.ourProduct6,
+//         collectionId: "gid://shopify/Collection/444937568468"
+//     }
+// ];
 
 export const useCategories = () => {
     // const { t } = useTranslation();

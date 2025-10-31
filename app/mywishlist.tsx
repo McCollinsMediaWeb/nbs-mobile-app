@@ -110,7 +110,10 @@ const MyWishlist: React.FC<MyWishlistProps> = () => {
                 )}
               />
             ) : (
-              <NotFoundCard />
+              <NotFoundCard
+                title={t("emptyWishlist.title")}
+                subtitle={t("emptyWishlist.subtitle")}
+              />
             )}
 
           </View>

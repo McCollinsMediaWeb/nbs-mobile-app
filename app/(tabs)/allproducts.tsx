@@ -4,10 +4,10 @@ import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity,
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import FilterComponent from '@/components/FilterComponent';
-import HeaderWithSearch from '@/components/HeaderWithSearch';
+import HeaderWithSearchTwo from '@/components/HeaderWithSearchTwo';
 import ProductCard from '@/components/ProductCard';
 import { COLORS, icons } from '@/constants';
-import { ourProducts } from '@/data';
+import { useOurProducts } from '@/data';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fetchGraphQL } from '@/utils/fetchGraphql';
@@ -128,7 +128,7 @@ const AllProducts: React.FC = () => {
     const filterSheetRef = useRef<any>(null);
     const sortSheetRef = useRef<any>(null);
     const [expanded, setExpanded] = useState<string | null>(null);
-
+    const ourProducts = useOurProducts();
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
     const [sort, setSort] = useState<{ sortKey: SortKey; reverse: boolean }>({
@@ -182,7 +182,7 @@ const AllProducts: React.FC = () => {
             <View>
                 {/* Headline */}
                 <View style={styles.headlineContainer}>
-                    <Text style={[styles.headline, { color: COLORS.white }]}>PRODUCTS</Text>
+                    <Text style={[styles.headline, { color: COLORS.white }]}>{t("products")}</Text>
                 </View>
             </View>
         ),
@@ -225,17 +225,17 @@ const AllProducts: React.FC = () => {
         <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
             {/* Top Search Header */}
             <View style={styles.headerContainer}>
-                <HeaderWithSearch title={t('allProduct.title')} icon={icons.search} onPress={onSearchPress} />
+                <HeaderWithSearchTwo title={t('allProduct.title')} icon={icons.search} onPress={onSearchPress} />
             </View>
 
             <View style={styles.filterSortContainer}>
                 <TouchableOpacity style={styles.halfBox} onPress={onFilterPress}>
                     <Image source={icons.filter} style={[styles.icon, { tintColor: dark ? COLORS.white : COLORS.primary }]} />
-                    <Text style={[styles.label, { color: dark ? COLORS.white : COLORS.primary }]}>Filters</Text>
+                    <Text style={[styles.label, { color: dark ? COLORS.white : COLORS.primary }]}>{t("filters.title")}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.halfBox, styles.noBorder]} onPress={onSortPress}>
-                    <Text style={[styles.label, { color: dark ? COLORS.white : COLORS.primary }]}>Sort By</Text>
+                    <Text style={[styles.label, { color: dark ? COLORS.white : COLORS.primary }]}>{t("sortBy.title")}</Text>
                     <Image source={icons.arrowDown} style={[styles.icon, { tintColor: dark ? COLORS.white : COLORS.primary }]} />
                 </TouchableOpacity>
             </View>

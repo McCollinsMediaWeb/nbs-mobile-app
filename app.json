@@ -58,7 +58,8 @@
         {
           "iosUrlScheme": "com.googleusercontent.apps.718209129465-kl54tsra6p0glvmi6ofg3u6dq53ptpsg"
         }
-      ]
+      ],
+      ["react-native-video"]
     ],
     "experiments": {
       "typedRoutes": true

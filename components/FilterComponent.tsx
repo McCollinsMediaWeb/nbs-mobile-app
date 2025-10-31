@@ -825,6 +825,7 @@
 import { COLORS, icons } from '@/constants';
 import { useTheme } from '@/theme/ThemeProvider';
 import { normalizeFont } from '@/utils/normalizeFont';
+import i18next from 'i18next';
 import React, { useCallback, useState } from 'react';
 import { Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -841,19 +842,50 @@ interface FilterComponentProps {
     handleShowResults: () => void;
 }
 
+// const SORT_OPTIONS = [
+//     { label: 'option1', sortKey: 'RELEVANCE', reverse: false },
+//     { label: 'option2', sortKey: 'BEST_SELLING', reverse: false },
+//     { label: 'Alphabetically A-Z', sortKey: 'TITLE', reverse: false },
+//     { label: 'Alphabetically Z-A', sortKey: 'TITLE', reverse: true },
+//     { label: 'Price low to high', sortKey: 'PRICE', reverse: false },
+//     { label: 'Price high to low', sortKey: 'PRICE', reverse: true },
+//     { label: 'Date old to new', sortKey: 'CREATED_AT', reverse: false },
+//     { label: 'Date new to old', sortKey: 'CREATED_AT', reverse: true },
+// ];
+
+// const PRODUCT_TYPES = ["AVR", "Batteries", "Generators", "Inverter/UPS", "Ongrid Inverter","Power Station", "Solar Hybrid UPS", "Water Pumps"];
+// const BRANDS = ["Nbs Groups", "Samsun", "Sumak", "Sunride"];
+
 const SORT_OPTIONS = [
-    { label: 'Featured', sortKey: 'RELEVANCE', reverse: false },
-    { label: 'Best selling', sortKey: 'BEST_SELLING', reverse: false },
-    { label: 'Alphabetically A-Z', sortKey: 'TITLE', reverse: false },
-    { label: 'Alphabetically Z-A', sortKey: 'TITLE', reverse: true },
-    { label: 'Price low to high', sortKey: 'PRICE', reverse: false },
-    { label: 'Price high to low', sortKey: 'PRICE', reverse: true },
-    { label: 'Date old to new', sortKey: 'CREATED_AT', reverse: false },
-    { label: 'Date new to old', sortKey: 'CREATED_AT', reverse: true },
+    { label: 'option1', sortKey: 'RELEVANCE', reverse: false },
+    { label: 'option2', sortKey: 'BEST_SELLING', reverse: false },
+    { label: 'option3', sortKey: 'TITLE', reverse: false },
+    { label: 'option4', sortKey: 'TITLE', reverse: true },
+    { label: 'option5', sortKey: 'PRICE', reverse: false },
+    { label: 'option6', sortKey: 'PRICE', reverse: true },
+    { label: 'option7', sortKey: 'CREATED_AT', reverse: false },
+    { label: 'option8', sortKey: 'CREATED_AT', reverse: true },
 ];
 
-const PRODUCT_TYPES = ["AVR", "Batteries", "Generators", "Inverter/UPS", "Ongrid Inverter","Power Station", "Solar Hybrid UPS", "Water Pumps"];
-const BRANDS = ["Nbs Groups", "Samsun", "Sumak", "Sunride"];
+
+const PRODUCT_TYPES = [
+    { key: "option1", value: "AVR" },
+    { key: "option2", value: "Batteries" },
+    { key: "option3", value: "Generators" },
+    { key: "option4", value: "Inverter/UPS" },
+    { key: "option5", value: "Ongrid Inverter" },
+    { key: "option6", value: "Power Station" },
+    { key: "option7", value: "Solar Hybrid UPS" },
+    { key: "option8", value: "Water Pumps" },
+];
+
+const BRANDS = [
+    { key: "option1", value: "Nbs Groups" },
+    { key: "option2", value: "Samsun" },
+    { key: "option3", value: "Sumak" },
+    { key: "option4", value: "Sunride" },
+];
+
 
 const FilterComponent: React.FC<FilterComponentProps> = ({
     filterSheetRef,
@@ -870,6 +902,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
     const { dark } = useTheme();
     const [filterVisible, setFilterVisible] = useState(false);
     const [sortVisible, setSortVisible] = useState(false);
+    const { t } = i18next;
 
     // Expose methods to parent via refs
     React.useImperativeHandle(filterSheetRef, () => ({
@@ -903,7 +936,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     <View style={[styles.modalContent, { backgroundColor: bgColor }]}>
                         <View style={styles.sheetHeader}>
                             <Text style={[styles.sheetTitle, { color: textColor }]}>
-                                Filters
+                                {t("filters.title")}
                             </Text>
                             <TouchableOpacity onPress={() => setFilterVisible(false)}>
                                 <Image
@@ -920,7 +953,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                                 onPress={() => toggleExpand("product")}
                             >
                                 <Text style={[styles.optionText, { color: textColor }]}>
-                                    Product Type
+                                    {t("filters.productType.title")}
                                 </Text>
                                 <Text style={[styles.optionText, { fontSize: 30, color: textColor }]}>
                                     {expanded === "product" ? "-" : "+"}
@@ -929,7 +962,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
                             {expanded === "product" && (
                                 <View style={styles.accordionBody}>
-                                    {PRODUCT_TYPES.map((item) => (
+                                    {/* {PRODUCT_TYPES.map((item) => (
                                         <TouchableOpacity
                                             key={item}
                                             style={styles.optionRow}
@@ -943,7 +976,23 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                                                 {item}
                                             </Text>
                                         </TouchableOpacity>
+                                    ))} */}
+                                    {PRODUCT_TYPES.map((item) => (
+                                        <TouchableOpacity
+                                            key={item.value}
+                                            style={styles.optionRow}
+                                            onPress={() => toggleCheckbox(item.value, "product")}
+                                        >
+                                            <Image
+                                                source={selectedTypes.includes(item.value) ? icons.ticked : icons.unticked}
+                                                style={[styles.checkboxIcon, { tintColor: textColor }]}
+                                            />
+                                            <Text style={[styles.optionText, { color: textColor }]}>
+                                                {t(`filters.productType.${item.key}`)}
+                                            </Text>
+                                        </TouchableOpacity>
                                     ))}
+
                                 </View>
                             )}
 
@@ -953,7 +1002,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                                 onPress={() => toggleExpand("brands")}
                             >
                                 <Text style={[styles.optionText, { color: textColor }]}>
-                                    Brands
+                                    {t("filters.brands.title")}
                                 </Text>
                                 <Text style={[styles.optionText, { fontSize: 30, color: textColor }]}>
                                     {expanded === "brands" ? "-" : "+"}
@@ -962,7 +1011,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
                             {expanded === "brands" && (
                                 <View style={styles.accordionBody}>
-                                    {BRANDS.map((item) => (
+                                    {/* {BRANDS.map((item) => (
                                         <TouchableOpacity
                                             key={item}
                                             style={styles.optionRow}
@@ -976,13 +1025,28 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                                                 {item}
                                             </Text>
                                         </TouchableOpacity>
+                                    ))} */}
+                                    {BRANDS.map((item) => (
+                                        <TouchableOpacity
+                                            key={item.value}
+                                            style={styles.optionRow}
+                                            onPress={() => toggleCheckbox(item.value, "brands")}
+                                        >
+                                            <Image
+                                                source={selectedBrands.includes(item.value) ? icons.ticked : icons.unticked}
+                                                style={[styles.checkboxIcon, { tintColor: textColor }]}
+                                            />
+                                            <Text style={[styles.optionText, { color: textColor }]}>
+                                                {t(`filters.brands.${item.key}`)}
+                                            </Text>
+                                        </TouchableOpacity>
                                     ))}
                                 </View>
                             )}
                         </ScrollView>
 
                         <TouchableOpacity style={styles.applyButton} onPress={handleShowResults}>
-                            <Text style={styles.applyButtonText}>Show Results</Text>
+                            <Text style={styles.applyButtonText}>{t("filters.showResults")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -999,7 +1063,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     <View style={[styles.modalContent, { backgroundColor: bgColor }]}>
                         <View style={styles.sheetHeader}>
                             <Text style={[styles.sheetTitle, { color: textColor }]}>
-                                Sort By
+                                {t("sortBy.title")}
                             </Text>
                             <TouchableOpacity onPress={() => setSortVisible(false)}>
                                 <Image
@@ -1010,7 +1074,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                         </View>
 
                         <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContent}>
-                            {SORT_OPTIONS.map((option) => (
+                            {/* {SORT_OPTIONS.map((option) => (
                                 <TouchableOpacity
                                     key={`${option.sortKey}-${option.reverse}`}
                                     style={styles.option}
@@ -1019,10 +1083,25 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                                     <Text style={[styles.optionText, { color: textColor }]}>
                                         {option.label}
                                     </Text>
-
-                                    {/* Tick mark if this is the current sort */}
                                     {currentSort?.sortKey === option.sortKey && currentSort?.reverse === option.reverse && (
-                                         <Image source={icons.checkMark} style={[styles.tickMark, { tintColor: dark ? COLORS.white : COLORS.primary }]} />
+                                        <Image source={icons.checkMark} style={[styles.tickMark, { tintColor: dark ? COLORS.white : COLORS.primary }]} />
+                                    )}
+                                </TouchableOpacity>
+                            ))} */}
+                            {SORT_OPTIONS.map((option) => (
+                                <TouchableOpacity
+                                    key={`${option.sortKey}-${option.reverse}`}
+                                    style={styles.option}
+                                    onPress={() => handleSortPress(option.sortKey, option.reverse)}
+                                >
+                                    <Text style={[styles.optionText, { color: textColor }]}>
+                                        {t(`sortBy.${option.label}`)}
+                                    </Text>
+                                    {currentSort?.sortKey === option.sortKey && currentSort?.reverse === option.reverse && (
+                                        <Image
+                                            source={icons.checkMark}
+                                            style={[styles.tickMark, { tintColor: dark ? COLORS.white : COLORS.primary }]}
+                                        />
                                     )}
                                 </TouchableOpacity>
                             ))}

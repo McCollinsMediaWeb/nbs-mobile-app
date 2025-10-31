@@ -77,7 +77,11 @@ const SelectShippingAddress = () => {
               />
             ))
           ) : (
-            <NotFoundCard />
+            <NotFoundCard
+              title={t("noSavedAddress.title")}
+              subtitle={t("noSavedAddress.subtitle")}
+            />
+
           )}
 
           <Button

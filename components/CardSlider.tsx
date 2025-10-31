@@ -1,3 +1,4 @@
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { normalizeFont } from '@/utils/normalizeFont';
 import React, { useRef, useState } from 'react';
 import { Dimensions, Image, ImageSourcePropType, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -16,6 +17,7 @@ interface CardSliderProps {
 const CardSlider: React.FC<CardSliderProps> = ({ cards }) => {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const scrollViewRef = useRef<ScrollView | null>(null);
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
     const { dark } = useTheme();
 
     // useEffect(() => {
@@ -64,7 +66,10 @@ const CardSlider: React.FC<CardSliderProps> = ({ cards }) => {
                     </View>
                 ))}
             </ScrollView>
-            <View style={styles.squareDotContainer} >
+            <View style={[
+                styles.squareDotContainer,
+                appLanguage === 'ar' && { transform: [{ rotate: '180deg' }] }
+            ]}>
                 {cards.map((_, index) => (
                     <View
                         key={index}
@@ -75,7 +80,7 @@ const CardSlider: React.FC<CardSliderProps> = ({ cards }) => {
                     />
                 ))}
             </View>
-        </View>
+        </View >
     );
 };
 

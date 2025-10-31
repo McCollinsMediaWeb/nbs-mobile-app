@@ -31,8 +31,6 @@ export const fetchGraphQL = async <T = any>(query: string, variables?: Record<st
 
     const language = (await AsyncStorage.getItem('language')) || 'en';
 
-    // console.log("language", language)
-
     try {
         const response = await fetch(API_URL, {
             method: "POST",

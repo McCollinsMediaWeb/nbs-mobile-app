@@ -104,8 +104,7 @@
                 },
                 "option6": "AVR",
                 "option7": "Solar Charge Controller",
-                "option8": "Su-Mak photovoltaic (PV)",
-                "option9": "Battery Management System (BMS)"
+                "option8": "Battery Management System (BMS)"
             },
             "samsunSolar": "Samsun Solar",
             "samsunSolarOptions": {
@@ -146,7 +145,7 @@
                 "option5": "Kama",
                 "option6": "Kubota",
                 "option7": "Perkins",
-                "option8": "Yamaha",
+                "option8": "Cummins",
                 "option9": "Yanmar"
             },
             "powerStation": "Power Station",
@@ -173,15 +172,22 @@
                 },
                 "option3": "Electric",
                 "option3Options": {
-                    "option1": "Prakash",
-                    "option2": "Panasonic",
-                    "option3": "Pedrollo",
-                    "option4": "Reyon",
-                    "option5": "Saer",
-                    "option6": "Silver",
-                    "option7": "Spino",
-                    "option8": "Vespa"
+                    "option1": "Panasonic",
+                    "option2": "Pedrollo",
+                    "option3": "Reyon",
+                    "option4": "Saer",
+                    "option5": "Silver",
+                    "option6": "Spino",
+                    "option7": "Vespa"
                 }
+            },
+            "solarPanel": "Solar Panel",
+            "solarPanelOptions": {
+                "option1": "Ja-Solar Panel",
+                "option2": "Risen Solar Panel ",
+                "option3": "Trina Solar Panel",
+                "option4": "Jinko Solar Panel",
+                "option5": "Su-Mak Solar Panel"
             },
             "accessories": "Accessories",
             "accessoriesOptions": {
@@ -229,6 +235,42 @@
                 "content": "Its mission goes beyond product delivery it's about making a measurable difference. Whether through improved agricultural output, enhanced power security, or water management, every solution is designed to support long-term economic growth and energy resilience.With a customer-first approach, a strong presence in the Middle East, Asia, and Africa, and an expanding dealer and service network, Nazeer Basha Syed Mech. & Eng. Equip. Trdg. Co. L.L.C. continues to redefine how essential energy and mechanical resources are delivered in the 21st century"
             }
         },
+        "ourGallery": {
+            "title": "Driving The Renewable Revolution",
+            "subTitle": "Discover reliable and cost-effective solar power systems with NBS Solar."
+        },
+        "emptyWishlist": {
+            "title": "Your wishlist is empty",
+            "subtitle": "Looks like you haven’t added any items yet. Start exploring and add your favorites!"
+        },
+        "emptyCart": {
+            "title": "Your cart is empty",
+            "subtitle": "Add some products to your cart to continue shopping."
+        },
+        "noOngoingOrders": {
+            "title": "No ongoing orders",
+            "subtitle": "You don’t have any active orders at the moment. Check back later."
+        },
+        "noCancelledOrders": {
+            "title": "No cancelled orders",
+            "subtitle": "You haven’t cancelled any orders yet."
+        },
+        "noCompletedOrders": {
+            "title": "No completed orders",
+            "subtitle": "You haven’t completed any orders yet. Once your orders are delivered, they’ll appear here."
+        },
+        "noSavedAddress": {
+            "title": "No saved addresses",
+            "subtitle": "You haven’t added any addresses yet. Add one to make checkout faster next time."
+        },
+        "collectionBanner": {
+            "banner1": "Samsun Solar",
+            "banner2": "NBS Solar",
+            "banner3": "New Arrivals",
+            "banner4": "NBS Solar",
+            "banner5": "Su-Mak Solar",
+            "banner6": "Perkins Generator"
+        },
         "banners": {
             "banner1": {
                 "label": "NBS SOLAR INVERTER",
@@ -247,6 +289,39 @@
             "item3": {
                 "title": "Top Picks"
             }
+        },
+        "filters": {
+            "title": "Filters",
+            "productType": {
+                "title": "Product Type",
+                "option1": "AVR",
+                "option2": "Batteries",
+                "option3": "Generators",
+                "option4": "Inverter/UPS",
+                "option5": "Ongrid Inverter",
+                "option6": "Power Station",
+                "option7": "Solar Hybrid UPS",
+                "option8": "Water Pumps"
+            },
+            "brands": {
+                "title": "Brands",
+                "option1": "Nbs Groups",
+                "option2": "Samsun",
+                "option3": "Sumak",
+                "option4": "Sunride"
+            },
+            "showResults": "Show Results"
+        },
+        "sortBy": {
+            "title": "Sort By",
+            "option1": "Featured",
+            "option2": "Best selling",
+            "option3": "Alphabetically A-Z",
+            "option4": "Alphabetically Z-A",
+            "option5": "Price low to high",
+            "option6": "Price high to low",
+            "option7": "Date old to new",
+            "option8": "Date new to old"
         },
         "popularProducts": {
             "subTitle": "Exceptional Choices for Discerning Tastes",
@@ -310,7 +385,56 @@
             "youlike": "You might also like",
             "addToCart": "Add to Cart",
             "outOfStock": "Out of Stock",
-            "totalPrice": "Total Price"
+            "totalPrice": "Total Price",
+            "viewCart": "View Cart",
+            "priceOnRequest": "Price on Request",
+            "submitQuoteRequest": "Submit Quote Request"
+        },
+        "productCard": {
+            "priceOnRequest": "Price on Request",
+            "outOfStock": "Out of Stock"
+        },
+        "products": "Products",
+        "quoteRequestForm": {
+            "title": "Request a Quote",
+            "name": "Name *",
+            "namePlaceholder": "Enter your name",
+            "email": "Email *",
+            "emailPlaceholder": "Enter your email",
+            "phoneNumber": "Phone Number *",
+            "phoneNumberPlaceholder": "Enter your phone number",
+            "companyName": "Company Name",
+            "companyNamePlaceholder": "Enter your company name",
+            "trnNumber": "TRN Number",
+            "trnNumber2": "(Optional)",
+            "trnNumberPlaceholder": "Enter your 15-digit TRN number",
+            "subject": "Subject",
+            "subjectPlaceholder": "Enter subject",
+            "additionalDetails": "Additional Details",
+            "additionalDetailsPlaceholder": "Enter additional details",
+            "cancel": "Cancel",
+            "submit": "Submit",
+            "submitting": "Submitting"
+        },
+        "bulkRequestForm": {
+            "title": "Bulk Order Request",
+            "name": "Name *",
+            "namePlaceholder": "Enter your name",
+            "email": "Email *",
+            "emailPlaceholder": "Enter your email",
+            "phoneNumber": "Phone Number *",
+            "phoneNumberPlaceholder": "Enter your phone number",
+            "companyName": "Company Name",
+            "companyNamePlaceholder": "Enter your company name",
+            "trnNumber": "TRN Number",
+            "trnNumber2": "(Optional)",
+            "trnNumberPlaceholder": "Enter your 15-digit TRN number",
+            "subject": "Subject",
+            "subjectPlaceholder": "Enter subject",
+            "additionalDetails": "Additional Details",
+            "additionalDetailsPlaceholder": "Enter additional details (specification, requirements, etc.)",
+            "submit": "Submit Bulk Order",
+            "submitting": "Submitting"
         },
         "allProduct": {
             "title": "All Products"
@@ -451,6 +575,62 @@
                 "subTitle": "Are you sure you want to log out?",
                 "button1": "Yes, Logout",
                 "button2": "Cancel"
+            }
+        },
+        "privacyPolicy": {
+            "title": "Privacy Policy",
+            "intro": "At NBS Group, we respect your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and protect your data.",
+            "section1Title": "1. Information We Collect",
+            "section1List": [
+                "Name, email address, phone number, and shipping/billing address",
+                "Order details and transaction history",
+                "Device and browser information (for website usage analytics)"
+            ],
+            "section2Title": "2. How We Use Your Information",
+            "section2List": [
+                "Process and deliver your orders",
+                "Communicate order updates and customer support",
+                "Improve our website, products, and services",
+                "Send promotional updates (only if you opt in)"
+            ],
+            "section3Title": "3. Data Protection",
+            "section3Content": "We take appropriate security measures to protect your personal data from unauthorized access, misuse, or disclosure. Your information is never sold or shared with third parties without your consent, except as required by law.",
+            "section4Title": "4. Cookies",
+            "section4Content": "Our website may use cookies to enhance user experience. You can choose to disable cookies through your browser settings.",
+            "section5Title": "5. Your Rights",
+            "section5Content": "You may request access, correction, or deletion of your personal data at any time by contacting us.",
+            "section6Title": "6. Contact Us",
+            "section6Content": "If you have any questions about this Privacy Policy or how we handle your data, please contact us."
+        },
+        "helpCenter": {
+            "title": "Help Center",
+            "contactUs": {
+                "title": "Contact us",
+                "callUs": "Call Us",
+                "emailUs": "Email Us",
+                "whatsapp": "Whatsapp",
+                "website": "Website",
+                "facebook": "Facebook",
+                "instagram": "Instagram"
+            },
+            "faqs": {
+                "title": "FAQ",
+                "question1": "How do I place an order on the app?",
+                "question1Answer": "To place an order, simply browse through our product catalog, select the items you want, add them to your cart, and proceed to checkout to confirm your order.",
+                "question2": "Can I view product details, such as specifications and availability?",
+                "question2Answer": "Yes, you can view detailed product information including specifications, availability, and customer reviews. Simply navigate to the product page within the app.",
+                "question3": "What should I do if I need to cancel or modify an order?",
+                "question3Answer": "To cancel or modify an order, go to the \"My Orders\" section, find your order, and follow the provided options to make changes.",
+                "question4": "How can I find products from specific categories or brands?",
+                "question4Answer": "You can use the app’s search filters to find products from specific categories or brands. Filter results by categories such as electronics or clothing.",
+                "question5": "Is there a way to make payments for orders within the app?",
+                "question5Answer": "Yes, you can securely make payments for orders using various payment methods available in the app, including credit/debit cards and digital wallets.",
+                "question6": "Are my personal details and order information kept secure?",
+                "question6Answer": "Yes, we prioritize the security and confidentiality of your personal details and order information. Our app complies with strict privacy and data protection standards.",
+                "question7": "Can I request assistance with special product requirements or preferences?",
+                "question7Answer": "Yes, you can request assistance with special product requirements or preferences during the ordering process. Simply specify your preferences, and we'll do our best to accommodate them.",
+                "question8": "Is customer support available through this app?",
+                "question8Answer": "While we facilitate online shopping, our app is not for customer support. For assistance, please contact our support team through the designated channels provided in the app."
             }
         }
     }

@@ -350,6 +350,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { addProductToCart, removeProductFromCart } from '@/utils/actions/cartActions';
 import { checkWishlistStatus } from '@/utils/actions/wishListActions';
 import { normalizeFont } from '@/utils/normalizeFont';
+import i18next from 'i18next';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
     ActivityIndicator,
@@ -391,6 +392,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     const cartItems = useAppSelector(state => state.cart.cartItems);
     const [wishlist, setWishlist] = useState(false);
     const [loading, setLoading] = useState<{ [key: string]: boolean }>({});
+    const { t } = i18next;
     const { dark } = useTheme();
 
     // Memoize cart item lookup
@@ -512,7 +514,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 <View style={styles.bottomPriceContainer}>
                     {(productTags?.includes("request-a-qoute") || productTags?.includes("request-a-quote")) ? (
                         <TouchableOpacity style={styles.priceButton} onPress={onPress}>
-                            <Text style={styles.price}>Price on Request</Text>
+                            <Text style={styles.price}>{t('productCard.priceOnRequest')}</Text>
                         </TouchableOpacity>
 
                     ) : (
@@ -537,7 +539,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 {!availableForSale &&
                     !(productTags?.includes("request-a-qoute") || productTags?.includes("request-a-quote")) ? (
                     <View style={[styles.soldContainer, { backgroundColor: "rgb(111, 113, 155)" }]}>
-                        <Text style={[styles.soldText, { color: "#fff" }]}>Out of Stock</Text>
+                        <Text style={[styles.soldText, { color: "#fff" }]}>{t('productCard.outOfStock')}</Text>
                     </View>
                 ) : discount ? (
                     <View style={[styles.soldContainer, { backgroundColor: "rgb(177, 18, 22)" }]}>

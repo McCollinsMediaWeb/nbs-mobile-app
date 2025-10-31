@@ -171,7 +171,10 @@ const OngoingOrders = ({ orders, refreshing, onRefresh }: CancelledOrdersProps) 
           )}
         />
       ) : (
-        <NotFoundCard />
+        <NotFoundCard
+          title={t("noOngoingOrders.title")}
+          subtitle={t("noOngoingOrders.subtitle")}
+        />
       )}
       <RBSheet
         ref={refRBSheet}

@@ -1,5 +1,6 @@
 import { COLORS } from '@/constants';
 import { normalizeFont } from '@/utils/normalizeFont';
+import i18next from 'i18next';
 import React, { useState } from 'react';
 import {
     ActivityIndicator,
@@ -48,6 +49,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
         details: '',
     });
     const [loading, setLoading] = useState(false);
+    const { t } = i18next;
 
     const handleInputChange = (field: keyof QuoteFormData, value: string) => {
         setFormData(prev => ({
@@ -188,7 +190,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                     color: textColor,
                                 }}
                             >
-                                Request a Quote
+                               {t('quoteRequestForm.title')}
                             </Text>
                             <TouchableOpacity
                                 onPress={onClose}
@@ -216,7 +218,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                 <Text
                                     style={[styles.fonts, { marginBottom: 8, color: textColor }]}
                                 >
-                                    Name *
+                                     {t('quoteRequestForm.name')}
                                 </Text>
                                 <TextInput
                                     style={{
@@ -227,7 +229,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                         padding: 12,
                                         color: textColor,
                                     }}
-                                    placeholder="Enter your name"
+                                    placeholder= {t('quoteRequestForm.namePlaceholder')}
                                     placeholderTextColor={dark ? '#999999' : '#cccccc'}
                                     value={formData.name}
                                     onChangeText={v => handleInputChange('name', v)}
@@ -240,7 +242,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                 <Text
                                     style={[styles.fonts, { marginBottom: 8, color: textColor }]}
                                 >
-                                    Email *
+                                     {t('quoteRequestForm.email')}
                                 </Text>
                                 <TextInput
                                     style={{
@@ -251,7 +253,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                         padding: 12,
                                         color: textColor,
                                     }}
-                                    placeholder="Enter your email"
+                                    placeholder= {t('quoteRequestForm.emailPlaceholder')}
                                     placeholderTextColor={dark ? '#999999' : '#cccccc'}
                                     keyboardType="email-address"
                                     value={formData.email}
@@ -265,7 +267,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                 <Text
                                     style={[styles.fonts, { marginBottom: 8, color: textColor }]}
                                 >
-                                    Phone Number *
+                                     {t('quoteRequestForm.phoneNumber')}
                                 </Text>
                                 <TextInput
                                     style={{
@@ -276,7 +278,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                         padding: 12,
                                         color: textColor,
                                     }}
-                                    placeholder="Enter your phone number"
+                                    placeholder= {t('quoteRequestForm.phoneNumberPlaceholder')}
                                     placeholderTextColor={dark ? '#999999' : '#cccccc'}
                                     keyboardType="phone-pad"
                                     value={formData.phone}
@@ -290,7 +292,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                 <Text
                                     style={[styles.fonts, { marginBottom: 8, color: textColor }]}
                                 >
-                                    Company Name
+                                     {t('quoteRequestForm.companyName')}
                                 </Text>
                                 <TextInput
                                     style={{
@@ -301,7 +303,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                         padding: 12,
                                         color: textColor,
                                     }}
-                                    placeholder="Enter your company name"
+                                    placeholder= {t('quoteRequestForm.companyName')}
                                     placeholderTextColor={dark ? '#999999' : '#cccccc'}
                                     value={formData.company}
                                     onChangeText={v => handleInputChange('company', v)}
@@ -314,9 +316,9 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                 <Text
                                     style={[styles.fonts, { marginBottom: 8, color: textColor }]}
                                 >
-                                    TRN Number
+                                     {t('quoteRequestForm.trnNumber')}
                                     <Text style={{ fontWeight: '400', color: '#999999' }}>
-                                        {' '}(Optional)
+                                        {' '}{t('quoteRequestForm.trnNumber2')}
                                     </Text>
                                 </Text>
                                 <TextInput
@@ -328,7 +330,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                         padding: 12,
                                         color: textColor,
                                     }}
-                                    placeholder="Enter your 15-digit TRN number"
+                                    placeholder= {t('quoteRequestForm.trnNumberPlaceholder')}
                                     placeholderTextColor={dark ? '#999999' : '#cccccc'}
                                     value={formData.trn}
                                     onChangeText={v => handleInputChange('trn', v)}
@@ -341,7 +343,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                 <Text
                                     style={[styles.fonts, { marginBottom: 8, color: textColor }]}
                                 >
-                                    Subject
+                                    {t('quoteRequestForm.subject')}
                                 </Text>
                                 <TextInput
                                     style={{
@@ -352,7 +354,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                         padding: 12,
                                         color: textColor,
                                     }}
-                                    placeholder="Enter subject"
+                                    placeholder= {t('quoteRequestForm.subjectPlaceholder')}
                                     placeholderTextColor={dark ? '#999999' : '#cccccc'}
                                     value={formData.subject}
                                     onChangeText={v => handleInputChange('subject', v)}
@@ -365,7 +367,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                 <Text
                                     style={[styles.fonts, { marginBottom: 8, color: textColor }]}
                                 >
-                                    Additional Details
+                                     {t('quoteRequestForm.additionalDetails')}
                                 </Text>
                                 <TextInput
                                     style={{
@@ -378,7 +380,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                         minHeight: 120,
                                         textAlignVertical: 'top',
                                     }}
-                                    placeholder="Enter additional details"
+                                    placeholder= {t('quoteRequestForm.additionalDetailsPlaceholder')}
                                     placeholderTextColor={dark ? '#999999' : '#cccccc'}
                                     multiline
                                     numberOfLines={6}
@@ -414,7 +416,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                         fontSize: normalizeFont(16),
                                     }}
                                 >
-                                    Cancel
+                                   {t('quoteRequestForm.cancel')}
                                 </Text>
                             </TouchableOpacity>
 
@@ -438,7 +440,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                                         fontSize: normalizeFont(16),
                                     }}
                                 >
-                                    {loading ? 'Submitting...' : 'Submit Quote'}
+                                    {loading ? t('quoteRequestForm.submitting') : t('quoteRequestForm.submit')}
                                 </Text>
                             </TouchableOpacity>
                         </View>

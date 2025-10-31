@@ -89,8 +89,13 @@ const SettingsLanguage = () => {
                         />
                         <LanguageItem
                             checked={appLanguage === 'ar'}
-                            name="Arabic"
+                            name="العربية"
                             onPress={() => handleCheckboxPress('ar')}
+                        />
+                        <LanguageItem
+                            checked={appLanguage === 'fr'}
+                            name="Français"
+                            onPress={() => handleCheckboxPress('fr')}
                         />
                     </View>
                     {/* <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.black }]}>Others</Text>

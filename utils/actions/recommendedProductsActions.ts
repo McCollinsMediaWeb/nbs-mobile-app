@@ -11,6 +11,7 @@ export const fetchRecommendedProducts = (id: string) => async (dispatch: any) =>
                                         id
                                         title
                                         availableForSale
+                                        tags
                                         images(first: 1) {
                                             nodes {
                                                 transformedSrc(maxWidth: 195, maxHeight: 195)
@@ -52,6 +53,7 @@ export const fetchRecommendedProducts = (id: string) => async (dispatch: any) =>
                 price: recommendation.priceRange.minVariantPrice.amount,
                 oldPrice: recommendation.compareAtPriceRange.maxVariantPrice.amount,
                 merchandiseId: recommendation.variants.edges[0]?.node.id,
+                productTags: recommendation.tags,
             })
         );
 

@@ -81,16 +81,20 @@ const CartCard: React.FC<CartCardProps> = ({
                         <Feather style={styles.heartIcon} size={19} name='trash-2' color="red" />
                     </TouchableOpacity>
                 </View>
-                <View style={styles.viewContainer}>
+                <View style={[styles.viewContainer, { gap: 10 }]}>
                     <Text style={[styles.oldPrice, {
                         color: dark ? COLORS.greyscale300 : COLORS.grayscale700,
                     }]}>AED {oldPrice?.toFixed(3)}</Text>
-                </View>
-                <View style={styles.viewContainer}>
+
                     <Text style={[styles.price, {
                         color: "rgb(177, 18, 22)",
                     }]}>AED {price.toFixed(2)}</Text>
                 </View>
+                {/* <View style={styles.viewContainer}>
+                    <Text style={[styles.price, {
+                        color: "rgb(177, 18, 22)",
+                    }]}>AED {price.toFixed(2)}</Text>
+                </View> */}
                 <View style={styles.bottomViewContainer}>
                     <View style={styles.priceContainer}>
                         <Text style={[styles.subtotalPrice, {
@@ -236,7 +240,7 @@ const styles = StyleSheet.create({
     },
     qtyContainer: {
         // width: 130,
-        width: width * 0.32,
+        width: width * 0.30,
         // height: 46,
         height: SIZES.height * 0.045,
         borderRadius: 24,
@@ -246,12 +250,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     qtyText: {
-        fontSize: normalizeFont(18),
+        fontSize: normalizeFont(16),
         fontFamily: 'regular',
         color: COLORS.primary,
     },
     qtyNum: {
-        fontSize: normalizeFont(18),
+        fontSize: normalizeFont(16),
         fontFamily: 'semiBold',
         color: COLORS.primary,
         marginHorizontal: 12,

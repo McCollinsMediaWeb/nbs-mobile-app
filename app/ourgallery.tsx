@@ -165,18 +165,18 @@ const OurGallery = () => {
                         </ImageBackground> */}
                         <VideoSlider
                             videos={[
-                                { id: '1', uri: 'https://cdn.shopify.com/videos/c/o/v/47f10a261ef84b1e8036eff354caa445.mp4' },
-                                { id: '2', uri: 'https://cdn.shopify.com/videos/c/o/v/11083b069a524669a74f173902a3b005.mp4' },
-                                { id: '3', uri: 'https://cdn.shopify.com/videos/c/o/v/0490b14fd9624a3482f018bf52b9c01f.mp4' },
-                                { id: '4', uri: 'https://cdn.shopify.com/videos/c/o/v/e2237ed190454352aea6ae2b069770a5.mp4' }
+                                { id: '1', uri: 'https://cdn.shopify.com/videos/c/o/v/47f10a261ef84b1e8036eff354caa445.mp4', thumbnail: "https://cdn.shopify.com/s/files/1/0760/7743/3044/files/video-capture-t0001.25seg-1297.png?v=1761716614" },
+                                { id: '2', uri: 'https://cdn.shopify.com/videos/c/o/v/11083b069a524669a74f173902a3b005.mp4', thumbnail: "https://cdn.shopify.com/s/files/1/0760/7743/3044/files/video-capture-t0001.44seg-971.png?v=1761716688" },
+                                { id: '3', uri: 'https://cdn.shopify.com/videos/c/o/v/0490b14fd9624a3482f018bf52b9c01f.mp4', thumbnail: "https://cdn.shopify.com/s/files/1/0760/7743/3044/files/video-capture-t0001.65seg-9609.png?v=1761716746" },
+                                { id: '4', uri: 'https://cdn.shopify.com/videos/c/o/v/e2237ed190454352aea6ae2b069770a5.mp4', thumbnail: "https://cdn.shopify.com/s/files/1/0760/7743/3044/files/video-capture-t0002.83seg-3053.png?v=1761716848" }
                             ]}
                         />
                     </View>
 
                     <View style={{ marginVertical: 40 }}>
-                        <Text style={[styles.headline2, { color: dark ? COLORS.white : "" }]}>Driving The Renewable Revolution</Text>
+                        <Text style={[styles.headline2, { color: dark ? COLORS.white : "" }]}>{t("ourGallery.title")}</Text>
                         <View style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 20 }}>
-                            <Text style={[styles.featureText, { color: dark ? COLORS.white : "#333" }]} >Discover reliable and cost-effective solar power systems with NBS Solar.</Text>
+                            <Text style={[styles.featureText, { color: dark ? COLORS.white : "#333" }]} >{t("ourGallery.subTitle")}</Text>
                         </View>
                         <TouchableOpacity style={styles.ctaButton} onPress={() => { Linking.openURL("https://cdn.shopify.com/s/files/1/0760/7743/3044/files/A5_MASTER_CATALOG_SU-MAK_PRODUCTS_SINGLE_PAGE_1ST-3_11zon.pdf?v=1760526347") }}>
                             <Text style={styles.ctaButtonText}>{t('aboutUs.section4.btn')}</Text>

@@ -290,30 +290,32 @@ const ProductDetails = () => {
                         />
                     </TouchableOpacity>
                 </View>
-                {product?.tags && !product.tags.includes("request-a-qoute") && (
-                    <View style={styles.ratingContainer}>
-                        <Text style={[styles.price, {
-                            // color: dark ? COLORS.white : COLORS.black,
-                            color: "rgb(177, 18, 22)",
-                        }]}>{product?.variants && product?.variants.length > 0
-                            ? "AED " + parseFloat(product?.variants[0]?.price).toFixed(2)
-                            : ""}</Text>
+                {/* {product?.tags && !product.tags.includes("request-a-qoute") && ( */}
+                {product?.tags &&
+                    !(product.tags.includes("request-a-qoute") || product.tags.includes("request-a-quote")) && (
+                        <View style={styles.ratingContainer}>
+                            <Text style={[styles.price, {
+                                // color: dark ? COLORS.white : COLORS.black,
+                                color: "rgb(177, 18, 22)",
+                            }]}>{product?.variants && product?.variants.length > 0
+                                ? "AED " + parseFloat(product?.variants[0]?.price).toFixed(2)
+                                : ""}</Text>
 
-                        {product?.variants &&
-                            product?.variants.length > 0 &&
-                            parseFloat(product?.variants[0]?.oldPrice) > 0 &&
-                            parseFloat(product?.variants[0]?.oldPrice) > parseFloat(product?.variants[0]?.price) && (
-                                <Text
-                                    style={[
-                                        styles.oldPrice,
-                                        { color: dark ? COLORS.white : COLORS.gray, marginLeft: 12 },
-                                    ]}
-                                >
-                                    {"AED " + parseFloat(product?.variants[0]?.oldPrice).toFixed(2)}
-                                </Text>
-                            )}
-                    </View>
-                )}
+                            {product?.variants &&
+                                product?.variants.length > 0 &&
+                                parseFloat(product?.variants[0]?.oldPrice) > 0 &&
+                                parseFloat(product?.variants[0]?.oldPrice) > parseFloat(product?.variants[0]?.price) && (
+                                    <Text
+                                        style={[
+                                            styles.oldPrice,
+                                            { color: dark ? COLORS.white : COLORS.gray, marginLeft: 12 },
+                                        ]}
+                                    >
+                                        {"AED " + parseFloat(product?.variants[0]?.oldPrice).toFixed(2)}
+                                    </Text>
+                                )}
+                        </View>
+                    )}
                 <View style={[styles.separateLine, {
                     backgroundColor: dark ? COLORS.greyscale900 : COLORS.grayscale200
                 }]} />
@@ -475,6 +477,7 @@ const ProductDetails = () => {
                                         price={item.price}
                                         oldPrice={item.oldPrice}
                                         availableForSale={item?.available}
+                                        productTags={item.productTags}
                                         onPress={() => navigation.navigate("productdetails", {
                                             id: item.id,
                                         })} />
@@ -512,7 +515,9 @@ const ProductDetails = () => {
                         borderTopColor: dark ? COLORS.dark1 : COLORS.white,
                         bottom: insets.bottom
                     }]}>
-                        {product?.tags && !product.tags.includes("request-a-qoute") ? (
+                        {/* {product?.tags && !product.tags.includes("request-a-qoute") ? ( */}
+                        {product?.tags &&
+                            !(product.tags.includes("request-a-qoute") || product.tags.includes("request-a-quote")) ? (
                             <>
                                 <View>
                                     <Text style={[styles.cartTitle, {
@@ -589,7 +594,7 @@ const ProductDetails = () => {
                                             textDecorationLine: 'underline'
                                         }}
                                     >
-                                        View Cart
+                                        {t('productPage.viewCart')}
                                     </Text>
                                 </View>
                             </>
@@ -602,7 +607,7 @@ const ProductDetails = () => {
 
                                     <Text style={{
                                         color: dark ? COLORS.white : COLORS.black, fontSize: normalizeFont(17), fontWeight: '700'
-                                    }}>Price on Request</Text>
+                                    }}>{t('productPage.priceOnRequest')}</Text>
                                 </View>
 
                                 <View style={{ flexDirection: 'column', alignItems: 'center', gap: 8 }}>
@@ -612,16 +617,16 @@ const ProductDetails = () => {
                                             backgroundColor: COLORS.primaryRed
                                         }]}
                                     >
-                                        <Image
+                                        {/* <Image
                                             source={icons.bags}
                                             resizeMode='contain'
                                             style={[styles.bagIcon, {
                                                 tintColor: dark ? COLORS.black : COLORS.white
                                             }]}
-                                        />
+                                        /> */}
                                         <Text style={[styles.cartBtnText, {
                                             color: dark ? COLORS.black : COLORS.white,
-                                        }]}>Submit Quote Request</Text>
+                                        }]}>{t('productPage.submitQuoteRequest')}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </>

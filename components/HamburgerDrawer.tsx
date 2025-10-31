@@ -1,4 +1,5 @@
 import { COLORS } from '@/constants';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { useTheme } from '@/theme/ThemeProvider';
 import { Feather } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
@@ -32,6 +33,7 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
     const { t } = i18next;
     const [isOpen, setIsOpen] = useState(false);
     const menuData = useMenuData();
+    const appLanguage = useAppSelector(state => state.generalSettings.language);
 
     // Animated value for horizontal slide
     const translateX = useRef(new Animated.Value(-width * 0.7)).current;
@@ -57,64 +59,17 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
             }).start();
         } else {
             Animated.timing(translateX, {
-                toValue: -width * 0.7,
+                toValue: appLanguage === 'ar' ? width * 0.7 : -width * 0.7,
                 duration: 300,
                 useNativeDriver: true,
             }).start();
         }
-    }, [isOpen]);
+    }, [isOpen, appLanguage]);
 
     const handleClose = () => {
         setIsOpen(false);
         internalRef.current?.close();
     };
-
-
-
-    // const menuData = [
-    //     { title: t('hamburgerMenu.home'), route: "/" },
-    //     { title: t('hamburgerMenu.aboutUs'), route: "aboutus" },
-    //     {
-    //         title: t('hamburgerMenu.allProducts'),
-    //         children: [
-    //             {
-    //                 title: "Category 1",
-    //                 children: [
-    //                     {
-    //                         title: "SubCategory A",
-    //                         children: [
-    //                             { title: "Deep Item 1", route: "deepItem1" },
-    //                             { title: "Deep Item 2", route: "deepItem2" },
-    //                         ],
-    //                     },
-    //                 ],
-    //             },
-    //             {
-    //                 title: "Category 2",
-    //                 children: [{ title: "SubCategory B", route: "subCategoryB" }],
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         title: t('hamburgerMenu.bestSellers'),
-    //         route: "collectionscreen",
-    //         params: {
-    //             collectionId: "gid://shopify/Collection/439668539604",
-    //             collectionTitle: "Best Sellers",
-    //             collectionImage: images.aboutUsBanner3,
-    //         },
-    //     },
-    //     {
-    //         title: t('hamburgerMenu.newArrivals'),
-    //         route: "collectionscreen",
-    //         params: {
-    //             collectionId: "gid://shopify/Collection/439668572372",
-    //             collectionTitle: "New Arrivals",
-    //             collectionImage: images.aboutUsBanner1,
-    //         },
-    //     },
-    //     { title: t('hamburgerMenu.downloadCatalogue'), route: "catalogue" },
-    // ];
 
 
     // Add this recursive MenuItem component INSIDE your HamburgerDrawer file
@@ -149,7 +104,7 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
 
         return (
             <View>
-                <TouchableOpacity onPress={onPress} style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                {/* <TouchableOpacity onPress={onPress} style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                     <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>
                         {item.title}
                     </Text>
@@ -160,7 +115,52 @@ const HamburgerDrawer = forwardRef<any>((_, ref) => {
                             color={dark ? COLORS.white : "black"}
                         />
                     )}
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+
+                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                    {/* Text part (80%) */}
+                    <TouchableOpacity
+                        style={{ flex: 0.8 }}
+                        onPress={() => {
+                            if (item.route) {
+                                handleClose();
+                                if (item.route === "/") {
+                                    setTimeout(() => {
+                                        router.replace("/(tabs)");
+                                    }, 200);
+                                } else if (item.route === "(tabs)/allproducts") {
+                                    setTimeout(() => {
+                                        router.replace("/allproducts");
+                                    }, 200);
+                                } else {
+                                    setTimeout(() => navigation.navigate(item.route, item.params || {}), 200);
+                                }
+                            }
+                        }}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>
+                            {item.title}
+                        </Text>
+                    </TouchableOpacity>
+
+                    {/* Icon part (20%) */}
+                    {item.children && (
+                        <TouchableOpacity
+                            style={{ flex: 0.2, alignItems: "flex-end" }}
+                            onPress={() => setExpanded(!expanded)}
+                            activeOpacity={0.7}
+                        >
+                            <Feather
+                                name={expanded ? "minus" : "plus"}
+                                size={18}
+                                color={dark ? COLORS.white : "black"}
+                            />
+                        </TouchableOpacity>
+                    )}
+                </View>
+
+
                 <View style={styles.divider} />
                 {expanded && item.children && (
                     <View style={{ paddingLeft: 15 }}>

@@ -95,13 +95,13 @@ const Cart: React.FC = () => {
           {t('cart.title')}
         </Text>
       </View>
-      <TouchableOpacity>
+      {/* <TouchableOpacity>
         <Image
           source={icons.search4}
           resizeMode="contain"
           style={[styles.headerIcon, { tintColor: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}
         />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
   /**
@@ -202,7 +202,10 @@ const Cart: React.FC = () => {
                 )}
               />
             ) : (
-              <NotFoundCard />
+              <NotFoundCard
+                title={t("emptyCart.title")}
+                subtitle={t("emptyCart.subtitle")}
+              />
             )}
           </View>
         </View>
@@ -232,7 +235,7 @@ const Cart: React.FC = () => {
           <TouchableOpacity
             disabled={resultsCount <= 0}
             // onPress={() => user.accessToken ? navigation.navigate("checkout") : refLoginSheet.current?.open()}
-            onPress={() => navigation.navigate("checkout") }
+            onPress={() => navigation.navigate("checkout")}
             style={[
               styles.cartBtn,
               resultsCount <= 0 && { opacity: 0.5 },

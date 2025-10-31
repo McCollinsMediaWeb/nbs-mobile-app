@@ -51,7 +51,11 @@ const Address = () => {
                             )}
                         />
                     ) : (
-                        <NotFoundCard />
+                        <NotFoundCard
+                            title={t("noSavedAddress.title")}
+                            subtitle={t("noSavedAddress.subtitle")}
+                        />
+
                     )}
 
                 </ScrollView>

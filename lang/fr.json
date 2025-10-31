@@ -1,0 +1,635 @@
+{
+    "translation": {
+        "welcome": {
+            "title": "Connectez-vous",
+            "continueWithGoogle": "Continuer avec Google",
+            "or": "Ou",
+            "signInWithEmail": "Se connecter avec une adresse e-mail",
+            "continueAsGuest": "Continuer en tant qu’invité",
+            "dontHaveAccount": "Vous n’avez pas de compte ?",
+            "signUp": "S’inscrire"
+        },
+        "login": {
+            "title": "Connectez-vous à votre",
+            "title2": "Compte",
+            "email": "E-mail",
+            "password": "Mot de passe",
+            "checkbox": "Se souvenir de moi",
+            "submit": "Connexion",
+            "forgotpassword": "Mot de passe oublié ?",
+            "continuewith": "ou continuer avec",
+            "dontHaveAccount": "Vous n’avez pas de compte ?",
+            "signUp": "S’inscrire"
+        },
+        "signup": {
+            "title": "Créez votre",
+            "title2": "Compte",
+            "firstName": "Prénom",
+            "lastName": "Nom de famille",
+            "email": "E-mail",
+            "password": "Mot de passe",
+            "checkbox": "En continuant, vous acceptez notre politique de confidentialité",
+            "submit": "S’inscrire",
+            "continuewith": "ou continuer avec",
+            "alreadyHaveAccount": "Vous avez déjà un compte ?",
+            "signIn": "Se connecter"
+        },
+        "forgotpassword": {
+            "title": "Mot de passe oublié",
+            "email": "E-mail",
+            "submit": "Envoyer le lien de réinitialisation du mot de passe",
+            "backToLogin": "Retour à la connexion"
+        },
+        "header": {
+            "home": "Accueil",
+            "shop": "Boutique",
+            "about": "À propos de nous",
+            "contact": "Contactez-nous",
+            "cart": "Panier",
+            "wishlist": "Liste de souhaits",
+            "account": "Compte"
+        },
+        "menus": {
+            "categories": "Catégories",
+            "allProducts": "Tous les produits",
+            "newArrivals": "Nouveautés",
+            "bestsellers": "Meilleures ventes",
+            "offers": "Offres",
+            "clearance": "Liquidation"
+        },
+        "hamburgerMenu2": {
+            "home": "Accueil",
+            "about": "À propos de nous",
+            "brands": "Marques",
+            "contact": "Contactez-nous",
+            "language": "Langue",
+            "currency": "Devise",
+            "account": "Compte",
+            "wishlist": "Liste de souhaits",
+            "cart": "Panier"
+        },
+        "hamburgerMenu": {
+            "home": "Accueil",
+            "aboutUs": "À propos de nous",
+            "allProducts": "Tous les produits",
+            "nbsSolar": "NBS Solar",
+            "nbsSolarOptions": {
+                "option1": "Onduleur/UPS à onde sinusoïdale pure",
+                "option2": "Batteries",
+                "option2Options": {
+                    "option1": "Batterie SMF",
+                    "option2": "Batterie tubulaire haute",
+                    "option3": "Batterie Gel",
+                    "option4": "Batterie au lithium"
+                },
+                "option3": "Onduleur mural à onde sinusoïdale pure haute fréquence",
+                "option4": "Onduleur hybride solaire",
+                "option5": "Système tout-en-un Energy Store"
+            },
+            "sumakSolar": "Sumak Solar",
+            "sumakSolarOptions": {
+                "option1": "Onduleur/UPS à onde sinusoïdale pure",
+                "option2": "Onduleur hybride solaire",
+                "option3": "Onduleur mural à onde sinusoïdale pure haute fréquence",
+                "option4": "Système tout-en-un Energy Store",
+                "option5": "Batteries",
+                "option5Options": {
+                    "option1": "Batterie SMF",
+                    "option2": "Batterie tubulaire haute",
+                    "option3": "Batterie Gel",
+                    "option4": "Batterie au lithium",
+                    "option5": "Batterie LifePO4"
+                },
+                "option6": "Régulateur de tension automatique (AVR)",
+                "option7": "Contrôleur de charge solaire",
+                "option8": "Système de gestion de batterie (BMS)"
+            },
+            "samsunSolar": "Samsun Solar",
+            "samsunSolarOptions": {
+                "option1": "Onduleur/UPS à onde sinusoïdale pure",
+                "option2": "Onduleur hybride solaire",
+                "option3": "Onduleur mural à onde sinusoïdale pure",
+                "option4": "Contrôleur de charge MPPT",
+                "option5": "Batteries",
+                "option5Options": {
+                    "option1": "Batterie SMF",
+                    "option2": "Batterie tubulaire haute",
+                    "option3": "Batterie Gel",
+                    "option4": "Batterie au lithium",
+                    "option5": "Batterie LifePO4"
+                }
+            },
+            "sunrideSolar": "Sunride Solar",
+            "sunrideSolarOptions": {
+                "option1": "Onduleur/UPS à onde sinusoïdale pure",
+                "option2": "Onduleur hybride solaire",
+                "option3": "Onduleur mural à onde sinusoïdale pure",
+                "option4": "Onduleur connecté au réseau",
+                "option5": "Batteries",
+                "option5Options": {
+                    "option1": "Batterie SMF",
+                    "option2": "Batterie tubulaire haute",
+                    "option3": "Batterie Gel",
+                    "option4": "Batterie au lithium",
+                    "option5": "Batterie LifePO4"
+                }
+            },
+            "generators": "Générateurs",
+            "generatorsOptions": {
+                "option1": "Dewalt",
+                "option2": "Daewoo",
+                "option3": "Elemax",
+                "option4": "Honda",
+                "option5": "Kama",
+                "option6": "Kubota",
+                "option7": "Perkins",
+                "option8": "Cummins",
+                "option9": "Yanmar"
+            },
+            "powerStation": "Station d’énergie",
+            "powerStationOptions": {
+                "option1": "Station d’énergie portable Bluetti"
+            },
+            "carWasher": "Nettoyeur de voiture",
+            "carWasherOptions": {
+                "option1": "Daewoo"
+            },
+            "waterPump": "Pompe à eau",
+            "waterPumpOptions": {
+                "option1": "Essence",
+                "option1Options": {
+                    "option1": "Honda",
+                    "option2": "Koshin"
+                },
+                "option2": "Diesel",
+                "option2Options": {
+                    "option1": "Kama",
+                    "option2": "Koshin",
+                    "option3": "Semilux",
+                    "option4": "Yanmar"
+                },
+                "option3": "Électrique",
+                "option3Options": {
+                    "option1": "Panasonic",
+                    "option2": "Pedrollo",
+                    "option3": "Reyon",
+                    "option4": "Saer",
+                    "option5": "Silver",
+                    "option6": "Spino",
+                    "option7": "Vespa"
+                }
+            },
+            "solarPanel": "Panneau solaire",
+            "solarPanelOptions": {
+                "option1": "Panneau solaire Ja-Solar",
+                "option2": "Panneau solaire Risen",
+                "option3": "Panneau solaire Trina",
+                "option4": "Panneau solaire Jinko",
+                "option5": "Panneau solaire Su-Mak"
+            },
+            "accessories": "Accessoires",
+            "accessoriesOptions": {
+                "option1": "Régulateur de charge PWM",
+                "option2": "Régulateur de charge solaire MPPT",
+                "option3": "Pince",
+                "option4": "Boîte de jonction",
+                "option5": "Fusible CC",
+                "option6": "Disjoncteur CC",
+                "option7": "Commutateur de transfert automatique",
+                "option8": "Parafoudre CC",
+                "option9": "Connecteur MC4",
+                "option10": "Testeur de panneau",
+                "option11": "Kit d’installation solaire",
+                "option12": "Câble solaire"
+            },
+            "bestSellers": "Meilleures ventes",
+            "newArrivals": "Nouveautés",
+            "downloadCatalogue": "Télécharger le catalogue",
+            "bulkOrder": "Commande en gros",
+            "ourGallery": "Notre galerie"
+        },
+        "price": "AED",
+        "aboutUs": {
+            "announcement": "Un leader mondial dans la distribution d’énergie électrique et renouvelable à travers le monde.",
+            "section1": {
+                "subTitle": "À PROPOS DE NOUS",
+                "title": "ALIMENTER LE PROGRÈS.\nÀ L’ÉCHELLE MONDIALE. DE MANIÈRE DURABLE."
+            },
+            "section2": {
+                "title": "ALIMENTER LE PROGRÈS.\nÀ L’ÉCHELLE MONDIALE. DE MANIÈRE DURABLE.",
+                "content": "Nazeer Basha Syed Mech. & Eng. Equip. Trdg. Co. L.L.C., dont le siège est à Dubaï, est une force nationale et internationale majeure dans le domaine des solutions d’énergie renouvelable et propre. Fondée en 2013, l’entreprise s’est développée de manière constante grâce à une base solide en technologies mécaniques et d’ingénierie, axée sur le développement et la distribution de systèmes énergétiques performants et prêts pour l’avenir. Depuis ses débuts, l’entreprise s’est spécialisée dans les solutions d’alimentation de secours et critiques, gagnant la confiance de clients dans diverses régions. Ses principales offres comprennent des générateurs diesel et solaires, des systèmes de pompage d’eau avancés et des machines agricoles, conçus pour répondre aux besoins spécifiques de l’irrigation, des opérations domestiques et industrielles. En combinant innovation technique et ingénierie pratique, l’entreprise fournit des systèmes efficaces, durables et conformes aux normes modernes de durabilité."
+            },
+            "section3": {
+                "title": "RENFORCER L’ACCÈS.\nFAVORISER LA CROISSANCE.",
+                "content": "Dans le cadre d’un mouvement énergétique mondial, l’entreprise s’engage envers l’innovation, la fiabilité et la responsabilité environnementale. Face à la demande croissante dans le monde en développement, Nazeer Basha Syed Mech. & Eng. Equip. Trdg. Co. L.L.C. vise à combler le fossé en matière d’accès à l’énergie en autonomisant les communautés et entreprises sous-desservies grâce à des technologies de pointe et accessibles."
+            },
+            "section4": {
+                "subTitle": "Conduire la révolution des énergies renouvelables",
+                "title": "Découvrez des systèmes d’énergie solaire fiables et économiques avec NBS Solar.",
+                "btn": "VOIR NOTRE CATALOGUE"
+            },
+            "section5": {
+                "title": "Notre mission : alimenter un avenir durable grâce à l’innovation mondiale B2B",
+                "content": "Sa mission va au-delà de la simple livraison de produits : il s’agit de produire un impact mesurable. Que ce soit par l’amélioration du rendement agricole, le renforcement de la sécurité énergétique ou la gestion de l’eau, chaque solution est conçue pour soutenir une croissance économique durable et une résilience énergétique à long terme. Avec une approche centrée sur le client, une forte présence au Moyen-Orient, en Asie et en Afrique, et un réseau de distribution et de service en expansion, Nazeer Basha Syed Mech. & Eng. Equip. Trdg. Co. L.L.C. continue de redéfinir la manière dont les ressources énergétiques et mécaniques essentielles sont fournies au XXIe siècle."
+            }
+        },
+        "ourGallery": {
+            "title": "Conduire la révolution des énergies renouvelables",
+            "subTitle": "Découvrez des systèmes d’énergie solaire fiables et économiques avec NBS Solar."
+        },
+        "emptyWishlist": {
+            "title": "Votre liste de souhaits est vide",
+            "subtitle": "Il semble que vous n’ayez encore ajouté aucun article. Commencez à explorer et ajoutez vos favoris !"
+        },
+        "emptyCart": {
+            "title": "Votre panier est vide",
+            "subtitle": "Ajoutez quelques produits à votre panier pour continuer vos achats."
+        },
+        "noOngoingOrders": {
+            "title": "Aucune commande en cours",
+            "subtitle": "Vous n’avez aucune commande active pour le moment. Revenez plus tard."
+        },
+        "noCancelledOrders": {
+            "title": "Aucune commande annulée",
+            "subtitle": "Vous n’avez encore annulé aucune commande."
+        },
+        "noCompletedOrders": {
+            "title": "Aucune commande terminée",
+            "subtitle": "Vous n’avez encore terminé aucune commande. Une fois vos commandes livrées, elles apparaîtront ici."
+        },
+        "noSavedAddress": {
+            "title": "Aucune adresse enregistrée",
+            "subtitle": "Vous n’avez encore ajouté aucune adresse. Ajoutez-en une pour accélérer le paiement la prochaine fois."
+        },
+        "collectionBanner": {
+            "banner1": "Samsun Solar",
+            "banner2": "NBS Solar",
+            "banner3": "Nouveautés",
+            "banner4": "NBS Solar",
+            "banner5": "Su-Mak Solar",
+            "banner6": "Générateur Perkins"
+        },
+        "banners": {
+            "banner1": {
+                "label": "ONDULEUR NBS SOLAR",
+                "headline1": "FIABLE. EFFICACE.",
+                "headline2": "CONÇU POUR LA PERFORMANCE.",
+                "buttonText": "VOIR LES PRODUITS"
+            }
+        },
+        "categories": {
+            "item1": {
+                "title": "Exclusivement chez NBS"
+            },
+            "item2": {
+                "title": "Nouveautés"
+            },
+            "item3": {
+                "title": "Meilleures sélections"
+            }
+        },
+        "filters": {
+            "title": "Filtres",
+            "productType": {
+                "title": "Type de produit",
+                "option1": "AVR",
+                "option2": "Batteries",
+                "option3": "Générateurs",
+                "option4": "Onduleur/UPS",
+                "option5": "Onduleur en réseau",
+                "option6": "Station d’alimentation",
+                "option7": "Onduleur solaire hybride",
+                "option8": "Pompes à eau"
+            },
+            "brands": {
+                "title": "Marques",
+                "option1": "Groupes NBS",
+                "option2": "Samsun",
+                "option3": "Sumak",
+                "option4": "Sunride"
+            },
+            "showResults": "Afficher les résultats"
+        },
+        "sortBy": {
+            "title": "Trier par",
+            "option1": "En vedette",
+            "option2": "Meilleures ventes",
+            "option3": "Alphabétiquement A-Z",
+            "option4": "Alphabétiquement Z-A",
+            "option5": "Prix croissant",
+            "option6": "Prix décroissant",
+            "option7": "Date la plus ancienne",
+            "option8": "Date la plus récente"
+        },
+        "popularProducts": {
+            "subTitle": "Des choix exceptionnels pour les goûts les plus exigeants",
+            "title": "Découvrez notre gamme"
+        },
+        "ourBrandPartners": {
+            "subTitle": "Choisissez parmi une large gamme de\nmarques fiables",
+            "title": "Nos partenaires de marque"
+        },
+        "ourGenerators": {
+            "subTitle": "Découvrez les solutions de générateurs fiables du Groupe NBS — conçues pour l’excellence.",
+            "title": "Découvrez nos générateurs"
+        },
+        "ourProducts": {
+            "subTitle": "Parcourez notre gamme complète de solutions énergétiques et renouvelables par catégorie.",
+            "title": "Nos produits"
+        },
+        "ourInverters": {
+            "subTitle": "Efficace. Fiable. Conçu pour tous les besoins.",
+            "title": "Découvrez nos onduleurs"
+        },
+        "ourPowerstations": {
+            "subTitle": "Efficace. Fiable. Conçu pour tous les besoins.",
+            "title": "Découvrez nos stations d’alimentation"
+        },
+        "ourWaterPump": {
+            "subTitle": "Puissance. Précision. Performance.",
+            "title": "Découvrez nos pompes à eau"
+        },
+        "ourBatteries": {
+            "subTitle": "Puissance. Précision. Performance.",
+            "title": "Découvrez nos batteries"
+        },
+        "ourNewArrivals": {
+            "subTitle": "Puissance. Précision. Performance.",
+            "title": "Découvrez nos nouveautés"
+        },
+        "pointCard": {
+            "card1": {
+                "title": "Livraison mondiale gratuite",
+                "subTitle": "Retours inclus. Taxes et droits entièrement pris en charge."
+            },
+            "card2": {
+                "title": "Service client",
+                "subTitle": "Nous sommes disponibles du lundi au vendredi pour répondre à vos questions."
+            },
+            "card3": {
+                "title": "Paiement sécurisé",
+                "subTitle": "Vos informations de paiement sont traitées en toute sécurité."
+            },
+            "card4": {
+                "title": "Contactez-nous",
+                "subTitle": "Besoin de nous contacter ? Envoyez-nous simplement un e-mail à sales@nbsgroups.com"
+            }
+        },
+        "productPage": {
+            "productOverview": "Aperçu du produit",
+            "productDescription": "Description du produit",
+            "viewCatalogue": "Voir le catalogue des produits",
+            "highlights": "Points forts",
+            "youlike": "Vous pourriez aussi aimer",
+            "addToCart": "Ajouter au panier",
+            "outOfStock": "Rupture de stock",
+            "totalPrice": "Prix total",
+            "viewCart": "Voir le panier",
+            "priceOnRequest": "Prix sur demande",
+            "submitQuoteRequest": "Soumettre une demande de devis"
+        },
+        "productCard": {
+            "priceOnRequest": "Prix sur demande",
+            "outOfStock": "Rupture de stock"
+        },
+        "products": "Produits",
+        "quoteRequestForm": {
+            "title": "Demande de devis",
+            "name": "Nom *",
+            "namePlaceholder": "Entrez votre nom",
+            "email": "E-mail *",
+            "emailPlaceholder": "Entrez votre adresse e-mail",
+            "phoneNumber": "Numéro de téléphone *",
+            "phoneNumberPlaceholder": "Entrez votre numéro de téléphone",
+            "companyName": "Nom de l’entreprise",
+            "companyNamePlaceholder": "Entrez le nom de votre entreprise",
+            "trnNumber": "Numéro TRN",
+            "trnNumber2": "(Facultatif)",
+            "trnNumberPlaceholder": "Entrez votre numéro TRN à 15 chiffres",
+            "subject": "Objet",
+            "subjectPlaceholder": "Entrez l’objet",
+            "additionalDetails": "Détails supplémentaires",
+            "additionalDetailsPlaceholder": "Entrez des détails supplémentaires",
+            "cancel": "Annuler",
+            "submit": "Soumettre",
+            "submitting": "Envoi en cours"
+        },
+        "bulkRequestForm": {
+            "title": "Demande de commande en gros",
+            "name": "Nom *",
+            "namePlaceholder": "Entrez votre nom",
+            "email": "E-mail *",
+            "emailPlaceholder": "Entrez votre adresse e-mail",
+            "phoneNumber": "Numéro de téléphone *",
+            "phoneNumberPlaceholder": "Entrez votre numéro de téléphone",
+            "companyName": "Nom de l’entreprise",
+            "companyNamePlaceholder": "Entrez le nom de votre entreprise",
+            "trnNumber": "Numéro TRN",
+            "trnNumber2": "(Facultatif)",
+            "trnNumberPlaceholder": "Entrez votre numéro TRN à 15 chiffres",
+            "subject": "Objet",
+            "subjectPlaceholder": "Entrez l’objet",
+            "additionalDetails": "Détails supplémentaires",
+            "additionalDetailsPlaceholder": "Entrez des détails supplémentaires (spécifications, exigences, etc.)",
+            "submit": "Soumettre la commande en gros",
+            "submitting": "Envoi en cours"
+        },
+        "allProduct": {
+            "title": "Tous les produits"
+        },
+        "cart": {
+            "title": "Mon panier",
+            "sheetTitle": "Retirer du panier ?",
+            "button1": "Oui, retirer",
+            "button2": "Annuler",
+            "sheetTitle2": "Vous n’êtes pas connecté",
+            "sheetContent": "Veuillez vous connecter pour continuer vos achats et finaliser votre commande.",
+            "login": "Connexion",
+            "totalPrice": "Prix total",
+            "continue": "Continuer"
+        },
+        "selectAddress": {
+            "title": "Sélectionner une adresse",
+            "alternateTitle": "Confirmer les détails",
+            "title2": "Adresse",
+            "shippingAddress": "Adresse de livraison",
+            "orderList": "Liste de commande",
+            "deliverTo": "Livrer à",
+            "addNewAddress": "Ajouter une nouvelle adresse",
+            "apply": "Appliquer",
+            "total": "Total",
+            "continueToCheckout": "Continuer vers le paiement",
+            "default": "Par défaut",
+            "noAddressTitle": "Aucune adresse sélectionnée",
+            "noAddressNote": "Veuillez sélectionner ou ajouter une adresse de livraison pour continuer."
+        },
+        "addNewAddress": {
+            "title": "Ajouter une nouvelle adresse",
+            "title2": "Mettre à jour l’adresse",
+            "button1": "SUPPRIMER L’ADRESSE",
+            "deleteSheet": {
+                "title": "Supprimer cette adresse ?",
+                "note": "Êtes-vous sûr de vouloir supprimer cette adresse ? Cette action est irréversible.",
+                "button1": "Oui, supprimer",
+                "button2": "Annuler"
+            },
+            "item1": {
+                "label": "Prénom*",
+                "placeholder": "Saisissez votre prénom"
+            },
+            "item2": {
+                "label": "Nom*",
+                "placeholder": "Saisissez votre nom"
+            },
+            "item3": {
+                "label": "Numéro de mobile*",
+                "placeholder": "Saisissez votre numéro de mobile"
+            },
+            "item4": {
+                "label": "Adresse*",
+                "placeholder": "Saisissez votre adresse"
+            },
+            "item5": {
+                "label": "Ville / District",
+                "placeholder": "Saisissez la ville"
+            },
+            "item6": {
+                "label": "Émirat*",
+                "placeholder": "Sélectionnez un émirat"
+            },
+            "item7": {
+                "label": "Code postal*",
+                "placeholder": "Saisissez le code postal"
+            },
+            "item8": {
+                "label": "Enregistrer l’adresse comme",
+                "option1": "Domicile",
+                "option2": "Travail"
+            },
+            "abudhabi": "Abou Dabi",
+            "dubai": "Dubaï",
+            "sharjah": "Charjah",
+            "ajman": "Ajman",
+            "rasalkhaimah": "Ras el Khaïmah",
+            "fujairah": "Foujaira",
+            "ummalquwain": "Oumm al Qaïwaïn",
+            "button": "ENREGISTRER L’ADRESSE",
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "mobileNo": "Numéro de mobile",
+            "address": "Adresse",
+            "apply": "Appliquer"
+        },
+        "orders": {
+            "title": "Mes commandes",
+            "ongoing": "En cours",
+            "completed": "Terminées",
+            "cancelled": "Annulées",
+            "moreDetails": "Plus de détails",
+            "orderAgain": "Commander à nouveau",
+            "sheet": {
+                "title": "Commander à nouveau",
+                "subTitle": "Les prix des produits peuvent varier",
+                "note": "Veuillez vérifier le prix final dans votre panier avant de passer au paiement.",
+                "button1": "Oui, commander à nouveau",
+                "button2": "Annuler"
+            }
+        },
+        "wishlist": {
+            "title": "Ma liste de souhaits"
+        },
+        "profile": {
+            "title": "Profil",
+            "guestUser": "Utilisateur invité",
+            "note": "Veuillez vous connecter pour effectuer des achats",
+            "setting1": {
+                "title": "Mon panier"
+            },
+            "setting2": {
+                "title": "Ma liste de souhaits"
+            },
+            "setting3": {
+                "title": "Adresse"
+            },
+            "setting4": {
+                "title": "Langue et région",
+                "subTitle": "Suggéré"
+            },
+            "setting5": {
+                "title": "Mode sombre"
+            },
+            "setting6": {
+                "title": "Politique de confidentialité"
+            },
+            "setting7": {
+                "title": "Centre d’aide"
+            },
+            "setting8": {
+                "title": "Connexion",
+                "title2": "Déconnexion"
+            },
+            "sheet": {
+                "title": "Déconnexion",
+                "subTitle": "Êtes-vous sûr de vouloir vous déconnecter ?",
+                "button1": "Oui, me déconnecter",
+                "button2": "Annuler"
+            }
+        },
+        "privacyPolicy": {
+            "title": "Politique de confidentialité",
+            "intro": "Chez NBS Group, nous respectons votre vie privée et nous engageons à protéger vos informations personnelles. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données.",
+            "section1Title": "1. Informations que nous collectons",
+            "section1List": [
+                "Nom, adresse e-mail, numéro de téléphone et adresse de livraison/facturation",
+                "Détails de commande et historique des transactions",
+                "Informations sur l’appareil et le navigateur (pour l’analyse d’utilisation du site web)"
+            ],
+            "section2Title": "2. Comment nous utilisons vos informations",
+            "section2List": [
+                "Traiter et livrer vos commandes",
+                "Communiquer les mises à jour de commande et assurer le service client",
+                "Améliorer notre site web, nos produits et nos services",
+                "Envoyer des mises à jour promotionnelles (uniquement si vous y avez consenti)"
+            ],
+            "section3Title": "3. Protection des données",
+            "section3Content": "Nous prenons les mesures de sécurité appropriées pour protéger vos données personnelles contre tout accès non autorisé, abus ou divulgation. Vos informations ne sont jamais vendues ni partagées avec des tiers sans votre consentement, sauf si la loi l’exige.",
+            "section4Title": "4. Cookies",
+            "section4Content": "Notre site web peut utiliser des cookies afin d’améliorer votre expérience utilisateur. Vous pouvez choisir de désactiver les cookies via les paramètres de votre navigateur.",
+            "section5Title": "5. Vos droits",
+            "section5Content": "Vous pouvez demander à tout moment l’accès, la correction ou la suppression de vos données personnelles en nous contactant.",
+            "section6Title": "6. Nous contacter",
+            "section6Content": "Si vous avez des questions concernant cette politique de confidentialité ou la manière dont nous traitons vos données, veuillez nous contacter."
+        },
+        "helpCenter": {
+            "title": "Centre d’aide",
+            "contactUs": {
+                "title": "Contactez-nous",
+                "callUs": "Appelez-nous",
+                "emailUs": "Envoyez-nous un e-mail",
+                "whatsapp": "WhatsApp",
+                "website": "Site web",
+                "facebook": "Facebook",
+                "instagram": "Instagram"
+            },
+            "faqs": {
+                "title": "FAQ",
+                "question1": "Comment puis-je passer une commande sur l’application ?",
+                "question1Answer": "Pour passer une commande, parcourez simplement notre catalogue de produits, sélectionnez les articles souhaités, ajoutez-les à votre panier, puis procédez au paiement pour confirmer votre commande.",
+                "question2": "Puis-je consulter les détails des produits, tels que les spécifications et la disponibilité ?",
+                "question2Answer": "Oui, vous pouvez consulter des informations détaillées sur les produits, y compris les spécifications, la disponibilité et les avis clients. Accédez simplement à la page du produit dans l’application.",
+                "question3": "Que dois-je faire si je souhaite annuler ou modifier une commande ?",
+                "question3Answer": "Pour annuler ou modifier une commande, rendez-vous dans la section « Mes commandes », trouvez votre commande et suivez les options disponibles pour effectuer les modifications.",
+                "question4": "Comment puis-je trouver des produits d’une catégorie ou d’une marque spécifique ?",
+                "question4Answer": "Vous pouvez utiliser les filtres de recherche de l’application pour trouver des produits selon des catégories ou des marques spécifiques. Filtrez les résultats par catégories, comme l’électronique ou les vêtements.",
+                "question5": "Puis-je effectuer des paiements pour mes commandes directement dans l’application ?",
+                "question5Answer": "Oui, vous pouvez effectuer des paiements en toute sécurité pour vos commandes en utilisant les différentes méthodes de paiement disponibles dans l’application, y compris les cartes de crédit/débit et les portefeuilles numériques.",
+                "question6": "Mes informations personnelles et mes commandes sont-elles sécurisées ?",
+                "question6Answer": "Oui, nous accordons une grande importance à la sécurité et à la confidentialité de vos informations personnelles et de vos commandes. Notre application respecte des normes strictes en matière de confidentialité et de protection des données.",
+                "question7": "Puis-je demander de l’aide pour des exigences ou préférences particulières concernant un produit ?",
+                "question7Answer": "Oui, vous pouvez demander une assistance pour des exigences ou préférences spécifiques lors du processus de commande. Indiquez simplement vos préférences, et nous ferons de notre mieux pour y répondre.",
+                "question8": "Un service client est-il disponible via cette application ?",
+                "question8Answer": "Bien que nous facilitons les achats en ligne, notre application n’est pas dédiée au service client. Pour obtenir de l’aide, veuillez contacter notre équipe d’assistance via les canaux indiqués dans l’application."
+            }
+        }
+    }
+}
