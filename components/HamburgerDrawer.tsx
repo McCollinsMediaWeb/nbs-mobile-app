@@ -315,3 +315,286 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
 });
+
+// import { COLORS } from '@/constants';
+// import { useAppSelector } from '@/hooks/useAppSelector';
+// import { useTheme } from '@/theme/ThemeProvider';
+// import { Feather } from '@expo/vector-icons';
+// import { NavigationProp } from '@react-navigation/native';
+// import { router, useNavigation } from 'expo-router';
+// import i18next from 'i18next';
+// import React, {
+//     forwardRef,
+//     useCallback,
+//     useEffect,
+//     useImperativeHandle,
+//     useRef,
+//     useState
+// } from 'react';
+// import {
+//     Animated,
+//     Dimensions,
+//     ScrollView,
+//     StyleSheet,
+//     Text,
+//     TouchableOpacity,
+//     View
+// } from 'react-native';
+// import RBSheet from 'react-native-raw-bottom-sheet';
+// import { useMenuData } from '../data';
+
+// const { width, height } = Dimensions.get('window');
+
+// const HamburgerDrawer = forwardRef<any>((_, ref) => {
+//     const navigation = useNavigation<NavigationProp<any>>();
+//     const internalRef = useRef<any>(null);
+//     const { dark } = useTheme();
+//     const { t } = i18next;
+//     const [isOpen, setIsOpen] = useState(false);
+//     const menuData = useMenuData();
+//     const appLanguage = useAppSelector(state => state.generalSettings.language);
+
+//     // Animated value for horizontal slide
+//     const translateX = useRef(new Animated.Value(-width * 0.7)).current;
+
+//     useImperativeHandle(ref, () => ({
+//         open: () => {
+//             setIsOpen(true);
+//             internalRef.current?.open();
+//         },
+//         close: () => {
+//             setIsOpen(false);
+//             internalRef.current?.close();
+//         },
+//     }));
+
+//     // Animate in/out when open/close - ONLY when isOpen changes
+//     useEffect(() => {
+//         if (isOpen) {
+//             Animated.timing(translateX, {
+//                 toValue: 0,
+//                 duration: 300,
+//                 useNativeDriver: true,
+//             }).start();
+//         } else {
+//             Animated.timing(translateX, {
+//                 toValue: appLanguage === 'ar' ? width * 0.7 : -width * 0.7,
+//                 duration: 300,
+//                 useNativeDriver: true,
+//             }).start();
+//         }
+//     }, [isOpen]); // Remove appLanguage from here to prevent unnecessary animations
+
+//     const handleClose = useCallback(() => {
+//         setIsOpen(false);
+//         internalRef.current?.close();
+//     }, []);
+
+//     interface MenuItemProps {
+//         item: any;
+//         dark: boolean;
+//         navigation: NavigationProp<any>;
+//         handleClose: () => void;
+//     }
+
+//     const MenuItem: React.FC<MenuItemProps> = ({ item, dark, navigation, handleClose }) => {
+//         const [expanded, setExpanded] = useState(false);
+
+//         const onPress = useCallback(() => {
+//             if (item.children && item.children.length > 0) {
+//                 setExpanded(!expanded);
+//             } else if (item.route) {
+//                 handleClose();
+//                 if (item.route === "/") {
+//                     setTimeout(() => {
+//                         router.replace("/(tabs)");
+//                     }, 200);
+//                 } else if (item.route === "(tabs)/allproducts") {
+//                     setTimeout(() => {
+//                         router.replace("/allproducts");
+//                     }, 200);
+//                 } else {
+//                     setTimeout(() => navigation.navigate(item.route, item.params || {}), 200);
+//                 }
+//             }
+//         }, [item, handleClose, navigation, expanded]);
+
+//         return (
+//             <View>
+//                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+//                     {/* Text part (80%) */}
+//                     <TouchableOpacity
+//                         style={{ flex: 0.8 }}
+//                         onPress={() => {
+//                             if (item.route) {
+//                                 handleClose();
+//                                 if (item.route === "/") {
+//                                     setTimeout(() => {
+//                                         router.replace("/(tabs)");
+//                                     }, 200);
+//                                 } else if (item.route === "(tabs)/allproducts") {
+//                                     setTimeout(() => {
+//                                         router.replace("/allproducts");
+//                                     }, 200);
+//                                 } else {
+//                                     setTimeout(() => navigation.navigate(item.route, item.params || {}), 200);
+//                                 }
+//                             }
+//                         }}
+//                         activeOpacity={0.7}
+//                     >
+//                         <Text style={[styles.menuItem, { color: dark ? COLORS.white : "" }]}>
+//                             {item.title}
+//                         </Text>
+//                     </TouchableOpacity>
+
+//                     {/* Icon part (20%) */}
+//                     {item.children && (
+//                         <TouchableOpacity
+//                             style={{ flex: 0.2, alignItems: "flex-end" }}
+//                             onPress={() => setExpanded(!expanded)}
+//                             activeOpacity={0.7}
+//                         >
+//                             <Feather
+//                                 name={expanded ? "minus" : "plus"}
+//                                 size={18}
+//                                 color={dark ? COLORS.white : "black"}
+//                             />
+//                         </TouchableOpacity>
+//                     )}
+//                 </View>
+
+//                 <View style={styles.divider} />
+//                 {expanded && item.children && (
+//                     <View style={{ paddingLeft: 15 }}>
+//                         {item.children.map((child: unknown, index: React.Key | null | undefined) => (
+//                             <MenuItem
+//                                 key={index}
+//                                 item={child}
+//                                 dark={dark}
+//                                 navigation={navigation}
+//                                 handleClose={handleClose}
+//                             />
+//                         ))}
+//                     </View>
+//                 )}
+//             </View>
+//         );
+//     };
+
+//     return (
+//         <View style={{ flex: 1 }}>
+//             <RBSheet
+//                 ref={internalRef}
+//                 closeOnPressMask={false}
+//                 height={600}
+//                 openDuration={250}
+//                 customStyles={{
+//                     wrapper: {
+//                         backgroundColor: 'rgba(0,0,0,0.4)',
+//                     },
+//                     container: {
+//                         flexDirection: 'row',
+//                         width: '100%',
+//                         height: '100%',
+//                         backgroundColor: 'transparent',
+//                     },
+//                 }}
+//                 onClose={() => setIsOpen(false)}
+//                 onOpen={() => setIsOpen(true)}
+//             >
+//                 {/* Animated Drawer */}
+//                 <Animated.View
+//                     style={[
+//                         styles.container,
+//                         {
+//                             width: width * 0.7,
+//                             backgroundColor: dark ? COLORS.dark1 : COLORS.white,
+//                             transform: [{ translateX }],
+//                         },
+//                     ]}
+//                 >
+//                     <TouchableOpacity onPress={handleClose}>
+//                         <Feather style={styles.closeBtn} color={dark ? "white" : "black"} size={23} name='x' />
+//                     </TouchableOpacity>
+
+//                     <ScrollView
+//                         showsVerticalScrollIndicator={false}
+//                         contentContainerStyle={{ paddingBottom: 50 }}
+//                     >
+//                         {menuData.map((item, index) => (
+//                             <MenuItem
+//                                 key={index}
+//                                 item={item}
+//                                 dark={dark}
+//                                 navigation={navigation}
+//                                 handleClose={handleClose}
+//                             />
+//                         ))}
+//                     </ScrollView>
+//                 </Animated.View>
+
+//                 {/* Right 30%: Transparent touchable area */}
+//                 <TouchableOpacity
+//                     activeOpacity={1}
+//                     style={{ width: width * 0.3, height: '100%' }}
+//                     onPress={handleClose}
+//                 />
+//             </RBSheet>
+//         </View>
+//     );
+// });
+
+// HamburgerDrawer.displayName = 'HamburgerDrawer';
+
+// export default HamburgerDrawer;
+
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         padding: 20,
+//     },
+//     closeBtn: {
+//         marginTop: 50,
+//         marginBottom: 20,
+//     },
+//     menuItem: {
+//         fontSize: 18,
+//         marginTop: 15,
+//         marginBottom: 15,
+//         fontWeight: '900',
+//         lineHeight: 30,
+//         textTransform: 'uppercase',
+//         fontFamily: 'TomorrowBold',
+//     },
+//     divider: {
+//         width: "100%",
+//         backgroundColor: COLORS.grayscale400,
+//         height: 1
+//     },
+//     menuSection: {
+//         marginTop: 20,
+//         fontWeight: 'bold',
+//         fontSize: 14,
+//         marginBottom: 10,
+//     },
+//     productGrid: {
+//         flexDirection: 'row',
+//         flexWrap: 'wrap',
+//         gap: 10,
+//     },
+//     productItem: {
+//         width: '30%',
+//         alignItems: 'center',
+//     },
+//     productImage: {
+//         width: 60,
+//         height: 60,
+//         resizeMode: 'contain',
+//     },
+//     productName: {
+//         fontSize: 10,
+//         textAlign: 'center',
+//         marginTop: 5,
+//     },
+// });

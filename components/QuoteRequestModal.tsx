@@ -103,10 +103,12 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
         };
         try {
             // Replace with your actual API endpoint
-            const response = await fetch('https://nbs-server.vercel.app/api/bulk-order-form-submitted', {
+            // const response = await fetch('https://nbs-server.vercel.app/api/bulk-order-form-submitted-mobile', {
+            const response = await fetch('http://localhost:3000/api/bulk-order-form-submitted-mobile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'x-api-key': 'nbs_super_secret_key_123',
                 },
                 body: JSON.stringify(payload),
             });
