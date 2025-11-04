@@ -117,7 +117,7 @@ const Home = () => {
             <Image source={icons.search3} resizeMode='contain' style={[styles.userIcon, { tintColor: dark ? COLORS.white : COLORS.greyscale900 }]} />
           </TouchableOpacity>
         </View>
-        <Image source={images.nbsLogo2} resizeMode='contain' style={styles.nbsLogo} />
+        <Image source={images.nbsLogo3} resizeMode='contain' style={styles.nbsLogo} />
         <View style={{ flexDirection: "row", alignItems: "center", gap: 20 }}>
           <TouchableOpacity onPress={() => navigation.navigate("mywishlist")}>
             <Image source={icons.heartOutline} resizeMode='contain' style={[styles.userIcon, { tintColor: dark ? COLORS.white : COLORS.greyscale900 }]} />
@@ -725,8 +725,9 @@ const styles = StyleSheet.create({
   nbsLogo: {
     // width: 128,
     // height: 68,
-    width: width * 0.25,
-    height: 68,
+    marginTop: 5,
+    width: width * 0.35,
+    height: 70,
     borderRadius: 32
   },
   viewLeft: {

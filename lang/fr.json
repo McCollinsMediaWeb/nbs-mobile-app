@@ -166,7 +166,8 @@
                     "option1": "Kama",
                     "option2": "Koshin",
                     "option3": "Semilux",
-                    "option4": "Yanmar"
+                    "option4": "Yanmar",
+                    "option5": "Jett +"
                 },
                 "option3": "Électrique",
                 "option3Options": {
@@ -582,23 +583,230 @@
             "section1List": [
                 "Nom, adresse e-mail, numéro de téléphone et adresse de livraison/facturation",
                 "Détails de commande et historique des transactions",
-                "Informations sur l’appareil et le navigateur (pour l’analyse d’utilisation du site web)"
+                "Informations sur l’appareil et le navigateur (pour les analyses d’utilisation du site web)"
             ],
             "section2Title": "2. Comment nous utilisons vos informations",
             "section2List": [
                 "Traiter et livrer vos commandes",
-                "Communiquer les mises à jour de commande et assurer le service client",
+                "Communiquer les mises à jour de commande et le support client",
                 "Améliorer notre site web, nos produits et nos services",
-                "Envoyer des mises à jour promotionnelles (uniquement si vous y avez consenti)"
+                "Envoyer des offres promotionnelles (uniquement si vous avez choisi de les recevoir)"
             ],
             "section3Title": "3. Protection des données",
-            "section3Content": "Nous prenons les mesures de sécurité appropriées pour protéger vos données personnelles contre tout accès non autorisé, abus ou divulgation. Vos informations ne sont jamais vendues ni partagées avec des tiers sans votre consentement, sauf si la loi l’exige.",
+            "section3Content": "Nous prenons des mesures de sécurité appropriées pour protéger vos données personnelles contre tout accès non autorisé, mauvaise utilisation ou divulgation. Vos informations ne seront jamais vendues ni partagées avec des tiers sans votre consentement, sauf si la loi l’exige.",
             "section4Title": "4. Cookies",
-            "section4Content": "Notre site web peut utiliser des cookies afin d’améliorer votre expérience utilisateur. Vous pouvez choisir de désactiver les cookies via les paramètres de votre navigateur.",
+            "section4Content": "Notre site web peut utiliser des cookies pour améliorer l’expérience utilisateur. Vous pouvez désactiver les cookies dans les paramètres de votre navigateur.",
             "section5Title": "5. Vos droits",
-            "section5Content": "Vous pouvez demander à tout moment l’accès, la correction ou la suppression de vos données personnelles en nous contactant.",
-            "section6Title": "6. Nous contacter",
-            "section6Content": "Si vous avez des questions concernant cette politique de confidentialité ou la manière dont nous traitons vos données, veuillez nous contacter."
+            "section5Content": "Vous pouvez demander l’accès, la correction ou la suppression de vos données personnelles à tout moment en nous contactant.",
+            "section6Title": "6. Contactez-nous",
+            "section6Content": "Si vous avez des questions concernant cette politique de confidentialité ou la manière dont nous traitons vos données, veuillez nous contacter :",
+            "section6List": {
+                "email": "sales@nbsgroups.com",
+                "phone": "+971 4 2243543",
+                "address": "Nazeer Basha Syed Mech. & Eng. Equp. Trdg. LLC, BP : 379670, Deira, Dubaï, E.A.U."
+            }
+        },
+        "shippingPolicy": {
+            "title": "Politique d’expédition",
+            "intro": "Chez NBS Group, nous accordons une grande importance à la satisfaction de nos clients et nous nous engageons à offrir des politiques de service claires et équitables. Veuillez lire ci-dessous nos directives concernant l’annulation, le retour et le remboursement.",
+            "section1Title": "1. Annulation de commande",
+            "section1List": [
+                "Vous pouvez annuler votre commande dans les 24 heures si elle n’a pas encore été expédiée.",
+                "Pour toute annulation, contactez-nous à sales@nbsgroups.com avec votre numéro de commande.",
+                "Les commandes personnalisées ou en gros ne peuvent pas être annulées une fois confirmées."
+            ],
+            "section2Title": "2. Retours",
+            "section2List": [
+                "Les retours sont acceptés dans les 7 jours suivant la livraison pour les articles inutilisés, non installés et dans leur emballage d’origine.",
+                "Les produits doivent inclure tous les accessoires et être exempts de tout dommage ou marque d’installation.",
+                {
+                    "title": "Les articles non retournables comprennent :",
+                    "items": [
+                        "Produits personnalisés ou sur commande",
+                        "Composants électriques ouverts",
+                        "Articles marqués « Vente finale »"
+                    ]
+                }
+            ],
+            "section3Title": "3. Processus de retour",
+            "section3List": [
+                "Envoyez un e-mail à sales@nbsgroups.com avec votre numéro de commande, la raison du retour et des photos du produit (en cas de dommage ou d’erreur).",
+                "Les frais de retour sont à la charge du client, sauf si le produit est défectueux ou incorrect.",
+                "Une fois approuvé, nous vous fournirons les instructions de retour ou une étiquette d’expédition."
+            ],
+            "section4Title": "4. Remboursements",
+            "section4List": [
+                "Les remboursements sont effectués dans un délai de 7 à 10 jours ouvrables après réception et inspection de l’article retourné.",
+                "Les remboursements seront crédités sur le mode de paiement initial.",
+                "Des remboursements partiels peuvent s’appliquer pour les retours tardifs, les pièces manquantes ou les signes d’utilisation."
+            ],
+            "section5Title": "5. Articles endommagés ou incorrects",
+            "section5List": [
+                "Si votre commande est endommagée ou incorrecte, contactez-nous dans les 3 jours suivant la livraison avec des photos.",
+                "Nous organiserons un remplacement ou un remboursement complet sans frais supplémentaires."
+            ],
+            "section6Title": "6. Contactez-nous",
+            "section6Content": "Pour toute demande de retour, de remboursement ou d’annulation :",
+            "section6List": {
+                "email": "sales@nbsgroups.com",
+                "phone": "+971 4 2243543",
+                "address": "Nazeer Basha Syed Mech. & Eng. Equp. Trdg. LLC, BP : 379670, Deira, Dubaï, E.A.U."
+            }
+        },
+        "termsAndCondition": {
+            "title": "Termes et conditions",
+            "intro": "En accédant au site ou en passant une commande auprès de NBS Group, vous acceptez les termes et conditions suivants. Veuillez les lire attentivement.",
+            "section1Title": "1. Informations sur l’entreprise",
+            "section1Content": "NBS Group \n\nNazeer Basha Syed Mech. & Eng. Equip. Trdg. LLC, Boîte postale : 379670, Deira, Dubaï, É.A.U.\n\n📧 sales@nbsgroups.com | 📞 +971 4 2243543",
+            "section2Title": "2. Commandes et paiements",
+            "section2List": [
+                "Toutes les commandes sont soumises à disponibilité et à acceptation.",
+                "Les prix sont indiqués en AED (ou en devise locale) et peuvent inclure les taxes applicables.",
+                "Les paiements doivent être effectués intégralement avant l’expédition, sauf accord contraire."
+            ],
+            "section3Title": "3. Expédition et livraison",
+            "section3List": [
+                "Les délais de livraison peuvent varier selon la disponibilité des produits et la destination.",
+                "Nous ne sommes pas responsables des retards causés par les services de messagerie ou par des circonstances imprévues.",
+                "Les clients doivent fournir des informations d’expédition exactes pour éviter tout retard."
+            ],
+            "section4Title": "4. Annulations et remboursements",
+            "section4List": [
+                "Les commandes peuvent être annulées dans les 24 heures si elles n’ont pas encore été expédiées.",
+                "Les retours sont acceptés dans un délai de 7 jours pour les articles éligibles. Veuillez consulter notre politique de remboursement et d’annulation pour plus de détails."
+            ],
+            "section5Title": "5. Garantie produit",
+            "section5List": [
+                "Les produits sont couverts par la garantie du fabricant (si applicable).",
+                "La garantie ne couvre pas une mauvaise utilisation, une installation incorrecte ou des réparations non autorisées."
+            ],
+            "section6Title": "6. Utilisation du site Web",
+            "section6List": [
+                "Vous acceptez de ne pas abuser du site ni de tenter d’y accéder sans autorisation.",
+                "Le contenu du site (textes, images, etc.) est la propriété de NBS Group et ne peut être copié sans autorisation préalable."
+            ],
+            "section7Title": "7. Limitation de responsabilité",
+            "section7List": [
+                {
+                    "title": "NBS Group n’est pas responsable de :",
+                    "items": [
+                        "Dommages indirects, accidentels ou consécutifs.",
+                        "Dommages résultant d’une mauvaise utilisation ou d’une installation incorrecte du produit."
+                    ]
+                }
+            ],
+            "section8Title": "8. Droit applicable",
+            "section8List": [
+                "Les présentes conditions sont régies par les lois des Émirats arabes unis. Tout litige sera soumis à la juridiction des tribunaux de Dubaï."
+            ],
+            "section9Title": "9. Modifications des conditions",
+            "section9Content": "NBS Group se réserve le droit de modifier ces conditions à tout moment. Les conditions mises à jour seront publiées sur notre site Web avec la date d’entrée en vigueur.",
+            "section10Title": "10. Contactez-nous",
+            "section10Content": "Pour toute question concernant ces conditions, veuillez nous contacter :",
+            "section10List": {
+                "email": "sales@nbsgroups.com",
+                "phone": "+971 4 2243543",
+                "address": "Nazeer Basha Syed Mech. & Eng. Equip. Trdg. LLC, Boîte postale : 379670, Deira, Dubaï, É.A.U."
+            }
+        },
+        "refundAndCancellationPolicy": {
+            "title": "Politique de remboursement et d’annulation",
+            "intro": "Chez NBS Group, nous nous engageons à assurer la satisfaction de nos clients et à offrir un service transparent.",
+            "section1Title": "1. Annulation de commande :",
+            "section1Content": "Les commandes peuvent être annulées dans un délai de 24 heures si elles n’ont pas encore été expédiées. Pour les commandes personnalisées ou en gros, aucune annulation n’est possible une fois la commande confirmée.",
+            "section2Title": "2. Retours et remboursements :",
+            "section2Content": "Les retours sont acceptés dans les 7 jours suivant la livraison pour les articles non utilisés, non installés et dans leur emballage d’origine. Les articles non retournables comprennent les produits personnalisés, les composants électriques ouverts et les articles marqués « Vente finale ». Les frais de retour sont à la charge du client, sauf si le produit est défectueux ou incorrect.",
+            "section3Title": "3. Articles endommagés ou défectueux :",
+            "section3List": "Contactez-nous dans les 3 jours suivant la livraison pour un remplacement gratuit ou un remboursement complet si l’article est endommagé, défectueux ou incorrect.",
+            "section4Title": "4. Délai de remboursement :",
+            "section4Content": "Les remboursements approuvés seront traités dans un délai de 7 à 10 jours ouvrables selon le mode de paiement initial.",
+            "section5Title": "5. Échanges :",
+            "section5Content": "Sous réserve de disponibilité. Les frais de retour et de réexpédition peuvent s’appliquer.",
+            "section6Title": "6. Contactez-nous",
+            "section6Content": "Pour toute demande de retour, remboursement ou annulation :",
+            "section6List": {
+                "email": "sales@nbsgroups.com",
+                "phone": "+971 4 2243543",
+                "address": "Nazeer Basha Syed Mech. & Eng. Equip. Trdg. LLC, Boîte postale : 379670, Deira, Dubaï, É.A.U."
+            }
+        },
+        "deliveryPolicy": {
+            "title": "Politique de livraison",
+            "intro": "Chez NBS Group, nous nous engageons à assurer la livraison rapide, sécurisée et transparente de vos commandes. Cette politique de livraison explique comment nous traitons, expédions et livrons les commandes à nos clients aux Émirats arabes unis et à l’international.",
+            "section1": {
+                "title": "1. Zone de livraison",
+                "description": "Nous livrons actuellement vers :",
+                "domesticFirst": "Livraison nationale : ",
+                "domestic": "Toutes les Émirats des Émirats arabes unis (Abou Dhabi, Dubaï, Charjah, Ajman, Oumm al Qaïwain, Ras el Khaïmah, Foujaïrah).",
+                "internationalFirst": "Livraison internationale : ",
+                "international": "Certains pays à travers le monde (veuillez contacter notre équipe d’assistance pour vérifier la disponibilité avant de passer commande)."
+            },
+            "section2": {
+                "title": "2. Délais de traitement",
+                "point1": "Les commandes sont traitées dans un délai de 1 à 2 jours ouvrables après la confirmation du paiement.",
+                "point2": "Les commandes passées pendant les week-ends ou les jours fériés des Émirats arabes unis seront traitées le jour ouvrable suivant."
+            },
+            "section3": {
+                "title": "3. Méthodes et délais de livraison",
+                "intro": "Nous faisons appel à des partenaires de messagerie fiables pour garantir une livraison sûre et ponctuelle. Les délais de livraison estimés sont les suivants :",
+                "table": {
+                    "header": {
+                        "col1": "Type de livraison",
+                        "col2": "Délai estimé",
+                        "col3": "Coût"
+                    },
+                    "rows_0_col1": "Livraison nationale standard",
+                    "rows_0_col2": "2–4 jours ouvrables",
+                    "rows_0_col3": "Selon le poids/volume de la commande",
+                    "rows_1_col1": "Livraison nationale express",
+                    "rows_1_col2": "1–2 jours ouvrables",
+                    "rows_1_col3": "Des frais supplémentaires s’appliquent",
+                    "rows_2_col1": "Livraison internationale",
+                    "rows_2_col2": "5–12 jours ouvrables",
+                    "rows_2_col3": "Selon la destination"
+                },
+                "note": "*Remarque : les délais de livraison peuvent varier selon la localisation, le dédouanement et des circonstances indépendantes de notre volonté.*"
+            },
+            "section4": {
+                "title": "4. Suivi de commande",
+                "description": "Une fois votre commande expédiée, vous recevrez :",
+                "point1": "Un numéro de suivi par e-mail ou SMS.",
+                "point2": "Un lien pour suivre votre envoi en temps réel."
+            },
+            "section5": {
+                "title": "5. Retards de livraison",
+                "description": "Nous nous efforçons de respecter les délais de livraison estimés, mais des retards peuvent survenir en raison de :",
+                "point1": "Informations de livraison incorrectes ou incomplètes fournies par le client.",
+                "point2": "Conditions météorologiques, contrôles douaniers ou problèmes logistiques imprévus.",
+                "point3": "Retards causés par nos partenaires de livraison externes.",
+                "note": "Dans de tels cas, NBS Group collaborera étroitement avec ses partenaires de livraison pour résoudre le problème rapidement."
+            },
+            "section6": {
+                "title": "6. Adresse de livraison",
+                "point1": "Veuillez vous assurer que votre adresse de livraison est exacte et complète avant de passer commande.",
+                "point2": "Toute modification après expédition est soumise à l’approbation du transporteur et peut entraîner des frais supplémentaires."
+            },
+            "section7": {
+                "title": "7. Livraisons manquées",
+                "point1": "En cas d’échec de livraison, le transporteur tentera une nouvelle livraison ou vous contactera pour convenir d’un autre créneau.",
+                "point2": "Les commandes non réclamées dans un délai de 5 jours peuvent nous être retournées, et des frais supplémentaires peuvent s’appliquer pour une réexpédition."
+            },
+            "section8": {
+                "title": "8. Articles endommagés ou manquants",
+                "description": "Si votre commande arrive endommagée ou incomplète :",
+                "point1": "Signalez le problème à sales@nbsgroups.com dans les 48 heures suivant la livraison.",
+                "point2": "Fournissez des photos du colis ou des articles endommagés pour accélérer le traitement.",
+                "point3": "Nous organiserons un remplacement, un échange ou un remboursement conformément à notre politique de retour et de remboursement."
+            },
+            "section9": {
+                "title": "9. Contactez-nous",
+                "email": "📧  sales@nbsgroups.com",
+                "phone": "☎️  +971 4 2243543",
+                "address": "🏢  Nazeer Basha Syed Mech. & Eng. Equip. Trdg. LLC, Boîte postale : 379670, Deira, Dubaï, É.A.U.",
+                "website": "🌐 www.nbsgroups.com"
+            },
+            "footer1": "NBS Group ",
+            "footer": "apprécie votre confiance et s’engage à livrer vos commandes avec soin et fiabilité."
         },
         "helpCenter": {
             "title": "Centre d’aide",

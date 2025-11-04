@@ -714,7 +714,7 @@ const BulkOrderForm = () => {
                     </View>
                     <View>
                         <Image
-                            source={images.nbsLogo2}
+                            source={images.nbsLogo3}
                             resizeMode='contain'
                             style={styles.nbsLogo}
                         />
@@ -797,8 +797,7 @@ const BulkOrderForm = () => {
                 {/* Scrollable form */}
                 <ScrollView
                     showsVerticalScrollIndicator={true}
-                    contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 100 }}
-                    style={{ flex: 1 }}
+                    contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 130 }}
                 >
                     <View style={{ paddingVertical: 16 }}>
                         <Text
@@ -1043,8 +1042,9 @@ const styles = StyleSheet.create({
         height: 38,
     },
     nbsLogo: {
-        width: width * 0.25,
-        height: 68,
+        marginTop: 5,
+        width: width * 0.35,
+        height: 70,
         borderRadius: 32
     },
     fonts: {
@@ -1065,7 +1065,7 @@ const styles = StyleSheet.create({
     },
     cartBottomContainer: {
         position: "absolute",
-        bottom: 25,
+        bottom: 65,
         left: 0,
         right: 0,
         width: SIZES.width,

@@ -33,25 +33,12 @@ const SettingsLanguage = () => {
                 }
 
                 await AsyncStorage.setItem('language', itemTitle);
+                await i18next.changeLanguage(itemTitle);
                 dispatch(changeAppLanguage(itemTitle));
-
-                // i18next.changeLanguage(itemTitle);
-
-                // const changedLang = await AsyncStorage.getItem('language');
-
-                // console.log("new language", changedLang);
-
-                // RNRestart.restart();
                 setTimeout(() => {
+                    console.log("Restarting app to apply language change...");
                     RNRestart.restart();
-                }, 300);
-
-                // const collectionIds = [
-                //     'gid://shopify/Collection/439108698324',
-                //     'gid://shopify/Collection/439109091540',
-                //     'gid://shopify/Collection/439668539604',
-                // ];
-                // dispatch(fetchCollections(collectionIds));
+                }, 500);
 
             } catch (error) {
                 console.error("Failed to update language:", error);
@@ -59,21 +46,29 @@ const SettingsLanguage = () => {
         }
     };
 
-    // const handleCheckboxPress = async (langCode: string) => {
-    //     if (langCode !== selectedLanguage) {
-    //         await AsyncStorage.setItem('language', langCode);
-    //         setSelectedLanguage(langCode);
+    // const handleCheckboxPress = async (itemTitle: string) => {
+    //     if (appLanguage !== itemTitle) {
+    //         try {
+    //             const isRTL = itemTitle === 'ar';
+
+    //             if (I18nManager.isRTL !== isRTL) {
+    //                 I18nManager.allowRTL(isRTL);
+    //                 I18nManager.forceRTL(isRTL);
+    //             }
+
+    //             await AsyncStorage.setItem('language', itemTitle);
+    //             await i18next.changeLanguage(itemTitle);
+    //             dispatch(changeAppLanguage(itemTitle));
+
+    //             setTimeout(() => {
+    //                 RNRestart.restart();
+    //             }, 300);
+    //         } catch (error) {
+    //             console.error('Failed to update language:', error);
+    //         }
     //     }
     // };
 
-    // Load language from AsyncStorage on mount
-    // useEffect(() => {
-    //     const loadLanguage = async () => {
-    //         const lang = await AsyncStorage.getItem('language');
-    //         if (lang) setSelectedLanguage(lang);
-    //     };
-    //     loadLanguage();
-    // }, [handleCheckboxPress]);
 
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
@@ -98,87 +93,6 @@ const SettingsLanguage = () => {
                             onPress={() => handleCheckboxPress('fr')}
                         />
                     </View>
-                    {/* <Text style={[styles.title, { color: dark ? COLORS.white : COLORS.black }]}>Others</Text>
-                    <LanguageItem
-                        checked={selectedItem === 'Mandarin'}
-                        name="Mandarin"
-                        onPress={() => handleCheckboxPress('Mandarin')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Hindi'}
-                        name="Hindi"
-                        onPress={() => handleCheckboxPress('Hindi')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Spanish'}
-                        name="Spanish"
-                        onPress={() => handleCheckboxPress('Spanish')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'French'}
-                        name="French"
-                        onPress={() => handleCheckboxPress('French')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Arabic'}
-                        name="Arabic"
-                        onPress={() => handleCheckboxPress('Arabic')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Bengali'}
-                        name="Bengali"
-                        onPress={() => handleCheckboxPress('Bengali')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Russian'}
-                        name="Russian"
-                        onPress={() => handleCheckboxPress('Russian')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Indonesia'}
-                        name="Indonesia"
-                        onPress={() => handleCheckboxPress('Indonesia')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Chinese'}
-                        name="Chinese"
-                        onPress={() => handleCheckboxPress('Chinese')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Vietnamese'}
-                        name="Vietnamese"
-                        onPress={() => handleCheckboxPress('Vietnamese')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Marathi'}
-                        name="Marathi"
-                        onPress={() => handleCheckboxPress('Marathi')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Yue Chinese (Cantonese)'}
-                        name="Yue Chinese (Cantonese)"
-                        onPress={() => handleCheckboxPress('Yue Chinese (Cantonese)')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Southern Min (Hokkien)'}
-                        name="Southern Min (Hokkien)"
-                        onPress={() => handleCheckboxPress('Southern Min (Hokkien)')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Persian (Farsi)'}
-                        name="Persian (Farsi)"
-                        onPress={() => handleCheckboxPress('Persian (Farsi)')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Polish'}
-                        name="Polish"
-                        onPress={() => handleCheckboxPress('Polish')}
-                    />
-                    <LanguageItem
-                        checked={selectedItem === 'Kannada'}
-                        name="Kannada"
-                        onPress={() => handleCheckboxPress('Kannada')}
-                    /> */}
                 </ScrollView>
             </View>
         </SafeAreaView>

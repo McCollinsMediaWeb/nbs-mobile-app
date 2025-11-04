@@ -228,6 +228,17 @@ const SettingsPrivacyPolicy = () => {
                         <Text style={[styles.body, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>
                             {t('privacyPolicy.section6Content')}
                         </Text>
+                        <View style={{ marginTop: 10 }}>
+                            <Text style={[styles.body, { marginTop: 10 }, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>
+                                📧 {t('privacyPolicy.section6List.email')}
+                            </Text>
+                            <Text style={[styles.body, { marginTop: 10 }, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>
+                                📞 {t('privacyPolicy.section6List.phone')}
+                            </Text>
+                            <Text style={[styles.body, { marginTop: 10 }, { color: dark ? COLORS.secondaryWhite : COLORS.greyscale900 }]}>
+                                📍 {t('privacyPolicy.section6List.address')}
+                            </Text>
+                        </View>
                     </View>
                 </ScrollView>
             </View>

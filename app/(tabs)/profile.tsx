@@ -94,7 +94,7 @@ const Profile = () => {
         <View>
           <Image
             // source={dark ? images.noUserWhite : images.noUser}
-            source={images.nbsLogo2}
+            source={images.nbsLogo3}
             // resizeMode='cover'
             style={styles.avatar}
           />
@@ -248,15 +248,30 @@ const Profile = () => {
           onPress={() => navigate("settingsprivacypolicy")}
         />
         <SettingsItem
+          icon={icons.document2Outline}
+          name={t('termsAndCondition.title')}
+          onPress={() => navigate("settingstermsandconditions")}
+        />
+        <SettingsItem
+          icon={icons.shipping}
+          name={t('shippingPolicy.title')}
+          onPress={() => navigate("settingsshippingpolicy")}
+        />
+        <SettingsItem
+          icon={icons.returnPolicy}
+          name={t('refundAndCancellationPolicy.title')}
+          onPress={() => navigate("settingsrefundandcancellation")}
+        />
+        <SettingsItem
+          icon={icons.box}
+          name={t('deliveryPolicy.title')}
+          onPress={() => navigate("settingsdeliverypolicy")}
+        />
+        <SettingsItem
           icon={icons.infoCircle}
           name={t('profile.setting7.title')}
           onPress={() => navigate("settingshelpcenter")}
         />
-        {/* <SettingsItem
-          icon={icons.people4}
-          name="Invite Friends"
-          onPress={() => navigate("settingsinvitefriends")}
-        /> */}
         {user?.accessToken ? (
           <TouchableOpacity
             onPress={() => refRBSheet.current.open()}
@@ -306,7 +321,7 @@ const Profile = () => {
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         {renderHeader()}
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ marginBottom: 60 }}>
           {renderProfile()}
           {renderSettings()}
         </ScrollView>

@@ -34,7 +34,7 @@ const LanguageModal = ({ languageModalVisible, setLanguageModalVisible }: Langua
                 dispatch(changeAppLanguage(itemTitle));
                 setTimeout(() => {
                     RNRestart.restart();
-                }, 300);
+                }, 500);
             } catch (error) {
                 console.error("Failed to update language:", error);
             }
@@ -59,7 +59,7 @@ const LanguageModal = ({ languageModalVisible, setLanguageModalVisible }: Langua
                 activeOpacity={1}
                 onPressOut={() => setLanguageModalVisible(false)}
             >
-                <View
+                {/* <View
                     style={{
                         width: 220,
                         backgroundColor: colors.background,
@@ -96,6 +96,68 @@ const LanguageModal = ({ languageModalVisible, setLanguageModalVisible }: Langua
                     >
                         <Text style={{ color: colors.text, fontSize: 16 }}>العربية</Text>
                         {appLanguage === "ar" && (
+                            <Image
+                                source={icons.done} // make sure you have a `language` icon in your `icons`
+                                style={{ width: 20, height: 20, tintColor: "green" }}
+                            />
+                        )}
+                    </TouchableOpacity>
+                </View> */}
+
+                <View
+                    style={{
+                        width: 250,
+                        backgroundColor: colors.background,
+                        borderRadius: 10,
+                        padding: 20,
+                        alignItems: 'center',
+                    }}
+                >
+                    <TouchableOpacity
+                        onPress={() => handleChangeLanguage('en')}
+                        style={{
+                            paddingVertical: 10,
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            width: '100%'
+                        }}
+                    >
+                        <Text style={{ color: colors.text, fontSize: 16 }}>English</Text>
+                        {appLanguage === "en" && (
+                            <Image
+                                source={icons.done} // make sure you have a `language` icon in your `icons`
+                                style={{ width: 20, height: 20, tintColor: "green" }}
+                            />
+                        )}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => handleChangeLanguage('ar')}
+                        style={{
+                            paddingVertical: 10,
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            width: '100%'
+                        }}
+                    >
+                        <Text style={{ color: colors.text, fontSize: 16 }}>العربية</Text>
+                        {appLanguage === "ar" && (
+                            <Image
+                                source={icons.done} // make sure you have a `language` icon in your `icons`
+                                style={{ width: 20, height: 20, tintColor: "green" }}
+                            />
+                        )}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => handleChangeLanguage('fr')}
+                        style={{
+                            paddingVertical: 10,
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            width: '100%'
+                        }}
+                    >
+                        <Text style={{ color: colors.text, fontSize: 16 }}>Français</Text>
+                        {appLanguage === "fr" && (
                             <Image
                                 source={icons.done} // make sure you have a `language` icon in your `icons`
                                 style={{ width: 20, height: 20, tintColor: "green" }}

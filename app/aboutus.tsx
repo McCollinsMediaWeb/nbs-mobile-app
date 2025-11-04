@@ -71,7 +71,7 @@ const AboutUs = () => {
                     </View>
                     <View>
                         <Image
-                            source={images.nbsLogo2}
+                            source={images.nbsLogo3}
                             resizeMode='contain'
                             style={styles.nbsLogo}
                         />
@@ -250,8 +250,9 @@ const styles = StyleSheet.create({
     nbsLogo: {
         // width: 128,
         // height: 68,
-        width: width * 0.25,
-        height: 68,
+        marginTop: 5,
+        width: width * 0.35,
+        height: 70,
         borderRadius: 32
     },
     viewLeft: {

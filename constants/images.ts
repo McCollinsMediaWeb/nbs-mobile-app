@@ -2,6 +2,7 @@ const ornament = require("../assets/images/ornament.png");
 const logo = require("../assets/images/logo.png");
 const nbsLogo = require("../assets/images/nbs-icon.png");
 const nbsLogo2 = require("../assets/images/nbs-icon-2.png");
+const nbsLogo3 = require("../assets/images/nbs-icon-3.png");
 
 const banner1 = require("../assets/images/banners/banner4.jpg");
 const banner2 = require("../assets/images/banners/banner2.jpg");
@@ -43,6 +44,7 @@ export default {
     logo,
     nbsLogo,
     nbsLogo2,
+    nbsLogo3,
     menu,
     menuWhite,
 

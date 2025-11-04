@@ -42,6 +42,8 @@ const resources = { en, ar, fr };
 const initI18n = async () => {
   const language = (await AsyncStorage.getItem('language')) || 'en';
 
+  console.log('Initializing i18n with language:', language);
+
   await i18n
     // .use(initReactI18next)
     .init({

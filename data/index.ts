@@ -828,6 +828,17 @@ export const useMenuData = () => {
                                         collectionImage: "",
                                     },
                                 },
+                                {
+                                    title: t(
+                                        "hamburgerMenu.waterPumpOptions.option2Options.option5"
+                                    ),
+                                    route: "collectionscreen",
+                                    params: {
+                                        collectionId: "gid://shopify/Collection/446539858132",
+                                        collectionTitle: t("hamburgerMenu.waterPumpOptions.option2Options.option5"),
+                                        collectionImage: "",
+                                    },
+                                },
                             ],
                         },
                         {

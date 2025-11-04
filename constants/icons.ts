@@ -332,6 +332,8 @@ const boxOpen2 = require("../assets/icons/box-open2.png");
 const boxOpen3 = require("../assets/icons/box-open3.png");
 const boxOpen4 = require("../assets/icons/box-open4.png");
 const delivery = require("../assets/icons/delivery.png");
+const shipping = require("../assets/icons/shipping.png");
+const returnPolicy = require("../assets/icons/return.png");
 const chair1 = require("../assets/icons/chair.png");
 const chair2 = require("../assets/icons/chair2.png");
 const cupboard1 = require("../assets/icons/cupboard1.png");
@@ -727,5 +729,8 @@ export default {
     cardShipping,
     cardContact,
     cardEmail,
-    cardSecurity
+    cardSecurity,
+
+    shipping,
+    returnPolicy,
 }
